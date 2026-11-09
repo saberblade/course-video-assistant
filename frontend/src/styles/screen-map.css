@@ -1,0 +1,663 @@
+/* ===== 知识地图画布 ===== */
+.scr-map {
+  position: absolute;
+  inset: 92px 0 76px;
+  overflow: hidden;
+}
+
+.scr-map__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* 三个模块区块：同一青绿色系，用深浅区分 */
+.scr-region {
+  fill: rgba(15, 125, 128, 0.08);
+  stroke: rgba(15, 125, 128, 0.42);
+  stroke-width: 1.15;
+  stroke-linejoin: round;
+  transition: fill 0.25s ease, stroke 0.25s ease;
+}
+
+.scr-region[data-module="basics"] {
+  fill: rgba(15, 125, 128, 0.075);
+}
+
+.scr-region[data-module="metrics"] {
+  fill: rgba(15, 125, 128, 0.17);
+}
+
+.scr-region[data-module="decision"] {
+  fill: rgba(15, 125, 128, 0.05);
+}
+
+.scr-region-texture {
+  fill: url(#scrDotPattern);
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.scr-region-outline {
+  fill: none;
+  stroke: rgba(15, 125, 128, 0.5);
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+  filter: url(#scrRegionGlow);
+}
+
+.scr-region--deep {
+  fill: rgba(10, 93, 96, 0.12);
+}
+
+.scr-region.is-dim {
+  fill: rgba(15, 125, 128, 0.02);
+  stroke: rgba(15, 125, 128, 0.13);
+}
+
+.scr-region__label {
+  fill: rgba(10, 93, 96, 0.75);
+  font-size: 12.5px;
+  letter-spacing: 3px;
+  text-anchor: middle;
+}
+
+.scr-link {
+  fill: none;
+  stroke: rgba(15, 125, 128, 0.24);
+  stroke-width: 1.1;
+  stroke-dasharray: 4 7;
+  animation: scrDash 4s linear infinite;
+}
+
+.scr-link.is-active {
+  stroke: rgba(15, 125, 128, 0.7);
+  stroke-width: 1.6;
+  filter: url(#scrLineGlow);
+}
+
+@keyframes scrDash {
+  to {
+    stroke-dashoffset: -44;
+  }
+}
+
+/* ===== 节点 ===== */
+.scr-node {
+  cursor: pointer;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.scr-node__halo {
+  fill: none;
+  stroke-width: 1.2;
+  opacity: 0.34;
+  transition: opacity 0.2s ease, stroke-width 0.2s ease;
+}
+
+.scr-node__pulse {
+  fill: none;
+  stroke-width: 1;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.scr-node__core {
+  transition: filter 0.2s ease;
+}
+
+/* 节点做成白底彩环的“珠点”，浅色底上更干净 */
+.scr-node__ring {
+  fill: #ffffff;
+  stroke-width: 2;
+}
+
+.scr-node__label {
+  fill: #2a3b40;
+  font-size: 12.5px;
+  text-anchor: middle;
+  letter-spacing: 0.5px;
+  transition: fill 0.2s ease;
+}
+
+.scr-node__value {
+  fill: #6d8188;
+  font-family: "Bahnschrift", "DIN Alternate", Consolas, monospace;
+  font-size: 10px;
+  text-anchor: middle;
+  font-variant-numeric: tabular-nums;
+}
+
+.scr-node:hover .scr-node__halo,
+.scr-node.is-active .scr-node__halo {
+  opacity: 0.85;
+  stroke-width: 2;
+}
+
+.scr-node:hover .scr-node__label,
+.scr-node.is-active .scr-node__label {
+  fill: var(--scr-accent-deep);
+}
+
+.scr-node.is-active .scr-node__pulse {
+  animation: scrRipple 1.8s ease-out infinite;
+}
+
+.scr-node.is-dim {
+  opacity: 0.26;
+}
+
+.scr-node.is-hit .scr-node__halo {
+  opacity: 1;
+  stroke-width: 2.4;
+}
+
+@keyframes scrRipple {
+  0% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.1);
+  }
+}
+
+/* 悬浮提示 */
+.scr-tip {
+  position: absolute;
+  z-index: 6;
+  min-width: 156px;
+  max-width: 250px;
+  padding: 9px 11px;
+  border: 1px solid var(--scr-line);
+  border-radius: 3px;
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(28, 62, 68, 0.14);
+  pointer-events: none;
+  transform: translate(-50%, -100%);
+}
+
+.scr-tip__name {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #16242a;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.scr-tip__meta {
+  margin-top: 3px;
+  color: var(--scr-text-faint);
+  font-size: 11px;
+  font-family: "Bahnschrift", Consolas, monospace;
+}
+
+.scr-tip__text {
+  margin: 5px 0 0;
+  color: var(--scr-text-dim);
+  font-size: 11.5px;
+  line-height: 1.6;
+}
+
+/* ===== 左下控件 ===== */
+.scr-ctrl {
+  position: absolute;
+  left: 18px;
+  bottom: 80px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.scr-ctrl__btn {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--scr-line);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--scr-text-dim);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(28, 62, 68, 0.06);
+  transition: color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.scr-ctrl__btn:hover {
+  color: var(--scr-accent-deep);
+  border-color: rgba(15, 125, 128, 0.5);
+  background: #ffffff;
+  box-shadow: 0 4px 14px rgba(15, 125, 128, 0.16);
+}
+
+.scr-ctrl__scale {
+  color: var(--scr-text-faint);
+  font-family: "Bahnschrift", Consolas, monospace;
+  font-size: 10px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* ===== 右下按钮 ===== */
+.scr-fab {
+  position: absolute;
+  right: 18px;
+  bottom: 62px;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(10, 93, 96, 0.3);
+  border-radius: 50%;
+  background: linear-gradient(150deg, #18989b, #0a6063);
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(15, 125, 128, 0.26);
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.scr-fab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(15, 125, 128, 0.32);
+}
+
+/* ===== 底部继续复习 ===== */
+.scr-dock {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  z-index: 5;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 14px;
+  border: 1px solid #d3e1e1;
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(7px);
+  box-shadow: 0 8px 26px rgba(28, 62, 68, 0.12);
+  white-space: nowrap;
+}
+
+.scr-dock__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.scr-dock__label {
+  color: var(--scr-text-faint);
+  font-size: 10px;
+  letter-spacing: 1.2px;
+}
+
+.scr-dock__title {
+  max-width: 320px;
+  overflow: hidden;
+  color: var(--scr-text);
+  font-size: 12.5px;
+  text-overflow: ellipsis;
+}
+
+.scr-dock__bar {
+  position: relative;
+  width: 118px;
+  height: 4px;
+  border-radius: 2px;
+  background: #e3ecec;
+  overflow: hidden;
+}
+
+.scr-dock__bar i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #17a3a5, #0b6b6d);
+}
+
+.scr-dock__pct {
+  color: var(--scr-text-dim);
+  font-family: "Bahnschrift", Consolas, monospace;
+  font-size: 11px;
+}
+
+.scr-dock__go {
+  padding: 6px 14px;
+  border: 1px solid rgba(10, 93, 96, 0.35);
+  border-radius: 30px;
+  background: linear-gradient(180deg, #15938f, #0b6b6d);
+  color: #ffffff;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: box-shadow 0.16s ease, transform 0.16s ease;
+}
+
+.scr-dock__go:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(15, 125, 128, 0.28);
+}
+
+/* ===== 右侧详情 ===== */
+.scr-detail {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 8;
+  display: flex;
+  flex-direction: column;
+  width: 384px;
+  max-width: 92vw;
+  border-left: 1px solid var(--scr-line);
+  background: #ffffff;
+  box-shadow: -18px 0 44px rgba(28, 62, 68, 0.1);
+  transform: translateX(100%);
+  transition: transform 0.32s cubic-bezier(0.22, 0.8, 0.3, 1);
+}
+
+.scr-detail.is-open {
+  transform: none;
+}
+
+.scr-detail__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 16px 18px 13px;
+  border-bottom: 1px solid var(--scr-line);
+}
+
+.scr-detail__close {
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: var(--scr-text-faint);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 4px;
+}
+
+.scr-detail__close:hover {
+  color: var(--scr-text);
+}
+
+.scr-detail__kicker {
+  color: var(--scr-text-faint);
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.scr-detail h2 {
+  margin: 3px 0 0;
+  color: #16242a;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.scr-detail__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 15px 18px 18px;
+  scrollbar-width: thin;
+}
+
+.scr-detail__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--scr-line);
+  font-size: 12.5px;
+}
+
+.scr-detail__row span {
+  color: var(--scr-text-faint);
+}
+
+.scr-detail__row b {
+  color: var(--scr-text);
+  font-weight: 500;
+}
+
+.scr-detail__time {
+  font-family: "Bahnschrift", Consolas, monospace;
+  color: var(--scr-accent) !important;
+  font-size: 13px;
+}
+
+.scr-detail__quote {
+  margin: 13px 0 0;
+  padding: 11px 12px;
+  border-left: 2px solid rgba(15, 125, 128, 0.45);
+  border-radius: 0 3px 3px 0;
+  background: rgba(15, 125, 128, 0.055);
+  color: var(--scr-text-dim);
+  font-size: 12.5px;
+  line-height: 1.85;
+}
+
+.scr-detail__quote em {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--scr-text-faint);
+  font-size: 10px;
+  font-style: normal;
+  letter-spacing: 1.4px;
+}
+
+.scr-detail__act {
+  display: flex;
+  gap: 9px;
+  margin-top: 16px;
+}
+
+.scr-btn {
+  flex: 1;
+  padding: 9px 12px;
+  border: 1px solid var(--scr-line);
+  border-radius: 3px;
+  background: #ffffff;
+  color: var(--scr-text-dim);
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+  transition: background 0.16s ease, box-shadow 0.16s ease, color 0.16s ease;
+}
+
+.scr-btn:hover {
+  background: var(--scr-accent-soft);
+  color: var(--scr-accent-deep);
+  box-shadow: 0 2px 10px rgba(15, 125, 128, 0.12);
+}
+
+.scr-btn--primary {
+  border-color: rgba(10, 93, 96, 0.35);
+  background: linear-gradient(180deg, #15938f, #0b6b6d);
+  color: #ffffff;
+}
+
+.scr-btn--primary:hover {
+  background: linear-gradient(180deg, #12908c, #0a5f61);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(15, 125, 128, 0.26);
+}
+
+.scr-detail__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 60px 20px;
+  color: var(--scr-text-faint);
+  font-size: 12.5px;
+  text-align: center;
+}
+
+/* 右上角关闭整页 */
+.scr-exit {
+  position: absolute;
+  top: 74px;
+  right: 18px;
+  z-index: 5;
+  border: 1px solid var(--scr-line);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--scr-text-dim);
+  font: inherit;
+  font-size: 11.5px;
+  padding: 4px 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(28, 62, 68, 0.05);
+  transition: right 0.32s cubic-bezier(0.22, 0.8, 0.3, 1), color 0.16s ease, border-color 0.16s ease;
+}
+
+.scr-shell.has-detail .scr-exit {
+  right: 402px;
+}
+
+.scr-exit:hover {
+  color: var(--scr-accent-deep);
+  border-color: rgba(15, 125, 128, 0.45);
+}
+
+/* ===== 适配 ===== */
+@media (max-width: 1180px) {
+  .scr-legend {
+    width: 172px;
+  }
+  .scr-detail {
+    width: 340px;
+  }
+  .scr-shell.has-detail .scr-search,
+  .scr-shell.has-detail .scr-exit {
+    right: 356px;
+  }
+}
+
+@media (max-width: 900px) {
+  .scr-legend {
+    top: 12px;
+    left: 12px;
+    width: 158px;
+    padding: 10px 11px;
+  }
+  .scr-search {
+    top: 96px;
+    right: 12px;
+    width: 200px;
+  }
+  .scr-headline {
+    top: 14px;
+  }
+  .scr-headline h1 {
+    font-size: 16px;
+    letter-spacing: 2px;
+  }
+  .scr-headline__deco {
+    width: 40px;
+  }
+  .scr-dock {
+    display: none;
+  }
+  .scr-map {
+    inset: 132px 0 64px;
+  }
+  .scr-shell.has-detail .scr-search,
+  .scr-shell.has-detail .scr-exit {
+    right: 12px;
+  }
+}
+
+@media (max-width: 700px) {
+  .scr-headline {
+    top: 8px;
+    left: 12px;
+    right: 12px;
+    transform: none;
+    align-items: flex-start;
+  }
+  .scr-headline__row {
+    gap: 0;
+  }
+  .scr-headline h1 {
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .scr-headline__deco,
+  .scr-headline__sub {
+    display: none;
+  }
+  .scr-legend {
+    top: 40px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    padding: 7px 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .scr-legend__title,
+  .scr-legend__stats {
+    display: none;
+  }
+  .scr-legend__row {
+    width: auto;
+    flex: 1;
+    gap: 5px;
+    padding: 2px 0;
+    font-size: 11.5px;
+  }
+  .scr-legend__row b {
+    margin-left: auto;
+    font-size: 11px;
+  }
+  .scr-search {
+    top: 86px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+  }
+  .scr-search__hint {
+    display: none;
+  }
+  .scr-map {
+    inset: 128px 0 58px;
+  }
+  .scr-exit {
+    top: auto;
+    bottom: 14px;
+    right: 12px;
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+  .scr-ctrl {
+    left: 12px;
+  }
+  .scr-ctrl__btn {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+  .scr-fab {
+    right: 12px;
+    bottom: 52px;
+    width: 34px;
+    height: 34px;
+  }
+}
