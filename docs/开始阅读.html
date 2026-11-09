@@ -1,0 +1,5817 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>课程视频复习助手 项目资料</title><style>
+:root{--ink:#173c44;--muted:#52676e;--line:#d7e1e4;--bg:#f3f7f8}*{box-sizing:border-box}body{margin:0;color:#1e3038;background:var(--bg);font:15px/1.85 'Microsoft YaHei','Segoe UI',sans-serif}header{background:var(--ink);color:white;padding:40px max(30px,calc((100vw - 1320px)/2)) 32px}header h1{margin:0 0 10px;font-size:31px;line-height:1.4}header p{margin:6px 0;color:#d3e5e8;max-width:1000px}header a{color:white}header .downloads{display:flex;gap:24px;flex-wrap:wrap;margin-top:18px}.shell{max-width:1380px;display:grid;grid-template-columns:250px minmax(0,1fr);gap:28px;margin:26px auto;padding:0 25px}aside{position:sticky;top:20px;align-self:start;max-height:calc(100vh - 40px);overflow:auto;font-size:13px}aside a{display:block;padding:4px 5px;color:var(--muted);text-decoration:none}aside a:hover{color:#007678;text-decoration:underline}.tools{position:sticky;top:0;background:var(--bg);padding:0 0 17px;z-index:2}input,select,button{font:inherit;border:1px solid #a8bdc4;border-radius:5px;padding:8px 12px;background:white;color:#173c44}input{width:min(500px,100%)}.filters{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}.note{font-size:13px;color:var(--muted);margin:9px 0}.doc{background:white;border:1px solid var(--line);margin-bottom:14px;border-radius:7px;scroll-margin-top:140px}summary{cursor:pointer;padding:16px 22px;font-weight:700;font-size:17px;display:flex;gap:16px;align-items:baseline}.group{font-weight:400;font-size:12px;color:var(--muted);min-width:140px}article{padding:5px 27px 25px;border-top:1px solid var(--line);overflow:auto}h2{font-size:22px;margin:27px 0 12px;color:var(--ink)}h3{font-size:18px;color:var(--ink)}p{margin:10px 0}a{color:#006d79}table{border-collapse:collapse;width:100%;font-size:13px;margin:17px 0;line-height:1.65}th,td{border:1px solid #cad7dc;padding:9px 11px;vertical-align:top}th{background:#edf4f5;text-align:left}tr:nth-child(even){background:#fafcfc}pre{background:#edf3f5;padding:16px;overflow:auto;line-height:1.5;font-size:12px;border-radius:4px}code{font-family:Consolas,monospace;font-size:.92em}li{margin:5px 0}.hidden{display:none!important}.empty{display:none;padding:25px;color:var(--muted)}footer{padding:30px;text-align:center;font-size:12px;color:var(--muted)}@media(max-width:950px){.shell{display:block}aside{display:none}.group{min-width:0}summary{display:block}.group{display:block}header{padding:28px}.tools{position:relative}article{padding:8px 18px 20px}}@media print{header{background:white;color:black;padding:0}header p{color:black}.downloads,aside,.tools,footer{display:none!important}.shell{display:block;margin:0;padding:0}.doc{border:0;break-before:page}.doc:first-child{break-before:auto}summary{font-size:22px;padding:0}.group{display:none}article{border:0;padding:0}.hidden{display:block!important}table{font-size:10px}pre{white-space:pre-wrap}}
+</style></head><body><header><h1>课程视频复习助手 · 项目资料</h1><p>产品经理与四岗执行资料。按需求、工单、技术、交接、质量与总结阅读。</p><p>立项外部研究、竞品核查、模拟调研、原型实测与试点方案均可查。工程状态按实际回执记录。</p><div class="downloads"><a href="%E9%A1%B9%E7%9B%AE%E6%89%A7%E8%A1%8C%E4%B8%8E%E4%BA%A4%E6%8E%A5%E6%89%8B%E5%86%8C.docx">打开 Word 执行手册</a><a href="01_%E9%9C%80%E6%B1%82%E4%B8%8E%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/03_%E5%8F%AF%E7%82%B9%E5%87%BB%E4%BA%A4%E4%BA%92%E5%8E%9F%E5%9E%8B.html">打开可点击交互原型</a> <a href="06_%E5%B1%95%E7%A4%BA%E4%B8%8E%E7%AD%94%E8%BE%A9/%E8%AF%BE%E7%A8%8B%E8%A7%86%E9%A2%91%E5%A4%8D%E4%B9%A0%E5%8A%A9%E6%89%8B_%E7%AB%8B%E9%A1%B9%E4%BE%9D%E6%8D%AE.pptx">打开立项依据 PPT</a><a href="#doc-0" class="doclink">阅读统一约定</a></div></header><div class="shell"><aside><strong>文档目录</strong><a class="doclink" href="#doc-0">项目导航与统一约定</a><a class="doclink" href="#doc-1">用前先读</a><a class="doclink" href="#doc-2">产品经理与组长交付清单</a><a class="doclink" href="#doc-3">立项说明与需求文档</a><a class="doclink" href="#doc-4">页面交互与需求调研</a><a class="doclink" href="#doc-5">需求依据与竞品取舍</a><a class="doclink" href="#doc-6">模拟用户调研与需求验证</a><a class="doclink" href="#doc-7">立项外部研究与证据</a><a class="doclink" href="#doc-8">竞品核查与方案取舍</a><a class="doclink" href="#doc-9">产品策略与试点评估</a><a class="doclink" href="#doc-10">阶段计划与里程碑</a><a class="doclink" href="#doc-11">五人职责与任务卡</a><a class="doclink" href="#doc-12">任务跟踪总表</a><a class="doclink" href="#doc-13">分工下达与四岗任务书</a><a class="doclink" href="#doc-14">需求工单与验收追踪</a><a class="doclink" href="#doc-15">架构与技术栈</a><a class="doclink" href="#doc-16">API与数据模型契约</a><a class="doclink" href="#doc-17">环境配置与运行部署</a><a class="doclink" href="#doc-18">技术栈定稿与选型决策</a><a class="doclink" href="#doc-19">产品需求交接开发与测试</a><a class="doclink" href="#doc-20">研发联调与测试交接</a><a class="doclink" href="#doc-21">部署发布与回退交接</a><a class="doclink" href="#doc-22">测试计划与验收门槛</a><a class="doclink" href="#doc-23">样本脚本与问题集</a><a class="doclink" href="#doc-24">测试结果与发布验收记录</a><a class="doclink" href="#doc-25">原型产品验收报告</a><a class="doclink" href="#doc-26">工程验收演练与模拟数据</a><a class="doclink" href="#doc-27">风险与变更管理</a><a class="doclink" href="#doc-28">决策与交接确认记录</a><a class="doclink" href="#doc-29">里程碑推进与变更演练</a><a class="doclink" href="#doc-30">项目总结报告</a><a class="doclink" href="#doc-31">立项复核与工程跟进</a><a class="doclink" href="#doc-32">测试工程师</a><a class="doclink" href="#doc-33">后端工程师</a><a class="doclink" href="#doc-34">前端工程师</a><a class="doclink" href="#doc-35">系统工程师</a></aside><main><div class="tools"><input id="search" type="search" placeholder="搜索文档内容，例如：前端、交接、验收、M2" aria-label="搜索文档"><div class="filters"><select id="group" aria-label="按文件夹筛选"><option value="">全部分类</option><option>项目总览</option><option>01_需求与产品设计</option><option>02_任务分配与进度</option><option>03_技术方案与接口</option><option>04_交接文档</option><option>05_测试与验收</option><option>07_管理记录</option><option>岗位开工单</option></select><button id="expand">全部展开</button><button id="collapse">全部收起</button><button id="print">打印当前资料</button></div><p class="note">点击标题展开正文。技术同学可直接编辑同目录 Markdown 源文件；资料更新后应同步本阅读版与 Word 手册。</p></div><details class="doc" id="doc-0" data-group="项目总览" ><summary><span class="group">项目总览</span><span>课程视频复习助手 项目导航与统一约定</span></summary><article><p>V1.3 · 2026 年 11 月 7 日 · 产品经理兼小组组长</p>
+<p>从分类阅读页进入本轮交付清单、需求原型、四岗任务书及技术定稿。汇报开场使用立项依据 PPT。<a href="%E5%BC%80%E5%A7%8B%E9%98%85%E8%AF%BB.html">开始阅读</a> · <a href="#doc-2" class="doclink">本轮交付清单</a> · <a href="%E9%A1%B9%E7%9B%AE%E6%89%A7%E8%A1%8C%E4%B8%8E%E4%BA%A4%E6%8E%A5%E6%89%8B%E5%86%8C.docx">Word 执行与交接手册</a> · <a href="06_%E5%B1%95%E7%A4%BA%E4%B8%8E%E7%AD%94%E8%BE%A9/%E8%AF%BE%E7%A8%8B%E8%A7%86%E9%A2%91%E5%A4%8D%E4%B9%A0%E5%8A%A9%E6%89%8B_%E7%AB%8B%E9%A1%B9%E4%BE%9D%E6%8D%AE.pptx">立项依据 PPT</a></p>
+<h2>本次交付的用途</h2>
+<p>本目录汇总课程视频复习助手的产品经理交付。需求、原型、分工、技术选型和交接标准已定稿。V1.3 复核外部证据与竞品，补齐试点评估、质量检查与开场 PPT。V1.2 原型浏览器复测通过 12 项。工程运行、性能、真实用户试点和成员签收分别在对应台账登记。<a href="#doc-7" class="doclink">外部研究</a> · <a href="#doc-8" class="doclink">竞品核查</a> · <a href="#doc-9" class="doclink">试点评估</a> · <a href="#doc-25" class="doclink">原型验收</a></p>
+<h2>时间窗口</h2>
+<p>原计划的五个核心开发日为 11 月 5、6、9、10、11 日，11 月 12 日验收与备份恢复，11 月 13 日作为整改与交付缓冲。11 月 9 日开工前复核 M1 实际回执。开场 PPT 属于本轮产品交付，工程节点按各自证据复核。<a href="#doc-31" class="doclink">复核与行动</a></p>
+<p>采用阶段里程碑，不安排逐小时或逐人逐日排班。M1：11月6日下班前完成工程接收与环境验证，需求、原型、分工、技术决策已在本包定稿；M2：11月10日中午前跑通真实纵向流程；M3：11月11日下班前冻结发布候选版；M4：11月12日下班前完成验收与备份恢复；11月13日处理遗留整改并归档交付。原M5展示节点暂缓。</p>
+<h2>团队身份</h2>
+<table>
+<thead>
+<tr>
+<th>代号</th>
+<th>岗位</th>
+<th>核心责任</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PM</td>
+<td>产品经理兼组长 即用户本人</td>
+<td>范围与需求、调研、原型、分工与技术决策、协调、产品验收</td>
+</tr>
+<tr>
+<td>FE</td>
+<td>前端工程师</td>
+<td>Vue页面、上传与状态展示、播放器、问答和引用跳转、前端联调</td>
+</tr>
+<tr>
+<td>BE</td>
+<td>后端工程师</td>
+<td>FastAPI接口、数据库与任务状态、检索和大模型问答、前后端协议</td>
+</tr>
+<tr>
+<td>QA</td>
+<td>测试工程师</td>
+<td>用例与数据集、缺陷记录、回归和验收证据</td>
+</tr>
+<tr>
+<td>SYS</td>
+<td>系统工程师</td>
+<td>环境与依赖、FFmpeg与语音转写模块、部署、日志、备份与恢复</td>
+</tr>
+</tbody></table>
+<p>系统工程师明确承担音视频处理与模型运行模块，不把所有AI开发集中给后端。每项任务一名主责，交接接收人需要检查后确认。每个角色对应团队中唯一一位成员，按角色已完成分工，缺少姓名不影响开工。交接材料备齐与成员实际签收分开记录。</p>
+<h2>统一产品基线</h2>
+<ol>
+<li>场景：单机或受信任课堂局域网的课程演示，无账号与多人数据隔离。仅处理取得使用许可的中文讲课视频。</li>
+<li>首版仅支持MP4容器、H.264视频和AAC音轨，文件不大于200 MiB（209715200字节），时长不大于20分钟，必须有可识别音轨。以服务端ffprobe结果为准。系统队列最多保留3个未完成任务，实际转写并发为1；问答同时最多1个生成请求。</li>
+<li>演示样本优先3至5分钟的清晰中文录课。20分钟是输入上限，不承诺所有设备都能快速处理。任务超过20分钟墙钟时间转failed，前端可提示换短视频或重试。</li>
+<li>P0：上传和列表、异步状态、带时间戳转写、章节提要、当前视频内单轮问答、原文引用、点击定位、明确无依据提示、失败重试、已完成或失败视频的删除。跨视频、多轮记忆、翻译、OCR、数字人、训练基础模型、账号权限、付费均不进入首版。</li>
+<li>摘要固定采用提取式章节提要：按视频起点每60秒分窗，标题为“mm:ss 章节提要”，依时间顺序选取完整原句最多120字，超长单句截断标省略，可展开全部来源；无文字窗口跳过。视频内仅出现在画面、没有被说出的内容不属于首版能力。</li>
+<li>问答采用中文分词加BM25检索，将候选原文送到通义千问API，返回有引用的回答。API不可用时可切换为“原文检索模式”，明确标识不能生成综合回答。已有结果回放只能标为历史结果，不能当成实时生成。</li>
+</ol>
+<h2>统一技术栈</h2>
+<p>前端：Vue 3、TypeScript、Vite、Element Plus、Axios、浏览器原生HTML5 video。运行环境Node.js 22 LTS且不低于22.12，正式小版本由SYS在M1前实机验证并记录。</p>
+<p>后端：Python 3.11、FastAPI、Uvicorn单worker、Pydantic 2、SQLAlchemy 2、SQLite、python-multipart、httpx、jieba、rank-bm25。SQLite持久化任务和元数据，本地文件保存视频与转写。暂不使用Redis、Celery、向量数据库、LangChain或GPU作为必需依赖。</p>
+<p>音视频：固定FFmpeg及ffprobe、faster-whisper、small多语言模型、CPU int8、本地模型目录运行。SYS在M1前用真实样本验证耗时与识别质量；模型更换必须经过PM变更确认与QA复测，不自行改为base或GPU方案。</p>
+<p>大模型：阿里云百炼通义千问，固定qwen-plus，通过OpenAI兼容HTTP协议使用httpx接入。账户地区端点是运行配置；若账户不支持指定模型，SYS需按变更流程上报处理，不能自行另选。LLM_BASE_URL、LLM_API_KEY、LLM_MODEL均由后端环境变量配置；密钥不得进入前端或仓库。预算暂设项目总额人民币30元内部上限，属于管理控制目标，不是服务商报价。调用前由PM确定额度，SYS配置可用的额度提醒与日志计量。</p>
+<p>交付：Windows本地启动为必达路径，前端build后由FastAPI同源托管，演示访问127.0.0.1:8000。Docker Compose不纳入当前分工。依赖锁文件和实际版本清单在M1落定，禁止“始终使用最新版”。</p>
+<h2>统一数据与接口口径</h2>
+<p>初次排队等待按created_at计算，重试排队按本次受理时的updated_at计算，处理耗时按elapsed_sec。首版只显示当前页面会话内的问答，刷新不恢复历史列表；后端保留问答记录供验收，不新增历史读取API。</p>
+<p>重试仅限status=failed且error.retryable=true；NO_SPEECH等不可重试错误需要换文件。MODEL_NOT_FOUND等本地服务错误由SYS修复后再允许主动重试。</p>
+<p>所有时间偏移使用从视频起点计的秒数，字段固定为start_sec、end_sec，允许小数；记录时间为ISO 8601 UTC字符串，页面按北京时间显示。所有业务ID为UUID字符串。错误统一为{error:{code,message,retryable},request_id}。正常JSON响应不再加data包装。</p>
+<p>任务状态固定为queued、transcribing、indexing、ready、failed。不提供伪造百分比，只显示阶段和已耗时。服务重启时将transcribing/indexing标failed并附中断原因，queued保留排队；用户主动retry重新生成派生数据，复用原video_id。删除处理中视频返回409，仅ready/failed允许删除。删除关联转写、提要、问答记录与原视频。</p>
+<p>接口清单：GET /api/health；POST /api/videos（multipart，202）；GET /api/videos；GET /api/videos/{id}；GET /api/videos/{id}/content（支持Range）；GET /api/videos/{id}/transcript；GET /api/videos/{id}/summary；POST /api/videos/{id}/questions（{question}）；POST /api/videos/{id}/retry（202）；DELETE /api/videos/{id}（204）。完整协议见技术方案文件。</p>
+<p>问题长度1至300个字符，禁止空白问题。默认检索top_k=5，不把BM25原始分数当概率。无有效候选、模型明确无依据或引用验证不通过时answer_status=not_found，citations=[]；API超时或故障时answer_status=degraded，mode=extractive，仅展示真实命中原文。正常生成时answer_status=answered，mode=generative。引用必须映射到已有segment_id并由后端填入原文和时间，不能直接采用模型编造的时间戳。</p>
+<h2>验收与证据统一口径</h2>
+<p>QA建立3段授权课程样本、20道有答案问题和5道无答案问题，人工标注对应原文与秒数。5道无答案题至少包含2道与课程主题相近但课程未讲的题。20道正题全部参与分母，任何not_found或degraded均按该正题未通过计数，另报降级数量。回答正确且至少1条有效引用的通过率目标不低于80%（至少16/20）。5道无答案题全部正确拒答；有效引用中时间点误差不超过5秒的比例目标不低于90%。所有门槛均为待实测目标。</p>
+<p>3至5分钟样本处理目标不超过8分钟（started_at至finished_at，模型已预热，排除上传、排队和首次下载），另报总等待；问答目标不超过20秒，外部请求总期限25秒，前端等待上限35秒；性能用10次独立问答记录中位数和最大值，不伪称P95。超限要记录实测、定位并由PM决定整改或如实披露，不能改写数据。</p>
+<h2>阅读顺序与目录</h2>
+<ul>
+<li>01_需求与产品设计包括 PRD、可点击原型、竞品依据和模拟调研原始数据。</li>
+<li>02_任务分配与进度包括阶段计划、五人任务卡、四岗任务书和 10 张需求工单。</li>
+<li>03_技术方案与接口：架构与技术栈、API和模型模块契约、依赖配置。</li>
+<li>04_交接文档：各岗位交付清单、联调和部署交接、发布与回退。</li>
+<li>05_测试与验收包括原型走查、工程验收演练和质量检查单。</li>
+<li>06_展示与答辩收录本轮立项依据 PPT 以及历史汇报材料。</li>
+<li>07_管理记录包括需求变更、交接确认、里程碑演练和项目总结。</li>
+</ul>
+<p>本文是所有方案的统一基线。冲突时由PM组织相关主责人修订基线和受影响文档，并记录版本。所有“待执行”“未测试”都必须保持真实状态，只有具备证据才能标完成。</p>
+</article></details>
+<details class="doc" id="doc-1" data-group="项目总览" open><summary><span class="group">项目总览</span><span>组员先读 开工与阅读顺序</span></summary><article><p>项目：课程视频复习助手。版本：V1.3。日期：2026年11月7日。产品经理兼组长负责需求、原型、分工、技术决策与协调。</p>
+<h2>如何打开</h2>
+<p>先把整个压缩包解压到同一个文件夹，再双击<a href="%E5%BC%80%E5%A7%8B%E9%98%85%E8%AF%BB.html">开始阅读.html</a>。可以搜索和按分类阅读，也可以打开<a href="%E9%A1%B9%E7%9B%AE%E6%89%A7%E8%A1%8C%E4%B8%8E%E4%BA%A4%E6%8E%A5%E6%89%8B%E5%86%8C.docx">Word手册</a>。不要只从压缩包内单独打开某个HTML文件，否则配套资料可能打不开。</p>
+<h2>每个人先读什么</h2>
+<ol>
+<li>全组先读<a href="#doc-3" class="doclink">PRD</a>，再点开<a href="01_%E9%9C%80%E6%B1%82%E4%B8%8E%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/03_%E5%8F%AF%E7%82%B9%E5%87%BB%E4%BA%A4%E4%BA%92%E5%8E%9F%E5%9E%8B.html">可点击原型</a>体验用户流程。</li>
+<li>阅读<a href="#doc-13" class="doclink">正式分工与四岗任务书</a>和<a href="#doc-18" class="doclink">技术栈定稿</a>，按照下面自己的岗位开工单开展工作。</li>
+<li>FE与BE对齐<a href="#doc-16" class="doclink">API契约</a>和<a href="03_%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88%E4%B8%8E%E6%8E%A5%E5%8F%A3/04_%E6%8E%A5%E5%8F%A3Mock%E7%A4%BA%E4%BE%8B.json">Mock样例</a>；SYS与BE同时对齐转写模块契约；QA核对需求与测试口径。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>岗位</th>
+<th>直接打开</th>
+<th>第一项交付</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>前端 FE</td>
+<td><a href="#doc-34" class="doclink">前端开工单</a></td>
+<td>页面骨架、接口类型、Mock五状态与三类回答</td>
+</tr>
+<tr>
+<td>后端 BE</td>
+<td><a href="#doc-33" class="doclink">后端开工单</a></td>
+<td>API骨架、数据库与上传任务，和SYS对齐转写调用</td>
+</tr>
+<tr>
+<td>测试 QA</td>
+<td><a href="#doc-32" class="doclink">测试开工单</a></td>
+<td>三段真实授权视频、25题人工答案与真实时间标注</td>
+</tr>
+<tr>
+<td>系统 SYS</td>
+<td><a href="#doc-35" class="doclink">系统开工单</a></td>
+<td>固定环境、依赖与模型缓存、真实转写和API试跑</td>
+</tr>
+</tbody></table>
+<h2>共同节点</h2>
+<ul>
+<li>11月6日下班前：工程接收、环境与协议验证、样本标注。</li>
+<li>11月10日中午前：真实视频从上传到问答、来源回看跑通。</li>
+<li>11月11日下班前：候选版本冻结、核心回归、运行包。</li>
+<li>11月12日下班前：正式验收与备份恢复。</li>
+<li>11月13日：整改、复测与归档缓冲。开场 PPT 单列为立项说明。</li>
+</ul>
+<h2>开工时确认的内容</h2>
+<p>阅读后向组长说明“岗位、已接收的任务、第一项交付、当前阻塞或疑问”。交付时写任务ID、版本/文件、复现步骤、实际结果、已知问题和接收人。不要各自换栈、改接口或加功能；有必要变更先说明影响与替代方案。</p>
+<h2>本轮补齐的资料</h2>
+<p>先查外部研究与竞品，理解立项取舍。模拟调研保留原始记录，原型浏览器复测独立归档。FE 和 QA 可以沿 10 张需求工单从需求追到用例。组长按试点规则核对准备时间、可核对完成率和就绪查找时间。</p>
+<ul>
+<li><a href="#doc-7" class="doclink">外部研究</a> · <a href="#doc-8" class="doclink">竞品核查</a> · <a href="#doc-9" class="doclink">试点评估</a></li>
+<li><a href="#doc-14" class="doclink">需求工单</a> · <a href="#doc-25" class="doclink">原型验收</a> · <a href="05_%E6%B5%8B%E8%AF%95%E4%B8%8E%E9%AA%8C%E6%94%B6/06_%E8%B4%A8%E9%87%8F%E6%A3%80%E6%9F%A5%E5%8D%95%EF%BC%88%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%EF%BC%89.xlsx">质量检查单</a></li>
+<li><a href="#doc-31" class="doclink">立项复核与工程跟进</a> · <a href="#doc-30" class="doclink">项目总结</a> · <a href="06_%E5%B1%95%E7%A4%BA%E4%B8%8E%E7%AD%94%E8%BE%A9/%E8%AF%BE%E7%A8%8B%E8%A7%86%E9%A2%91%E5%A4%8D%E4%B9%A0%E5%8A%A9%E6%89%8B_%E7%AB%8B%E9%A1%B9%E4%BE%9D%E6%8D%AE.pptx">开场 PPT</a></li>
+</ul>
+<p>11 月 9 日开工前复核 M1 实际回执。工程状态和实际签收请登记在<a href="#doc-28" class="doclink">交接台账</a>。</p>
+</article></details>
+<details class="doc" id="doc-2" data-group="项目总览" ><summary><span class="group">项目总览</span><span>产品经理与组长本轮交付清单</span></summary><article><p>V1.3 · 2026 年 11 月 7 日 · 产品经理兼组长</p>
+<p>产品经理任务 PM-01 至 PM-05 已按课程原型交付。原型在浏览器中复测 12 项通过。用户调研、工程推进和工程验收裁决使用模拟数据，分别附原始记录、决策和复算口径。组长分工及技术选型按 LEAD-01、LEAD-02 交付。</p>
+<h2>完成项与证据</h2>
+<table>
+<thead>
+<tr>
+<th>工作</th>
+<th>已交付成果</th>
+<th>状态与边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>产品定位与立项</td>
+<td><a href="#doc-3" class="doclink">PRD</a></td>
+<td>已定稿：目标用户、问题、场景、P0与不做项</td>
+</tr>
+<tr>
+<td>用户故事和验收条件</td>
+<td><a href="#doc-14" class="doclink">10 张需求工单</a>、<a href="#doc-22" class="doclink">测试计划</a></td>
+<td>R01 至 R10 已关联研发任务、关闭条件和回归用例</td>
+</tr>
+<tr>
+<td>交互设计和修订</td>
+<td><a href="#doc-4" class="doclink">交互规范</a>、<a href="01_%E9%9C%80%E6%B1%82%E4%B8%8E%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/03_%E5%8F%AF%E7%82%B9%E5%87%BB%E4%BA%A4%E4%BA%92%E5%8E%9F%E5%9E%8B.html">可点击原型</a></td>
+<td>已修复拒答缺少操作提示、切换视频后播放位置沿用两个问题</td>
+</tr>
+<tr>
+<td>需求依据与用户调研</td>
+<td><a href="#doc-5" class="doclink">竞品取舍</a>、<a href="#doc-6" class="doclink">模拟调研</a>、<a href="01_%E9%9C%80%E6%B1%82%E4%B8%8E%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/06_%E6%A8%A1%E6%8B%9F%E8%B0%83%E7%A0%94%E5%8E%9F%E5%A7%8B%E6%95%B0%E6%8D%AE.json">原始记录</a></td>
+<td>5 个虚构角色、10 条配对任务记录，形成需求与优先级取舍</td>
+</tr>
+<tr>
+<td>立项外部研究与竞品</td>
+<td><a href="#doc-7" class="doclink">外部研究</a> · <a href="#doc-8" class="doclink">官方竞品核查</a></td>
+<td>样本口径、证据边界、已有替代与为何自做均已记录</td>
+</tr>
+<tr>
+<td>产品策略与试点</td>
+<td><a href="#doc-9" class="doclink">试点评估</a> · <a href="#doc-31" class="doclink">立项复核</a></td>
+<td>用户细分、任务旅程、替代比较、8 人试点与 11 月 9 日复核动作</td>
+</tr>
+<tr>
+<td>五人职责与四岗分工</td>
+<td><a href="#doc-11" class="doclink">任务卡</a>、<a href="#doc-13" class="doclink">正式任务书</a></td>
+<td>角色即唯一负责人，开工输入和输出明确，未虚构已通知成员</td>
+</tr>
+<tr>
+<td>时间节点与依赖</td>
+<td><a href="#doc-10" class="doclink">阶段计划</a>、<a href="#doc-12" class="doclink">任务总表</a></td>
+<td>五个核心开发日和验收缓冲已排定，不安排逐小时班表</td>
+</tr>
+<tr>
+<td>技术栈与架构决策</td>
+<td><a href="#doc-18" class="doclink">技术栈定稿</a>、<a href="#doc-15" class="doclink">架构</a></td>
+<td>技术路线与主要版本已确定，SYS接手实机安装与patch锁定</td>
+</tr>
+<tr>
+<td>接口和模块交接</td>
+<td><a href="#doc-16" class="doclink">API契约</a>、<a href="03_%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88%E4%B8%8E%E6%8E%A5%E5%8F%A3/04_%E6%8E%A5%E5%8F%A3Mock%E7%A4%BA%E4%BE%8B.json">Mock</a>、<a href="#doc-19" class="doclink">产品交接</a></td>
+<td>文档与样例已备齐，实际服务和成员签收尚未发生</td>
+</tr>
+<tr>
+<td>进度、阻塞和变更</td>
+<td><a href="#doc-29" class="doclink">里程碑与变更演练</a>、<a href="#doc-28" class="doclink">决策台账</a></td>
+<td>已按 M1 至 M4 演练，记录 3 项阻塞、3 项范围裁决和四岗交接</td>
+</tr>
+<tr>
+<td>验收与质量检查</td>
+<td><a href="#doc-25" class="doclink">原型验收报告</a>、<a href="#doc-26" class="doclink">工程验收演练</a>、<a href="05_%E6%B5%8B%E8%AF%95%E4%B8%8E%E9%AA%8C%E6%94%B6/06_%E8%B4%A8%E9%87%8F%E6%A3%80%E6%9F%A5%E5%8D%95%EF%BC%88%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%EF%BC%89.xlsx">质量检查单</a></td>
+<td>原型实际走查 12 项通过，25 题工程验收演练另列</td>
+</tr>
+<tr>
+<td>项目总结</td>
+<td><a href="#doc-30" class="doclink">项目总结报告</a></td>
+<td>已记录目标、进度与成本、质量、问题和改进</td>
+</tr>
+<tr>
+<td>汇报开场</td>
+<td><a href="06_%E5%B1%95%E7%A4%BA%E4%B8%8E%E7%AD%94%E8%BE%A9/%E8%AF%BE%E7%A8%8B%E8%A7%86%E9%A2%91%E5%A4%8D%E4%B9%A0%E5%8A%A9%E6%89%8B_%E7%AB%8B%E9%A1%B9%E4%BE%9D%E6%8D%AE.pptx">立项依据 PPT</a></td>
+<td>按大创立项结构说明选题，内含北邮官方校标和讲稿备注</td>
+</tr>
+</tbody></table>
+<h2>组长已经确定的技术与责任</h2>
+<p>FE使用Vue 3、TypeScript 5、Vite 7、Element Plus 2、Axios 1及原生video；BE使用Python 3.11、FastAPI、Pydantic 2、SQLAlchemy 2、SQLite、jieba、rank-bm25和httpx；SYS负责FFmpeg/ffprobe、faster-whisper small多语言CPU int8、本地部署和恢复；生成模型固定百炼qwen-plus。Node采用22 LTS且不低于22.12，后端单Uvicorn worker。主要技术不可由成员自行更换。</p>
+<p>SYS须在M1提交实际版本、前后端锁文件及模型试跑；这是已分配的工程任务，不代表技术栈还未确定。模型账户端点和密钥是部署配置，不需要用户再次在多套架构之间选择。</p>
+<h2>工程状态</h2>
+<p>原型可以用于课程交付和联调参照。工程签收、运行和 QA 放行按台账记录。原型实测、模拟数据和后续试点使用不同证据口径。<a href="#doc-28" class="doclink">交接台账</a></p>
+</article></details>
+<details class="doc" id="doc-3" data-group="01_需求与产品设计" ><summary><span class="group">01_需求与产品设计</span><span>课程视频复习助手 立项说明与需求文档</span></summary><article><p>V1.2 · 2026 年 11 月 5 日 · 产品经理。M1 为 11 月 6 日下班前的工程接收与环境验证节点。时间、岗位与技术口径见<a href="#doc-0" class="doclink">统一约定</a>。</p>
+<h2>项目要解决的问题</h2>
+<p>课程复习的核心场景是从一段录屏中找到某个概念并回看原讲解。模拟调研用 5 个虚构角色和 10 条配对任务记录检验章节、问答、引用和定位的取舍。它为课程原型提供设计依据，效率数值属于模拟场景。<a href="#doc-6" class="doclink">模拟用户调研</a></p>
+<p>目标用户为使用中文录课复习的大学生。典型任务是“老师在哪一段解释了接口幂等性”。首版成功的判断是能否给出有课程依据的答案并准确定位，以及是否减少查找时间。项目不声称理解全部视频画面。</p>
+<p>项目来源为《人工智能实战项目选题》的进阶项目一。原题允许依据设备能力合理选型和简化功能。本方案选择中文音轨转写、原文检索和有来源问答，不训练基础模型。若指导教师新增“必须训练模型”等要求，由PM记录为外部约束变更并重新评估，不把示例流程中的训练步骤当作本项目已完成事项。</p>
+<p>项目以可核对回看作为核心结果。外部研究支持比较片段查找和字幕检索的路径，官方竞品已有相近能力。首版试点测量就绪后的查找收益与准备等待，并在同题型对照中检查引文是否支持回答。<a href="#doc-7" class="doclink">外部证据</a> · <a href="#doc-8" class="doclink">竞品核查</a> · <a href="#doc-9" class="doclink">试点评估</a></p>
+<h2>首版边界</h2>
+<p>必做流程为上传视频、等待处理、浏览章节提要、针对当前视频提问、核对原文、点击时间点回看。上传支持MP4容器、H.264视频、AAC音轨，不超过200 MiB与20分钟。以3至5分钟的清晰中文样本作为验收主样本，较长视频的耗时另行记录。</p>
+<p>首版不做账号、多租户、跨视频检索、多轮对话记忆、翻译、OCR、自动习题、复杂编辑器、在线抓取视频、数字人或模型训练。播放器展示原视频，语音未讲述的画面内容不进入问答知识来源。若用户追问“刚才说的那个”，页面提示补充完整问题。</p>
+<p>导出章节提要、关键词高亮列入后续版本，本轮不分配实施任务。任何新增项均须PM变更确认并说明替换哪项工作；工程师不能自行扩大范围。M3后停止新增功能。</p>
+<h2>用户故事与验收条件</h2>
+<table>
+<thead>
+<tr>
+<th>需求ID</th>
+<th>用户故事</th>
+<th>验收条件</th>
+<th>实现主责</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R01</td>
+<td>我想上传一段课程视频开始复习</td>
+<td>服务端验证格式、大小、时长、音轨；合法上传返回202及视频对象的id字段，非法输入有明确原因；队列满返回429</td>
+<td>FE、BE主责接口，SYS提供探测</td>
+</tr>
+<tr>
+<td>R02</td>
+<td>我想知道处理到哪一步</td>
+<td>页面按queued/transcribing/indexing/ready/failed显示阶段与耗时；刷新后状态保留；不虚报百分比</td>
+<td>BE，FE呈现</td>
+</tr>
+<tr>
+<td>R03</td>
+<td>我想快速了解课程讲了什么</td>
+<td>ready后看到按约60秒聚合的章节提要，内容来自转写原句，带时间点和来源；转写缺失不编造章节</td>
+<td>BE，FE呈现</td>
+</tr>
+<tr>
+<td>R04</td>
+<td>我想问课程中的具体问题</td>
+<td>问题为1至300个字符，非空；仅检索当前视频；正常返回回答与有效引用；按钮等待时防止重复提交</td>
+<td>BE，FE呈现</td>
+</tr>
+<tr>
+<td>R05</td>
+<td>我想确认回答有没有依据</td>
+<td>引用包含原文、开始/结束秒数及segment_id；后端只采用现有转写片段；测试人工检查证据是否支持回答</td>
+<td>BE，QA核验</td>
+</tr>
+<tr>
+<td>R06</td>
+<td>我想直接回看相关讲解</td>
+<td>点击章节或回答引用，播放器定位start_sec并暂停；用户可继续播放；误差目标不超过5秒</td>
+<td>FE</td>
+</tr>
+<tr>
+<td>R07</td>
+<td>我想知道课程没有讲的内容</td>
+<td>无足够依据返回not_found，不补充常识当成课程答案；引用为空；页面建议换具体问法或回看原文</td>
+<td>BE，QA核验</td>
+</tr>
+<tr>
+<td>R08</td>
+<td>我希望失败时还能继续</td>
+<td>处理失败保留错误原因；可重试错误允许retry；API故障可展示标记清楚的原文检索结果；不伪装实时生成</td>
+<td>BE，SYS协助</td>
+</tr>
+<tr>
+<td>R09</td>
+<td>我想回到之前的视频</td>
+<td>视频列表支持查看状态和打开详情；ready/failed可删除并清理关联数据；处理中删除返回409</td>
+<td>BE，FE呈现</td>
+</tr>
+<tr>
+<td>R10</td>
+<td>我希望重启后仍能打开成果</td>
+<td>原视频、转写、索引所需数据、提要和记录持久化；重启后ready仍可用；中断处理标failed并支持重试</td>
+<td>BE、SYS</td>
+</tr>
+</tbody></table>
+<h2>页面文案与状态规则</h2>
+<p>生成模式回答显示“根据本视频转写生成，请核对原文”。原文检索模式显示“当前仅展示原文检索结果，未生成综合回答”。没有依据显示“未在本视频中找到足够依据”。这些提示常驻结果区域，不能只藏在说明页。</p>
+<p>处理中显示“正在排队”“正在转写”“正在整理章节与检索索引”。模型首次下载在SYS准备环境时完成，验收时不临时下载。预处理好的样本注明“已处理样本”，历史问答注明生成时间。</p>
+<h2>验收目标</h2>
+<p>以下为目标门槛，当前均未实测。正式结果由QA在测试记录中填入环境、版本、输入与证据。</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>样本与计算口径</th>
+<th>目标</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>课程问答</td>
+<td>20道有答案题。回答正确且至少一条引用真实支持回答才记通过；拒答与降级也计入分母</td>
+<td>至少16/20通过</td>
+</tr>
+<tr>
+<td>无依据处理</td>
+<td>5道无答案题，其中至少2道与课程相近但未讲的题</td>
+<td>5/5正确拒答且无伪造引用</td>
+</tr>
+<tr>
+<td>时间定位</td>
+<td>逐条核对20道正题所返回的全部引用，分母和通过条数都记录</td>
+<td>有效引用中偏差不超过5秒者至少90%</td>
+</tr>
+<tr>
+<td>样本处理</td>
+<td>3至5分钟清晰中文样本，模型已下载且预热，记录3段各自耗时</td>
+<td>单段不超过8分钟</td>
+</tr>
+<tr>
+<td>问答时延</td>
+<td>10次独立生成请求，记录中位数和最大值；不与降级结果混算</td>
+<td>目标每次不超过20秒，超25秒触发降级</td>
+</tr>
+<tr>
+<td>发布</td>
+<td>P0流程回归、重启、断网降级、备份恢复</td>
+<td>无未解决阻塞/严重缺陷</td>
+</tr>
+</tbody></table>
+<p>引用存在不等于答案正确。QA必须检查语义支持关系，不能只检查链接可点击。小样本结果用于课程项目验收，不能据此声称普遍可靠或获得统计显著结论。</p>
+<h2>产品经理兼组长的交付与决策</h2>
+<p>本轮交付包含范围、PRD、交互原型、竞品取舍、模拟用户调研、需求工单、分工与技术决策、推进演练和原型验收。原型验收结论为通过。工程验收仍由 PM 根据候选版本与 QA 报告决定。<a href="#doc-14" class="doclink">需求工单</a> · <a href="#doc-25" class="doclink">原型验收</a></p>
+<p>需求、接口、分工与技术决策现已定稿。M1核对成员接收和环境试跑；M2核对真实流程；M3冻结候选版；M4根据QA证据作验收决定；11月13日用于整改与归档，不作为当前展示节点。阻塞超过半个工作日由PM组织主责和接收人处理，不能把固定结果当成真实能力。</p>
+<h2>依据</h2>
+<ul>
+<li>本目录上级《人工智能实战项目选题.docx》进阶项目一与自创项目说明。</li>
+<li>本目录上级《AI项目开发流程案例岗位版.docx》产品经理的调研、PRD、用户故事与验收职责。</li>
+<li>本目录上级《专业实习总结报告要求.docx》要求设计合理、分析正确、数据可靠。当前文档不代替项目结束后基于本人实际工作的实习总结报告。</li>
+</ul>
+</article></details>
+<details class="doc" id="doc-4" data-group="01_需求与产品设计" ><summary><span class="group">01_需求与产品设计</span><span>页面交互与需求调研</span></summary><article><p>V1.2 · 产品经理编制，FE 与 QA 协作。可点击原型使用预置教学数据，已完成浏览器走查。用户调研使用模拟记录。<a href="01_%E9%9C%80%E6%B1%82%E4%B8%8E%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/03_%E5%8F%AF%E7%82%B9%E5%87%BB%E4%BA%A4%E4%BA%92%E5%8E%9F%E5%9E%8B.html">可点击原型</a> · <a href="#doc-6" class="doclink">模拟调研</a></p>
+<h2>页面结构</h2>
+<p>首版只做两个主页面。首页为视频列表与上传区，详情页同时展示播放器、章节提要与问答。首页不设置登录，演示环境不向公共网络开放。</p>
+<pre><code class="language-text">首页
+  标题：课程视频复习助手
+  简短说明：上传中文课程视频，按原文查找知识点
+  上传：选择文件 / 文件限制 / 开始处理
+  列表：标题 / 时长 / 创建时间 / 当前阶段 / 打开 / 删除
+
+详情页
+  返回列表 / 视频标题 / 当前模式
+  左侧：视频播放器 + 原文转写（可折叠）
+  右侧上部：章节提要 + 时间点
+  右侧下部：问题输入 + 回答 + 引用原文与时间点
+  错误区域：原因 + 当前可执行的操作
+</code></pre>
+<p>布局示意只规定信息关系，不规定最终像素。优先适配目标电脑的1366×768及以上屏幕。低于该宽度时上下排列，播放器不横向溢出，长引用自动换行。所有操作有可读文字标签和键盘焦点，不只依赖颜色表达状态。</p>
+<h2>交互状态</h2>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>页面行为</th>
+<th>可操作内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>无视频</td>
+<td>展示用途与输入限制，不展示虚构示例结果</td>
+<td>选择文件</td>
+</tr>
+<tr>
+<td>文件选择后</td>
+<td>显示文件名和大小，客户端初筛；服务端仍做最终验证</td>
+<td>开始上传、重新选择</td>
+</tr>
+<tr>
+<td>上传传输中</td>
+<td>可显示真实上传字节百分比，文字注明仅上传进度</td>
+<td>等待；不重复创建任务</td>
+</tr>
+<tr>
+<td>queued</td>
+<td>显示排队与耗时，不显示处理百分比</td>
+<td>返回列表、刷新</td>
+</tr>
+<tr>
+<td>transcribing/indexing</td>
+<td>说明当前阶段，保留播放器不可用提示</td>
+<td>返回列表、刷新</td>
+</tr>
+<tr>
+<td>ready</td>
+<td>加载播放器、提要、原文和问题输入</td>
+<td>提问、点引用、删除</td>
+</tr>
+<tr>
+<td>failed</td>
+<td>显示面向用户的错误原因；详细堆栈不出现在页面</td>
+<td>retryable=true时重试，或删除后换文件</td>
+</tr>
+<tr>
+<td>提问等待</td>
+<td>禁用提交按钮，保留问题文本；最多等待25秒外部调用窗口</td>
+<td>不重复提交</td>
+</tr>
+<tr>
+<td>answered</td>
+<td>显示回答与证据，提示核对原文</td>
+<td>点击引用，重新提问</td>
+</tr>
+<tr>
+<td>not_found</td>
+<td>显示未找到足够依据，引用为空</td>
+<td>改写问题或查看章节</td>
+</tr>
+<tr>
+<td>degraded</td>
+<td>明示原文检索模式，仅显示真实命中片段</td>
+<td>点击原文定位，稍后重试生成</td>
+</tr>
+</tbody></table>
+<p>上传阶段的网络失败不能自动无限重发POST，避免生成重复任务。接收202后读取视频对象的id字段，将其作为后续路径中的video_id轮询GET详情，建议每2秒一次；离开页面或ready/failed后停止轮询。用户返回时重新查询状态，不依靠浏览器内存判断。</p>
+<h2>关键细节</h2>
+<p>点击时间点后设置video.currentTime=start_sec并暂停，显示“已定位至mm:ss，点击播放继续”。loadedmetadata未完成时暂存跳转请求，加载后执行。源视频URL固定走后端content接口，支持Range；禁止把系统文件路径直接暴露给页面。</p>
+<p>删除先二次确认“删除该视频及其转写、提要和问答记录？”，成功后退出详情页并刷新列表。queued/transcribing/indexing不显示删除按钮；后端仍检查状态防止竞态。前端把所有模型回答按纯文本或安全转义文本展示，不直接插入原始HTML。</p>
+<p>问答是当前视频内的单轮请求。首版只显示当前页面会话内的问答，刷新后不恢复历史列表，不新增历史读取接口。后端持久化问答仅供验收与排查，不用历史回答作为新问题证据。</p>
+<h2>访谈方案</h2>
+<p>PM邀请3至5位使用录课复习的同学，约10分钟/人。先询问最近一次查找课程内容的实际经历，再展示原型。不要先告诉对方“AI可以节省时间”来诱导回答。</p>
+<p>访谈问题：最近一次找知识点是什么时候；当时用什么方法找；大概找了多久；最后有没有找到；遇到不准确的摘要会如何核对；更看重摘要、问答还是直接定位；什么情况下不愿上传视频。记录用户原话、具体行为、需求假设是否得到支持和相应改动。</p>
+<table>
+<thead>
+<tr>
+<th>访谈记录项</th>
+<th>待执行时填写的内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>受访者</td>
+<td>匿名编号、课程使用习惯、同意参与情况</td>
+</tr>
+<tr>
+<td>实际经历</td>
+<td>最近一次任务、使用工具、具体卡点</td>
+</tr>
+<tr>
+<td>证据</td>
+<td>原话或观察记录，不用推测代替</td>
+</tr>
+<tr>
+<td>决策</td>
+<td>保留/调整/不采纳，以及原因</td>
+</tr>
+</tbody></table>
+<p>课程原型使用 5 个模拟角色和 10 条配对情景记录完成此项交付。模拟访谈、痛点计数和用时见<a href="#doc-6" class="doclink">调研报告</a>。下面的实地任务方法可用于后续真实用户研究。</p>
+<h2>使用效果验证</h2>
+<p>可邀请5位同学，各完成两组难度相近的查找任务。半数先用原播放器，半数先用助手，采用不同知识点以减少记忆影响。记录完成情况、定位是否正确、耗时与主观反馈。报告样本量、原始时间、中位数变化和失败任务；不删除失败样本。</p>
+<p>这项小样本观察用于发现交互问题，不是必须达标的发布门槛。不预先填写“效率提升百分之多少”。若未实施，验收与项目记录中直接说明尚未验证效率提升。</p>
+<h2>已定稿的细节</h2>
+<p>初次排队等待按created_at计算；重试保留原created_at，因此重试排队按本次受理时的updated_at计算，均标“已排队”。开始处理后使用elapsed_sec标“已处理”。queued状态elapsed_sec为0不代表没有等待。性能统计使用started_at至finished_at，上传、排队和总等待另报。</p>
+<p>章节按视频起点每60秒分窗。标题固定“mm:ss 章节提要”。每窗按时间顺序选取前若干完整转写原句，合计最多120字；单句超过120字时截断并标省略，点击展开完整来源。保留全部segment_ids及来源全文。没有有效转写的窗口跳过，不编造静音章节或知识结论。</p>
+<table>
+<thead>
+<tr>
+<th>错误</th>
+<th>用户文案与动作</th>
+<th>是否提供重试</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NO_SPEECH</td>
+<td>未识别到有效讲课语音，请更换清晰中文视频</td>
+<td>否，换文件</td>
+</tr>
+<tr>
+<td>PROCESS_INTERRUPTED</td>
+<td>上次处理因服务中断停止，可重新处理</td>
+<td>是</td>
+</tr>
+<tr>
+<td>TASK_TIMEOUT</td>
+<td>处理超时，建议换短视频，也可重新处理</td>
+<td>是，用户主动</td>
+</tr>
+<tr>
+<td>MODEL_NOT_FOUND</td>
+<td>转写服务尚未准备好，请联系系统工程师</td>
+<td>SYS修复后再试</td>
+</tr>
+<tr>
+<td>TRANSCRIBE_FAILED</td>
+<td>转写失败，请提供问题编号给系统工程师排查</td>
+<td>SYS排查后再试</td>
+</tr>
+<tr>
+<td>LLM_TIMEOUT或上游故障</td>
+<td>当前仅展示原文检索结果，未生成综合回答</td>
+<td>可稍后重新提问，不重建视频</td>
+</tr>
+</tbody></table>
+<p>真实协议以Video.error.retryable为准。当前原型提供评审状态切换，帮助FE和QA核对分支；原型中的模拟行为不能作为开发完成或测试通过证据。</p>
+</article></details>
+<details class="doc" id="doc-5" data-group="01_需求与产品设计" ><summary><span class="group">01_需求与产品设计</span><span>需求依据与竞品取舍</span></summary><article><p>版本V1.1 定稿。负责人PM。核查日期：2026年11月5日。类型：基于公开官方资料的桌面调研，不冒充真人访谈或实际付费试用。</p>
+<h2>产品结论</h2>
+<p>本轮确定服务“回看中文录课、找知识点”的大学生，只做单个本地课程视频的复习流程。产品重点是从回答回到课程原文和时间位置。这个方向已有类似产品能力作为可行性参考，但“本校学生愿意使用、能够节省多少时间”仍是待真人任务测试验证的假设。</p>
+<h2>同类产品事实与设计借鉴</h2>
+<table>
+<thead>
+<tr>
+<th>参考产品</th>
+<th>官方资料明确描述的能力</th>
+<th>对本项目的设计影响</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NotebookLM的音频与YouTube来源能力</td>
+<td>Google官方介绍支持音频文件、公开YouTube链接，并可依据视频转写探索内容、通过引用核对来源</td>
+<td>借鉴基于来源回答的方式；首版聚焦单个本地MP4及时间点回看，不承担通用资料工作台范围</td>
+</tr>
+<tr>
+<td>飞书智能纪要与妙记</td>
+<td>飞书官方说明可通过视频会议、录音或上传音视频生成智能纪要，妙记用于查看会议录制内容</td>
+<td>音视频处理与总结已有成熟应用场景；本项目选择个人课程复习，不复制会议协作、待办分发或组织权限</td>
+</tr>
+<tr>
+<td>Clipchamp自动字幕</td>
+<td>Microsoft官方说明可以生成字幕与可编辑转写，并通过转写中的时间点定位视频</td>
+<td>把原文与时间点作为核心交互；首版不做视频剪辑或字幕编辑，资源用于问答与引用验证</td>
+</tr>
+</tbody></table>
+<p>以上仅描述官方列明的功能，不据此断言某产品缺少某能力，也不声明本项目首创。没有开展竞品性能、价格或用户规模比较，不提供虚构的优势评分。</p>
+<h2>已完成的产品取舍</h2>
+<table>
+<thead>
+<tr>
+<th>决策</th>
+<th>为什么这样定</th>
+<th>开发与验收影响</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>中文讲课音轨作为唯一知识来源</td>
+<td>与五天和本地设备边界匹配</td>
+<td>不回答仅出现在画面中的图表；界面明确音轨能力</td>
+</tr>
+<tr>
+<td>首版单视频、单轮问答</td>
+<td>避免检索范围与对话记忆混淆</td>
+<td>问题必须自足，禁止跨视频证据和新增历史接口</td>
+</tr>
+<tr>
+<td>回答必须带真实片段来源</td>
+<td>流畅文字不足以让用户核对课程</td>
+<td>BE校验ID与秒数，QA另做语义支持核验</td>
+</tr>
+<tr>
+<td>摘要先做提取式章节提要</td>
+<td>降低自由生成摘要的无依据内容与调用成本</td>
+<td>约60秒一窗、展示上限120字、能展开完整来源</td>
+</tr>
+<tr>
+<td>无依据拒答与接口降级分开</td>
+<td>课程没讲和服务暂不可用需要不同动作</td>
+<td>not_found无引用；degraded明示原文检索</td>
+</tr>
+<tr>
+<td>先不做账号与多人隔离</td>
+<td>单机复习原型和本地工程便于五人交付</td>
+<td>固定本机运行，不把它宣传为公网产品</td>
+</tr>
+<tr>
+<td>导出、翻译、OCR、多轮、自动出题延期</td>
+<td>当前核心流程需要充分联调和验收</td>
+<td>本轮不为这些功能分配研发任务</td>
+</tr>
+</tbody></table>
+<h2>用户假设及验证安排</h2>
+<p>H1：学生曾因不记得视频位置而反复拖动进度条。H2：能查看原文与时间点比只看到生成答案更便于核对。H3：术语检索和章节提要能够缩短部分查找任务时间。当前三项都没有实地证据。</p>
+<p>PM 已完成课程原型的模拟访谈与配对任务。结论按模拟样本解释，并对应到 R01 至 R10 的产品取舍。访谈方案和独立验证方法随资料归档。<a href="#doc-6" class="doclink">模拟用户调研</a> · <a href="#doc-4" class="doclink">任务研究方法</a></p>
+<h2>资料来源</h2>
+<ol>
+<li><a href="https://blog.google/innovation-and-ai/products/notebooklm-audio-video-sources/">Google官方 NotebookLM音频与视频来源说明</a>，2026年11月5日核查。此处用于引用已公开的来源与引用机制，不用于推断全部最新功能或套餐。</li>
+<li><a href="https://www.feishu.cn/hc/zh-CN/articles/244959839578-%E5%9C%A8%E8%A7%86%E9%A2%91%E4%BC%9A%E8%AE%AE%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%99%BA%E8%83%BD%E7%BA%AA%E8%A6%81">飞书官方 在视频会议中使用智能纪要</a>，2026年11月5日核查。</li>
+<li><a href="https://support.microsoft.com/en-au/clipchamp/how-to-use-autocaptions-in-clipchamp">Microsoft官方 Clipchamp自动字幕</a>，2026年11月5日核查。</li>
+</ol>
+</article></details>
+<details class="doc" id="doc-6" data-group="01_需求与产品设计" ><summary><span class="group">01_需求与产品设计</span><span>课程视频复习助手 模拟用户调研与需求验证</span></summary><article><p><strong>资料类型为模拟调研。</strong> 本记录于2026年11月5日编制，编号PM-04-SIM-01。5个学习角色、访谈台词、任务成败和耗时均为原型演练构造值，适用范围是产品取舍和交互脚本设计。配对任务使用HTTP课程预置样例，运行环境、真实媒体和候选应用由工程验收另行记录。</p>
+<h2>调研问题与方法</h2>
+<p>目标用户设为使用中文录课复习的大学生。本轮考察三个需求假设。H1为定位具体讲解费时。H2为学生需要原句与时间点核对回答。H3为先扫章节或针对当前视频提问有机会减少查找动作。</p>
+<p>先按角色写出最近一次复习的目的、查找路径、失败后的动作和选择视频的顾虑，再用两道知识点任务演练。问题顺序是“上次找什么、怎么找、卡在哪”“凭什么判断找对了”“查不到或服务出错时会做什么”。角色及时间是有意覆盖常见路径和异常路径的合成样本。</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>本轮口径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>样本</td>
+<td>5个虚构角色，覆盖考前复习、项目查漏、本地资料复习、笔记核对和碎片时间复习</td>
+</tr>
+<tr>
+<td>对照路径</td>
+<td>概念化原播放器时间轴与可点击原型的预置页面路径，各5次</td>
+</tr>
+<tr>
+<td>任务</td>
+<td>A询问上传返回202的含义，预置起点01:00。B询问重复提交的后果，预置起点02:00</td>
+</tr>
+<tr>
+<td>顺序</td>
+<td>每个角色分别用两种路径做不同题。3个角色先用时间轴，2个先用原型。题目和路径分配见原始记录</td>
+</tr>
+<tr>
+<td>完成条件</td>
+<td>180秒内说出要点并给出与预置起点偏差不超过5秒的位置</td>
+</tr>
+<tr>
+<td>耗时</td>
+<td>从找入口到确认要点和位置，超时计180秒。汇总保留失败任务</td>
+</tr>
+<tr>
+<td>痛点编码</td>
+<td>同一痛点每个角色最多计一次。严重度1为轻微不便，2为需要绕路，3为阻断或可能误用</td>
+</tr>
+</tbody></table>
+<p>A通过预置“为什么返回202”问答和原文定位完成。B通过02:00章节提要完成，当前原型仅给202问题配置了生成答复样例。两题的媒体时间是界面样例。工程验收题库以录制后的真值标注为准。<a href="01_%E9%9C%80%E6%B1%82%E4%B8%8E%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/03_%E5%8F%AF%E7%82%B9%E5%87%BB%E4%BA%A4%E4%BA%92%E5%8E%9F%E5%9E%8B.html">可点击原型</a> · <a href="01_%E9%9C%80%E6%B1%82%E4%B8%8E%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/06_%E6%A8%A1%E6%8B%9F%E8%B0%83%E7%A0%94%E5%8E%9F%E5%A7%8B%E6%95%B0%E6%8D%AE.json">原始数据</a> · <a href="#doc-23" class="doclink">工程验收题库</a></p>
+<h2>模拟访谈摘录</h2>
+<p>下列引号内是角色脚本中的台词。</p>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>角色</th>
+<th>模拟台词</th>
+<th>主要编码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SIM-01</td>
+<td>考前集中复习</td>
+<td>“我知道老师解释过202，但记不得在哪一段。能先扫小节、直接跳回去听原话会更方便。”</td>
+<td>P01、P02、P07</td>
+</tr>
+<tr>
+<td>SIM-02</td>
+<td>按项目作业查漏</td>
+<td>“卡在上传时我想知道后台还在处理吗。今天关掉页面，明天还得从视频列表打开。”</td>
+<td>P04、P06</td>
+</tr>
+<tr>
+<td>SIM-03</td>
+<td>偶尔复习本地资料</td>
+<td>“我想知道录屏格式不对怎么换，也想先看到这段视频大概讲了哪几件事。”</td>
+<td>P05、P07</td>
+</tr>
+<tr>
+<td>SIM-04</td>
+<td>做笔记时核对术语</td>
+<td>“用我自己的话问容易问得太模糊。我需要看到老师怎么说，还想删掉之前已经记完的视频。”</td>
+<td>P02、P06、P08</td>
+</tr>
+<tr>
+<td>SIM-05</td>
+<td>碎片时间复习和弱网</td>
+<td>“我常问‘连点会怎样’这种问题。要是接口暂时不可用，我也想知道下面显示的是原文还是新回答。”</td>
+<td>P03、P04、P08</td>
+</tr>
+</tbody></table>
+<h2>模拟痛点排序</h2>
+<p>先按覆盖角色数降序排序，再按严重度分值之和降序排列，同分按编码顺序排列。表中角色号对应原始记录的SIM编号。</p>
+<table>
+<thead>
+<tr>
+<th>排名</th>
+<th>痛点</th>
+<th>涉及角色</th>
+<th>覆盖数</th>
+<th>严重度合计</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>P01 定位知识点费力</td>
+<td>01、02、03、04、05</td>
+<td>5/5</td>
+<td>13</td>
+</tr>
+<tr>
+<td>2</td>
+<td>P02 回答缺少可核对来源</td>
+<td>01、02、04、05</td>
+<td>4/5</td>
+<td>11</td>
+</tr>
+<tr>
+<td>3</td>
+<td>P03 没有依据与正常回答难区分</td>
+<td>01、04、05</td>
+<td>3/5</td>
+<td>8</td>
+</tr>
+<tr>
+<td>4</td>
+<td>P04 处理状态或失败后动作不清楚</td>
+<td>02、03、05</td>
+<td>3/5</td>
+<td>7</td>
+</tr>
+<tr>
+<td>5</td>
+<td>P07 希望先扫章节再决定回看</td>
+<td>01、03、04</td>
+<td>3/5</td>
+<td>6</td>
+</tr>
+<tr>
+<td>6</td>
+<td>P05 文件限制、音轨或上传授权需要说明</td>
+<td>03、05</td>
+<td>2/5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>7</td>
+<td>P06 关闭后需要找回资料或删除旧视频</td>
+<td>02、04</td>
+<td>2/5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>8</td>
+<td>P08 口语提问与课程术语不一致</td>
+<td>04、05</td>
+<td>2/5</td>
+<td>5</td>
+</tr>
+</tbody></table>
+<p>H1和H2在脚本中对应最多的场景，首版把原文核对和时间定位放在同一个任务里。SIM-05对“连点会怎样”的提问未命中预置回答，且在时限内没有转到章节。无依据时同时保留改问和浏览章节两个入口，能覆盖H3中的回看路径。原始记录保留全部编码，包括未出现在访谈摘录中的观察。<a href="01_%E9%9C%80%E6%B1%82%E4%B8%8E%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/06_%E6%A8%A1%E6%8B%9F%E8%B0%83%E7%A0%94%E5%8E%9F%E5%A7%8B%E6%95%B0%E6%8D%AE.json">原始数据</a></p>
+<h2>模拟任务结果</h2>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>时间轴任务</th>
+<th>原型任务</th>
+<th>路径差异</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SIM-01</td>
+<td>A，151秒，完成</td>
+<td>B，45秒，完成</td>
+<td>从逐段拖动改为按章节找原句</td>
+</tr>
+<tr>
+<td>SIM-02</td>
+<td>A，180秒，超时</td>
+<td>B，69秒，完成</td>
+<td>先碰到无依据，再用02:00章节核对</td>
+</tr>
+<tr>
+<td>SIM-03</td>
+<td>B，102秒，完成</td>
+<td>A，60秒，完成</td>
+<td>由回答中的引用直接到01:00</td>
+</tr>
+<tr>
+<td>SIM-04</td>
+<td>B，125秒，完成</td>
+<td>A，80秒，完成</td>
+<td>先浏览章节，再核对问答的来源</td>
+</tr>
+<tr>
+<td>SIM-05</td>
+<td>A，180秒，超时</td>
+<td>B，180秒，超时</td>
+<td>口语问法进入无依据后未找到章节路径</td>
+</tr>
+<tr>
+<td>汇总</td>
+<td>3/5完成，中位数151秒</td>
+<td>4/5完成，中位数69秒</td>
+<td>分别包含2次和1次超时</td>
+</tr>
+</tbody></table>
+<p>时间轴的5条耗时排序为102、125、151、180、180，原型为45、60、69、80、180。两种路径均完成的3个角色中，逐人耗时差为106、42、45秒，差值中位数为45秒。两种任务的分配只有3/2的交叉平衡，题目难度、顺序和预置问法均可能影响数值。模拟结果用于识别引导与回退路径，实际查找效率保留为待验证假设。</p>
+<h2>产品决定与验收追踪</h2>
+<p>保持单视频、单轮、中文音轨来源的P0边界。正常回答须带可打开的原文和时间点。没有依据时显示明确提示，接口故障且存在命中原文时展示原文检索模式。首版继续使用BM25及小型课程术语表，口语召回困难通过具体问法和章节入口承接。方案来源及字段以产品、交互和技术文档为准。<a href="#doc-3" class="doclink">PRD</a> · <a href="#doc-4" class="doclink">交互规范</a> · <a href="#doc-15" class="doclink">技术架构</a></p>
+<table>
+<thead>
+<tr>
+<th>需求</th>
+<th>调研输入</th>
+<th>产品经理确认</th>
+<th>工程核对入口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R01 上传</td>
+<td>P05</td>
+<td>清楚列出MP4、H.264/AAC、200 MiB和20分钟限制，明确中文音轨与授权要求。区分本机转写和生成问答使用的课程片段</td>
+<td>F01、F06、F07</td>
+</tr>
+<tr>
+<td>R02 状态</td>
+<td>P04</td>
+<td>按真实阶段显示排队、转写和整理，让用户知道可返回列表。仅上传过程可依据真实字节数显示百分比</td>
+<td>F09、F10</td>
+</tr>
+<tr>
+<td>R03 章节提要</td>
+<td>P01、P07及B</td>
+<td>以约60秒为窗口提取原句，有时间点和完整来源入口，空窗跳过</td>
+<td>F11、F35</td>
+</tr>
+<tr>
+<td>R04 当前视频提问</td>
+<td>P01、P08及A</td>
+<td>1至300个字符，提示一次提出一个完整问题，发送等待期间防重复。QA按真实课程核对术语映射</td>
+<td>F12、F13、F15、F27</td>
+</tr>
+<tr>
+<td>R05 引用核对</td>
+<td>P02</td>
+<td>正常答复随附真实原文、片段ID与时间区间，人工验收检查原文是否支持答案</td>
+<td>F16、F28</td>
+</tr>
+<tr>
+<td>R06 回看定位</td>
+<td>P01及A、B</td>
+<td>点击章节或回答引用定位到起点后暂停。原型位置示意与实际播放器误差分别记录</td>
+<td>F17、F26</td>
+</tr>
+<tr>
+<td>R07 无依据</td>
+<td>P03、P08及SIM-05</td>
+<td>文案说明当前视频中缺少依据，给改写问题与章节回看两种动作，引用为空</td>
+<td>F18</td>
+</tr>
+<tr>
+<td>R08 恢复与降级</td>
+<td>P03、P04</td>
+<td>失败后按错误原因提示重试或换片。生成故障但有命中时明示“原文检索模式”，无命中时给无依据提示</td>
+<td>F19、F20、F36</td>
+</tr>
+<tr>
+<td>R09 列表与删除</td>
+<td>P06</td>
+<td>能回到之前的视频。只对已完成或失败任务开放删除，确认框说明关联资料一并删除</td>
+<td>F22、F23</td>
+</tr>
+<tr>
+<td>R10 重启后恢复</td>
+<td>P06</td>
+<td>服务重启后保留已完成视频与证据，遇中断有明确失败与重试路径</td>
+<td>F24、F25</td>
+</tr>
+</tbody></table>
+<p>保留章节提要、单视频内带引用问答和回看作为复习主线。导出、高亮、跨视频、OCR和多轮纳入后续取舍。此轮模拟记录用于M1复查用例覆盖，M2重点检查真实流程及三种回答状态，M4采用固定的20道正题、5道无答案题及实机恢复证据。模拟定位、答复和秒数与QA的验收记录分列。<a href="#doc-5" class="doclink">竞品取舍</a> · <a href="#doc-22" class="doclink">测试计划与验收门槛</a></p>
+</article></details>
+<details class="doc" id="doc-7" data-group="01_需求与产品设计" ><summary><span class="group">01_需求与产品设计</span><span>课程视频复习助手立项研究</span></summary><article><p>2026 年 11 月 7 日 · 产品经理 · 外部证据与本地验证方案</p>
+<p>首版服务已经看过或听过一堂课、此刻带着具体问题回来核对的大学生。以一段获授权的中文录屏为范围，验证学生能否更快找到正确讲解，并用原文判断答案是否可信。外部研究记录了选择性复看、字幕检索与带来源问答的使用行为，也提示主观易用、实际定位效率、引用支撑和学习成绩需要分别测量。建议将<strong>正确定位并核对证据的复习任务</strong>作为本轮立项与验收的主线。</p>
+<h2>研究问题与核查方法</h2>
+<p>本轮桌面研究回答四个问题：学生是否会跳着回看，现有导航怎样帮助定位，生成式回答的引用能否核验，中文高校场景是否具备小范围试点条件。以课程视频回看、字幕查找、分段导航、课程范围内问答和国内线上课程认定为检索方向。技术可行性用论文和项目维护者文档交叉核查。对同一数据来源的研究去重解释，逐条记录分析单位和限制。</p>
+<p>本页把材料分成四类：公开课程供给资料用于说明背景，学术研究用于说明已观察行为和设计先例，现有模拟调研用于覆盖交互路径，后续真实任务与工程测量用于决定放行。外部论文的会话、学生、片段、消息与问卷分母不能相加。本文是定向证据梳理，当前场景的采用率、愿付费和提分幅度尚无数据。<a href="#doc-6" class="doclink">模拟用户调研</a> · <a href="#doc-25" class="doclink">原型产品验收报告</a></p>
+<h2>证据表</h2>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>来源与样本</th>
+<th>已观察的结果</th>
+<th>对本项目的判断与局限</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E01</td>
+<td>教育部教高函〔2025〕9 号，2025 年 12 月 22 日印发。第三批认定 5,994 门一流本科课程</td>
+<td>其中线上课程 1,000 门，线上线下混合式课程 2,204 门，另有线下、虚拟仿真实验教学与社会实践类别</td>
+<td>可作为国内高校有线上课程供给的背景。分母是该批认定课程，不能换算成全国课程库存、北邮用户规模或可上传录屏量。<a href="https://www.moe.gov.cn/srcsite/A08/s7056/202601/t20260122_1427237.html">教育部通知</a> · <a href="https://jwc.xjau.edu.cn/_upload/article/files/25/7b/5907869d45aa9fc06bc1c38c548a/fe2b215b-7b5a-4b03-a824-5049dc397b3c.pdf">高校转载的盖章原件</a></td>
+</tr>
+<tr>
+<td>E02</td>
+<td>Guo、Kim 与 Rubin，ACM Learning at Scale，2014。2012 年秋季 edX 四门课、862 段视频、6,902,358 次观看会话</td>
+<td>视频时长和制作形式与观看参与度有关。研究用观看时长和是否尝试回答视频后练习衡量参与度</td>
+<td>参与度只说明观看行为。论文中的短视频发现不能推导出首版 60 秒分段最优、学生能提分或本项目一定更快。场景来自较早期英语理工 MOOC。<a href="https://doi.org/10.1145/2556325.2566239">论文与 DOI</a> · <a href="https://eddatax.fed.cuhk.edu.hk/wp-content/uploads/2016/06/How-Video-Production-Affects-Student-Engagement-An-Empirical-Study-of-MOOC-Videos.pdf">原文表 2</a></td>
+</tr>
+<tr>
+<td>E03</td>
+<td>Kim 等，ACM Learning at Scale，2014。同一批四门 edX 课，862 段视频，约 3,932 万条播放与暂停事件。另取 80 段视频人工分析峰值</td>
+<td>与初看相比，复看更常出现尖锐的交互峰。研究者观察到回看错过的内容、重播短段和反复听讲解等行为。在 80 段视频子样本中，61% 的已分类峰值伴随画面切换</td>
+<td>局部回看值得作为目标任务。交互峰不直接代表困惑，也不是每位学生的重点。画面切换的结果说明某些回看需要视觉线索，首版应把未口述的代码、公式和图表排除在音轨问答能力之外。E02 与 E03 用了相同课程数据背景，分别描述不同观察单位。<a href="https://kgajos.seas.harvard.edu/papers/kim14video.pdf">论文表 1、表 3</a></td>
+</tr>
+<tr>
+<td>E04</td>
+<td>Zhang 等，ASEE，2021。ClassTranscribe 记录覆盖 25 门工程课、1,894 名学生。论文针对 167 名搜索者的 1,022 次检索做时序分析</td>
+<td>有学生输入术语、课程事项或自己记得的授课短语，用字幕找回视频中的位置</td>
+<td>学生有时记得术语，有时只记得一句话。应提供章节扫读和短问两种入口。1,894 是日志覆盖人数，167 是该分析的搜索人群，不能用来估计本校普及率。日志研究也无法判定检索造成成绩变化。<a href="https://peer.asee.org/how-students-search-video-captions-to-learn-an-analysis-of-search-terms-and-behavioral-timing-data.pdf">论文第 3、4 节</a></td>
+</tr>
+<tr>
+<td>E05</td>
+<td>Kim 等，ACM UIST，2014。12 名入门计算机课学习者，各体验 LectureScape 与已有互动转写和缩略图的对照播放器</td>
+<td>参与者主观认为导航功能多的界面更高效，计时没有确认明显差异，使用者还认为增强界面更复杂</td>
+<td>先把搜索、证据和回看接成短路径。和已有字幕查找比较时要实测任务成败、耗时和误跳，不能只问体验喜不喜欢。小型单次实验中的结论限于其任务和界面。<a href="https://kgajos.seas.harvard.edu/papers/kim-uist14-lecturescape.pdf">论文实验设计与结果</a></td>
+</tr>
+<tr>
+<td>E06</td>
+<td>Brame，CBE Life Sciences Education，2016。教学视频设计综述，综合既有研究</td>
+<td>讨论控制认知负担、保持参与、促进主动学习，并给出分段和提示重点等设计原则</td>
+<td>分段提要承担概览和导航用途。让学生用问题找回原句可支持主动核对。这篇综述没有统一的受试者分母，也无法验证首版分窗或提要的收益。<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5132380/">综述原文</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/27789532/">PubMed</a></td>
+</tr>
+<tr>
+<td>E07</td>
+<td>Gonzalez 等，ACL BEA，2023。招募 106 名本科及硕士生，使用同一 AI 课程中的 10 分钟和 12 分钟讲解。论文表 1 按条件报告记录数 56、39、48，同一参与者可参与不同讲解</td>
+<td>视频加自动摘要组的前后测改善呈正向趋势，三种条件的组间比较未达到统计显著，作者报告 Kruskal–Wallis 检验 p=0.34</td>
+<td>把提要当作可验证的导航辅助。保持原视频、原文与跳转入口，现阶段无需把摘要宣传成学习结果。<a href="https://aclanthology.org/2023.bea-1.31.pdf">论文第 3 节</a></td>
+</tr>
+<tr>
+<td>E08</td>
+<td>Ahmed 与 Subhlok，EMNLP Industry Track，2026 年 10 月。2026 春季在一个机构的 8 门活跃课部署 VideoPoints，共 833 条消息</td>
+<td>587 条消息带引用，作者的诊断审计发现部分引用不足以支撑回答。8 门活跃课中单门入门课贡献 656/833 条。另有 22 名自报使用者的感知反馈</td>
+<td>课程范围约束、时间点和拒答具备部署先例。引用覆盖率衡量是否附来源，无法代替答案正确率或语义支持。消息高度集中、无唯一使用者分母，诊断以模型辅助标注，也没有测出提分或部署期时延。<a href="https://aclanthology.org/2026.emnlp-industry.250.pdf">论文表 1、表 2、表 4 及局限</a></td>
+</tr>
+<tr>
+<td>E09</td>
+<td>Radford 等，ICML，2023。Whisper 的训练数据口径为约 68 万小时多语言与多任务音频。faster-whisper 项目文档给出 CPU INT8 与时间片输出示例</td>
+<td>可以基于现成多语种识别工具输出文本和起止时间，原型可以从授权短录屏开始试跑</td>
+<td>训练量不是中文课堂测试集。口音、底噪、中英术语和板书的覆盖仍需本地评估。工具文档示例不构成本项目处理速度承诺。<a href="https://proceedings.mlr.press/v202/radford23a.html">Whisper 论文</a> · <a href="https://github.com/SYSTRAN/faster-whisper#usage">faster-whisper 官方使用说明</a></td>
+</tr>
+</tbody></table>
+<h2>首批用户与复习场景</h2>
+<p>优先覆盖有授权录课、已初步了解课程、需要定位某个概念或步骤的大学生。可从计算机类或工科中文课堂开始，题目容易写出可核对的课程原句。HTTP 202、事务与文件边界、BM25 术语这些任务已有脚本和题库，可分别覆盖明确术语、口语改写和语义误引。样本选择体现可测性，尚未证明这些学科的复习需求强于其他学科。<a href="#doc-23" class="doclink">样本脚本与问题集</a></p>
+<blockquote>
+<p>当我在复习或做项目时只记得一个概念，记不起老师在哪段说过，我想找到并回到那段原讲解，以便确认我记的内容和课上说的一致。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>触发时刻与目标</th>
+<th>常用替代路径</th>
+<th>可判定的任务结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>明确知识点查找，首批主场景</td>
+<td>考前记得“幂等”或“202”，想核对该节课的说法</td>
+<td>时间轴拖动、章节名、字幕查词、课堂笔记</td>
+<td>找到正确讲解，说明要点并回到对应起点</td>
+</tr>
+<tr>
+<td>概览后局部深挖，首批次场景</td>
+<td>补课或查漏时还想不起关键词，先扫一段录屏讲了什么</td>
+<td>倍速浏览、查看课件目录、从头跳听</td>
+<td>通过章节原句选出相关段落，随后核对原视频</td>
+</tr>
+<tr>
+<td>口语表达与课堂术语不一致，边界场景</td>
+<td>知道现象，记不清术语，例如“连点会怎样”</td>
+<td>改词重搜、查课程笔记、问同学</td>
+<td>有支撑时定位原句。证据不足时换具体问法或进入章节回看</td>
+</tr>
+<tr>
+<td>缺少可用音轨，范围外场景</td>
+<td>只想找未口述的板书、公式或代码框</td>
+<td>截图对照、视觉浏览、按讲义页码查找</td>
+<td>明确当前音轨能力，返回视频浏览或课堂资料</td>
+</tr>
+</tbody></table>
+<h2>立项取舍</h2>
+<p><strong>为什么做。</strong> 目标是让一次回看能结束于可验证的定位。单纯拖时间轴保留了全部上下文，查找工作由学习者承担。普通字幕搜索已经能高效处理明确术语，是本项目必须超过的比较基线。课程内问答只有在帮助改写后的问题匹配原句、提供必要上下文或降低核对动作时才有增量价值。若实测看不出增量，保留提要和可跳转原文即可覆盖基本复习路径。此处为基于 E03–E05、E08 的产品推断。</p>
+<p><strong>为什么现在试。</strong> 国内高校线上课程已有明确供给背景，现成识别工具可以为获授权的短录屏生成可定位文本。同类部署已经给出课程内限制、来源引用和拒答的可借鉴方案，也暴露了引用与语义可能脱节的问题。这些条件让小团队可以先验证需求和可信度。课程数量不能替代本校授权和使用数据，工具存在也不能替代目标电脑上的性能核查。<a href="https://www.moe.gov.cn/srcsite/A08/s7056/202601/t20260122_1427237.html">教育部认定通知</a> · <a href="https://github.com/SYSTRAN/faster-whisper#usage">语音识别工具文档</a> · <a href="https://aclanthology.org/2026.emnlp-industry.250/">课程问答部署论文</a></p>
+<p><strong>为什么从一段视频开始。</strong> 用户问题、音轨原句、视频起止秒数和播放器跳转可以一一核对，质量问题也能定位到转写、检索、生成或播放器。首版维持已定稿的中文讲课 MP4、单视频、单轮和授权约束。跨课搜索需要处理相似术语与引用归属，多轮对话需要明确记忆和问句补全，OCR 和图表理解需要独立素材与标注，自动出题需要额外的正确性和课程边界评估。这些工作放进同一轮会干扰核心假设验证。<a href="#doc-3" class="doclink">PRD 与首版边界</a> · <a href="#doc-14" class="doclink">需求工单</a></p>
+<p><strong>章节与问答各有任务。</strong> 保持短提要帮助扫读，完整原文和上下文留给需要核对的人。现有 60 秒分窗是首版交付约束。检查项是提要是否来自真实原句、跳转位置是否可核对、空窗如何处理。问答给出处，有依据不足时说明情况，有上游故障时允许走可用的原文路径。默认分窗长度、BM25 召回与用户是否理解状态分别验证。<a href="#doc-4" class="doclink">交互规则</a> · <a href="#doc-16" class="doclink">接口与数据模型</a></p>
+<h2>从洞察到需求</h2>
+<table>
+<thead>
+<tr>
+<th>洞察与证据</th>
+<th>需求</th>
+<th>设计选择</th>
+<th>验证入口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>有课可复习，能否合法取得本轮使用素材由团队逐段确认。E01、E09</td>
+<td>R01、R02</td>
+<td>限定已获许可的中文录课，明确输入限制、处理阶段和失败原因。分开记录初次处理和就绪后的查询</td>
+<td>F01–F10、F31、F32</td>
+</tr>
+<tr>
+<td>复看常常针对局部，扫读与定位是不同动作。E03、E04、E06、E07</td>
+<td>R03、R06</td>
+<td>短提要和时间点帮助定范围，完整原文和原视频供核对。点引用定位到片段起点并暂停</td>
+<td>F11、F17、F26、F33、F35</td>
+</tr>
+<tr>
+<td>搜索可能从已知术语或记忆中的短语出发。更复杂的导航未必提效。E04、E05</td>
+<td>R04</td>
+<td>保持当前视频内的直接问句，保留章节和原文的替代路径，分别测明确术语与口语改写</td>
+<td>F12–F15、F27、F29、F34</td>
+</tr>
+<tr>
+<td>引用覆盖、语义支撑与拒答正确性是三个不同信号。E08</td>
+<td>R05、R07</td>
+<td>核对片段归属、时间和原文，再由 QA 判定语义是否支持回答。无依据时给下一步动作</td>
+<td>F16、F18、F28</td>
+</tr>
+<tr>
+<td>内容处理和生成都有故障路径，用户还需控制自己的视频。原型场景和工程约束</td>
+<td>R08、R09、R10</td>
+<td>可重试时保留入口，生成故障时标明原文模式。列表、清理和重启恢复按契约独立验证</td>
+<td>F19–F25、F30、F36</td>
+</tr>
+</tbody></table>
+<h2>真实验证方案</h2>
+<p>首轮按<a href="#doc-9" class="doclink">试点评估</a>安排 8 人，比较原有可用播放器路径与助手。首轮和工程关卡完成后，若还需要比较字幕检索和助手完整工作流，再进行 12 人三路径探索。第二轮每人用三种入口分别做一道难度接近的任务，入口分别为原播放器、播放器加统一的可搜索转写、助手的提要和课程内问答。把六种顺序各分配给两人，平衡题目和入口搭配。记录顺序、熟悉度、是否看过素材和设备。第二轮先小试两人检查题目差异，再固定标准答案和正确片段。样本用于发现可复验的问题，适用范围限于招募与材料条件。</p>
+<p>同一口径计时。从收到任务开始，到给出正确要点且打开正确片段结束。片段起点误差参照 F17 记录。超时和错误留在总分母，报告次数与耗时中位数。第二轮主比较是<strong>统一字幕搜索与助手完整路径的任务差异</strong>，原播放器用于说明原有摩擦。若要估计问答的独立作用，需保持转写、导航和界面一致，仅切换问答入口。无答案题单独判定正确拒答、是否错误展示引用、能否转到可用的下一步。长期学习效果需另设延迟测试和对照。<a href="#doc-22" class="doclink">工程验收口径</a></p>
+<table>
+<thead>
+<tr>
+<th>假设</th>
+<th>记录与判断</th>
+<th>无支持时的产品动作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>H01 学生近期确实需要为具体知识点回看</td>
+<td>访谈询问最近一次真实事件、课程、触发原因、尝试顺序和结果。优先记录能复述过程的案例，避免让受试者先看产品再推测需求</td>
+<td>如果问题主要集中于整课补看，重新评估要不要优先做章节导航</td>
+</tr>
+<tr>
+<td>H02 生成问答相比已有字幕搜索有额外价值</td>
+<td>比较完成率、正确定位耗时、操作步数和误跳，按明确术语与口语改写分组报告</td>
+<td>无可见增益时，优先保留提要和原文导航，问答继续验证</td>
+</tr>
+<tr>
+<td>H03 引用帮助核对，也可能造成误信</td>
+<td>记录学生是否点出处、原句是否支持答案、是否识别出错误或无依据。用预先设计的错误案例检验</td>
+<td>优先修复引用、边界和拒答，再考虑功能扩张</td>
+</tr>
+<tr>
+<td>H04 处理开销值得付出</td>
+<td>分开统计上传、排队、就绪与查询耗时。询问同一视频被回看的次数，将初始处理成本与后续任务收益分别呈现</td>
+<td>单次查找不合算时，聚焦同一视频反复回看的复习场景</td>
+</tr>
+<tr>
+<td>H05 中文术语和秒数达到可用性</td>
+<td>三段短课分别检查关键术语、口语表达、无音轨与音画边界。用独立 QA 标注判断 F11、F16–F19 和固定题集</td>
+<td>先定位是转写、切段、检索或生成问题，再调整相关环节</td>
+</tr>
+</tbody></table>
+<p>正式工程验收继续采用现行目标：20 道正题至少 16 道正确且有有效引用，5 道无答案题全部正确拒答，并按 QA 计划核查全部返回引用、时间偏差、耗时、降级和恢复。当前浏览器走查证据只覆盖界面交互。调研演练数字和两轮模拟工程裁决分别保留其原标签。<a href="#doc-25" class="doclink">原型验收</a> · <a href="#doc-26" class="doclink">工程验收演练</a> · <a href="#doc-24" class="doclink">正式验收记录</a></p>
+</article></details>
+<details class="doc" id="doc-8" data-group="01_需求与产品设计" ><summary><span class="group">01_需求与产品设计</span><span>课程视频复习助手竞品核查与方案取舍</span></summary><article><p>核查日期为 2026 年 11 月 7 日，北京时间。比较对象是「学生手上已有一段授权中文录课，要找回某处讲解并核对老师原话」的工作流。核查按公开官方帮助和产品资料进行。表中的「已确认」指公开资料明确描述了能力，「未确认」指尚未找到足够材料确认对应产品、入口和配置下的行为。页面可用性、中文术语识别质量、账号权益与耗时需要另行实测。</p>
+<h2>立项决定</h2>
+<p>保留单视频、音轨转写和证据回看的窄范围课程原型。飞书妙记覆盖本地音视频转写、逐字稿搜索和点文字回看。微软组织版 Clipchamp 播放器的 Copilot 和 Panopto AI Search 已把问答接到视频时间点。由此可见，成熟服务已覆盖相近任务。本项目的交付价值在于由小组亲自实现和验证一个可控制、可复查的闭环，能逐条检查输入、回答、原句、时间定位和无依据时的行为。产品是否比熟悉的播放器加字幕更省事，以及提问相对于检索能否带来额外价值，仍是需要验证的假设。<a href="https://www.feishu.cn/hc/zh-CN/articles/022111234449-%E6%9F%A5%E7%9C%8B%E5%A6%99%E8%AE%B0?lang=zh-CN&open_in_browser=true">飞书查看妙记</a> · <a href="https://support.microsoft.com/en-us/clipchamp/stream-pages/ask-questions-get-summaries-of-any-video-with-microsoft-copilot-in-the-clipchamp-player">微软 Clipchamp 播放器内的 Copilot</a> · <a href="https://www.panopto.com/capabilities/ai-capabilities/ai-search/">Panopto AI Search</a></p>
+<h2>资料核查与任务口径</h2>
+<p>用同一条课程任务拆解五步。第一步打开或导入本地素材，第二步获得可检索的文字或章节，第三步用术语或口语描述找到讲解，第四步核对原句是否支持结论，第五步回到媒体时间点确认。引用能回到文档位置、逐字稿能跳到播放器、问答能直接附可点时间戳是三项不同能力。表中分别记录。对「先搜索还是先提问」等路径差异，比较的是完成任务所需的前提与转换步骤。</p>
+<table>
+<thead>
+<tr>
+<th>参考产品和入口</th>
+<th>本地中文音视频</th>
+<th>转写与检索</th>
+<th>证据和回看</th>
+<th>画面与使用前提</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Google Gemini Notebook，项目早期资料称 NotebookLM</td>
+<td>电脑帮助的本地音频导入清单包含 MP4，语言清单列出 Traditional Chinese 和 Traditional Cantonese。简体输出、特定普通话课件的识别表现及本地 MP4 画面保留未确认。公开、带字幕的 YouTube URL 只导入文字转写</td>
+<td>本地音频转写为笔记本来源。可选择来源后提问。逐字稿内关键词查找入口未确认，帮助中的「搜索来源」是发现资料入口</td>
+<td>答复可附来源引用，点引用回到原文位置。回到本地 MP4 播放秒数未确认</td>
+<td>支持图片作为独立来源。视频画面 OCR 未由上述导入说明确认。通过 Google 在线账户使用，使用条款随账户类型而异。<a href="https://support.google.com/gemininotebook/answer/16215270">来源导入</a> · <a href="https://support.google.com/gemininotebook/answer/16179559">引用与聊天</a> · <a href="https://support.google.com/gemininotebook/answer/17004255">隐私及账户条款</a></td>
+</tr>
+<tr>
+<td>飞书妙记桌面端和网页端</td>
+<td>桌面端妙记首页可上传本地音视频，上传流程列明支持中文，可选转录语言。针对同一 MP4 编码组合与组织额度仍需在实际账号核对</td>
+<td>官方帮助支持逐字稿关键词搜索。官网介绍另列出妙记问答，具体入口及可用范围依实际账号与版本确认</td>
+<td>点逐字稿可跳到对应音视频位置。问答结果是否包含可核对的逐字引文和可点击播放秒数，尚未在已核查页面确认</td>
+<td>飞书服务接收上传素材，访问、分享和导出涉及权限。画面 OCR 是否进入本地上传后的妙记问答未确认。<a href="https://www.feishu.cn/content/article/7578773484596153570">本地上传和问答</a> · <a href="https://www.feishu.cn/hc/zh-CN/articles/022111234449-%E6%9F%A5%E7%9C%8B%E5%A6%99%E8%AE%B0?lang=zh-CN&open_in_browser=true">搜索与定位</a> · <a href="https://www.feishu.cn/hc/zh-CN/articles/749309666122-%E5%88%86%E4%BA%AB%E5%A6%99%E8%AE%B0">分享权限</a></td>
+</tr>
+<tr>
+<td>Microsoft Clipchamp 视频编辑器</td>
+<td>可从设备导入带语音媒体，支持 MP4 容器。自动字幕语言清单链接至 Azure Speech，列有普通话简体转写。实际账号和术语表现待核</td>
+<td>自动字幕提供带时间的可编辑脚本，可导出 SRT。关键词检索入口未在该编辑器帮助确认</td>
+<td>字幕脚本可用于定位时间。该自动字幕流程的课程问答和问答引文未确认</td>
+<td>生成字幕时音轨由 Azure 服务处理。编辑器与下方组织视频播放器属于不同入口。画面 OCR 未由自动字幕文档确认。<a href="https://support.microsoft.com/en-us/clipchamp/video-file-formats-supported-by-clipchamp">支持格式</a> · <a href="https://support.microsoft.com/zh-cn/clipchamp/how-to-use-autocaptions-in-clipchamp">自动字幕</a> · <a href="https://learn.microsoft.com/azure/ai-services/speech-service/language-support?tabs=stt">Azure 语音语言表</a> · <a href="https://support.microsoft.com/en-us/clipchamp/what-is-clipchamp">编辑器与账户</a></td>
+</tr>
+<tr>
+<td>Microsoft 365 Clipchamp 视频播放器与 Copilot</td>
+<td>可将媒体存入组织的 OneDrive、SharePoint 或 Teams。播放器生成逐字稿的帮助列有 MP4 与普通话。自动触发与手动生成入口的语言表有差异</td>
+<td>播放器逐字稿支持关键词搜索。Copilot 基于视频逐字稿回答问题</td>
+<td>点逐字稿可跳转。Copilot 答复附可点时间戳，能跳回视频。答复是否始终展示完整逐字引文未确认</td>
+<td>Copilot 以逐字稿为依据，播放器入口需 Microsoft 365 Copilot 许可证和 SharePoint 对应服务计划。具体视频权限与字幕长度影响可用性。<a href="https://support.microsoft.com/en-us/clipchamp/stream-pages/learn-more-about-the-clipchamp-video-capabilities-in-microsoft-365">组织视频入口</a> · <a href="https://support.microsoft.com/en-us/clipchamp/stream-pages/view-edit-and-manage-video-transcripts-and-captions">逐字稿</a> · <a href="https://support.microsoft.com/en-us/clipchamp/stream-pages/ask-questions-get-summaries-of-any-video-with-microsoft-copilot-in-the-clipchamp-player">Copilot 问答与时间戳</a></td>
+</tr>
+<tr>
+<td>Panopto 高校视频库</td>
+<td>机构入口支持 Creator 上传已有媒体。普通话短课在实际部署中的 ASR、OCR 及问答质量未确认</td>
+<td>Smart Search 对语音、屏幕文字和课件做索引，能按内容搜索。AI Search 扩展提供自然语言问答</td>
+<td>搜索结果可跳到视频时间点。AI Search 答复可连到来源时刻。逐字引文展示样式未确认</td>
+<td>官方说明涵盖画面文字和课件索引。上传与问答以机构视频库、账号权限和扩展开通为前提。学生上传入口依机构与课程配置。<a href="https://support.panopto.com/s/article/How-to-Use-the-Build-a-Session-Feature">本地媒体上传</a> · <a href="https://www.panopto.com/higher-education/">高教产品页</a> · <a href="https://www.panopto.com/capabilities/ai-capabilities/ai-search/">AI Search 扩展</a></td>
+</tr>
+<tr>
+<td>VLC 本地播放器与 SRT 或笔记</td>
+<td>可打开本地视频并加载外置 SRT，字幕可包含原句和时间。中文实际显示取决于字幕文件和编码</td>
+<td>已有 SRT 时，用文本编辑器查术语属于可复现基线。VLC 此处比较的播放流程从既有字幕出发</td>
+<td>读取字幕时间后在 VLC 输入时间，回看原片。可用书签记住位置，核对来源由用户完成</td>
+<td>本地文件和字幕可在桌面端直接打开。字幕取得、内容搜索与秒数核对需要用户操作。<a href="https://docs.videolan.me/vlc-user/desktop/3.0/en/basic/media.html">打开文件</a> · <a href="https://docs.videolan.me/vlc-user/desktop/3.0/en/basic/subtitles.html">外挂字幕</a> · <a href="https://docs.videolan.me/vlc-user/desktop/3.0/en/basic/playback.html">书签与时间跳转</a></td>
+</tr>
+</tbody></table>
+<p>Google 原 NotebookLM 帮助链接在本次核查时转向 Gemini Notebook 帮助。跨页比较使用页面当前标题和资料口径。飞书和 Panopto 官网宣传中的识别准确率、提效和学习结果没有纳入比较。未采集价格、市场份额、用户规模和北邮校园账号覆盖率。<a href="https://support.google.com/notebooklm/answer/16215270">Google 原来源帮助</a></p>
+<p>北邮校内的相邻方案是初发 TruFar。官网列有班级 AI 助教与知识库，FAQ 明确教师可上传课件、教材、例题及问答资料。适合由教师配置资料后开展课程答疑。学生个人导入本地 MP4、音轨转写和检索、回答引用或跳回播放秒数、画面 OCR、媒体本地处理，均未在已核查的公开资料中确认。此案例说明高校教学已有资料问答场景，可作为校内参照。<a href="https://trufar.bupt.edu.cn/">初发 TruFar 官网及 FAQ</a></p>
+<h2>替代方案和五天取舍</h2>
+<p>以项目计划给出的五个核心开发日为预算，优先确认四项立项条件。素材须有合法使用授权，且同意本次处理方式。流程须允许回到真实视频片段并核对原句。测试须能在同一素材和真值上复现。工程须能把处理结果及失败原因交给下一岗位独立检查。<a href="#doc-3" class="doclink">PRD</a> · <a href="#doc-10" class="doclink">阶段计划</a> · <a href="#doc-22" class="doclink">测试与验收</a></p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>适合的任务和优势</th>
+<th>前提与代价</th>
+<th>立项判断</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>继续用播放器时间轴、书签与字幕</td>
+<td>已知关键词、字幕准确时查找直接。已知秒数时播放器即可回看。具有本地处理优势</td>
+<td>无字幕时需先取得转写。只记得大意时，要试词或按章节浏览。原句、时间与结论由学生手动核对</td>
+<td>作为最低复杂度基线。若实地对照显示已满足目标，以同样素材继续观察提问价值，避免扩功能</td>
+</tr>
+<tr>
+<td>通用来源问答搭配本地播放器</td>
+<td>已有转写或资料，且需要综合多类学习来源时，接入成熟问答更快</td>
+<td>在「导入转写文本再开本地播放器」的组合下，回答位置和媒体位置需要人为建立对应。外部服务访问和素材授权需先确认</td>
+<td>可以快速做研究参照。本组仍需可控制的证据和失败语义来完成课程交付</td>
+</tr>
+<tr>
+<td>使用已开通的妙记、组织版 Clipchamp 或高校视频库</td>
+<td>组织已有视频、权限或文字稿时可直接使用搜索、跳转和部分问答能力，省去维护自研系统</td>
+<td>需要账号、素材上传许可及对应功能开通。外部产品是否满足同一题集的依据和拒答判定，需要实测</td>
+<td>对已有成熟平台的真实用户，优先复用现成能力。本课程项目选择可复查实现，原因是要交付并测试项目本身</td>
+</tr>
+<tr>
+<td>自建单视频音轨复习助手</td>
+<td>可在同一视频用章节和单轮问题找到讲解，原句与秒点绑定，规则和失败样例能由 QA 复测</td>
+<td>需要真音频转写、索引、接口、媒体 Range、引文校验与降级联调。BM25 可能漏掉同义改写，术语错转会传导。问答受外部 API 影响</td>
+<td>选择此方案。锁定单视频、短样本、可证实原句和时间点，把集成时间用于真链路与异常复验</td>
+</tr>
+<tr>
+<td>扩成画面 OCR、跨课检索和多轮上下文</td>
+<td>可覆盖未说出的公式、截图或跨课比较。在视觉信息关键的课程中有价值</td>
+<td>需额外定义画面采样、版式识别、时间对齐、跨来源冲突和相应真值。多轮还要处理指代和跨素材状态</td>
+<td>放入后续验证。先统计授权课程中画面独有信息造成的任务失败，再决定是否增加 OCR 或多素材</td>
+</tr>
+</tbody></table>
+<p>这次自建的优先级依次是原句与时间能回查、无依据时能继续、场景覆盖。R05 和 R06 用真实片段 ID 与原视频时间绑定。R07 与 R08 分开处理内容未检出和服务故障。R03 的提要从转写提取，在模型不可用时仍保留回看的入口。规划中的原始视频、转写与索引在本机处理，生成问答将问题和命中片段发给百炼 API。只有授权范围覆盖这一外发步骤的样本进入生成测试。这个边界按本项目架构配置，不能把本地转写描述成全离线问答。<a href="#doc-15" class="doclink">技术架构</a> · <a href="#doc-16" class="doclink">接口契约</a></p>
+<h2>可重复的同任务核查</h2>
+<p>使用同一段 3 至 5 分钟的授权中文录课、同一份人工校正的 SRT 和预先标注的真值作为对照。转写质量和界面效率分开看。界面对照尽量向各可配置路径提供同一份文字，端到端对照则另记实际语音识别与等待。固定样本版本、播放器、素材入口、设置和网络，记录每条路径的账号或权限门槛。某路径因无账号、权益或网络无法执行时，记录为「该路径不可用」，汇总时单列。</p>
+<table>
+<thead>
+<tr>
+<th>任务</th>
+<th>观察内容</th>
+<th>记录与判定</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>T1 同词定位</td>
+<td>用课中原术语找到相关讲解</td>
+<td>从题目出现到核对原句及画面计时。核对成功须找到正确内容且跳转误差不超过 5 秒</td>
+</tr>
+<tr>
+<td>T2 口语改写</td>
+<td>用同义说法找同类知识点</td>
+<td>记录是否需换词、搜索尝试次数、是否打开来源。优先用不同但近似难度的题分配各路径，减少记忆干扰</td>
+</tr>
+<tr>
+<td>T3 证据检查</td>
+<td>判断回答和引文是否表达同一结论</td>
+<td>同时记录原文、时间、用户理解与人工支持判定。答案文字正确、引用跳对、引文支持结论分别记账</td>
+</tr>
+<tr>
+<td>T4 无答案和仅画面信息</td>
+<td>提问一个主题相近但未讲的知识点，再询问一项只写在画面上的信息</td>
+<td>逐条核对是否清楚呈现依据范围、是否误给确定答案及下一步是否可见。按首版音轨边界预期处理，仅画面题另列</td>
+</tr>
+<tr>
+<td>T5 从文件开始与故障</td>
+<td>记录导入、转写、问答和回看。另切断生成 API 重做一次</td>
+<td>冷路径单列导入和处理耗时，热路径记录查找耗时。故障时检查是否可读原文、是否明示降级。保留失败、超时和无权限记录</td>
+</tr>
+</tbody></table>
+<p>每条记录包含匿名样本编号、原视频/字幕版本、真值秒、工具及入口、任务顺序、冷/热路径、完成或失败、实际耗时、返回原句、定位偏差和失败原因。先比正确完成比例，再看包含失败上限的耗时及操作次数。配对试验中同一人对同一题只使用一种路径，用等难度题交叉分配。报告同时给分子和分母，小样本结论用于取舍。原有模拟研究的 5 个虚构角色与 10 条任务记录可用来演练记录方法。模型质量、语义支持和定位的正式门槛仍以项目验收口径为准。<a href="#doc-6" class="doclink">模拟研究</a> · <a href="#doc-22" class="doclink">QA 测试口径</a></p>
+<h2>开场陈述可引用的结论</h2>
+<ul>
+<li><strong>同一类任务有成熟实现。</strong> 飞书妙记可搜索逐字稿并跳回对应音视频位置，组织版 Clipchamp 的 Copilot 可根据逐字稿答问并给出可点时间戳。<a href="https://www.feishu.cn/hc/zh-CN/articles/022111234449-%E6%9F%A5%E7%9C%8B%E5%A6%99%E8%AE%B0?lang=zh-CN&open_in_browser=true">飞书帮助</a> · <a href="https://support.microsoft.com/en-us/clipchamp/stream-pages/ask-questions-get-summaries-of-any-video-with-microsoft-copilot-in-the-clipchamp-player">微软帮助</a></li>
+<li><strong>校园已有更完整的替代。</strong> Panopto 面向机构视频库，可索引语音和画面文字，其 AI Search 可从答复返回来源时刻。本组围绕一段已获授权的中文短课交付可复测的产品闭环。<a href="https://www.panopto.com/higher-education/">Panopto 高教产品</a> · <a href="https://www.panopto.com/capabilities/ai-capabilities/ai-search/">Panopto AI Search</a></li>
+<li><strong>检验增量价值。</strong> 和「播放器加字幕」比较，学生能否更快找到正确的讲解并亲自核对。现阶段的模拟用时用于设计评审。真实效率和模型正确性由同素材对照及 QA 证据确认。<a href="https://docs.videolan.me/vlc-user/desktop/3.0/en/basic/playback.html">播放器基线</a> · <a href="#doc-6" class="doclink">模拟研究</a></li>
+</ul>
+</article></details>
+<details class="doc" id="doc-9" data-group="01_需求与产品设计" ><summary><span class="group">01_需求与产品设计</span><span>产品策略与试点评估</span></summary><article><p>V1.3 · 2026 年 11 月 7 日 · 产品经理兼组长</p>
+<p>批准推进一个可验证的课程原型，目标是让学生找到一段中文录课中的正确讲解，并能返回原话核对。首版仍按 R01 至 R10 实施。立项评估同时观察两笔成本：学生在就绪视频里的查找时间，以及从未处理视频开始的准备时间。若搜索字幕已能解决大多数任务，生成问答的优先级应随证据下调。<a href="#doc-3" class="doclink">PRD</a> · <a href="#doc-7" class="doclink">外部研究</a> · <a href="#doc-8" class="doclink">竞品核查</a></p>
+<h2>使用人群与任务边界</h2>
+<table>
+<thead>
+<tr>
+<th>人群</th>
+<th>触发任务与现有做法</th>
+<th>首版处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主用户，持有获准使用的中文课程录屏、已经看过一遍的大学生</td>
+<td>考前核对知识点，或做项目时找回老师讲过的解释。通常拖进度条、翻笔记或搜字幕</td>
+<td>以“找到正确片段并能核对原话”为任务完成条件。优先选择讲解为主的短课</td>
+</tr>
+<tr>
+<td>次用户，第一次接触录课的学生</td>
+<td>先看讲了哪些内容，再挑一段观看</td>
+<td>提供按时间组织的原句提要。内容正确性和跳转仍用相同口径检查</td>
+</tr>
+<tr>
+<td>延后服务的人群</td>
+<td>面向整学期课程的跨文件复习、多人共享、画面公式与代码逐字检索</td>
+<td>收集需求并记录所需证据。跨视频、OCR、账号与共享进入后续取舍</td>
+</tr>
+</tbody></table>
+<p>具体任务是“记得老师解释过一个概念，但忘了在哪儿。给我一段我能重新播放并确认的原话”。当学生已经掌握原句且视频自带可搜索字幕时，字幕检索的学习成本可能更低。学生只复习一次很短的片段时，准备成本也可能抵消查找收益。</p>
+<h2>旅程与责任</h2>
+<table>
+<thead>
+<tr>
+<th>旅程阶段</th>
+<th>用户需要确认</th>
+<th>产品要求</th>
+<th>如何判断风险</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>决定是否提交</td>
+<td>文件是否合规，课程内容会流向哪里</td>
+<td>明确格式、大小、时长和音轨要求。区分本地媒体处理与生成问答发送的必要文本</td>
+<td>不合规拒绝应可理解且可纠正。只用有授权的自录或公开许可样本</td>
+</tr>
+<tr>
+<td>等待处理</td>
+<td>系统是否在工作，失败后怎么做</td>
+<td>真实阶段、耗时和错误动作，处理期间可回列表</td>
+<td>测量从选择文件到可用的等待，另外记上传、排队与处理</td>
+</tr>
+<tr>
+<td>搜索或浏览</td>
+<td>我问的点是否在本段课里</td>
+<td>给章节入口和单轮问题入口。无依据提示换更具体的问法或回看原文</td>
+<td>用有答案、改写和近域无答案题复核。记录降级及其影响</td>
+</tr>
+<tr>
+<td>核对与返回</td>
+<td>摘要或回答是否与老师原话一致</td>
+<td>露出原句与位置，点击后进入对应片段</td>
+<td>QA 同时检查语义支持和实际定位，不能只检查 ID 是否存在</td>
+</tr>
+<tr>
+<td>管理资料</td>
+<td>稍后是否还能继续，删除会影响什么</td>
+<td>查看既有视频，说明删除范围并确认</td>
+<td>重启和恢复另测，删除后检查关联数据与文件</td>
+</tr>
+</tbody></table>
+<h2>机会排序与取舍</h2>
+<p>优先级按任务完成必要性、错误影响和五个核心开发日的工作量排序。模拟调研中定位覆盖 5/5、证据覆盖 4/5，这些数字用于检查设计场景覆盖，实际需求频率需后续观察。<a href="#doc-6" class="doclink">模拟调研与原始记录</a></p>
+<table>
+<thead>
+<tr>
+<th>顺序</th>
+<th>机会</th>
+<th>保留的理由</th>
+<th>暂停条件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>真实音轨、章节、回看，R01/R02/R03/R06</td>
+<td>支持浏览、定位和核对，且能在问答失效时继续使用</td>
+<td>授权素材无法获取，或目标环境不能稳定处理短课</td>
+</tr>
+<tr>
+<td>2</td>
+<td>带证据问答与拒答，R04/R05/R07/R08</td>
+<td>处理用户用不同措辞提出的具体问题，错误回答的影响最高</td>
+<td>合法片段语义仍频繁不支持回答，或质量门槛未达时先修证据链</td>
+</tr>
+<tr>
+<td>3</td>
+<td>列表、删除与恢复，R09/R10</td>
+<td>保障资料可控、可复现，减少重新处理</td>
+<td>候选版未通过一致备份和恢复时暂停工程放行</td>
+</tr>
+<tr>
+<td>延后</td>
+<td>跨课、历史对话、OCR、翻译、导出和协作</td>
+<td>增加数据边界、界面状态和验收成本。当前试点可独立判断价值</td>
+<td>只有试点记录显示现有边界反复阻断主要任务时，再按变更流程评估</td>
+</tr>
+</tbody></table>
+<h2>试点招募与执行</h2>
+<p>招募 8 名有中文课程录屏复习经历的同学，优先覆盖考前定位和项目查漏两类。先问最近一次实际经历、使用资料、已有字幕与笔记的情况，再安排任务。测试人员观察操作和成功条件，用中性提示，避免直接告诉参与者该点哪里。本轮用于发现障碍和做组内立项决定。8 人的结果应保留个案与失败，不做总体比例或学习效果推断。<a href="https://www.gov.uk/service-manual/user-research/plan-user-research-for-your-service">GOV.UK 用户研究规划</a> · <a href="https://www.gov.uk/service-manual/user-research/using-moderated-usability-testing">主持式可用性测试</a></p>
+<ol>
+<li><strong>准备材料。</strong> 选两段讲解型短课 A、B，时长和难度接近，题目不复用工程验收固定题库。为每段分别准备原播放器材料和助手已就绪材料。保留用户原有字幕条件，如有可用字幕就允许使用。先用一名同学走通材料与计时，该次不计正式分母。</li>
+<li><strong>事先标注。</strong> QA 以原始录课标记正确观点、可接受的答案表述和回看片段起点。A 题可采用“老师解释提交后为什么还要等处理，找出讲解位置”。B 题可采用“找出老师解释重复提交会怎样的位置”。两题的真值从实际录制中取得。另给一题“课程有没有规定某个具体超时秒数”核查无依据提示。</li>
+<li><strong>交叉分配。</strong> 8 人分成四个顺序，每组 2 人。分别用原播放器 A → 助手 B，助手 B → 原播放器 A，原播放器 B → 助手 A，助手 A → 原播放器 B。同一个人不会重复同一道题。记录材料版本、顺序、是否用了字幕和主持人提示。</li>
+<li><strong>确定起止。</strong> 给出任务并开放界面时开始计时。参与者说出正确要点且定位与标注起点误差不超过 5 秒时完成，或者 180 秒到时结束。未完成的尝试计 180 秒并单列失败原因。主持人提示和引文不支持均写入记录。</li>
+<li><strong>另测准备成本。</strong> 对同一视频从未处理开始记录至少一次上传至就绪的总等待，采集上传、排队、处理三段时间。复习任务的计时从已就绪开始，单次和多次复习的净时间分别计算。</li>
+<li><strong>追问原因。</strong> 在完成后询问“你怎么确定找到了老师的解释”“如果原文与回答不一致会怎么处理”“有字幕搜索时你会选哪种方式”。记录原话需获得本人同意，研究表只写匿名编号与任务所需信息。<a href="https://www.gov.uk/service-manual/measuring-success/usability-benchmarking-a-website-or-whole-service">GOV.UK 可用性基准</a></li>
+</ol>
+<h2>指标、门槛与决策</h2>
+<p>以下是试点事前决策线，属于项目假设。工程回归仍按固定 25 题、3 段录课及 10 次问答的现有标准执行。模拟的 151 秒和 69 秒不参与下列判断。<a href="#doc-22" class="doclink">工程验收门槛</a></p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>定义与分母</th>
+<th>本轮决策规则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>可核对完成</td>
+<td>180 秒内答对要点并定位至标注起点 ±5 秒的任务数 / 分配尝试数</td>
+<td>两种方式各报 8 次。助手至少 7/8 完成，且完成数不低于原播放器，才考虑推进</td>
+</tr>
+<tr>
+<td>已就绪查找时间</td>
+<td>每人记录两种方式用时。超时计 180 秒。报各组中位数、逐人差值、两侧均完成者敏感性检查</td>
+<td>助手中位数至少低 25%，且改进不能只由单一题目或使用顺序驱动</td>
+</tr>
+<tr>
+<td>证据准确性</td>
+<td>QA 逐条核对引文、视频和起点。遇到结构合法但不支持答案的情况另列</td>
+<td>试点暴露错引、无支持结论或误导拒答时暂停扩展，按缺陷等级修复</td>
+</tr>
+<tr>
+<td>准备后净收益</td>
+<td>对每段课估计 单次就绪节省 Δ = 原播放器耗时 − 助手耗时。多次净收益 = 复习次数 × Δ − 准备总等待</td>
+<td>Δ ≤ 0 时无法靠重复获得净时间收益。Δ &gt; 0 时记录收回准备成本所需的最少次数，按使用频率判断</td>
+</tr>
+<tr>
+<td>反馈与复用意愿</td>
+<td>观察两种方式失败原因、退出点、是否愿为下一段获准使用的课再处理</td>
+<td>按个案记录愿意使用的条件和反例。出现同类障碍时定位到对应 R 工单</td>
+</tr>
+</tbody></table>
+<p>若助手达标且工程关卡通过，保留当前切入场景。首轮保留用户实际可用的字幕，按「有字幕」和「无字幕」描述个案，整体比较的是现有查找路径与助手。它可以判断场景价值，无法单独估计问答贡献。若引文质量、拒答或净收益未达标，先缩小材料范围、修复证据或采用字幕方案，再复测同口径任务。生成内容可能出现错误陈述或捏造引用，引用有效性需要独立核验。<a href="https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence">NIST 生成式 AI 风险框架</a></p>
+<p>只有首轮与工程关卡完成，且团队还需判断助手能否超越字幕路径时，才启动第二轮。第二轮使用 12 名同学与 3 个等难度任务，对照原播放器、播放器加统一的可搜索转写、助手完整路径。主比较为字幕路径与助手路径的整体差异，原播放器用于解释现有查找摩擦。用六种顺序平衡安排，每种两人，两名预跑同学单列。若要单独估计问答的作用，需要固定同一套转写、章节、播放器和界面，仅切换问答入口。若完整路径与字幕检索的可核对完成和耗时相当，优先保留章节、原文和定位，继续收集口语改写场景。<a href="#doc-7" class="doclink">三路径试验细节</a></p>
+<h2>记录表与数据责任</h2>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>采集方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>参与者编号、场景、顺序、题号、材料版本</td>
+<td>PM 分配匿名编号，按任务逐行登记</td>
+</tr>
+<tr>
+<td>开始和结束秒、是否超时、要点正确、位置误差</td>
+<td>观察员记时并记录位置，QA 用预先标注对照</td>
+</tr>
+<tr>
+<td>查找路径、字幕可用性、引用是否支持、提示次数</td>
+<td>观察员记录，QA 复核</td>
+</tr>
+<tr>
+<td>放弃原因、用户反馈、对应需求或缺陷编号</td>
+<td>PM 按失败阶段归类，更新工单和交接台账</td>
+</tr>
+<tr>
+<td>处理与运行成本</td>
+<td>SYS 记录设备、排队、耗时与额度，BE 记录调用次数和服务端账单口径</td>
+</tr>
+</tbody></table>
+<p>记录保存在项目本机资料中。试点使用参与者同意和获准提供的课程文件，生成问答样本的许可范围需覆盖发送问题与命中片段。分享结论只保留汇总与必要的匿名情景。学生姓名、学号、原视频和接口密钥不写进共享的试点记录。目标设备、授权样本、模型额度和工程候选版本以实际回执为准。<a href="#doc-17" class="doclink">环境与额度约定</a></p>
+<h2>费用与准备成本</h2>
+<p>截至 2026 年 11 月 7 日，阿里云 qwen-plus 模型信息列出的华北 2（北京）常规非思考模式在输入不超过 128k 时，输入为每百万 Token 0.8 元，输出为每百万 Token 2 元。以 100 次请求、每次输入 2,000 Token、输出 300 Token 作预算示例，输入约 0.16 元，输出约 0.06 元，合计约 0.22 元。该估算采用列明的地区与计费档位，费用随实际输入、输出、重试和账号配置变化。启动前仍按 30 元内部控制目标复核，SYS 从模型用量和账单核对实际记录。复习时间成本另用真实设备测量，不从模型费用推导。<a href="https://help.aliyun.com/zh/model-studio/qwen-plus">百炼 qwen-plus 模型信息</a> · <a href="https://help.aliyun.com/zh/model-studio/model-usage-statistics">模型用量</a></p>
+<h2>试点交接与结项</h2>
+<p>PM 固定任务说明和决策线。QA 先标真值，独立复核正确性。FE 与 BE 按工单修复界面和问答问题，SYS 对照设备、媒体、模型和恢复条件。每个问题记录复现样本、影响、主责、修复版和复测证据。达到工程门槛后再做小范围试点。V1.2 浏览器实测完成 12 项原型交互复测，用户试点和正式工程验收各自记录。<a href="#doc-25" class="doclink">原型验收</a> · <a href="#doc-24" class="doclink">工程验收记录</a> · <a href="#doc-14" class="doclink">需求工单</a></p>
+</article></details>
+<details class="doc" id="doc-10" data-group="02_任务分配与进度" ><summary><span class="group">02_任务分配与进度</span><span>阶段计划与里程碑</span></summary><article><p>版本：V1.1。负责人：PM。时间：2026年11月5日至13日，北京时间。</p>
+<h2>当前安排</h2>
+<p>五个核心开发日为11月5、6、9、10、11日，11月12日验收与备份恢复，11月13日预留整改和交付缓冲。用户已要求先完成产品经理、组长分工和技术定栈工作，展示暂缓，不占用本轮开发和验收时间。</p>
+<p>需求、原型、分工、技术选型和验收材料已定稿。PM 已完成模拟调研、推进演练与原型验收。M1 至 M4 的实际工程状态按版本和回执登记。<a href="#doc-12" class="doclink">任务总表</a> · <a href="#doc-29" class="doclink">推进演练</a> · <a href="#doc-28" class="doclink">交接台账</a></p>
+<h2>总体安排</h2>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>时间范围</th>
+<th>本阶段重点</th>
+<th>交付与退出条件</th>
+<th>截止节点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>立项交接和环境验证</td>
+<td>11月5日至6日</td>
+<td>按定稿材料开工，对齐协议，验证真实环境和素材</td>
+<td>四岗接收任务；协议无冲突；SYS真实转写/API试跑；QA完成样本标注</td>
+<td>M1 11月6日下班前</td>
+</tr>
+<tr>
+<td>核心开发和真实联通</td>
+<td>11月9日至10日中午</td>
+<td>完成上传、转写、提要、问答、引用回看</td>
+<td>用真实视频和真实模型完成一次完整流程，QA独立复核</td>
+<td>M2 11月10日中午前</td>
+</tr>
+<tr>
+<td>修复并冻结候选版本</td>
+<td>11月10日下午至11日</td>
+<td>补异常处理、回归、部署与恢复</td>
+<td>P0完成，严重缺陷清零，代码/依赖/文档可追溯</td>
+<td>M3 11月11日下班前</td>
+</tr>
+<tr>
+<td>验收与恢复验证</td>
+<td>11月12日</td>
+<td>对正式题集执行评估，在目标设备复测</td>
+<td>QA报告、PM验收决定、一致备份和恢复证据</td>
+<td>M4 11月12日下班前</td>
+</tr>
+<tr>
+<td>整改和交付缓冲</td>
+<td>11月13日</td>
+<td>处理M4遗留，交齐运行与维护材料</td>
+<td>修复项回归，交接签收，保留最终版本和已知限制</td>
+<td>11月13日下班前</td>
+</tr>
+</tbody></table>
+<p>11月7日至8日不安排必达任务，不将晚间加班计入正常产能。保留的M5是原展示节点，当前暂缓，恢复时间以用户后续安排为准。</p>
+<h2>M1 范围与接口冻结</h2>
+<p>PM部分已完成：项目定位与P0边界、PRD、交互规范与原型、需求优先级、验收方案、四岗任务分配和技术栈决定均有文件。本节点余下的是实际接收与工程验证：</p>
+<ul>
+<li>FE、BE检查字段、错误格式、任务状态、引用秒数与原型，并各自记录接收或需要修订的明确问题。</li>
+<li>SYS在目标电脑上完成ffprobe、音频提取、small CPU int8转写试跑和Qwen服务端真实调用，记录实际版本、耗时和脱敏日志。</li>
+<li>QA把自录脚本录成3段授权视频，逐题标注20道有答案题和5道无答案题；题库文字已备齐，实际视频与时间标注仍需执行。</li>
+<li>四位成员以角色代号接收任务。姓名可附加登记，不以尚未填写姓名阻止开工。</li>
+</ul>
+<p>没有可用API端点、真实视频不能转写、协议与原型冲突或题库没有真实依据时，PM记录阻塞和责任人，不写成M1整体通过。</p>
+<h2>M2 真实纵向流程可运行</h2>
+<p>使用一段未预处理的3至5分钟视频完成上传、排队、转写、索引、ready、章节提要、正题问答、有效引用与时间点回看，再检查一题无依据题。FE、BE、SYS交付对应版本和运行证据，QA独立操作。</p>
+<p>模拟响应只能用于前端开发，不能证明本节点完成。只有原文检索模式时，生成问答仍未完成。目标不及预期就取消P1并集中修复主链路。</p>
+<h2>M3 候选版冻结</h2>
+<ul>
+<li>所有P0实现并自测，QA已执行核心回归与首轮量化评估。</li>
+<li>无未解决S1/S2缺陷，包括核心结果错误、伪造引用、数据损坏、密钥泄露。</li>
+<li>重启、重试、删除、超限、无音轨和API超时有一致行为。</li>
+<li>SYS交付本机启动说明、锁文件、模型缓存、一致备份和恢复方法。</li>
+<li>FE、BE、SYS提交同一候选版本；文档与实现差异已修订。</li>
+</ul>
+<p>M3之后只接受必要缺陷修复；账号、OCR、跨视频、多轮、Docker和展示包装不进入本轮。</p>
+<h2>M4 产品验收</h2>
+<p>QA提交正式25题、引用时间、三段样本处理耗时、10次问答时延、回归和缺陷证据。PM核对分母、失败题、降级数量与限制，作出通过、附条件接受或不通过的书面决定。SYS在目标电脑验证冷启动、播放、来源跳转、网络故障降级和备份恢复。</p>
+<p>本节点不以展示稿、彩排或录屏作为前置。软件没有完成或没有证据时，最终验收必须继续保持待执行/不通过，不能因文档已定稿而提前签收。</p>
+<h2>组长的执行规则</h2>
+<p>各岗位只汇报已交付证据、当前阻塞和下一个交付点。预计受阻超过半个工作日就通知PM及直接依赖人。技术故障由技术主责定位，PM决定范围、优先级和资源取舍；QA独立判断复测结果。</p>
+<p>收敛顺序：取消P1和美化，保留提取式提要，使用清晰短视频验证真实流程；必要降级明确标识，生成问答未达标照实记录。不能用Mock、历史回答或录像冒充真实处理。</p>
+<h2>实际节点记录</h2>
+<table>
+<thead>
+<tr>
+<th>节点</th>
+<th>计划截止</th>
+<th>当前已具备</th>
+<th>尚缺事实</th>
+<th>PM结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>M1</td>
+<td>11月6日下班前</td>
+<td>V1.2 需求与原型、协议、工单和验收材料</td>
+<td>成员实际接收、环境/API试跑、真实样本标注</td>
+<td>材料已备齐，工程节点待验收</td>
+</tr>
+<tr>
+<td>M2</td>
+<td>11月10日中午前</td>
+<td>接口样例与验收步骤</td>
+<td>真实应用端到端运行证据</td>
+<td>待开发与复核</td>
+</tr>
+<tr>
+<td>M3</td>
+<td>11月11日下班前</td>
+<td>候选版交付清单和用例</td>
+<td>实现版本、自测、回归、运行包</td>
+<td>待开发与复核</td>
+</tr>
+<tr>
+<td>M4</td>
+<td>11月12日下班前</td>
+<td>原型验收结论、两轮工程裁决演练、正式验收记录表</td>
+<td>QA 实测报告、候选版本和恢复证据</td>
+<td>原型已验，正式放行待证据</td>
+</tr>
+<tr>
+<td>缓冲</td>
+<td>11月13日下班前</td>
+<td>交接与回退规范</td>
+<td>按M4结果确定整改量</td>
+<td>预留</td>
+</tr>
+<tr>
+<td>M5展示</td>
+<td>暂不安排</td>
+<td>原文件保留</td>
+<td>用户恢复安排后再处理</td>
+<td>用户要求暂缓</td>
+</tr>
+</tbody></table>
+</article></details>
+<details class="doc" id="doc-11" data-group="02_任务分配与进度" ><summary><span class="group">02_任务分配与进度</span><span>五人职责与任务卡</span></summary><article><p>版本：V1.1。分工决定人：PM兼组长。依据：<a href="#doc-0" class="doclink">统一约定</a>。本分工已定稿，四个岗位各对应团队中唯一一名成员，直接按岗位开工；姓名不影响责任归属。</p>
+<h2>岗位职责</h2>
+<table>
+<thead>
+<tr>
+<th>岗位</th>
+<th>负责范围</th>
+<th>不应转嫁的责任</th>
+<th>接收人</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PM 产品经理兼组长</td>
+<td>产品定位、PRD、交互、优先级、分工、技术决策、进度与最终验收</td>
+<td>不代替QA编写未经测试的通过结论</td>
+<td>四岗接收需求，QA提供验收证据</td>
+</tr>
+<tr>
+<td>FE 前端工程师</td>
+<td>页面与交互、播放器、状态、问答和来源定位</td>
+<td>不把密钥放前端，不以Mock代替真实联调</td>
+<td>BE验协议、QA验功能、PM验体验</td>
+</tr>
+<tr>
+<td>BE 后端工程师</td>
+<td>API、业务数据、队列、检索、大模型问答、引用与生命周期</td>
+<td>不把转写环境和所有AI运行工作都揽到自己一人</td>
+<td>FE、SYS、QA</td>
+</tr>
+<tr>
+<td>QA 测试工程师</td>
+<td>样本标注、用例、指标、缺陷、回归和验收建议</td>
+<td>不以接口200或开发自测代替正确性核验</td>
+<td>工程师接收缺陷，PM接收报告</td>
+</tr>
+<tr>
+<td>SYS 系统工程师</td>
+<td>环境、音视频校验、转写模块、部署、日志、备份与恢复</td>
+<td>不把模块运行和部署工作交回BE</td>
+<td>BE接模块，QA验恢复，PM收运行包</td>
+</tr>
+</tbody></table>
+<p>一项工程任务只有一个主责；协作人不代替主责提交。成员接收、实际实现和测试均需各自证据，不能只因本分工文件存在就标为已完成。</p>
+<h2>PM 产品经理兼组长</h2>
+<table>
+<thead>
+<tr>
+<th>任务ID</th>
+<th>工作与交付</th>
+<th>当前状态</th>
+<th>后续事实依赖</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PM-01</td>
+<td>产品定位、PRD、P0边界与验收规则</td>
+<td>文档定稿，已备齐</td>
+<td>四岗实际接收待确认</td>
+</tr>
+<tr>
+<td>PM-02</td>
+<td>页面流程、交互规范、可点击原型</td>
+<td>文档与原型已备齐</td>
+<td>FE实现后与原型核对</td>
+</tr>
+<tr>
+<td>PM-03</td>
+<td>需求依据、竞品取舍、用户调研和验收方案</td>
+<td>模拟调研、需求取舍和验收方案已完成</td>
+<td>研发和 QA 按工单接收</td>
+</tr>
+<tr>
+<td>LEAD-01</td>
+<td>五人分工、里程碑、依赖与四岗任务书</td>
+<td>决策定稿，已备齐</td>
+<td>成员实际接收和执行待确认</td>
+</tr>
+<tr>
+<td>LEAD-02</td>
+<td>选定技术栈、架构边界与变更规则</td>
+<td>决策定稿，已备齐</td>
+<td>SYS/BE/FE实机验证与依赖锁定未完成</td>
+</tr>
+<tr>
+<td>PM-04</td>
+<td>调研、进度、阻塞、需求变更与总结</td>
+<td><a href="#doc-6" class="doclink">调研</a>及<a href="#doc-29" class="doclink">管理演练</a>已归档</td>
+<td>实际成员回执与进展按事件登记</td>
+</tr>
+<tr>
+<td>PM-05</td>
+<td>产品原型验收与工程裁决演练</td>
+<td><a href="#doc-25" class="doclink">原型验收</a>通过，工程裁决演练已完成</td>
+<td>正式发布须有 QA 报告、候选版本和恢复证据</td>
+</tr>
+<tr>
+<td>SHOW-01/02</td>
+<td>展示、彩排与主讲</td>
+<td>用户要求暂缓</td>
+<td>不列入本轮交付标准</td>
+</tr>
+</tbody></table>
+<p>组长已把范围、技术路线和任务边界定下来，成员负责实现与验证。遇到资源不可用，主责人给出证据和替代方案，PM按变更流程决策；不以“先讨论一下再说”替代明确分工。</p>
+<h2>FE 前端工程师</h2>
+<p>技术栈固定为Vue 3、TypeScript、Vite、Element Plus、Axios、HTML5 video、Node.js 22 LTS。工程小版本按SYS的实机锁文件执行。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>必须交付</th>
+<th>节点</th>
+<th>接收与完成标准</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FE-01</td>
+<td>页面骨架、路由、类型、按协议标明的Mock</td>
+<td>M1</td>
+<td>PM核原型，BE核字段，不另加产品范围</td>
+</tr>
+<tr>
+<td>FE-02</td>
+<td>上传、列表、阶段轮询、失败、重试</td>
+<td>M2</td>
+<td>QA能观察5种真实状态，上传不重复，错误提示明确</td>
+</tr>
+<tr>
+<td>FE-03</td>
+<td>播放器、转写、提要、问答和时间点定位</td>
+<td>M2</td>
+<td>当前视频问答，按start_sec定位并暂停，模式标识清楚</td>
+</tr>
+<tr>
+<td>FE-04</td>
+<td>删除、输入边界、异常修复、生产build与说明</td>
+<td>M3</td>
+<td>QA回归，SYS可同源托管，产物无密钥</td>
+</tr>
+</tbody></table>
+<p>输入为PRD、原型和API样例；输出到拟建工程<code>course-review/frontend/</code>。无需等待真实后端才开始页面，但M2必须切到真实服务。立即执行步骤见<a href="#doc-13" class="doclink">四岗任务书</a>。</p>
+<h2>BE 后端工程师</h2>
+<p>技术栈固定为Python 3.11、FastAPI、Uvicorn单worker、Pydantic、SQLAlchemy 2、SQLite、httpx、jieba、rank-bm25、python-multipart。本地存文件，不引入Redis、Celery、向量库或LangChain。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>必须交付</th>
+<th>节点</th>
+<th>接收与完成标准</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BE-01</td>
+<td>按既定契约实现数据结构、协议映射和错误处理骨架</td>
+<td>M1</td>
+<td>FE/QA核对现有契约；当前API文档已备齐，实现仍待执行</td>
+</tr>
+<tr>
+<td>BE-02</td>
+<td>上传验证、文件保存、持久队列、状态与Range</td>
+<td>M2</td>
+<td>200 MiB/20分钟、未完成3、转写并发1均真实生效</td>
+</tr>
+<tr>
+<td>BE-03</td>
+<td>SYS模块接入、分段落库、索引、约60秒提要</td>
+<td>M2</td>
+<td>原文ID与秒数可追溯，ready必须有真实可用内容</td>
+</tr>
+<tr>
+<td>BE-04</td>
+<td>BM25检索、API问答、引用校验、拒答和降级</td>
+<td>M2</td>
+<td>单视频单轮；引用由后端回填；故障不伪装生成成功</td>
+</tr>
+<tr>
+<td>BE-05</td>
+<td>重试删除、重启恢复、期限、日志和运行说明</td>
+<td>M3</td>
+<td>QA回归，SYS可复现，日志有request_id无密钥</td>
+</tr>
+</tbody></table>
+<p>输出到<code>course-review/backend/app/</code>和<code>backend/tests/</code>。SYS交转写模块，BE统一编排业务状态；不得让SYS直接写业务数据库。完整字段见<a href="#doc-16" class="doclink">API契约</a>。</p>
+<h2>QA 测试工程师</h2>
+<p>使用pytest与httpx做接口检查，浏览器做页面和播放器验证，人工核对语义、来源与时间；用已有Markdown记录实际结果，不要求新增自动化框架。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>必须交付</th>
+<th>节点</th>
+<th>接收与完成标准</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>QA-01</td>
+<td>录成3段授权样本、标注正式25题与真实时间</td>
+<td>M1</td>
+<td>题库文字已备齐，QA补真实视频/哈希/原文依据；PM核场景</td>
+</tr>
+<tr>
+<td>QA-02</td>
+<td>按既有用例检查协议、真实主流程与边界</td>
+<td>M2</td>
+<td>保存版本、输入、实际响应和缺陷，不能仅报体验印象</td>
+</tr>
+<tr>
+<td>QA-03</td>
+<td>正式指标、缺陷和修复回归</td>
+<td>M3</td>
+<td>20道正题全部参与统计；降级另报；保留失败记录</td>
+</tr>
+<tr>
+<td>QA-04</td>
+<td>最终报告、冷启动和恢复复核、验收建议</td>
+<td>M4</td>
+<td>PM可按证据作验收决定；当前不含彩排计时</td>
+</tr>
+</tbody></table>
+<p>测试计划与题库已编制，QA负责实际录制、标注、执行和判断。证据保存在<code>05_测试与验收/实际测试证据/&lt;候选版本&gt;/</code>，接口测试代码在<code>course-review/backend/tests/</code>。</p>
+<h2>SYS 系统工程师</h2>
+<p>技术栈固定为FFmpeg/ffprobe、faster-whisper small多语言模型、CPU int8、Python 3.11、Node.js 22 LTS和Windows本地部署。首版不做Docker部署。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>必须交付</th>
+<th>节点</th>
+<th>接收与完成标准</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SYS-01</td>
+<td>环境清单、实机依赖锁定、端点/API验证</td>
+<td>M1</td>
+<td>BE可调用，版本可复现，密钥只在服务端</td>
+</tr>
+<tr>
+<td>SYS-02</td>
+<td>真实视频转写试跑、缓存、耗时和问题记录</td>
+<td>M1</td>
+<td>QA核质量，BE核schema；首次下载不计入性能</td>
+</tr>
+<tr>
+<td>SYS-03</td>
+<td>转写模块、依赖、成功/失败输出、可取消进程</td>
+<td>M2</td>
+<td>BE按约定独立调用，错误受控、超时能停进程</td>
+</tr>
+<tr>
+<td>SYS-04</td>
+<td>运行包、启停日志、数据备份和恢复方法</td>
+<td>M3</td>
+<td>在目标设备启动，模型不临时下载，数据与视频匹配</td>
+</tr>
+<tr>
+<td>SYS-05</td>
+<td>最终设备复现、恢复验证与运行包交付</td>
+<td>M4</td>
+<td>QA独立复核，PM收版本和已知限制；展示保障暂缓</td>
+</tr>
+</tbody></table>
+<p>输出到<code>course-review/modules/transcriber/</code>、<code>models/</code>、<code>scripts/</code>以及实际版本清单。转写模块公开签名以<a href="#doc-16" class="doclink">模型契约</a>为准。</p>
+<h2>统一交付规则</h2>
+<p>提交文件或代码版本、复现步骤、预期与已知问题；接收人实际检查后记录接收或退回。涉及产品行为的工程变更由QA回归。文档定稿、成员签收、实现完成和测试通过是四种不同事实，分别记录。</p>
+</article></details>
+<details class="doc" id="doc-12" data-group="02_任务分配与进度" ><summary><span class="group">02_任务分配与进度</span><span>任务跟踪总表</span></summary><article><p>V1.3 · 产品经理维护。PM-01 至 PM-05 已完成课程原型交付，四岗工程状态按实际证据登记。汇报开场单独交付。</p>
+<h2>状态规则</h2>
+<p>文档、模拟演练、浏览器实测和工程执行分别记录。成员接收以回执为准。工程任务完成时登记版本、运行或测试证据以及接收人。</p>
+<h2>产品经理与组长已完成的立项交付</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>工作</th>
+<th>交付证据</th>
+<th>文档/决策状态</th>
+<th>成员接收</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PM-01</td>
+<td>产品定位、P0和PRD</td>
+<td><a href="#doc-3" class="doclink">需求文档</a></td>
+<td>已定稿</td>
+<td>待实际接收</td>
+</tr>
+<tr>
+<td>PM-02</td>
+<td>页面流程、交互与原型</td>
+<td><a href="#doc-4" class="doclink">交互规范</a>、<a href="01_%E9%9C%80%E6%B1%82%E4%B8%8E%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/03_%E5%8F%AF%E7%82%B9%E5%87%BB%E4%BA%A4%E4%BA%92%E5%8E%9F%E5%9E%8B.html">V1.2 原型</a></td>
+<td>两处交互问题已修正并复测</td>
+<td>FE/QA 待实际接收</td>
+</tr>
+<tr>
+<td>PM-03</td>
+<td>竞品取舍、用户调研和验收方案</td>
+<td><a href="#doc-6" class="doclink">模拟调研</a>、<a href="#doc-14" class="doclink">需求工单</a>、<a href="#doc-22" class="doclink">测试计划</a></td>
+<td>调研与需求取舍已交付，样本为模拟</td>
+<td>QA 待实际接收</td>
+</tr>
+<tr>
+<td>LEAD-01</td>
+<td>五人职责、节点、依赖和四岗任务书</td>
+<td><a href="#doc-11" class="doclink">任务卡</a>、<a href="#doc-13" class="doclink">任务书</a>、<a href="#doc-10" class="doclink">阶段计划</a></td>
+<td>分工决定已定稿</td>
+<td>四岗待实际接收</td>
+</tr>
+<tr>
+<td>LEAD-02</td>
+<td>技术栈、架构与接口口径</td>
+<td><a href="#doc-15" class="doclink">技术方案</a>、<a href="#doc-16" class="doclink">API契约</a>、<a href="#doc-17" class="doclink">配置约定</a></td>
+<td>技术路线已确定；实机锁定未执行</td>
+<td>FE/BE/SYS待实际接收</td>
+</tr>
+<tr>
+<td>PM-04</td>
+<td>调研执行、进度、阻塞、变更和项目总结</td>
+<td><a href="#doc-6" class="doclink">模拟调研</a>、<a href="#doc-29" class="doclink">推进演练</a>、<a href="#doc-30" class="doclink">项目总结</a></td>
+<td>课程原型的模拟记录与裁决已完成</td>
+<td>实际成员回执、版本和进度另登记</td>
+</tr>
+<tr>
+<td>PM-05</td>
+<td>产品验收、质量检查和遗留问题裁决</td>
+<td><a href="#doc-25" class="doclink">原型验收</a>、<a href="#doc-26" class="doclink">工程验收演练</a>、<a href="05_%E6%B5%8B%E8%AF%95%E4%B8%8E%E9%AA%8C%E6%94%B6/06_%E8%B4%A8%E9%87%8F%E6%A3%80%E6%9F%A5%E5%8D%95%EF%BC%88%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%EF%BC%89.xlsx">检查单</a></td>
+<td>浏览器复测 12/12，原型通过。工程裁决已模拟</td>
+<td>正式工程验收待候选版和 QA 证据</td>
+</tr>
+<tr>
+<td>SHOW-01</td>
+<td>汇报开场与立项依据</td>
+<td><a href="06_%E5%B1%95%E7%A4%BA%E4%B8%8E%E7%AD%94%E8%BE%A9/%E8%AF%BE%E7%A8%8B%E8%A7%86%E9%A2%91%E5%A4%8D%E4%B9%A0%E5%8A%A9%E6%89%8B_%E7%AB%8B%E9%A1%B9%E4%BE%9D%E6%8D%AE.pptx">立项依据 PPT</a></td>
+<td>开场交付，含来源与备注</td>
+<td>合并至最终汇报</td>
+</tr>
+<tr>
+<td>SHOW-02</td>
+<td>后续产品展示、彩排与复盘</td>
+<td>后续汇报阶段</td>
+<td>待安排</td>
+<td>依据工程进度</td>
+</tr>
+</tbody></table>
+<p>本表列出的文件在项目文件夹内交付给用户，不代表已经向其他成员发送、开会确认或由本人签字批准上线。</p>
+<h2>四岗工程执行任务</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>任务</th>
+<th>主责</th>
+<th>协作</th>
+<th>截止</th>
+<th>必交成果与接收人</th>
+<th>实现状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FE-01</td>
+<td>页面骨架与类型对齐</td>
+<td>FE</td>
+<td>PM、BE</td>
+<td>M1</td>
+<td>按原型建立页面/路由/类型，PM核流程、BE核字段</td>
+<td>未开始</td>
+</tr>
+<tr>
+<td>FE-02</td>
+<td>上传与任务状态</td>
+<td>FE</td>
+<td>BE</td>
+<td>M2</td>
+<td>真实上传、列表、轮询、失败重试，QA核5状态</td>
+<td>未开始</td>
+</tr>
+<tr>
+<td>FE-03</td>
+<td>播放和问答来源回看</td>
+<td>FE</td>
+<td>BE、PM</td>
+<td>M2</td>
+<td>提要、回答、引用点击定位，QA核start_sec</td>
+<td>未开始</td>
+</tr>
+<tr>
+<td>FE-04</td>
+<td>异常修复与生产构建</td>
+<td>FE</td>
+<td>QA、SYS</td>
+<td>M3</td>
+<td>删除/输入校验、build、锁文件和说明，SYS接收</td>
+<td>未开始</td>
+</tr>
+<tr>
+<td>BE-01</td>
+<td>按契约实现服务与表结构</td>
+<td>BE</td>
+<td>FE、QA、SYS</td>
+<td>M1</td>
+<td>已有文档转为服务代码，FE/QA核真实结构</td>
+<td>未开始</td>
+</tr>
+<tr>
+<td>BE-02</td>
+<td>上传校验与持久队列</td>
+<td>BE</td>
+<td>SYS、FE</td>
+<td>M2</td>
+<td>上限、容量、状态和Range，QA核真实行为</td>
+<td>未开始</td>
+</tr>
+<tr>
+<td>BE-03</td>
+<td>转写接入、提要与索引</td>
+<td>BE</td>
+<td>SYS</td>
+<td>M2</td>
+<td>SYS模块接入、原文与秒数落库，QA核来源</td>
+<td>未开始</td>
+</tr>
+<tr>
+<td>BE-04</td>
+<td>检索与生成问答</td>
+<td>BE</td>
+<td>SYS、QA</td>
+<td>M2</td>
+<td>当前视频单轮、引用校验、拒答降级，QA核结果</td>
+<td>未开始</td>
+</tr>
+<tr>
+<td>BE-05</td>
+<td>重试删除与重启恢复</td>
+<td>BE</td>
+<td>SYS、QA</td>
+<td>M3</td>
+<td>错误、日志、超时与恢复，QA回归</td>
+<td>未开始</td>
+</tr>
+<tr>
+<td>QA-01</td>
+<td>真实样本与25题标注</td>
+<td>QA</td>
+<td>PM</td>
+<td>M1</td>
+<td>根据已有脚本/题库录制和标注，PM核场景</td>
+<td>未开始</td>
+</tr>
+<tr>
+<td>QA-02</td>
+<td>真实纵向流程与边界检查</td>
+<td>QA</td>
+<td>FE、BE、SYS</td>
+<td>M2</td>
+<td>对应版本、响应、步骤与缺陷证据</td>
+<td>未开始</td>
+</tr>
+<tr>
+<td>QA-03</td>
+<td>指标评估与缺陷回归</td>
+<td>QA</td>
+<td>FE、BE、SYS</td>
+<td>M3</td>
+<td>固定分母、完整失败记录和回归结论</td>
+<td>未开始</td>
+</tr>
+<tr>
+<td>QA-04</td>
+<td>最终报告与恢复复核</td>
+<td>QA</td>
+<td>PM、SYS</td>
+<td>M4</td>
+<td>实际报告和验收建议，PM接收</td>
+<td>未开始</td>
+</tr>
+<tr>
+<td>SYS-01</td>
+<td>实机环境和API验证</td>
+<td>SYS</td>
+<td>BE、PM</td>
+<td>M1</td>
+<td>实际版本/锁文件/端点证据，BE核调用</td>
+<td>未开始</td>
+</tr>
+<tr>
+<td>SYS-02</td>
+<td>真实转写试跑</td>
+<td>SYS</td>
+<td>QA、BE</td>
+<td>M1</td>
+<td>模型缓存、转写和耗时，QA核质量</td>
+<td>未开始</td>
+</tr>
+<tr>
+<td>SYS-03</td>
+<td>转写模块交付</td>
+<td>SYS</td>
+<td>BE</td>
+<td>M2</td>
+<td>函数、依赖、失败与取消能力，BE独立调用</td>
+<td>未开始</td>
+</tr>
+<tr>
+<td>SYS-04</td>
+<td>运行包与备份方法</td>
+<td>SYS</td>
+<td>FE、BE、QA</td>
+<td>M3</td>
+<td>冷启动和一致副本，QA复现</td>
+<td>未开始</td>
+</tr>
+<tr>
+<td>SYS-05</td>
+<td>最终设备和恢复验证</td>
+<td>SYS</td>
+<td>QA、PM</td>
+<td>M4</td>
+<td>目标设备可复现、恢复证据、运行交接</td>
+<td>未开始</td>
+</tr>
+</tbody></table>
+<p>M1为11月6日下班前；M2为11月10日中午前；M3为11月11日下班前；M4为11月12日下班前；11月13日为整改缓冲。每项对应的输入、输出位置和依赖见<a href="#doc-13" class="doclink">四岗任务书</a>。</p>
+<h2>状态更新记录</h2>
+<table>
+<thead>
+<tr>
+<th>日期</th>
+<th>任务</th>
+<th>变化</th>
+<th>证据</th>
+<th>实际接收结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2026年11月5日</td>
+<td>PM-01/02/03、LEAD-01/02</td>
+<td>立项材料与分工技术决定定稿</td>
+<td>本表各文件链接</td>
+<td>未进行成员签收</td>
+</tr>
+<tr>
+<td>2026年11月5日</td>
+<td>PM-01 至 PM-05</td>
+<td>补齐调研、推进、验收和质量归档</td>
+<td>V1.2 交付清单及本表证据</td>
+<td>原型通过，工程回执待登记</td>
+</tr>
+<tr>
+<td>2026年11月5日</td>
+<td>SHOW-01/02</td>
+<td>按用户最新要求暂缓</td>
+<td>当前会话要求</td>
+<td>不纳入本轮</td>
+</tr>
+<tr>
+<td>2026年11月7日</td>
+<td>PM-03/04、SHOW-01</td>
+<td>补齐外部研究、竞品核查和试点计划，恢复汇报开场</td>
+<td><a href="#doc-31" class="doclink">立项复核</a></td>
+<td>四岗实际回执按台账登记</td>
+</tr>
+</tbody></table>
+<p>后续每次更新保留旧状态、时间、提交版本、接收人和证据；不覆盖历史截止以掩盖延期。</p>
+</article></details>
+<details class="doc" id="doc-13" data-group="02_任务分配与进度" ><summary><span class="group">02_任务分配与进度</span><span>组长分工决定与四岗任务书</span></summary><article><p>版本：V1.1。分工决定人：产品经理兼小组组长。日期：2026年11月5日。</p>
+<p>本轮统一开发“课程视频复习助手”。需求、原型、接口和验收材料已经备齐，技术路线已确定，四位成员按下面岗位直接开展工作。本文是可交给组员的正式任务书；当前只在项目文件夹交付给用户，尚未发送给成员，也没有代替成员确认接收。</p>
+<h2>全组共同规则</h2>
+<p>首版只做单个中文课程视频的上传、转写、章节提要、问答、原文引用、时间定位、失败重试和删除。输入是MP4/H.264/AAC，200 MiB及20分钟上限。生成问答采用通义千问API，系统工程师承担音视频与转写模块，后端承担业务和问答；不增加账号、OCR、跨视频、多轮、Docker和展示工作。</p>
+<p>技术栈按<a href="#doc-15" class="doclink">技术方案</a>执行，字段按<a href="#doc-16" class="doclink">API契约</a>执行。需要换栈、换模型或改字段，先写影响与证据，由组长决定并同步相关文档，不各自选一套。</p>
+<table>
+<thead>
+<tr>
+<th>节点</th>
+<th>截止</th>
+<th>全组要看到什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>M1</td>
+<td>11月6日下班前</td>
+<td>页面/接口对齐，真实转写与API试跑，测试样本和真值标注</td>
+</tr>
+<tr>
+<td>M2</td>
+<td>11月10日中午前</td>
+<td>一段真实视频从上传到问答、引用回看的完整流程</td>
+</tr>
+<tr>
+<td>M3</td>
+<td>11月11日下班前</td>
+<td>功能冻结的候选版、回归记录和运行包</td>
+</tr>
+<tr>
+<td>M4</td>
+<td>11月12日下班前</td>
+<td>正式测试、PM验收决定、备份恢复和最终交接</td>
+</tr>
+<tr>
+<td>缓冲</td>
+<td>11月13日</td>
+<td>按实际遗留整改、复测、交齐材料</td>
+</tr>
+</tbody></table>
+<h2>前端工程师 FE</h2>
+<p>你负责全部用户页面与播放器交互，技术固定为Vue 3、TypeScript、Vite、Element Plus、Axios和HTML5 video。</p>
+<p><strong>先读：</strong> <a href="#doc-3" class="doclink">PRD</a>、<a href="#doc-4" class="doclink">交互规范</a>、<a href="01_%E9%9C%80%E6%B1%82%E4%B8%8E%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/03_%E5%8F%AF%E7%82%B9%E5%87%BB%E4%BA%A4%E4%BA%92%E5%8E%9F%E5%9E%8B.html">可点击原型</a>、<a href="#doc-16" class="doclink">接口契约</a>和<a href="03_%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88%E4%B8%8E%E6%8E%A5%E5%8F%A3/04_%E6%8E%A5%E5%8F%A3Mock%E7%A4%BA%E4%BE%8B.json">Mock</a>。</p>
+<p><strong>现在开始：</strong> 建立首页和详情页、路由与接口类型；用既定Mock实现空态、等待态、失败态、生成回答、拒答和原文检索模式。Mock需要标明，不能当真实AI结果。M1前交页面骨架和字段核对结论。</p>
+<p><strong>M2交：</strong> 真实上传、视频列表、2秒状态轮询、播放器、转写和提要、提问与引用定位。点击引用设置start_sec并暂停，由用户继续播放。禁止在页面或产物中保存LLM密钥。</p>
+<p><strong>M3交：</strong> 删除、重试、输入边界、错误提示、生产build和构建说明。代码放<code>course-review/frontend/</code>，锁文件放<code>frontend/package-lock.json</code>，构建产物放<code>frontend/dist/</code>。这些是工程待创建的约定路径，不是当前已存在的软件。</p>
+<p><strong>依赖与接收：</strong> BE提供服务和字段，SYS提供运行地址。等待服务时先完成Mock页面；M2必须切真实接口。BE验字段，QA验行为，PM验与原型一致，SYS接收build。</p>
+<h2>后端工程师 BE</h2>
+<p>你负责业务API、数据、任务队列、检索问答与引用验证，技术固定为Python 3.11、FastAPI、Uvicorn单worker、SQLAlchemy 2、SQLite、jieba、rank-bm25和httpx。</p>
+<p><strong>先读：</strong> <a href="#doc-3" class="doclink">PRD</a>、<a href="#doc-15" class="doclink">架构</a>、<a href="#doc-16" class="doclink">API与模型契约</a>、<a href="#doc-17" class="doclink">配置约定</a>。</p>
+<p><strong>现在开始：</strong> 按现有契约建表和路由骨架、错误结构、上传与状态接口；和SYS对齐转写调用，不重新设计另一套字段。M1前交可启动API骨架和协议核对结论。</p>
+<p><strong>M2交：</strong> 上传校验、持久队列、转写接入、约60秒原文提要、BM25索引、真实Qwen问答、引用回填、无依据拒答和API降级。上传202的响应字段是视频对象id，后续路径以该值作为video_id。任何模型输出的时间戳均不能直接当真值。</p>
+<p><strong>M3交：</strong> Range、重试删除、重启恢复、期限控制、脱敏日志与自测。代码放<code>course-review/backend/app/</code>，接口测试放<code>backend/tests/</code>。服务导出<code>backend/app/main.py</code>中的app，默认本机8000端口、单worker。</p>
+<p><strong>依赖与接收：</strong> SYS交transcribe模块、模型目录和环境，FE按你的真实服务联调。SYS不写业务数据库；你不代替SYS重新搭整套转写环境。FE验协议，QA验接口和正确性，SYS接服务启动入口。</p>
+<h2>测试工程师 QA</h2>
+<p>你负责真实样本和真值、用例执行、缺陷、指标与最终验收建议。工具采用pytest/httpx、浏览器和人工语义核验，不要求为本轮增加复杂自动化框架。</p>
+<p><strong>先读：</strong> <a href="#doc-22" class="doclink">测试计划</a>、<a href="#doc-23" class="doclink">样本脚本和25题</a>、<a href="#doc-24" class="doclink">结果记录</a>、<a href="#doc-16" class="doclink">API契约</a>。</p>
+<p><strong>现在开始：</strong> 按已有脚本录制或组织录制3段授权课程，检查格式，逐题标原文和真实秒数，登记文件哈希，锁定20道正题及5道无答案题。题目文字已写好，不能把尚未录制的视频时间写成已标注。M1前交真实素材和标注。</p>
+<p><strong>M2交：</strong> 在真实服务上独立走完整流程，验证输入、5状态、3类回答、来源定位，提交有版本和复现步骤的缺陷。</p>
+<p><strong>M3交：</strong> 完整正题分母、拒答、全部引用检查、10次时延、三段处理耗时与回归结果。<strong>M4交：</strong> 最终报告、冷启动与备份恢复复核、未解决问题及验收建议。所有目标值须与真实结果分开，降级不能算生成通过。</p>
+<p><strong>输出：</strong> 证据保存在<code>05_测试与验收/实际测试证据/&lt;候选版本&gt;/</code>，每题保存响应、真值、结论和必要日志。开发组提供固定候选版后再出最终报告；PM接收报告并作业务验收。当前不安排彩排计时。</p>
+<h2>系统工程师 SYS</h2>
+<p>你负责环境、音视频校验与语音转写模块、部署和数据恢复。技术固定为FFmpeg/ffprobe、faster-whisper small多语言模型、CPU int8、Windows本地运行、Python 3.11和Node.js 22 LTS。</p>
+<p><strong>先读：</strong> <a href="#doc-15" class="doclink">技术方案</a>、<a href="#doc-16" class="doclink">转写模块契约</a>、<a href="#doc-17" class="doclink">配置和运行约定</a>、<a href="#doc-21" class="doclink">部署交接</a>。</p>
+<p><strong>现在开始：</strong> 在目标电脑准备隔离环境、FFmpeg与模型缓存，用一段真实视频验证small CPU int8并记录版本、耗时和识别问题；从实际账户控制台取得Qwen地区端点，以服务端环境变量验证调用。M1前交真实试跑与依赖锁定证据，不能把方案上的版本当已验证版本。</p>
+<p><strong>M2交：</strong> <code>course-review/modules/transcriber/</code>模块，公开transcribe(video_path, output_dir)及契约规定的预热/取消能力，输出真实带秒数分段和受控错误。给BE独立调用成功，不写业务SQLite。</p>
+<p><strong>M3交：</strong> Windows本地启动脚本、前端同源托管、脱敏配置、日志、依赖/模型清单和一致备份方法。<strong>M4交：</strong> 在目标电脑冷启动与恢复副本复现，交付最终运行包和已知限制。代码与脚本按<code>course-review/</code>约定目录组织；本轮不做Docker和展示设备包装。</p>
+<p><strong>依赖与接收：</strong> BE给服务入口和数据结构，FE给生产build，QA核对环境与恢复，PM接运行包。密钥不进入前端、仓库或普通交接文件。额度与付费使用按既定配置和PM管理决定执行。</p>
+<h2>交付与阻塞汇报</h2>
+<p>每次提交只需写清：任务ID、版本或文件路径、如何复现、实际结果、已知问题、交给谁。预计受阻半个工作日就报告影响节点、已尝试方案和可交付替代物。交接接收人检查后记入<a href="#doc-28" class="doclink">交接台账</a>，没有实际检查时保持“待接收”。</p>
+</article></details>
+<details class="doc" id="doc-14" data-group="02_任务分配与进度" ><summary><span class="group">02_任务分配与进度</span><span>需求工单与验收追踪</span></summary><article><p>V1.2 · 2026 年 11 月 5 日 · 产品经理兼组长</p>
+<p>以下 10 张本地需求工单可直接用于组内分工和验收。R01 至 R10 均为首版必做需求。工程任务 ID 对应<a href="#doc-12" class="doclink">任务总表</a>，F 编号对应<a href="#doc-22" class="doclink">测试用例</a>。需求目标、输入上限、错误语义和接口字段分别按<a href="#doc-3" class="doclink">PRD</a>与<a href="#doc-16" class="doclink">API 契约</a>执行。</p>
+<table>
+<thead>
+<tr>
+<th>工单</th>
+<th>用户要完成的事</th>
+<th>工程任务</th>
+<th>可观察的关闭条件</th>
+<th>回归用例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R01 上传课程</td>
+<td>提交本地中文录课并知道输入是否合规</td>
+<td>BE-02、FE-02、SYS-02</td>
+<td>合法输入获 202 和稳定 ID。格式、音轨、时长、文件大小与队列限额均可单独复验</td>
+<td>F01–F08、F32</td>
+</tr>
+<tr>
+<td>R02 查处理进度</td>
+<td>知道视频正在排队、处理还是已就绪</td>
+<td>BE-02、FE-02、BE-05</td>
+<td>五状态与服务端一致。超时转失败，刷新恢复服务端状态，等待有阶段和耗时提示</td>
+<td>F09、F10、F31</td>
+</tr>
+<tr>
+<td>R03 看章节</td>
+<td>先读短提要，再展开对应原文</td>
+<td>BE-03、FE-03、SYS-03</td>
+<td>按 60 秒切窗，章节标题含起点，提要与原文一致，空窗跳过</td>
+<td>F11、F35</td>
+</tr>
+<tr>
+<td>R04 当前视频问答</td>
+<td>输入课程问题并得到课程内答案</td>
+<td>BE-04、FE-03、FE-04</td>
+<td>单视频单轮。问题非空且在 1 至 300 字范围内。等待时防重复，答复与来源一致</td>
+<td>F12–F15、F27、F29、F34</td>
+</tr>
+<tr>
+<td>R05 核对依据</td>
+<td>读到回答引用的原句和时间</td>
+<td>BE-04、FE-03、QA-03</td>
+<td>引用在当前视频中存在，显示原文和时间。QA 核对语义支持，错误 ID 或伪造原文阻断放行</td>
+<td>F16、F28</td>
+</tr>
+<tr>
+<td>R06 定位回看</td>
+<td>点章节或引用回到相关片段</td>
+<td>FE-03、BE-02、QA-02</td>
+<td>跳到起点并暂停。真实播放器支持媒体 Range。定位误差按原视频逐条记录</td>
+<td>F17、F26、F33</td>
+</tr>
+<tr>
+<td>R07 无依据处理</td>
+<td>知道课程是否覆盖问题并能继续查</td>
+<td>BE-04、FE-03、QA-03</td>
+<td>无证据返回 <code>not_found</code> 且引用为空。页面给出换问法或回看原文的下一步</td>
+<td>F18</td>
+</tr>
+<tr>
+<td>R08 故障后继续</td>
+<td>重试可恢复任务，或在模型故障时读原文</td>
+<td>BE-04、BE-05、FE-04、SYS-03</td>
+<td>仅可重试的失败任务受理，复用原 ID。上游故障清楚标出原文模式，未检出时拒答</td>
+<td>F19–F21、F36</td>
+</tr>
+<tr>
+<td>R09 管理视频</td>
+<td>从列表打开或删除符合条件的视频</td>
+<td>FE-02、FE-04、BE-05</td>
+<td>仅就绪或失败可删。删除同步清理关联数据，处理中有明确反馈。页面安全显示文本</td>
+<td>F22、F23、F30</td>
+</tr>
+<tr>
+<td>R10 重启与恢复</td>
+<td>重启后继续查看已处理成果</td>
+<td>BE-05、SYS-04、SYS-05</td>
+<td>已就绪结果重启可读，中断任务按契约处理，备份可在独立目录恢复</td>
+<td>F24、F25</td>
+</tr>
+</tbody></table>
+<h2>接收与关闭</h2>
+<ul>
+<li><strong>原型评审。</strong> PM 核对可观察的页面行为并记录问题与复测。结果见<a href="#doc-25" class="doclink">原型验收</a>。</li>
+<li><strong>工程接收。</strong> 主责在交接台账追加版本、复现方式和提交物。QA 按对应 F 编号记录实际结果，PM 对照本表决定关闭或退回。每张工单的工程状态以<a href="#doc-12" class="doclink">任务总表</a>为准。</li>
+<li><strong>变更。</strong> 在<a href="#doc-28" class="doclink">决策与交接记录</a>写清涉及的 R 编号、改动、主责和受影响用例。需跨岗协调时沿用<a href="#doc-29" class="doclink">阶段推进演练</a>中的复查方式。</li>
+</ul>
+</article></details>
+<details class="doc" id="doc-15" data-group="03_技术方案与接口" ><summary><span class="group">03_技术方案与接口</span><span>课程视频复习助手 技术方案与模块分工</span></summary><article><p>版本 V1.1　定稿日期 2026年11月5日　选型决策 PM兼组长　技术执行 SYS　业务接口负责人 BE</p>
+<p>本方案是组长下达的首版技术基线，供五人小组按五个核心开发日实施。技术选型已定稿，无需团队再次选框架；具体版本、交接物和变更规则见<a href="#doc-18" class="doclink">技术栈定稿与选型决策</a>。范围和时间统一遵循<a href="#doc-0" class="doclink">项目基线</a>。技术决策完成不代表软件已经开发、依赖已经实机验证或测试通过。</p>
+<h2>产品与技术边界</h2>
+<p>首版以中文讲课音轨为知识来源，完成上传、转写、章节提要、当前视频问答和原文定位。系统不分析画面，不理解只出现在课件上的文字，也不跨视频回答。选用现成语音模型和联网大模型接口，不进行基础模型训练。</p>
+<p>本地浏览器访问同一台Windows电脑上的应用。开发期由Vite代理API，交付时将前端构建产物交给FastAPI同源托管。默认只监听127.0.0.1。课堂局域网展示须由SYS另行设置防火墙和监听地址，仅在受信任网络使用；没有账号和权限隔离，不能直接作为公开互联网服务。</p>
+<h2>技术栈与选择理由</h2>
+<table>
+<thead>
+<tr>
+<th>层次</th>
+<th>约定技术</th>
+<th>主责</th>
+<th>选择理由与交付限制</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>页面</td>
+<td>Vue 3、TypeScript 5、Vite 7、Element Plus 2、Axios 1</td>
+<td>FE</td>
+<td>组件库加快表单和状态页实现，类型与接口字段同步</td>
+</tr>
+<tr>
+<td>视频回看</td>
+<td>浏览器HTML5 video</td>
+<td>FE</td>
+<td>使用currentTime进行时间点定位，服务端必须支持HTTP Range</td>
+</tr>
+<tr>
+<td>服务</td>
+<td>Python 3.11、FastAPI 0.x（≥0.128）、Uvicorn单worker、Pydantic 2</td>
+<td>BE</td>
+<td>Python便于连接音频模型，接口文档由服务自动生成</td>
+</tr>
+<tr>
+<td>存储</td>
+<td>SQLAlchemy 2、SQLite、本地文件目录</td>
+<td>BE</td>
+<td>单机单任务演示适用，不引入远程数据库部署成本</td>
+</tr>
+<tr>
+<td>上传</td>
+<td>python-multipart、流式分块写入</td>
+<td>BE</td>
+<td>后端累计字节并限制大小，不能依赖浏览器校验</td>
+</tr>
+<tr>
+<td>视频检查与音频</td>
+<td>FFmpeg、ffprobe</td>
+<td>SYS</td>
+<td>验证容器、时长和编码，生成转写音频</td>
+</tr>
+<tr>
+<td>转写</td>
+<td>faster-whisper、多语言small、CPU int8</td>
+<td>SYS</td>
+<td>不把GPU作为前提；实际速度和中文识别质量必须在目标电脑测试</td>
+</tr>
+<tr>
+<td>检索</td>
+<td>jieba、rank-bm25</td>
+<td>BE</td>
+<td>能在CPU上索引原文，分词和术语表由开发与QA一起检查</td>
+</tr>
+<tr>
+<td>问答</td>
+<td>httpx调用百炼通义千问OpenAI兼容接口，模型固定qwen-plus</td>
+<td>BE</td>
+<td>仅传问题和命中片段；地区端点与密钥按账户配置，不改变选型</td>
+</tr>
+<tr>
+<td>任务处理</td>
+<td>SQLite持久队列、单个顺序处理器</td>
+<td>BE</td>
+<td>不引入Redis或Celery；不能启动多个Uvicorn worker竞争任务</td>
+</tr>
+<tr>
+<td>运行与交付</td>
+<td>Windows本地脚本、requirements.lock.txt、package-lock.json、版本清单</td>
+<td>SYS</td>
+<td>在目标电脑可复现是必达交付，Docker不进入本轮必做范围</td>
+</tr>
+</tbody></table>
+<p>Node.js固定22 LTS线且不低于22.12，Python固定3.11。各框架与模型选择已经确定；具体补丁版本和传递依赖由SYS组织FE/BE在M1实机验证后写入锁文件。这属于被分配的环境执行任务，不是仍待组长选型。尚无真实安装或试跑证据，因此不把补丁组合称为已验证。接口文件与页面引用的字段以<a href="#doc-16" class="doclink">契约</a>为准。</p>
+<h2>架构中的数据流</h2>
+<ol>
+<li>FE使用multipart上传MP4。BE流式保存到临时目录，校验实际大小，通过ffprobe检查音视频信息，验证成功后将文件移到UUID目录并在SQLite创建queued记录。</li>
+<li>BE从SQLite按入队时间取最早queued任务，将状态改为transcribing。SYS的转写模块抽取音频，返回带秒数的文本分段。</li>
+<li>BE将状态改为indexing，保存分段，建立按60秒聚合的检索块和提取式章节提要。章节标题固定为“mm:ss 章节提要”，正文按时间摘取原句至最多120字符，全部来源ID保留。所有分段必须通过时间和文本校验后才将任务改为ready。</li>
+<li>用户提问时，BE只读取当前视频的索引，中文分词后取最多5个候选块，把原文及片段ID传给LLM。没有有效候选时直接拒答。</li>
+<li>LLM只返回答案、依据片段ID和是否有依据。BE检查ID和内容后，用数据库中的原文和时间生成citations。FE将引用渲染成可点击时间点。</li>
+<li>外部模型接口不可用时，BE在同一响应里返回明确的degraded和extractive，仅给出检索原文。FE展示“原文检索模式”，不能把它呈现成生成式回答。</li>
+</ol>
+<h2>模块责任与交接边界</h2>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>实现责任</th>
+<th>输入</th>
+<th>输出</th>
+<th>接收及验收人</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>页面与播放器</td>
+<td>FE</td>
+<td>固定Mock与实际API</td>
+<td>上传页、列表、详情、播放器、章节与问答</td>
+<td>BE验字段，QA验交互，PM验产品流程</td>
+</tr>
+<tr>
+<td>视频检查与转写模块</td>
+<td>SYS</td>
+<td>video_path、output_dir</td>
+<td>TranscriptSegment列表（片段键为id）与受控错误</td>
+<td>BE接入，QA使用真实音频复核</td>
+</tr>
+<tr>
+<td>任务与文件生命周期</td>
+<td>BE</td>
+<td>上传或重试请求</td>
+<td>状态变更、持久化、超时和删除</td>
+<td>SYS验重启，QA验异常</td>
+</tr>
+<tr>
+<td>章节与检索</td>
+<td>BE</td>
+<td>TranscriptSegment数组</td>
+<td>章节提要、索引、候选片段ID</td>
+<td>QA检查来源和召回</td>
+</tr>
+<tr>
+<td>LLM适配与引用验证</td>
+<td>BE</td>
+<td>question、候选原文、配置</td>
+<td>answered/not_found/degraded结果</td>
+<td>QA测正确性与拒答，PM验收</td>
+</tr>
+<tr>
+<td>环境、密钥、备份和运行包</td>
+<td>SYS</td>
+<td>代码、锁文件、配置约定</td>
+<td>可复现运行包、启动说明和回退包</td>
+<td>QA复现，PM接收交付</td>
+</tr>
+<tr>
+<td>用例与证据</td>
+<td>QA</td>
+<td>冻结版本、样本和人工标注</td>
+<td>实测数据、缺陷和回归结论</td>
+<td>PM签署产品验收结论</td>
+</tr>
+</tbody></table>
+<p>BE不再独自承担音频环境和模型下载。SYS不负责业务问答和检索算法。双方在M1前用1段授权样本验证函数输入输出，M2前接入完整纵向流程。</p>
+<h2>顺序任务与恢复策略</h2>
+<ul>
+<li>队列容量按queued、transcribing、indexing三类记录总数计，最多3个，检查与入队在同一写事务完成。容量满返回429，不接收第四个任务。</li>
+<li>同时只有一个转写任务。SQLite使用短事务更新状态，不在转写或联网请求期间持有写事务。转写、FFmpeg及模型推理不能阻塞ASGI事件循环。</li>
+<li>SYS把转写放在可终止的专用子进程，提供同步函数包装供BE在工作线程调用。超时需要真正终止该子进程并清理临时文件，不能只取消Python Future却留下后台推理。首次模型加载可预热，后续请求顺序复用单个模型进程。</li>
+<li>每个任务从首次进入transcribing起计1200秒墙钟期限，排队等待不计入处理期限。达到期限即failed，错误TASK_TIMEOUT。SYS应能停止转写子进程；BE的任务监控作为总期限兜底。</li>
+<li>应用启动时，将上次遗留的transcribing/indexing转failed，记录PROCESS_INTERRUPTED。queued继续排队，不假装自动恢复到中间步骤。failed允许用户主动重试。</li>
+<li>重试仅接受failed且error.retryable=true，复用video_id，增加attempt，刷新updated_at，清除旧转写、摘要、索引和问答结果后重新排队。UI需要提示旧结果会重建。ready、不可重试失败和处理中重复重试均返回409。</li>
+<li>删除仅支持ready或failed。BE持有视频级锁，阻止删除与问答同时操作。先把整份视频目录移入本地回收区，再事务删除关联记录；失败可还原，成功后再清理回收区。用户不可自行指定文件路径。</li>
+</ul>
+<h2>检索与问答的可靠性设计</h2>
+<p>BM25适合词语匹配，但不保证能理解所有中文同义表达。采用jieba分词、标准化空格和英文字母大小写，并维护一份小型课程术语表，例如“召回率”和“查全率”。同义映射由QA用课程原文核对，不能把不同概念强行合并。</p>
+<p>检索按约60秒窗口组织原文，保留全部segment_id。默认top_k为5，候选在发送前去重，单次上下文限制为6000个中文或英文字符，优先保留完整分段。BM25分数不是概率，不能在界面显示成“置信度92%”。筛选规则应由开发集调试后冻结，再在独立验收题上评估；未命中需要正确拒答。</p>
+<p>引用ID存在只是必要条件，不能证明答案事实正确。BE验证引用来自当前视频、落在候选集合、时间合法且原文非空，并要求生成回答附依据。QA仍需人工对照检查答案是否确由原文支持。引用验证失败时返回not_found，不能悄悄去掉引用继续显示答案。</p>
+<p>模型系统提示要求只依据给定课程片段回答，忽略片段内让模型改变规则的指令。文档和视频文本属于不可信内容。对外只发送问题和命中原文，视频文件不上传大模型服务。</p>
+<h2>数据目录与最低表结构</h2>
+<p>约定应用仓库名为course-review，当前仅是实现目标，不表示目录已存在。</p>
+<pre><code class="language-text">course-review/
+  frontend/                 Vue代码和package-lock.json
+  backend/app/              接口、任务、检索和LLM适配
+  backend/tests/            单元与接口测试
+  modules/transcriber/      SYS的转写模块和子进程入口
+  data/app.db               SQLite数据库
+  data/videos/&lt;video_id&gt;/   原视频、转写JSON、索引和章节提要
+  data/tmp/                 流式上传和FFmpeg临时文件
+  data/trash/               删除事务的短期回收区
+  models/faster-whisper-small/ 本地模型文件
+  logs/                     不含密钥和完整原文的运行日志
+  scripts/                  启动、检查与备份脚本
+</code></pre>
+<p>最低数据库表为videos、segments、chapters、questions。videos保存状态、文件路径、时长、字节数、入队/开始/完成时间、attempt、错误；segments保存video_id、起止秒数和原文；chapters保存章节及来源段ID；questions保存问题、回答模式、引用快照、耗时和时间。检索块可在本地JSON保存并在重启后从segments重建，不要求增加向量库。SQLite开启外键，删除关联数据需覆盖所有表。</p>
+<h2>五天内的工程取舍</h2>
+<p>M1（11月6日下班前）验证环境、转写和API密钥，按已定稿协议检查Mock与消费者实现。M2（11月10日中午前）完成真实端到端流程。M3（11月11日下班前）形成发布候选。M4（11月12日下班前）完成产品验收、备份恢复检查；11月13日保留整改与交付缓冲。展示与彩排按用户最新要求暂缓，不是本轮发布前置。交付压力出现时先放弃视觉美化、额外页面和扩展交互，不能拿Mock结果代替真实处理，也不能把没有来源的回答纳入正常成功。</p>
+<h2>参考资料与核查日期</h2>
+<p>核查日期为2026年11月5日。以下来源只说明相应工具的能力，不构成本项目性能承诺。</p>
+<ul>
+<li><a href="https://github.com/SYSTRAN/faster-whisper">faster-whisper官方仓库</a>：CPU int8调用方式与本地模型路径。</li>
+<li><a href="https://fastapi.tiangolo.com/deployment/server-workers/">FastAPI部署与worker说明</a>：服务进程配置。本项目固定单worker属于简化部署决策。</li>
+<li><a href="https://www.alibabacloud.com/help/en/model-studio/first-api-call-to-qwen">阿里云百炼Qwen首次调用</a>：兼容接口、模型参数、环境变量及地区端点。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Range_requests">MDN HTTP Range说明</a>：媒体分段读取及206、416响应。</li>
+</ul>
+</article></details>
+<details class="doc" id="doc-16" data-group="03_技术方案与接口" ><summary><span class="group">03_技术方案与接口</span><span>课程视频复习助手 API与模型模块契约</span></summary><article><p>版本 V1.1　定稿日期 2026年11月5日　负责人 BE　接收人 FE、SYS、QA　工程核对节点 M1</p>
+<p>本文是已定稿的首版接口协议，工程师据此实施，当前应用尚未生成。同目录<a href="03_%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88%E4%B8%8E%E6%8E%A5%E5%8F%A3/04_%E6%8E%A5%E5%8F%A3Mock%E7%A4%BA%E4%BE%8B.json">Mock示例</a>可供前端和测试先行对齐，但不是接口服务器。M1由BE、FE、SYS、QA核对实现与本协议的一致性；新增或改字段需PM登记影响并同步所有消费者，不能各自采用另一套结构。</p>
+<h2>通用约定</h2>
+<p>基础路径为/api。请求和JSON响应使用UTF-8，JSON响应无需额外data包装。业务ID统一UUID字符串，时间偏移统一秒数start_sec、end_sec，允许小数，显示时才转分秒。记录时间采用UTC ISO 8601字符串，以Z结尾，页面显示北京时间。</p>
+<p>常规错误统一返回：</p>
+<pre><code class="language-json">{&quot;error&quot;:{&quot;code&quot;:&quot;VIDEO_NOT_READY&quot;,&quot;message&quot;:&quot;视频尚未处理完成，请稍后再试&quot;,&quot;retryable&quot;:true},&quot;request_id&quot;:&quot;a56a2ed3-0198-4c1a-8a4d-921efce0a599&quot;}
+</code></pre>
+<p>每个响应带X-Request-ID，日志以它关联。retryable表示问题消除后能否重试，不代表前端必须自动重试。FastAPI默认422应转换成上述结构，不把栈、磁盘路径或密钥返回页面。</p>
+<h2>共享对象</h2>
+<h3>Video</h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型与约束</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>UUID字符串</td>
+<td>视频ID</td>
+</tr>
+<tr>
+<td>title</td>
+<td>字符串1至120字符</td>
+<td>去除扩展名和危险字符的原始文件名，不能作为磁盘路径</td>
+</tr>
+<tr>
+<td>status</td>
+<td>queued/transcribing/indexing/ready/failed</td>
+<td>任务阶段</td>
+</tr>
+<tr>
+<td>processing_mode</td>
+<td>固定audio_only</td>
+<td>首版仅处理音轨文本，不分析视频画面</td>
+</tr>
+<tr>
+<td>duration_sec</td>
+<td>大于0且不超过1200的数字</td>
+<td>ffprobe取得的时长</td>
+</tr>
+<tr>
+<td>size_bytes</td>
+<td>1至209715200整数</td>
+<td>实际保存字节数</td>
+</tr>
+<tr>
+<td>created_at、updated_at</td>
+<td>UTC时间字符串</td>
+<td>入队和最后更新时间</td>
+</tr>
+<tr>
+<td>started_at、finished_at</td>
+<td>UTC时间字符串或null</td>
+<td>开始和终止时间</td>
+</tr>
+<tr>
+<td>elapsed_sec</td>
+<td>非负数字</td>
+<td>queued为0，处理从started_at算，终态为完成时处理耗时；排队等待另算</td>
+</tr>
+<tr>
+<td>attempt</td>
+<td>正整数</td>
+<td>首次1，每次接受重试后加1</td>
+</tr>
+<tr>
+<td>error</td>
+<td>null或{code,message,retryable}</td>
+<td>failed原因，其余状态为null</td>
+</tr>
+</tbody></table>
+<p>接口不暴露local_path、API Key或模型提示全文。progress百分比不属于协议。</p>
+<h3>TranscriptSegment与Citation</h3>
+<p>TranscriptSegment固定为{id,start_sec,end_sec,text}。id为UUID，0≤start_sec&lt;end_sec≤duration_sec，text为非空字符串。segments按start_sec升序返回。重试后允许生成新分段ID，因此旧问答同步清除。</p>
+<p>Citation固定为{segment_id,start_sec,end_sec,text}，其中text必须是该segment保存的完整原文，时间由数据库回填。模型只负责选择segment_id，不能自行填写或改写引用原文和时间。映射规则固定为Citation.segment_id=TranscriptSegment.id：SYS的转写返回对象使用id字段；BE在生成引用对象时才改为segment_id，FE不得把转写片段直接当作Citation读取。</p>
+<h3>Summary</h3>
+<pre><code class="language-json">{&quot;video_id&quot;:&quot;43b4b091-630e-4819-8f56-f20b9120c001&quot;,&quot;mode&quot;:&quot;extractive&quot;,&quot;chapters&quot;:[{&quot;id&quot;:&quot;a738bafe-7487-47c5-8c3d-45226d90c001&quot;,&quot;start_sec&quot;:0.0,&quot;end_sec&quot;:60.0,&quot;title&quot;:&quot;00:00 章节提要&quot;,&quot;text&quot;:&quot;精确率等于真正例除以真正例与假正例之和。&quot;,&quot;segment_ids&quot;:[&quot;7c388118-4875-4125-9383-40513670c001&quot;]}]}
+</code></pre>
+<p>章节固定按60秒时间窗聚合，尾章可短于60秒。片段按start_sec归入所在时间窗，窗内按start_sec升序排列。title固定为“mm:ss 章节提要”。text按时间取前若干完整原句，累计不超过120个字符；单个原句本身超长时截断并显示省略标记，整体仍不超过120个字符。不增加原文没有的知识结论。segment_ids保留该窗全部来源段，不能因提要截短而删除来源ID；FE展开来源时用transcript映射原文。空窗跳过，不生成空章节。FE可点章节起点回看。无任何可用分段时处理应failed，不返回空章节冒充ready。</p>
+<h3>QuestionResult</h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型与约束</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id、video_id</td>
+<td>UUID字符串</td>
+<td>问答记录和视频ID</td>
+</tr>
+<tr>
+<td>question</td>
+<td>字符串</td>
+<td>trim后的问题，1至300字符</td>
+</tr>
+<tr>
+<td>answer_status</td>
+<td>answered/not_found/degraded</td>
+<td>生成成功、无依据、外部模型不可用</td>
+</tr>
+<tr>
+<td>mode</td>
+<td>generative/extractive</td>
+<td>生成式或原文检索</td>
+</tr>
+<tr>
+<td>answer</td>
+<td>字符串</td>
+<td>回答或明确说明</td>
+</tr>
+<tr>
+<td>citations</td>
+<td>Citation数组</td>
+<td>真实来源，最多5条，按时间排序并去重</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>UTC时间字符串</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>latency_ms</td>
+<td>非负整数</td>
+<td>从接受有效问题到形成响应的总耗时</td>
+</tr>
+</tbody></table>
+<p>answered必须mode=generative且至少1条有效引用。not_found固定mode=extractive、citations=[]、answer=“当前视频中未找到足够依据，请换一种问法或回看课程。”。degraded固定mode=extractive，仅当已有候选但外部服务失败，或SYS明确将ANSWER_MODE切到extractive时返回，answer=“生成服务暂不可用，以下是检索到的课程原文。”，citations仅包含真实候选。不将degraded计入生成成功。主动关闭生成时内部记录GENERATION_DISABLED，无候选时仍返回not_found。</p>
+<h2>接口一览</h2>
+<table>
+<thead>
+<tr>
+<th>方法与路径</th>
+<th>请求</th>
+<th>成功响应</th>
+<th>常见错误</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET /api/health</td>
+<td>无</td>
+<td>200 Health</td>
+<td>503本地服务未就绪</td>
+</tr>
+<tr>
+<td>POST /api/videos</td>
+<td>multipart的file字段</td>
+<td>202 Video，status=queued</td>
+<td>413/415/422/429/507</td>
+</tr>
+<tr>
+<td>GET /api/videos</td>
+<td>limit、offset</td>
+<td>200 {items,total,limit,offset}</td>
+<td>422参数错误</td>
+</tr>
+<tr>
+<td>GET /api/videos/{id}</td>
+<td>UUID路径</td>
+<td>200 Video</td>
+<td>404/422</td>
+</tr>
+<tr>
+<td>GET /api/videos/{id}/content</td>
+<td>可选Range头</td>
+<td>200或206视频字节</td>
+<td>404/416</td>
+</tr>
+<tr>
+<td>GET /api/videos/{id}/transcript</td>
+<td>UUID路径</td>
+<td>200 {video_id,segments}</td>
+<td>404/409</td>
+</tr>
+<tr>
+<td>GET /api/videos/{id}/summary</td>
+<td>UUID路径</td>
+<td>200 Summary</td>
+<td>404/409</td>
+</tr>
+<tr>
+<td>POST /api/videos/{id}/questions</td>
+<td>{question}</td>
+<td>200 QuestionResult</td>
+<td>404/409/422/429</td>
+</tr>
+<tr>
+<td>POST /api/videos/{id}/retry</td>
+<td>无请求体</td>
+<td>202 Video，status=queued</td>
+<td>404/409/429</td>
+</tr>
+<tr>
+<td>DELETE /api/videos/{id}</td>
+<td>无</td>
+<td>204，无响应体</td>
+<td>404/409/500</td>
+</tr>
+</tbody></table>
+<h2>上传与列表</h2>
+<p>POST /api/videos使用multipart/form-data，字段名严格为file，不能把文件base64放进JSON。后端边接收边计数，超过209715200字节立即停止写入并清理临时文件，返回413 FILE_TOO_LARGE。前端可先校验扩展名和大小，但服务端必须独立验证。</p>
+<p>服务端使用ffprobe校验：容器为MP4兼容格式、视频编码h264、音频编码aac、有音轨、时长0至1200秒。格式或编码不支持返回415 UNSUPPORTED_MEDIA；没有音轨返回422 AUDIO_REQUIRED；损坏、无法读取、零时长返回422 INVALID_VIDEO；超过20分钟返回422 DURATION_EXCEEDED。FFprobe校验最长15秒，超时返回422 INVALID_VIDEO，附可读提示。</p>
+<p>上传成功必须先保证原文件和数据库记录一致，再返回202完整Video。Location头指向/api/videos/{id}。未完成任务总数达到3，返回429 QUEUE_FULL及Retry-After: 10。拒绝上传需要删除该次暂存文件，不创建空视频记录。磁盘写入不足返回507 STORAGE_FULL。</p>
+<p>首版上传不做跨请求内容去重，相同文件重复上传会产生新video_id。FE在请求进行中禁用重复提交按钮；上传网络中断或超时后先刷新列表判断是否已经创建，再由用户决定重传，不盲目自动重发。</p>
+<p>GET /api/videos默认limit=20、offset=0，limit范围1至100，offset非负，按created_at倒序，时间相同时按id排序。响应items为Video数组，total为总数。首版没有跨视频搜索或状态筛选参数。</p>
+<h2>状态查询与前端行为</h2>
+<p>FE每2秒查询一次详情，ready或failed后停止轮询，页面隐藏时暂停，恢复可见后立即查询。网络暂断保留最后状态并提示“连接中断”，不把网络错误写成任务失败。组件销毁应清除定时器。queued阶段显示排队等待：首次入队从created_at计算，重试入队从updated_at计算（retry受理时更新）；transcribing/indexing阶段显示服务端elapsed_sec，不能混用排队等待与处理耗时。</p>
+<p>queued显示“等待处理”；transcribing显示“正在转写”；indexing显示“正在整理章节与索引”；ready可进入提要和问答；failed显示error.message以及可用的重试和删除。只显示阶段和耗时，不把已耗时映射成百分比。</p>
+<p>处理任务的合法路径为queued、transcribing、indexing、ready。transcribing或indexing发生异常可转failed。启动恢复将遗留处理中任务转failed，使用PROCESS_INTERRUPTED；queued保留；failed主动重试后回queued。禁止ready再次进入处理态。</p>
+<p>GET transcript和summary仅ready可取。其他现存状态返回409 VIDEO_NOT_READY，failed时retryable=false，等待中为true。不存在ID返回404 VIDEO_NOT_FOUND，不得与未就绪混淆。</p>
+<h2>媒体内容与时间点跳转</h2>
+<p>GET content可在视频保存成功后读取原文件，响应Content-Type: video/mp4、Accept-Ranges: bytes。普通GET返回200和完整文件。Range: bytes=0-1023返回206，Content-Range为bytes 0-1023/总字节数，Content-Length为1024。范围终点超出文件末端时截到末端，完全越界返回416和Content-Range: bytes */总字节数。</p>
+<p>支持浏览器常用的单段闭区间、bytes=起点-及bytes=-后缀长度。首版对含逗号的多段请求忽略Range并返回200完整文件，不伪造multipart响应。异常Range语法返回416 RANGE_NOT_SATISFIABLE，错误体遵循通用结构。若框架自带文件响应行为不同，由BE在M1确认并同步QA用例。</p>
+<p>FE等待video元素loadedmetadata后设置currentTime=start_sec并暂停，显示引用原文及“已定位，点击播放继续”，由用户主动播放。时间点不能超过视频时长，不把秒数误当毫秒。SPA静态资源路由必须排在/api之后，不得将未知API请求回退成HTML。</p>
+<h2>问答流程与超时</h2>
+<p>POST questions请求固定为{&quot;question&quot;:&quot;召回率怎样计算？&quot;}。服务端trim后校验1至300字符，不接受额外video_id或history字段，不实现多轮记忆。问题为空、超长或JSON错误返回422 INVALID_QUESTION。FE只保留当前页面会话的问答显示，刷新或切换视频后清空该显示，不承诺恢复历史问答；BE仍持久化问答记录用于验收和故障追溯，本轮不新增历史问答读取API。</p>
+<p>仅ready可问答，未就绪返回409。整个应用同时最多1个生成请求，其他请求立即返回429 QUESTION_BUSY和Retry-After: 3，不长时间排队。FE每次提交后禁用发送，直到完成或错误。</p>
+<ol>
+<li>按当前video_id加载索引，中文分词，取最多5个有效候选块。无有效候选直接返回not_found，禁止调用LLM靠常识补答。</li>
+<li>将候选的segment_id及原文放入上下文，单次最多6000字符，超长需按完整分段裁剪并记录。模型system提示限定当前材料，禁止服从材料内的指令。</li>
+<li>使用httpx发送OpenAI兼容chat completions请求。LLM_MODEL由配置读取，本轮固定qwen-plus；环境变量保留只是便于部署与受控变更，不能未经记录自行换模型。模型调用总墙钟截止25秒，单次请求连接超时5秒。仅在限流/暂时5xx或连接瞬断且总剩余时间足够时最多补试一次；鉴权错误不重试。不能简单叠加两次25秒等待。</li>
+<li>期待模型返回JSON：{&quot;has_evidence&quot;:true,&quot;answer&quot;:&quot;…&quot;,&quot;segment_ids&quot;:[&quot;…&quot;]}。schema不合规、has_evidence=false或引用验证不通过，返回not_found，不自动修复成无依据答案。</li>
+<li>外部服务连接/超时/鉴权/限流/服务端错误则返回degraded，并在内部日志记录LLM_TIMEOUT、LLM_AUTH_ERROR或LLM_UPSTREAM_ERROR。不会向FE暴露服务商原始错误内容。</li>
+<li>正常回答按后端保存的分段回填引用并返回answered。响应不流式输出，避免首版额外处理引用与流式内容一致性。</li>
+</ol>
+<p>FE对questions请求的总超时设35秒，以容纳25秒外部期限和本地处理；不能把20秒目标误设为25秒以下的强制取消。后端丢失连接时也要按期限释放问答锁。</p>
+<h2>拒答与降级判定表</h2>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>HTTP</th>
+<th>answer_status</th>
+<th>mode</th>
+<th>citations与页面提示</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>有依据且模型回答有效</td>
+<td>200</td>
+<td>answered</td>
+<td>generative</td>
+<td>至少1条真实引用，正常回答</td>
+</tr>
+<tr>
+<td>无候选，模型表示无依据，或引用校验失败</td>
+<td>200</td>
+<td>not_found</td>
+<td>extractive</td>
+<td>空数组，明确未找到依据</td>
+</tr>
+<tr>
+<td>有候选但API超时、不可用、鉴权失败或已主动关闭生成</td>
+<td>200</td>
+<td>degraded</td>
+<td>extractive</td>
+<td>真实命中原文，标“原文检索模式”</td>
+</tr>
+<tr>
+<td>视频不存在</td>
+<td>404</td>
+<td>不使用问答结果对象</td>
+<td>不适用</td>
+<td>通用错误体</td>
+</tr>
+<tr>
+<td>视频未ready</td>
+<td>409</td>
+<td>不使用问答结果对象</td>
+<td>不适用</td>
+<td>通用错误体</td>
+</tr>
+<tr>
+<td>已有一个问答生成中</td>
+<td>429</td>
+<td>不使用问答结果对象</td>
+<td>不适用</td>
+<td>等待后手动再试</td>
+</tr>
+</tbody></table>
+<p>拒答是业务结果，不等于服务故障。降级是能力减少，不等于问题在课程中没有答案。历史缓存只能作为明确标记的历史结果回放，不能用来伪装当前联网调用成功。</p>
+<h2>重试与删除</h2>
+<p>POST retry仅接受failed且该错误retryable=true，原文件必须存在；NO_SPEECH等不可重试错误返回409 RETRY_NOT_ALLOWED并提示换视频。原文件不存在返回409 SOURCE_MISSING且retryable=false。容量检查仍受最多3个未完成任务限制。入队、updated_at刷新和attempt加1在同一事务完成。第一次重试返回202 queued；并发第二次重试因状态已改变返回409 RETRY_NOT_ALLOWED。重试不新增视频，也不保留上一次派生结果。</p>
+<p>DELETE仅接受ready或failed，处理状态返回409 VIDEO_BUSY，正在问答时也返回409 VIDEO_BUSY。成功204不携带JSON。删除重复调用返回404，属于状态幂等，不要求重复返回204。删除应覆盖原视频、临时音频、分段、章节、索引和问答记录。删除出错返回500 DELETE_FAILED，重试前SYS核对文件与数据库一致性。</p>
+<h2>健康检查</h2>
+<p>GET health不向外部模型发起付费调用。正常响应结构为{&quot;status&quot;:&quot;ok&quot;,&quot;version&quot;:&quot;0.1.0&quot;,&quot;database&quot;:&quot;ok&quot;,&quot;transcriber&quot;:&quot;ready&quot;,&quot;llm_configured&quot;:true}，version取实际应用版本。数据库不可写或本地转写模块不可用返回503，status=not_ready并说明本地部件。llm_configured只表示配置齐全，不能表示密钥或公网真实连通；M1及最终产品验收前由SYS另外进行小额真实调用验证。</p>
+<h2>SYS与BE的转写模块契约</h2>
+<p>模块位置固定modules/transcriber，公开函数固定为transcribe(video_path, output_dir)，返回TranscriptSegment列表，每个片段字段为{id,start_sec,end_sec,text}。video_path和output_dir均为由BE生成的绝对本地路径，不接受URL或用户输入路径。Citation的segment_id由BE映射此处的id生成，不要求SYS返回两套ID字段。</p>
+<p>SYS提供warmup()进行模型加载检查，以及shutdown()关闭可终止的专用子进程。transcribe同步等待子进程任务，BE通过工作线程调用，不得在FastAPI主事件循环直接运行。SYS还提供cancel_current()供BE的1200秒看门狗调用，确保停止FFmpeg和推理进程。只有1个调用可活动，模块内检查重复调用。</p>
+<p>输出要求：列表非空，段ID为UUID，时间单位秒，排序且合法，文本无空串，保存UTF-8 transcript.json后再向BE返回。每次写入先落临时文件再原子替换，不能把半写JSON交给BE。首次模型下载属于环境准备，交付设备应从本地模型目录加载，不依赖启动时下载。</p>
+<p>受控异常类别：INVALID_VIDEO、AUDIO_REQUIRED、TRANSCRIBE_FAILED、NO_SPEECH、TASK_TIMEOUT、MODEL_NOT_FOUND。BE将可读说明保存为Video.error，日志记录实际诊断。不能将失败吞掉后返回空列表。SYS不得负责写业务SQLite或修改Video状态，状态由BE统一维护。</p>
+<p>失败动作固定如下，retryable含义为排除原因后允许用户主动重试，前端不自动反复重试：</p>
+<table>
+<thead>
+<tr>
+<th>code</th>
+<th>retryable</th>
+<th>用户与工程师动作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NO_SPEECH</td>
+<td>false</td>
+<td>提示该视频没有可识别语音，换有清晰中文讲解的视频</td>
+</tr>
+<tr>
+<td>PROCESS_INTERRUPTED</td>
+<td>true</td>
+<td>说明服务中断，用户可点击重试</td>
+</tr>
+<tr>
+<td>TASK_TIMEOUT</td>
+<td>true</td>
+<td>提示处理超时，可重试并建议换更短视频；SYS检查性能</td>
+</tr>
+<tr>
+<td>MODEL_NOT_FOUND</td>
+<td>true</td>
+<td>提示本地模型未就绪，SYS修复目录与文件后再重试</td>
+</tr>
+<tr>
+<td>TRANSCRIBE_FAILED</td>
+<td>true</td>
+<td>提示转写失败并提供request_id，SYS排查后重试</td>
+</tr>
+<tr>
+<td>INVALID_VIDEO、AUDIO_REQUIRED</td>
+<td>false</td>
+<td>上传校验阶段拒绝，换符合要求的视频，不自动排队</td>
+</tr>
+</tbody></table>
+<h2>联调与协议变更检查</h2>
+<ul>
+<li>FE先用Mock完成所有状态和三种问答结果，BE实现相同结构，QA逐字段核对。</li>
+<li>M1检查file字段、秒数、UTC时间、错误结构、Range、重试与删除状态限制。</li>
+<li>M2前必须用真实文件、真实转写和真实API打通一次，不以Mock成功代替纵向完成。</li>
+<li>M3将服务生成的openapi.json和本契约对照，新增差异必须登记。接口测试覆盖2xx以及409、413、415、422、429。</li>
+<li>发生字段或枚举变更时，变更人同时修改契约、Mock、FE类型和QA预期，并通知接收人；M3后只接受修复阻断问题的必要变更。</li>
+</ul>
+<h2>通用错误码速查</h2>
+<table>
+<thead>
+<tr>
+<th>HTTP</th>
+<th>业务码</th>
+<th>处理建议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>404</td>
+<td>VIDEO_NOT_FOUND</td>
+<td>刷新列表，勿继续使用旧ID</td>
+</tr>
+<tr>
+<td>409</td>
+<td>VIDEO_NOT_READY、VIDEO_BUSY、RETRY_NOT_ALLOWED、SOURCE_MISSING</td>
+<td>按当前状态提示，不自动重复提交</td>
+</tr>
+<tr>
+<td>413</td>
+<td>FILE_TOO_LARGE</td>
+<td>换不超过200 MiB的文件</td>
+</tr>
+<tr>
+<td>415</td>
+<td>UNSUPPORTED_MEDIA</td>
+<td>换MP4/H.264/AAC样本</td>
+</tr>
+<tr>
+<td>416</td>
+<td>RANGE_NOT_SATISFIABLE</td>
+<td>检查Range与文件长度</td>
+</tr>
+<tr>
+<td>422</td>
+<td>INVALID_VIDEO、AUDIO_REQUIRED、DURATION_EXCEEDED、INVALID_QUESTION、INVALID_PARAMETER</td>
+<td>修正输入</td>
+</tr>
+<tr>
+<td>429</td>
+<td>QUEUE_FULL、QUESTION_BUSY</td>
+<td>按Retry-After等待后手动重试</td>
+</tr>
+<tr>
+<td>500</td>
+<td>INTERNAL_ERROR、DELETE_FAILED</td>
+<td>提供request_id给BE或SYS排查</td>
+</tr>
+<tr>
+<td>503</td>
+<td>SERVICE_NOT_READY</td>
+<td>SYS检查本地数据库和转写模块</td>
+</tr>
+<tr>
+<td>507</td>
+<td>STORAGE_FULL</td>
+<td>SYS清理演示盘或调整数据目录</td>
+</tr>
+</tbody></table>
+<h2>参考资料</h2>
+<p>2026年11月5日核查：<a href="https://www.alibabacloud.com/help/en/model-studio/first-api-call-to-qwen">百炼Qwen调用</a>、<a href="https://github.com/SYSTRAN/faster-whisper">faster-whisper</a>、<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Range_requests">HTTP Range</a>。其余字段、容量和错误码为本项目设计约定。</p>
+</article></details>
+<details class="doc" id="doc-17" data-group="03_技术方案与接口" ><summary><span class="group">03_技术方案与接口</span><span>课程视频复习助手 环境配置与部署交接</span></summary><article><p>版本 V1.1　定稿日期 2026年11月5日　主责 SYS　接收人 BE、FE、QA　确认人 PM</p>
+<p>本文是按<a href="#doc-18" class="doclink">定稿技术栈</a>执行的环境任务书和交接要求，框架、模型、运行方式均已确定。当前交付的是项目文档，course-review应用、启动脚本及依赖锁文件尚未生成。下面命令需在工程师实际创建对应文件后执行，不应在本文目录直接执行并期待应用启动。</p>
+<h2>M1前的环境检查</h2>
+<p>SYS在M1前落实一台开发交付电脑，记录Windows版本、CPU型号、内存、可用磁盘空间、网络和浏览器版本。内存16 GB、空闲空间10 GB作为准备目标，能否满足以真实3至5分钟样本实测为准，不承诺特定硬件性能。本轮不要求展示设备、彩排或备用录像作为交付前置。</p>
+<p>基础环境固定Python 3.11和Node.js 22 LTS（≥22.12），前端固定Vue 3、TypeScript 5、Vite 7、Element Plus 2、Axios 1，后端固定FastAPI 0.x（≥0.128）、Pydantic 2、SQLAlchemy 2。安装FFmpeg与ffprobe，并确认shell能找到其可执行文件。faster-whisper固定small多语言模型、CPU int8，不把CUDA安装当成五天前置任务。下载模型到本地models目录，用断网后加载测试确认无需临时联网。</p>
+<p>M1完成三项真实验证：1段中文样本转写、1次Qwen真实调用、FE对Mock字段检查。任何一项未完成必须由PM记录风险；不能等到M2联调时才发现密钥、模型或媒体编码不可用。</p>
+<h2>配置约定</h2>
+<p>实际配置只在服务端读取，开发期使用不入库的.env.local；由BE实现配置加载，系统环境变量优先于本地配置文件。仓库只提交不含密钥的.env.example。FE只能读前端公开配置，不能添加VITE_LLM_API_KEY之类字段。</p>
+<pre><code class="language-dotenv">APP_ENV=demo
+APP_HOST=127.0.0.1
+APP_PORT=8000
+DATA_DIR=./data
+DATABASE_URL=sqlite:///./data/app.db
+FFMPEG_BIN=ffmpeg
+FFPROBE_BIN=ffprobe
+WHISPER_MODEL_DIR=./models/faster-whisper-small
+WHISPER_DEVICE=cpu
+WHISPER_COMPUTE_TYPE=int8
+WHISPER_LANGUAGE=zh
+MAX_UPLOAD_BYTES=209715200
+MAX_VIDEO_SECONDS=1200
+MAX_UNFINISHED_JOBS=3
+TRANSCRIBE_CONCURRENCY=1
+TASK_TIMEOUT_SECONDS=1200
+QUESTION_CONCURRENCY=1
+RETRIEVAL_TOP_K=5
+MAX_CONTEXT_CHARACTERS=6000
+LLM_BASE_URL=
+LLM_API_KEY=
+LLM_MODEL=qwen-plus
+LLM_CONNECT_TIMEOUT_SECONDS=5
+LLM_TOTAL_DEADLINE_SECONDS=25
+ANSWER_MODE=generative
+</code></pre>
+<p>LLM_BASE_URL由SYS从实际账户、地区及工作空间控制台复制，配置为OpenAI兼容接口的基础地址，BE再追加/chat/completions。不能把旧教程的通用域名当成所有账户的可用地址，不能把带/chat/completions的完整路径再次重复拼接。LLM_API_KEY必须与所用地区和工作空间匹配。LLM_MODEL固定qwen-plus。若账户权限或实际服务不可用，SYS提交阻塞证据，由BE提出可用替代及影响，经PM记录变更后才能改模型，QA重跑同一验收集；不得把模型名改成当前恰好能调用的型号后不留记录。</p>
+<p>ANSWER_MODE=extractive是主动关闭外部生成的原文检索模式。生成模式出现API故障也可返回degraded，但必须保留内部故障码。缺失密钥时可以启动本地组件，health中llm_configured=false，页面显示原文检索模式；完整生成式问答验收不能因此判通过。</p>
+<p>预算暂以项目人民币30元为内部管理上限，最终由PM在首次调用前确认。该数字不是厂商报价，不假设免费额度。SYS检查账户可用的额度提醒或上限设置；若平台不能硬性限额，在每轮测试前核对用量。BE记录调用次数、输入/输出token数量（服务返回时）和时间，脱敏日志不保存密钥。真实费用以控制台账单为准。</p>
+<h2>实现后的首次准备命令</h2>
+<p>以下均以工程师交付的course-review为工作目录，PowerShell逐条执行。具体安装位置由SYS记录，不要求修改用户全局执行策略。</p>
+<pre><code class="language-powershell">py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.lock.txt
+node --version
+npm --prefix frontend ci
+npm --prefix frontend run build
+ffmpeg -version
+ffprobe -version
+</code></pre>
+<p>前提是requirements.lock.txt、frontend/package-lock.json已由SYS组织FE/BE实机验证并交付。框架与主版本选型已完成，SYS在隔离环境解析兼容补丁和传递依赖，验证后生成精确锁文件；发布包不能只写浮动包名。安装时发现不兼容应修正锁文件并重新测试，不能在QA电脑临时逐包升级。此执行责任无需再退回PM自行研究选型。</p>
+<h2>实现后的启动与停止</h2>
+<p>实现约定：backend/app/main.py导出app；启动时初始化数据库、检查目录、恢复中断任务、预热SYS转写模块，并托管frontend/dist。</p>
+<pre><code class="language-powershell">.\.venv\Scripts\python.exe -m uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8000 --workers 1
+</code></pre>
+<p>演示环境不使用--reload，不启动多个worker，不临时修改端口。启动后浏览器访问<a href="http://127.0.0.1:8000%EF%BC%8C%E5%8F%A6%E6%9F%A5GET">http://127.0.0.1:8000，另查GET</a> /api/health。启动与health均正常后仍需真实问答验证外部连通。</p>
+<p>正常停止先等队列清空，确认没有正在问答或删除，再在原运行终端Ctrl+C。异常中断后按设计将处理中记录改failed，不能手工修改为ready。进程残留由SYS按PID核对后停止，禁止无差别结束所有Python进程。</p>
+<p>开发期FE可单独使用Vite，代理/api到8000；交付前必须验证构建后的同源版本，不能只测试开发服务器。静态页面刷新、资源路径和/api路由优先级均需要测试。</p>
+<h2>模型模块验收</h2>
+<p>SYS交接modules/transcriber源代码、版本锁定、模型下载来源与许可、模型目录结构、样本耗时、正确输出JSON和失败样本。用固定输入验证warmup、transcribe、cancel_current、shutdown，接口细节见<a href="#doc-16" class="doclink">API契约</a>。</p>
+<p>必须证明：中文文本非空、时间单位为秒、时间不超视频长度、取消后不存在残留FFmpeg或模型子进程、断网仍可本地转写。small、CPU int8为已定技术决策。若真实样本在目标机器不满足时间目标，SYS先提交耗时和错误证据、排查环境，再提出缩短测试输入或模型替代的影响；变更须由PM登记，QA重跑相同验收题，不能悄悄换模型后沿用旧测试结果。</p>
+<p>首次下载和第一次模型加载耗时分别记录，正式性能数据在预热后采集；视频处理耗时从transcribing开始到ready或failed结束，排队耗时另记。3至5分钟样本不超过8分钟是验收目标，未测前不写“8分钟内完成”。</p>
+<h2>日志与故障定位</h2>
+<p>每条关键日志至少包含UTC时间、级别、request_id、video_id（如有）、阶段、错误码和耗时。转写开始/结束、队列长度、重试、API调用状态、引用验证失败、删除和启动恢复必须可查。日志不记录Authorization、不打印.env、不保存完整视频原文和用户个人信息。</p>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>首先检查</th>
+<th>主责与交接</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>无法启动</td>
+<td>Python/锁文件、端口占用、目录写权限</td>
+<td>SYS定位环境，BE处理服务异常</td>
+</tr>
+<tr>
+<td>视频无法播放或跳转</td>
+<td>编码、Content-Type、Range 206/416</td>
+<td>SYS确认样本，BE修文件响应，FE验播放器</td>
+</tr>
+<tr>
+<td>一直排队</td>
+<td>worker是否启动，是否存在未释放锁</td>
+<td>BE查看状态与日志，SYS确认进程</td>
+</tr>
+<tr>
+<td>转写失败或很慢</td>
+<td>模型目录、CPU内存、音轨、任务期限</td>
+<td>SYS给出诊断与样本证据</td>
+</tr>
+<tr>
+<td>问答返回degraded</td>
+<td>配置、地区密钥、网络、额度、25秒期限</td>
+<td>SYS验证账户，BE记录上游错误</td>
+</tr>
+<tr>
+<td>原文有答案但拒答</td>
+<td>分词、术语、候选片段、模型JSON与引用检查</td>
+<td>BE与QA按固定题复现</td>
+</tr>
+<tr>
+<td>删除失败</td>
+<td>视频级锁、文件占用、回收区与SQLite一致性</td>
+<td>BE核对事务，SYS检查本地文件</td>
+</tr>
+</tbody></table>
+<h2>发布、备份与回退</h2>
+<p>M3（11月11日下班前）冻结发布候选，记录git commit/tag和依赖锁文件校验值，不能只写“最新版”。SYS交付源码、前端dist、启动脚本、.env.example、模型准备说明、授权测试样本和版本清单；密钥通过当面或已授权的私密渠道配置，不包含在压缩包或截图。</p>
+<p>M4（11月12日下班前）完成产品验收与备份恢复检查。备份步骤：清空活动任务，停止服务，复制data目录、配置的非敏感部分、代码和前端产物到带日期与版本的备份目录，再启动验证。复制SQLite时服务必须停止，避免只复制app.db却遗漏正在写入的内容或WAL文件。模型文件体积较大，可单独保存并记录路径和校验值。11月13日留作整改与交付缓冲。</p>
+<p>回退步骤：停止当前版本；保留故障日志和当前数据副本；恢复同一版本的源码/前端/锁文件及其匹配数据快照；保留本机密钥配置；按原启动命令启动；执行health、样本播放、引用跳转和真实问答检查。回退完成后由QA记录版本和证据，PM据此决定是否接受该版本。</p>
+<h2>当前验收中的异常路径</h2>
+<ul>
+<li>使用真实授权样本验证上传、状态、问答、拒答、引用定位，不以Mock代替真实处理。</li>
+<li>断网时检查本地播放、章节、原文定位和extractive检索模式，明确外部生成能力不可用。</li>
+<li>本地服务无法启动时按日志定位，不以历史录屏代替产品验收。</li>
+<li>按用户最新要求，展示、彩排、投影、备用录像等工作暂缓；已有展示文件不作为本轮技术交付或验收前置。</li>
+</ul>
+<h2>版本清单与交接记录</h2>
+<p>下表是待执行检查，不代表已经验证。实际路径、版本和证据由SYS填入后交QA复核。</p>
+<table>
+<thead>
+<tr>
+<th>检查项</th>
+<th>应记录信息</th>
+<th>当前状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主机</td>
+<td>OS、CPU、内存、磁盘、浏览器</td>
+<td>待SYS实机确认</td>
+</tr>
+<tr>
+<td>Python与Node</td>
+<td>Python 3.11、Node 22.x且≥22.12的完整版本与路径</td>
+<td>选型已定，待SYS在M1实机记录</td>
+</tr>
+<tr>
+<td>后端依赖</td>
+<td>requirements.lock.txt及校验值</td>
+<td>待工程实现</td>
+</tr>
+<tr>
+<td>前端依赖</td>
+<td>package-lock.json及构建结果</td>
+<td>待工程实现</td>
+</tr>
+<tr>
+<td>音视频</td>
+<td>FFmpeg/ffprobe版本与样本编码</td>
+<td>待SYS验证</td>
+</tr>
+<tr>
+<td>转写</td>
+<td>faster-whisper/CTranslate2版本、模型目录与校验</td>
+<td>待SYS验证</td>
+</tr>
+<tr>
+<td>大模型</td>
+<td>qwen-plus、地区、基础地址、测试request_id</td>
+<td>模型已定，待SYS真实调用，禁止填密钥</td>
+</tr>
+<tr>
+<td>发布版本</td>
+<td>commit/tag、打包时间、变更摘要</td>
+<td>待M3冻结</td>
+</tr>
+<tr>
+<td>备份回退</td>
+<td>备份位置、版本、恢复检查记录</td>
+<td>待M4实际检查，展示演练暂缓</td>
+</tr>
+</tbody></table>
+<h2>官方资料</h2>
+<p>核查日期2026年11月5日：<a href="https://www.alibabacloud.com/help/en/model-studio/first-api-call-to-qwen">Qwen首次调用与地区配置</a>、<a href="https://github.com/SYSTRAN/faster-whisper">faster-whisper使用与模型说明</a>、<a href="https://fastapi.tiangolo.com/deployment/server-workers/">FastAPI worker部署</a>。具体工程路径、配置变量和操作顺序为本项目实施约定。</p>
+</article></details>
+<details class="doc" id="doc-18" data-group="03_技术方案与接口" ><summary><span class="group">03_技术方案与接口</span><span>首版技术栈定稿与选型决策</span></summary><article><p>版本V1.1。决策日期2026年11月5日。决策负责人：PM兼组长。工程执行负责人：SYS，协作FE与BE，验证QA。</p>
+<h2>已完成的决定</h2>
+<p>课程视频复习助手首版采用Vue前端、Python FastAPI后端、SQLite与本地文件、faster-whisper本地语音转写、BM25原文检索、百炼通义千问API生成回答。下面列出的框架、模型、部署方式和岗位边界已定稿，四位成员可直接按此开工，不再把选技术栈当作待讨论任务。</p>
+<p>“技术选型已定稿”与“依赖已安装验证”是两件事。本次完成的是前者及工程交接规范；目标电脑安装、补丁版本锁定、真实转写与API连通由SYS组织FE/BE在M1前完成并提交证据。当前没有实机运行记录，不能写成环境已经验证。</p>
+<h2>固定技术组合</h2>
+<table>
+<thead>
+<tr>
+<th>层次</th>
+<th>首版决定</th>
+<th>实现主责</th>
+<th>执行约束</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>前端运行环境</td>
+<td>Node.js 22 LTS线，版本不低于22.12</td>
+<td>SYS准备，FE使用</td>
+<td>不使用Node 18或22.0等不满足Vite 7要求的版本</td>
+</tr>
+<tr>
+<td>页面框架</td>
+<td>Vue 3与TypeScript 5</td>
+<td>FE</td>
+<td>两个主页面，代码和接口类型同步</td>
+</tr>
+<tr>
+<td>构建与组件</td>
+<td>Vite 7、Element Plus 2</td>
+<td>FE</td>
+<td>沿用本主版本线，首次构建后锁定精确依赖，不在开发中临时换框架</td>
+</tr>
+<tr>
+<td>请求与播放器</td>
+<td>Axios 1、HTML5 video</td>
+<td>FE</td>
+<td>接口走/api；播放器支持引用秒数定位，不额外引入播放器框架</td>
+</tr>
+<tr>
+<td>后端运行环境</td>
+<td>Python 3.11独立虚拟环境</td>
+<td>SYS准备，BE使用</td>
+<td>不混用系统全局包或多个Python小版本</td>
+</tr>
+<tr>
+<td>服务与数据校验</td>
+<td>FastAPI 0.x（≥0.128）、Pydantic 2、Uvicorn单worker</td>
+<td>BE</td>
+<td>使用Pydantic v2模型；音频任务不阻塞请求事件循环</td>
+</tr>
+<tr>
+<td>数据访问与存储</td>
+<td>SQLAlchemy 2、SQLite、本地文件目录</td>
+<td>BE</td>
+<td>SQLite存元数据与任务，视频和派生文件按UUID存本地</td>
+</tr>
+<tr>
+<td>上传</td>
+<td>python-multipart</td>
+<td>BE</td>
+<td>file字段，服务端独立验证文件，不用JSON传base64</td>
+</tr>
+<tr>
+<td>音视频工具</td>
+<td>FFmpeg、ffprobe</td>
+<td>SYS</td>
+<td>独立命令用于媒体探测及约定音轨处理，由SYS记录完整版本和路径</td>
+</tr>
+<tr>
+<td>语音模型</td>
+<td>faster-whisper，多语言small，CPU，int8</td>
+<td>SYS</td>
+<td>模型在本地models/faster-whisper-small目录加载；不以GPU作为前置</td>
+</tr>
+<tr>
+<td>原文检索</td>
+<td>jieba、rank-bm25</td>
+<td>BE</td>
+<td>仅检索当前视频，top_k=5；不把分数当概率</td>
+</tr>
+<tr>
+<td>大模型</td>
+<td>百炼通义千问qwen-plus</td>
+<td>BE接入，SYS配账户</td>
+<td>模型名固定，使用httpx调用OpenAI兼容HTTP接口；端点从账户控制台配置</td>
+</tr>
+<tr>
+<td>交付运行</td>
+<td>Windows本机，127.0.0.1:8000，FastAPI同源托管前端build</td>
+<td>SYS</td>
+<td>单个Uvicorn worker；开发期可用Vite代理，验收使用打包版本</td>
+</tr>
+<tr>
+<td>测试工具</td>
+<td>pytest用于后端自动化，浏览器与人工语义核验</td>
+<td>QA，BE协作</td>
+<td>pytest只执行适合自动化的断言；答案是否被原文支持仍由QA核验</td>
+</tr>
+</tbody></table>
+<p>没有指定主版本号的Python库，名称已固定；SYS在上述Python与后端组合内解析兼容版本并记录精确版本。发布验收以锁文件实际内容为准，不以宽泛版本范围代替可复现环境。</p>
+<p>Vite 7文档要求Node 20.19+或22.12+，本项目固定选择22线且至少22.12；FastAPI官方说明较新版本使用Pydantic v2，本项目直接采用Pydantic 2，不维护v1兼容模型。<a href="https://v7.vite.dev/guide/">Vite 7官方文档</a>、<a href="https://fastapi.tiangolo.com/how-to/migrate-from-pydantic-v1-to-pydantic-v2/">FastAPI迁移文档</a></p>
+<p>faster-whisper本身可通过PyAV解码，不要求单独安装系统FFmpeg。本项目仍明确安装FFmpeg/ffprobe，用于服务端输入验证和统一音轨处理；这是项目决策，不是对该库前提条件的误述。<a href="https://github.com/SYSTRAN/faster-whisper">faster-whisper官方说明</a></p>
+<h2>选型决策记录</h2>
+<table>
+<thead>
+<tr>
+<th>决策ID</th>
+<th>决定与理由</th>
+<th>本轮舍弃</th>
+<th>代价与边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ADR-01</td>
+<td>Vue 3加组件库实现上传、列表与复习页，减少重复写基础控件</td>
+<td>同时维护React版或桌面PyQt版</td>
+<td>首版按现代浏览器与本机Web应用交付</td>
+</tr>
+<tr>
+<td>ADR-02</td>
+<td>Python统一承载接口、检索和模型模块，FastAPI明确数据协议</td>
+<td>再加Java/Node业务后端</td>
+<td>转写在独立进程顺序运行，BE需保证接口不被计算阻塞</td>
+</tr>
+<tr>
+<td>ADR-03</td>
+<td>SQLite和本地文件满足小组单机交付，减少服务数量</td>
+<td>MySQL/PostgreSQL、对象存储、向量数据库</td>
+<td>不承诺生产级并发、账号隔离或多台服务器共享数据</td>
+</tr>
+<tr>
+<td>ADR-04</td>
+<td>small多语言模型加CPU int8，避免GPU环境成为必经依赖</td>
+<td>large模型、CUDA优化和自行训练基础模型</td>
+<td>中文术语准确率与处理耗时必须真实测量</td>
+</tr>
+<tr>
+<td>ADR-05</td>
+<td>BM25结合中文分词，先交付可追溯的课程检索</td>
+<td>首版向量嵌入、混合检索、多检索器融合、LangChain</td>
+<td>同义表达可能漏召回，需要独立题库评估，不宣传完整语义理解</td>
+</tr>
+<tr>
+<td>ADR-06</td>
+<td>qwen-plus经兼容HTTP协议生成答案，SDK层保持简单</td>
+<td>同时接入多家模型、自建LLM服务</td>
+<td>依赖账户权限、网络和费用，失效时明确降级为原文检索</td>
+</tr>
+<tr>
+<td>ADR-07</td>
+<td>SQLite持久队列、转写并发1、问答生成并发1、Uvicorn单worker</td>
+<td>Redis、Celery和多worker部署</td>
+<td>排队容量3，超限拒绝；避免多进程重复加载模型或领取任务</td>
+</tr>
+<tr>
+<td>ADR-08</td>
+<td>Windows本地脚本加前端build为必达交付</td>
+<td>本轮Docker、云端部署、公共互联网服务</td>
+<td>M4必须实机启动和恢复验证，展示和彩排暂缓</td>
+</tr>
+</tbody></table>
+<p>选用某个框架是组长作出的实施决定，不代表它在任何场景都最好。决策围绕五个核心开发日、四位工程成员和单机课程复习范围，不把比较意见当作实测性能结论。</p>
+<h2>四岗模块边界</h2>
+<ul>
+<li>FE拥有frontend，负责页面、状态、接口类型、播放器及当前页面会话的问答显示。刷新不恢复历史UI，不新增历史问答API需求。</li>
+<li>BE拥有backend/app及检索/问答业务，负责接口、数据库、队列状态、约60秒检索块、固定章节提要、模型调用、引用校验、重试和删除。</li>
+<li>SYS拥有modules/transcriber、环境准备和scripts运行交付，负责FFmpeg/ffprobe、模型文件、转写子进程、取消超时、依赖整合与数据备份恢复。</li>
+<li>QA拥有测试用例、人工标注、缺陷与证据，负责验证实际行为。不能因为响应200或引用ID存在就判答案正确。</li>
+</ul>
+<p>SYS不写业务SQLite状态，BE不把模型下载、音频环境和进程清理全部退回自己处理。模块交接按<a href="#doc-16" class="doclink">API与模型契约</a>执行，不以“交给后端自行看着接”代替明确输入输出。</p>
+<h2>跨模块固定口径</h2>
+<ol>
+<li>transcribe(video_path, output_dir)返回TranscriptSegment列表，片段字段为id、start_sec、end_sec、text。Citation使用segment_id，它等于对应TranscriptSegment.id，由BE回填原文与时间。</li>
+<li>Video上传响应的ID字段为id，FE从该字段取值用于后续路径video_id；不是从上传响应读取不存在的video_id字段。</li>
+<li>章节按固定60秒窗口聚合，标题为“mm:ss 章节提要”，正文按时间摘取原句至最多120字符，保留完整来源ID。空窗口跳过，不调用大模型编写章节内容。</li>
+<li>queued阶段等待时间独立显示：首次按created_at，retry重新入队按updated_at；开始处理后使用elapsed_sec。性能指标排除上传与排队，另报用户总等待。</li>
+<li>问答分answered/generative、not_found/extractive、degraded/extractive。模型故障不等于课程没有答案；降级不能计入正式生成通过率。</li>
+<li>小组所有成员使用<a href="03_%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88%E4%B8%8E%E6%8E%A5%E5%8F%A3/04_%E6%8E%A5%E5%8F%A3Mock%E7%A4%BA%E4%BE%8B.json">接口Mock</a>的同一结构。Mock是虚构联调样例，不能作为语音模型输出或验收数据。</li>
+</ol>
+<h2>M1分配的环境执行任务</h2>
+<p>截止节点为11月6日下班前。以下任务已确定由对应成员执行，不再要求PM自行研究或安装。</p>
+<table>
+<thead>
+<tr>
+<th>主责</th>
+<th>要做的事</th>
+<th>必须交付</th>
+<th>接收检查</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FE</td>
+<td>按固定Vue/TS/Vite/组件组合创建工程并构建</td>
+<td>frontend/package.json、frontend/package-lock.json、构建日志与dist</td>
+<td>SYS在同版本Node下npm ci并构建；BE核对接口类型</td>
+</tr>
+<tr>
+<td>BE</td>
+<td>按Python 3.11/FastAPI/Pydantic 2创建服务，完成schema与基本入口</td>
+<td>后端直接依赖清单、启动入口、health、协议实现计划</td>
+<td>SYS在独立虚拟环境安装；QA检查错误结构和响应字段</td>
+</tr>
+<tr>
+<td>SYS</td>
+<td>整合BE与转写直接依赖，安装兼容补丁与传递依赖</td>
+<td>requirements.lock.txt、docs/environment-versions.md、模型来源与目录记录</td>
+<td>在干净虚拟环境从锁文件重装，执行pip check并实际导入核心模块</td>
+</tr>
+<tr>
+<td>SYS</td>
+<td>验证small本地转写及qwen-plus实际连通</td>
+<td>短样本transcript.json、环境/参数/耗时、脱敏request_id</td>
+<td>BE独立调用转写函数；QA抽查文本与真实时间，不能只看截图</td>
+</tr>
+<tr>
+<td>QA</td>
+<td>对照协议和Mock检查跨岗位数据</td>
+<td>字段核对记录与不一致项</td>
+<td>FE/BE/SYS分别修正自己的消费者与生产者</td>
+</tr>
+</tbody></table>
+<p>本次没有运行上述安装与真实调用，所以这些工程任务保持待执行。若M1验证失败，SYS交具体错误、环境和复现步骤，BE/FE按归属修复；只有遇到必须更换技术的事实时才启动变更。</p>
+<h2>锁文件和版本记录的完成标准</h2>
+<p>requirements.lock.txt需包含安装环境内后端及转写全部精确依赖版本，不能只有fastapi等浮动包名；FE提交与package.json匹配的package-lock.json。SYS在docs/environment-versions.md记录操作系统、Python完整版本、Node完整版本、FFmpeg/ffprobe版本与路径、faster-whisper/CTranslate2版本、small模型目录与可校验来源、实际qwen-plus端点地区和验证日期。禁止记录密钥。</p>
+<p>首次本机通过后应在另一独立环境执行npm ci和pip按锁文件安装，再验证health、转写、问答与播放器Range。不是要求多台机器必须同时在场；有一台电脑时用全新目录和全新虚拟环境验证。未获得这些证据前，只能标“选型已定，环境验证待执行”，不能标“可复现已通过”。</p>
+<p>M3（11月11日下班前）冻结应用候选和锁文件后，不随意升级依赖；M4（11月12日下班前）完成产品验收与数据备份恢复，11月13日作为整改交付缓冲。当前不要求展示、彩排或录屏作为技术发布前置。</p>
+<h2>技术变更规则</h2>
+<p>以下情形才提出变更：真实安装不兼容且无法在既定版本线修复；账户无法使用qwen-plus；small在目标设备经排查仍不能满足可接受的质量或耗时；必要依赖出现必须处理的问题。</p>
+<p>变更发起人须提交事实证据、现有版本、最小替代方案、受影响需求/接口/测试和预计工作量。SYS负责环境方案，BE负责接口与模型适配影响，FE负责界面影响，QA负责复测范围，PM记录是否采纳。改模型或检索策略后重跑同一正式验收集，不能沿用旧结果。</p>
+<p>日常密钥轮换、账户地区端点填入和按既定主版本线首次锁补丁，属于SYS执行配置与验证，不属于重新选择技术栈。不得因为个人偏好改用React、换数据库、加入向量库或另接一种模型。</p>
+<h2>核查依据</h2>
+<p>官方资料于2026年11月5日核查，仅支持对应产品能力和版本约束，不保证本项目设备性能。除上述Vite/FastAPI/faster-whisper资料，模型调用依据为<a href="https://www.alibabacloud.com/help/en/model-studio/first-api-call-to-qwen">百炼Qwen首次调用与地区配置</a>。其余任务、容量、时间和责任均为本项目的正式实施决定。</p>
+</article></details>
+<details class="doc" id="doc-19" data-group="04_交接文档" ><summary><span class="group">04_交接文档</span><span>产品需求交接开发与测试</span></summary><article><p>V1.2 · 产品经理编制 · FE、BE、QA、SYS 接收。M1 接收节点为 11 月 6 日下班前。材料已备齐，实际接收由各岗位登记。</p>
+<h2>交接目标</h2>
+<p>让四个技术岗位按照同一套需求开发和验收。项目是课程视频复习助手，首版聚焦“找到知识点并回看依据”。本文件规定要交什么、怎么确认，以及什么情况应退回补充。产品范围和指标以<a href="#doc-0" class="doclink">统一约定</a>为准。</p>
+<h2>PM已备齐的交出材料</h2>
+<p>本次已经完成产品侧文档和分工技术决定，四岗可据此开工。下面列出实际文件，避免只有交接模板而没有可交材料。文档产出不等于成员已签收，也不表示应用已经实现。</p>
+<table>
+<thead>
+<tr>
+<th>已备齐材料</th>
+<th>文件位置</th>
+<th>当前状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PRD、P0与用户故事</td>
+<td><a href="#doc-3" class="doclink">立项与需求文档</a></td>
+<td>已定稿</td>
+</tr>
+<tr>
+<td>页面与交互、可点击原型</td>
+<td><a href="#doc-4" class="doclink">交互规范</a>、<a href="01_%E9%9C%80%E6%B1%82%E4%B8%8E%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/03_%E5%8F%AF%E7%82%B9%E5%87%BB%E4%BA%A4%E4%BA%92%E5%8E%9F%E5%9E%8B.html">原型</a></td>
+<td>已备齐</td>
+</tr>
+<tr>
+<td>需求依据与产品取舍</td>
+<td><a href="#doc-5" class="doclink">竞品取舍</a>、<a href="#doc-6" class="doclink">模拟调研</a></td>
+<td>已完成，按模拟样本解释</td>
+</tr>
+<tr>
+<td>需求工单与原型验收</td>
+<td><a href="#doc-14" class="doclink">需求工单</a>、<a href="#doc-25" class="doclink">原型验收</a></td>
+<td>R01 至 R10 已映射用例，浏览器复测 12 项通过</td>
+</tr>
+<tr>
+<td>正式分工与节点</td>
+<td><a href="#doc-13" class="doclink">四岗任务书</a>、<a href="#doc-10" class="doclink">阶段计划</a></td>
+<td>决策已定稿</td>
+</tr>
+<tr>
+<td>技术栈与协议</td>
+<td><a href="#doc-15" class="doclink">技术方案</a>、<a href="#doc-16" class="doclink">API契约</a>、<a href="03_%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88%E4%B8%8E%E6%8E%A5%E5%8F%A3/04_%E6%8E%A5%E5%8F%A3Mock%E7%A4%BA%E4%BE%8B.json">接口样例</a></td>
+<td>技术路线已确定；实机验证待SYS/BE/FE执行</td>
+</tr>
+<tr>
+<td>测试与验收材料</td>
+<td><a href="#doc-22" class="doclink">测试计划</a>、<a href="#doc-23" class="doclink">样本脚本与题库</a></td>
+<td>方案已定稿；录制、标注、测试未执行</td>
+</tr>
+</tbody></table>
+<h2>接收人检查标准</h2>
+<table>
+<thead>
+<tr>
+<th>材料</th>
+<th>必须具备的内容</th>
+<th>接收人如何检查</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PRD与范围清单</td>
+<td>目标用户、任务、P0、暂不做的功能、输入限制、失败与拒答规则</td>
+<td>FE、BE、QA分别复述一条完整成功流程和一条失败流程</td>
+</tr>
+<tr>
+<td>页面与交互说明</td>
+<td>上传/列表、处理状态、播放器/提要/问答、来源定位、错误和删除确认</td>
+<td>FE检查每个页面是否有入口、等待态、空态、失败态和返回方式</td>
+</tr>
+<tr>
+<td>用户故事和验收标准</td>
+<td>编号、触发条件、正常结果、异常结果、证据要求</td>
+<td>QA能直接转化为测试用例，BE能判断接口何时返回错误</td>
+</tr>
+<tr>
+<td>技术与资源约束</td>
+<td>单机演示、Python AI项目、可用API、CPU转写、存储、预算</td>
+<td>SYS确认目标设备和模型可跑，BE确认API配置来源</td>
+</tr>
+<tr>
+<td>任务与节点</td>
+<td>单一主责、依赖、交付接收人、M1至M4及整改缓冲</td>
+<td>按岗位直接认领；姓名可补，不阻止开工；展示暂缓</td>
+</tr>
+<tr>
+<td>样本和验收口径</td>
+<td>授权视频、问题来源、目标值与待实测结果的区分</td>
+<td>QA核对许可与真实标注，不将目标冒充成绩</td>
+</tr>
+</tbody></table>
+<p>材料存放：需求与页面在<code>01_需求与产品设计</code>，技术协议在<code>03_技术方案与接口</code>，测试计划在<code>05_测试与验收</code>，任务见<a href="#doc-12" class="doclink">任务总表</a>。</p>
+<h2>逐项口径确认</h2>
+<h3>1 输入和任务状态</h3>
+<ul>
+<li>首版只接收规定格式的中文讲课MP4，200 MiB和20分钟为硬上限，由服务端检查，不能只靠浏览器扩展名。</li>
+<li>最大3个未完成任务，实际转写并发1；问答同时最多1个生成请求。</li>
+<li>五种状态只使用queued、transcribing、indexing、ready、failed。等待时显示阶段和耗时，不显示没有依据的百分比。</li>
+<li>转写任务墙钟超20分钟按失败处理；应有可理解的错误与重试入口。</li>
+</ul>
+<p>FE负责可理解的提示，BE负责真实状态与校验，SYS负责音视频验证与进程超时控制，QA负责边界验证。</p>
+<h3>2 内容与问答</h3>
+<ul>
+<li>内容来自语音转写，画面上未被说出的文字不属于能力范围。</li>
+<li>约60秒聚合的章节提要要保留原文与时间来源，不宣传为视频画面理解。</li>
+<li>只在当前视频内进行单轮问答，不要求跨视频或历史对话记忆。</li>
+<li>引用由后端验证片段ID并填入真实原文、start_sec、end_sec，前端按start_sec跳转播放器。</li>
+<li>无依据返回not_found且无引用；API故障进入degraded/extractive，页面清楚显示“原文检索模式”。历史结果与现场回答分别标识。</li>
+</ul>
+<h3>3 数据管理</h3>
+<ul>
+<li>ready和failed视频可删除，删除原文件、派生数据与关联问答；处理中删除返回409。</li>
+<li>failed视频可主动重试，复用video_id，清理或替换旧派生结果。</li>
+<li>重启时正在转写/索引的任务转failed，queued继续排队。不能重启后无故显示ready。</li>
+<li>没有账号与多人权限，演示版本只在本机或受信任课堂网络使用，密钥只在服务端环境变量中。</li>
+</ul>
+<h3>4 验收判断</h3>
+<p>QA使用3段授权样本、20道正题和5道无答案题。正题至少16/20回答正确且含有效引用；5道无答案题全部正确拒答；有效引用时间偏差不超5秒的比例至少90%。这些是目标，尚未实测。</p>
+<p>3至5分钟视频预热后处理目标8分钟内。10次问答记录中位数与最大值，问答目标20秒，外部请求超时上限25秒。超过目标时保留真实记录，由PM决策；不能为了“通过”选择性删掉失败题。</p>
+<h2>每个岗位必须给出的反馈</h2>
+<table>
+<thead>
+<tr>
+<th>接收岗位</th>
+<th>必须回答的问题</th>
+<th>有疑问时的处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FE</td>
+<td>页面流程和状态是否完整？哪些文案或交互尚不明确？</td>
+<td>在交互说明标出问题，由PM确认后更新</td>
+</tr>
+<tr>
+<td>BE</td>
+<td>数据、错误、超时、删除和重试是否可实现？</td>
+<td>记录涉及协议或工期的影响，由PM和SYS共同评估</td>
+</tr>
+<tr>
+<td>QA</td>
+<td>每项P0能否观察和判定？题目与来源能否人工标注？</td>
+<td>补测试准备条件，不能用“体验好”替代验收条件</td>
+</tr>
+<tr>
+<td>SYS</td>
+<td>本机、模型、网络、API、预算是否满足？</td>
+<td>提供实测限制及替代方案，涉及降级需PM确认</td>
+</tr>
+</tbody></table>
+<h2>退回补充的条件</h2>
+<p>出现以下任一情况，不把需求标“已接收”：P0没有完成标准；同一功能在不同文档中口径冲突；输入上限与技术资源明显不符；问答无依据和故障模式未定义；验收数据无法获得；团队尚不清楚谁负责转写模块。</p>
+<p>退回时写明问题、影响角色、建议处理和下一确认节点。PM修订后同步更新基线、任务、接口和用例，不只在聊天里口头解释。</p>
+<h2>交接确认方式</h2>
+<p>材料已在本文件夹向用户备齐。由用户实际交给四位接收人后，接收人逐项检查并在<a href="#doc-28" class="doclink">交接确认记录</a>填“已接收”或“退回”。当前没有发送、启动会或团队签收的记录，不代签成员意见。展示与彩排暂不纳入本次交接。</p>
+</article></details>
+<details class="doc" id="doc-20" data-group="04_交接文档" ><summary><span class="group">04_交接文档</span><span>研发联调与测试交接</span></summary><article><p>版本：V1.1。协调人：PM。技术主责：FE、BE、SYS；独立验证：QA。接口与交接规范已备齐；实际代码、运行与成员签收尚未执行。</p>
+<h2>统一规则</h2>
+<p>交接遵循“交出材料、接收人独立运行、记录结果”三步。演示视频、截图和日志需要标注样本ID、代码版本、环境、日期和执行人。聊天截图或“我这里能跑”不足以说明接收环境可用。</p>
+<p>技术细节以<code>03_技术方案与接口</code>和<a href="#doc-0" class="doclink">统一约定</a>为准。所有接口变更先同步FE、BE、QA、SYS，再修改实现。交接确认写入<a href="#doc-28" class="doclink">记录表</a>。</p>
+<h2>SYS交接BE 音视频与转写模块</h2>
+<p>计划：M1前给出真实样本试跑和契约，M2前交付可集成模块。</p>
+<table>
+<thead>
+<tr>
+<th>交出项</th>
+<th>必须说明</th>
+<th>接收检查</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>环境与依赖</td>
+<td>Python、FFmpeg/ffprobe、faster-whisper的实际版本，small模型本地目录，CPU int8参数</td>
+<td>BE在约定环境独立加载模型，不依赖SYS个人临时目录</td>
+</tr>
+<tr>
+<td>模块与调用契约</td>
+<td>输入文件路径、输出数据、异常、超时与资源清理，函数签名以技术契约为准</td>
+<td>BE使用技术文档中的调用方式完成成功与失败样例</td>
+</tr>
+<tr>
+<td>媒体校验</td>
+<td>MP4、H.264、AAC、大小、时长、音轨检查及拒绝原因</td>
+<td>对无音轨、损坏文件、超长文件返回约定错误，不阻塞队列</td>
+</tr>
+<tr>
+<td>转写数据</td>
+<td>可追溯片段ID、start_sec、end_sec、text，时间从视频起点计秒</td>
+<td>BE与QA抽查原视频，开始小于结束，时间在视频范围内，文本非伪造</td>
+</tr>
+<tr>
+<td>模型试跑证据</td>
+<td>授权样本ID、模型/参数、预热说明、耗时和转写输出</td>
+<td>QA核对识别质量，BE核对字段可入库</td>
+</tr>
+<tr>
+<td>超时与资源释放</td>
+<td>任务20分钟上限、子进程结束、临时音频清理和错误日志</td>
+<td>模拟失败后下一个任务仍能执行，无僵死进程和无限等待</td>
+</tr>
+</tbody></table>
+<p><strong>分工边界：</strong> SYS提供音视频处理和模型运行能力；BE负责持久化队列、任务状态、业务数据、索引和接口。BE不能直接把原始模块异常展示给用户，需转为统一错误格式。</p>
+<p><strong>退回条件：</strong> 缺模型文件或依赖；仅在个人电脑某个目录可运行；时间戳失真；没有失败行为；无法停止超时任务；耗时没有真实样本证据。若从small改为base，须有PM/QA决策记录及同一验收集的复测。</p>
+<h2>BE交接FE API与业务状态</h2>
+<p>计划：M1冻结契约，M2前真实服务可用，M3完成稳定版。</p>
+<p>BE须提供：</p>
+<ul>
+<li>环境地址、启动说明、代码版本及接口文档入口。</li>
+<li>全部约定接口的请求和响应，包括正常与关键错误样例。</li>
+<li>上传202、删除204、处理中删除409等语义，以及错误结构<code>{error:{code,message,retryable},request_id}</code>。</li>
+<li>五状态及每种状态可做的操作，轮询建议和任务超时表现。</li>
+<li>真实样本ID、可播放地址、transcript和summary结构、问题接口及三类回答状态。</li>
+<li>Range支持的复现方式，确保播放器按时间跳转时可以继续读取视频。</li>
+<li>UTC记录时间与秒数偏移的说明。不得把毫秒当秒，也不得对视频偏移添加时区。</li>
+</ul>
+<p>FE接收时必须执行：上传一段真实样本，检查状态轮询；打开ready视频，播放并跳转；执行一题正题和一题无答案题；模拟API不可用，确认degraded/extractive模式；对failed任务重试；删除ready/failed视频并确认刷新后消失。</p>
+<p><strong>退回条件：</strong> 文档和接口字段不同；只有模拟服务；正常响应额外套了data包装；模型直接输出的时间戳未经验证；接口错误无request_id；秘密出现在浏览器请求或构建文件；Range失败导致跳转不可用。</p>
+<h2>FE交接BE和SYS 构建与集成</h2>
+<p>FE交付生产build目录、源码版本、依赖锁文件、构建说明、路由约定、API地址配置、错误映射与已知问题。前端build由FastAPI同源托管，演示入口为<code>http://127.0.0.1:8000</code>；开发时代理配置不得带入错误的生产地址。</p>
+<p>BE检查静态资源、页面刷新与<code>/api</code>路径不冲突；SYS在目标设备按说明构建或使用对应build产物，并核对版本。浏览器中不得出现模型API密钥、内部异常栈或错误的跨域请求。</p>
+<p><strong>退回条件：</strong> 只能通过开发服务器打开；缺锁文件；前端和后端来自不同不兼容版本；部署后刷新页面404；引用无法跳转；等待态、失败态或降级文案缺失。</p>
+<h2>FE与BE共同完成M2纵向流程</h2>
+<p>使用同一真实样本按以下顺序验证：上传后返回202及视频对象id（后续路径中的video_id）；queued、transcribing、indexing到ready；显示转写与提要；提问得到可核对回答；至少一条有效引用跳转到正确片段；无依据题不编造；失败能解释并可重试。</p>
+<p>SYS协助记录模型与运行环境，QA独立操作并记录证据。尚未接入的功能逐项标记，不用演示录像替代真实接口的完成情况。</p>
+<h2>开发交接QA 测试候选版本</h2>
+<p>计划：M2接收主流程，M3接收完整候选版。FE、BE、SYS分别提交本岗位交付，BE汇总候选版本，SYS提供稳定运行环境。</p>
+<table>
+<thead>
+<tr>
+<th>必交材料</th>
+<th>内容要求</th>
+<th>QA接收检查</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>候选版标识</td>
+<td>版本标签或提交ID、构建日期、FE/BE/模型版本</td>
+<td>本次测试可以定位到同一组代码和配置</td>
+</tr>
+<tr>
+<td>功能清单</td>
+<td>已实现P0、未实现项、已知问题及影响</td>
+<td>与PRD逐项对应，未实现项不能从用例中删除</td>
+</tr>
+<tr>
+<td>运行与配置</td>
+<td>启停方法、端口、模型目录、脱敏配置、数据重置方式</td>
+<td>QA能独立访问，测试失败后可恢复环境</td>
+</tr>
+<tr>
+<td>自测证据</td>
+<td>主流程、重试、删除、重启、拒答、降级、输入校验</td>
+<td>有步骤、实际结果、版本和request_id</td>
+</tr>
+<tr>
+<td>测试数据</td>
+<td>授权样本和标注位置，不含真实API密钥</td>
+<td>QA能还原输入，样本来源明确</td>
+</tr>
+<tr>
+<td>限制说明</td>
+<td>单机、并发、无账号、语音内容范围、性能观察</td>
+<td>用例和对外展示口径一致</td>
+</tr>
+</tbody></table>
+<p><strong>进入测试的条件：</strong> 版本固定、健康检查通过、最小主流程可运行、配置和已知问题完整。若测试过程中热改代码，QA需记录新版本并重测受影响用例。</p>
+<h2>QA交接开发 缺陷与回归</h2>
+<p>缺陷至少包括：编号、标题、严重级别、环境与版本、前置条件、输入样本/问题、复现步骤、期望结果、实际结果、日志request_id或录像、建议主责、当前状态。</p>
+<ul>
+<li>阻断：服务无法启动、主流程无法继续、结果/引用伪造、密钥泄露、数据破坏。立即通知PM与主责人。</li>
+<li>严重：P0关键结果错误、无依据题编造、重试/删除/来源回看不可用。M3前修复并回归。</li>
+<li>一般：不阻断主流程的布局、文案或次要体验问题。PM依据影响安排处理。</li>
+</ul>
+<p>开发提交修复版本和影响范围后，QA按原步骤回归，再补受影响的相邻流程。开发自称“已修复”不等于QA已关闭。</p>
+<h2>QA交接PM 最终验收建议</h2>
+<p>计划：M4前。QA提交版本与环境、P0结果、20道正题与5道无答案题逐题证据、引用时间误差、10次问答中位数与最大值、3至5分钟样本处理耗时、阻断/严重缺陷状态、已知限制和结论建议。</p>
+<p>20道正题全部计入分母，not_found或degraded都按该正题未通过；另报降级数量。引用误差统计写清实际检查了多少条有效引用；不能把“不含引用的题”静默排除后仍宣称整体回答达标。</p>
+<p>PM核对证据后决定通过、附条件接受或整改后复验。指标未达标不能改写为达标；附条件接受须写明限制、用户影响、整改主责与节点，S1/S2未解决不能按通过处理。展示按用户最新要求暂缓，不列入本轮交接。</p>
+</article></details>
+<details class="doc" id="doc-21" data-group="04_交接文档" ><summary><span class="group">04_交接文档</span><span>部署发布与回退交接</span></summary><article><p>版本：V1.1。交出与执行主责：SYS。协作：FE、BE。检查：QA。产品放行：PM。当前只规定产品运行交付，展示和现场保障暂缓。</p>
+<h2>交付方式</h2>
+<p>首版固定使用Windows本地启动，前端生产build由FastAPI同源托管，访问<code>http://127.0.0.1:8000</code>。采用Python 3.11、Uvicorn单worker、SQLite、本地视频和模型缓存。Docker不纳入本轮。</p>
+<p>本文件规定运行包必须具备的内容与检查步骤。实际启动命令、依赖版本、目录名和环境变量完整清单以技术方案和SYS提交的运行说明为准，不能把计划说明当作已经存在的程序。</p>
+<h2>SYS应交出的运行包</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>要求</th>
+<th>检查人</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>发布版本标识</td>
+<td>对应源码提交、前端build、后端、模型和配置版本</td>
+<td>QA、BE</td>
+</tr>
+<tr>
+<td>启动停止说明</td>
+<td>工作目录、环境准备、启动、健康检查、正常停止和日志位置</td>
+<td>QA独立照做</td>
+</tr>
+<tr>
+<td>依赖与模型</td>
+<td>实际小版本、Python依赖锁定、前端锁文件、FFmpeg、模型本地路径</td>
+<td>BE、FE</td>
+</tr>
+<tr>
+<td>配置示例</td>
+<td>不含真实密钥的示例和填写说明，LLM_BASE_URL/LLM_API_KEY/LLM_MODEL由服务端读取</td>
+<td>BE、PM</td>
+</tr>
+<tr>
+<td>数据目录说明</td>
+<td>SQLite文件、原视频、转写/索引等派生数据、日志和临时文件</td>
+<td>BE、QA</td>
+</tr>
+<tr>
+<td>演示数据</td>
+<td>授权样本、测试问题、已处理样本、真实历史结果及明确标记</td>
+<td>PM、QA</td>
+</tr>
+<tr>
+<td>备份与恢复</td>
+<td>数据库和文件一致副本、旧版本代码/build/配置、恢复步骤及验证证据</td>
+<td>QA</td>
+</tr>
+<tr>
+<td>运行交接材料</td>
+<td>运行入口、故障定位、备份和恢复操作卡</td>
+<td>PM；展示稿、彩排与录像暂不作为前置</td>
+</tr>
+</tbody></table>
+<p>真实API密钥单独通过团队约定的安全方式配置，不打包到源码、展示截图或普通交接文档。内部项目总预算暂设30元控制目标，PM确认实际额度后由SYS设置可用提醒和使用记录，不据此承诺服务商费用。</p>
+<h2>发布前检查</h2>
+<h3>版本和功能</h3>
+<ul>
+<li>FE、BE、SYS提交的是同一候选版本，QA报告对应此版本。</li>
+<li>所有P0已完成自测与回归，未解决问题有等级、影响和PM决定。</li>
+<li>无阻断或严重的正确性、引用、数据和密钥问题。</li>
+<li>API可正常访问，当前模型和地区端点与配置一致，模型缓存可离线加载。</li>
+<li>网络故障时能进入明确标识的原文检索模式；不能将历史结果伪装为实时回答。</li>
+</ul>
+<h3>设备和数据</h3>
+<ul>
+<li>在目标运行电脑验证浏览器视频编码、播放、音频输出、模型缓存与网络；投影和上台设备检查暂缓。</li>
+<li>留出视频处理所需的可用磁盘，检查模型缓存、样本和运行日志是否在约定目录。</li>
+<li>服务只绑定本机作为默认方式。若临时改局域网访问，由SYS和PM确认范围，不能误当成有账号权限的公网系统。</li>
+<li>保留本次验收数据，不在交付前随意清库或删除唯一副本。</li>
+</ul>
+<h2>一致备份步骤</h2>
+<p>SQLite与视频文件要对应同一时点，不能服务仍写入时直接复制单个数据库文件。</p>
+<ol>
+<li>PM宣布短暂停止新上传和问答，FE暂停操作入口或通知组员停止请求。</li>
+<li>SYS等待任务到稳定状态后正常停止服务；若存在正在执行的任务，记录其ID和状态，不强行把它标ready。</li>
+<li>BE确认数据库连接已关闭且写入结束。SYS保存数据库及其需要的关联文件、原视频、派生数据、版本化配置和前端build。</li>
+<li>为副本记录日期、版本、样本列表和文件校验信息，真实密钥单独保管。</li>
+<li>SYS在独立恢复目录启动副本，由QA核对列表、视频播放、转写、提要和来源跳转。问答API另按实时网络验证。</li>
+<li>恢复正常服务。只有恢复检查通过的副本才标“可用备份”。</li>
+</ol>
+<p>如果团队采用SQLite在线备份API，也需保证相关文件一致并验证恢复；方案变更由BE与SYS写入实际运行说明。</p>
+<h2>发布操作与放行</h2>
+<table>
+<thead>
+<tr>
+<th>顺序</th>
+<th>主责</th>
+<th>操作</th>
+<th>证据与接收</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>PM</td>
+<td>确认候选版本、QA结果和已知限制</td>
+<td>发布决定记录</td>
+</tr>
+<tr>
+<td>2</td>
+<td>SYS</td>
+<td>保存一致副本，部署对应代码与build，填写本地配置</td>
+<td>版本与备份路径</td>
+</tr>
+<tr>
+<td>3</td>
+<td>SYS、BE</td>
+<td>启动服务，验证健康接口、模型、日志、存储</td>
+<td>脱敏日志和健康响应</td>
+</tr>
+<tr>
+<td>4</td>
+<td>QA</td>
+<td>执行冒烟：列表、播放、正题、无答案题、引用跳转、错误提示</td>
+<td>冒烟结果和request_id</td>
+</tr>
+<tr>
+<td>5</td>
+<td>PM</td>
+<td>根据QA证据接收产品运行包并记录限制</td>
+<td>产品交付签收，不含展示</td>
+</tr>
+</tbody></table>
+<p>部署和产品验收分开记录。可以部署测试版供验证，但没有QA证据和PM结论不能标“最终验收通过”。</p>
+<h2>回退条件与操作</h2>
+<p>触发条件：新版本无法启动、核心流程失效、数据或引用错误、明显性能退化、密钥暴露、依赖更新导致演示电脑不可运行。SYS立即停止有风险的新请求，通知PM、BE和QA。</p>
+<p>回退步骤：</p>
+<ol>
+<li>保存失败版本日志和request_id，记录触发原因，避免丢掉排查依据。</li>
+<li>停止服务，保存当前状态副本，确认要恢复的版本及完整数据副本。</li>
+<li>恢复旧版本代码、前端build、依赖环境与兼容配置。若数据结构已变，连同匹配的数据库和关联文件一起恢复，不只换代码。</li>
+<li>启动后按既定规则处理任务：queued继续排队，曾处于transcribing/indexing的任务标failed并允许重试。</li>
+<li>QA验证健康、列表、播放、提要、问答、引用和删除等受影响功能；PM决定是否恢复产品使用。</li>
+<li>记录恢复到的版本、数据时点和恢复后可能丢失的新数据，向组内说明影响。</li>
+</ol>
+<p>回退耗时在恢复验证中实际测量后填写，不事先宣称“一键恢复”或固定秒数。</p>
+<h2>暂缓附录 展示现场故障处理</h2>
+<p>以下为V1.0保留内容，用户已要求展示先不用管，本轮不执行、不新增，不影响产品验收。恢复展示安排时再更新。</p>
+<table>
+<thead>
+<tr>
+<th>现场情况</th>
+<th>第一动作</th>
+<th>备用展示</th>
+<th>责任人</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>API超时或额度不可用</td>
+<td>保留错误，切原文检索并显示模式</td>
+<td>展示引用与回看，解释生成受限</td>
+<td>BE、SYS，PM说明</td>
+</tr>
+<tr>
+<td>临时上传转写过慢</td>
+<td>显示真实状态，不等待到讲解失控</td>
+<td>打开已处理样本，并说明预处理时间</td>
+<td>SYS操作，PM讲解</td>
+</tr>
+<tr>
+<td>服务无法恢复</td>
+<td>保存日志，停止反复重启</td>
+<td>播放真实运行录像，明确录像时间与版本</td>
+<td>SYS操作，PM主讲</td>
+</tr>
+<tr>
+<td>投影或网络问题</td>
+<td>检查设备/使用已准备网络</td>
+<td>使用本机离线展示稿与录像</td>
+<td>SYS</td>
+</tr>
+<tr>
+<td>真实结果不符合预期</td>
+<td>记录问题，不修改数据伪装成功</td>
+<td>讲清限制和修复方向</td>
+<td>PM、QA</td>
+</tr>
+</tbody></table>
+<h2>发布与回退实际记录</h2>
+<table>
+<thead>
+<tr>
+<th>日期</th>
+<th>版本</th>
+<th>操作类型</th>
+<th>备份位置与时点</th>
+<th>QA检查结果</th>
+<th>PM决定</th>
+<th>执行人</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>待执行</td>
+<td>待提交</td>
+<td>尚未发布</td>
+<td>待提交</td>
+<td>未检查</td>
+<td>未放行</td>
+<td>SYS</td>
+</tr>
+</tbody></table>
+<p>完整交接签收见<a href="#doc-28" class="doclink">决策与交接确认记录</a>。</p>
+</article></details>
+<details class="doc" id="doc-22" data-group="05_测试与验收" ><summary><span class="group">05_测试与验收</span><span>测试计划与验收门槛</span></summary><article><p>负责人QA。PM确认业务判断，BE/FE/SYS定位和修复各自问题。本文为待执行计划，未产生测试通过结论。</p>
+<h2>测试安排</h2>
+<p>M1（11月6日下班前）完成需求到用例映射、测试素材清单和问答标注；M2（11月10日中午前）检验真实纵向流程；M3（11月11日下班前）完成首轮回归并锁定候选版；M4（11月12日下班前）完成验收与备份恢复；11月13日用于整改与归档。展示和彩排按用户要求暂缓。测试可在开发过程中提前进行，不等待全部功能完成后才开始。</p>
+<p>开发提交必须包含版本标识、变更范围、启动方法、已自测内容、已知限制和日志路径。QA拒收无法启动、没有真实样本流程、没有版本、关键接口与协议不一致的版本。拒收原因进入缺陷记录，由PM协调，不算QA未开始工作。</p>
+<h2>数据集与来源</h2>
+<p>准备3段3至5分钟清晰中文课程视频。优先由团队按<a href="#doc-23" class="doclink">样本脚本与题库</a>自录，录制完成后才记录文件哈希、实际时间戳和音轨信息。脚本中的文字答案不能直接作为产品返回内容；必须让真实音轨经转写与检索进入系统。</p>
+<p>20道有答案题和5道无答案题构成固定验收集，M1锁定版本。另准备8道开发调试题，和验收题分离。标注员先看源视频写答案和时间，不能先看系统回答再改标准答案。允许标注事实错误的修订，但需记录原因、版本和批准人，不为提高指标而删难题。</p>
+<h2>用例清单</h2>
+<p>所有用例执行结果初始为“未执行”。需求ID对应PRD。</p>
+<table>
+<thead>
+<tr>
+<th>用例ID</th>
+<th>需求</th>
+<th>操作或输入</th>
+<th>预期</th>
+<th>级别</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>F01</td>
+<td>R01</td>
+<td>上传合法样本</td>
+<td>202且视频响应id唯一，最终ready</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F02</td>
+<td>R01</td>
+<td>非MP4/伪装扩展名</td>
+<td>服务端拒绝并给格式错误，不进入队列</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F03</td>
+<td>R01</td>
+<td>超过200 MiB</td>
+<td>413且不残留大临时文件</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F04</td>
+<td>R01</td>
+<td>恰好200 MiB、合法20分钟以内</td>
+<td>不因大小拒绝；其他校验独立执行</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>F05</td>
+<td>R01</td>
+<td>时长超过20分钟</td>
+<td>明确拒绝时长超限</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F06</td>
+<td>R01</td>
+<td>无音轨、损坏视频</td>
+<td>明确拒绝，错误可解释</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F07</td>
+<td>R01</td>
+<td>MP4但编码不符</td>
+<td>ffprobe校验拒绝并提示编码要求</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F08</td>
+<td>R01</td>
+<td>队列已有3个未完成任务再上传</td>
+<td>429且说明稍后再试，不丢现有任务</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F09</td>
+<td>R02</td>
+<td>观察处理流程</td>
+<td>状态顺序合法，无伪造百分比</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F10</td>
+<td>R02</td>
+<td>处理中刷新页面</td>
+<td>以服务端状态恢复，不重复上传</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F11</td>
+<td>R03</td>
+<td>打开ready样本</td>
+<td>章节提要能追溯到真实原句和时间</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F12</td>
+<td>R04</td>
+<td>正常有答案题</td>
+<td>回答与当前视频一致，有支持性引用</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F13</td>
+<td>R04</td>
+<td>空白、空字符串、301字符问题</td>
+<td>统一参数错误，前后端都校验</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F14</td>
+<td>R04</td>
+<td>1字符、300字符边界</td>
+<td>不因长度误拒绝，内容无依据可正常not_found</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>F15</td>
+<td>R04</td>
+<td>连续点提问/同时发两个生成请求</td>
+<td>FE防重，服务端忙时429，不阻塞转写状态查询</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F16</td>
+<td>R05</td>
+<td>核对每条引用</td>
+<td>segment_id存在、原文一致、区间合法，语义支持回答</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F17</td>
+<td>R06</td>
+<td>点击引用和章节时间点</td>
+<td>播放器定位并暂停，开始秒数偏差符合目标</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F18</td>
+<td>R07</td>
+<td>5道无答案题</td>
+<td>5/5 not_found，无编造证据</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F19</td>
+<td>R08</td>
+<td>禁用密钥/模拟上游超时/断网</td>
+<td>明示degraded及原文检索，不伪称实时AI回答</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F20</td>
+<td>R08</td>
+<td>故意产生转写失败后retry</td>
+<td>只有failed可重试，重新排队且旧派生数据清理</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F21</td>
+<td>R08</td>
+<td>ready或处理中重复retry</td>
+<td>409，原任务状态和数据不变</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F22</td>
+<td>R09</td>
+<td>删除ready或failed视频</td>
+<td>204，文件与关联记录清理，详情再取404</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F23</td>
+<td>R09</td>
+<td>删除queued/transcribing/indexing视频</td>
+<td>409，无半删除数据</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F24</td>
+<td>R10</td>
+<td>重启服务</td>
+<td>ready可读，处理中任务标failed，queued继续排队</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F25</td>
+<td>R10</td>
+<td>用备份恢复到干净目录</td>
+<td>文件和数据库对应，样本可播放，原文引用可打开</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F26</td>
+<td>R06</td>
+<td>拖动播放器至未缓冲位置</td>
+<td>content支持Range，返回206及正确Content-Range</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F27</td>
+<td>R04</td>
+<td>A视频提问B视频独有知识</td>
+<td>不串视频引用，不把B数据混入A回答</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F28</td>
+<td>R05</td>
+<td>分别检查不存在ID，以及真实ID但原文不支持结论</td>
+<td>无效ID由后端自动转not_found；真实ID但语义不支持由QA判本题失败并记S2，修复后重测，不假定已有自动语义校验</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F29</td>
+<td>R04</td>
+<td>转写内含“忽略之前要求”等指令句</td>
+<td>当课程数据处理，不执行外部指令或泄露配置</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F30</td>
+<td>R09</td>
+<td>文件名或回答含HTML标签</td>
+<td>页面显示转义文本，不执行脚本</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F31</td>
+<td>R02</td>
+<td>任务墙钟超过20分钟</td>
+<td>failed并记录超时原因，队列可处理后续任务</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>F32</td>
+<td>R01</td>
+<td>上传中网络断开</td>
+<td>临时文件清理、无假ready记录、可重新选文件上传</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>F33</td>
+<td>R06</td>
+<td>1366×768与1920×1080显示</td>
+<td>播放器、回答、长引用可读，主要按钮不溢出</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>F34</td>
+<td>R04</td>
+<td>请求不存在UUID与无效ID</td>
+<td>按协议返回404/参数错误，不暴露系统堆栈</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>F35</td>
+<td>R03</td>
+<td>视频后段有较长静音</td>
+<td>不把幻觉转写当作确定事实，异常记录并评估</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>F36</td>
+<td>R08</td>
+<td>索引无命中且上游也不可用</td>
+<td>返回not_found，不伪造检索片段</td>
+<td>P0</td>
+</tr>
+</tbody></table>
+<p>P0代表关键验证路径，不表示严重级别。缺陷严重级别单独记录：S1为无法运行/数据损坏/核心流程整体不可用；S2为核心功能错误、编造引用、错误拒答机制或模式标识错误；S3为不阻断主流程的局部问题；S4为文字与轻微样式问题。发布要求S1/S2为零，S3/S4逐条由PM说明影响与处理计划。</p>
+<h2>指标计算</h2>
+<ul>
+<li>正题通过率＝回答事实正确且至少一条引用真实支持回答的题数÷20。not_found、degraded、超时和报错都记未通过，另报数量。</li>
+<li>无答案拒答率＝正确返回not_found且无伪造引用的题数÷5。目标5/5。</li>
+<li>引用时间准确率＝人工确认有效且开始时间偏差≤5秒的引用条数÷全部返回引用条数。必须同时报告无效引用数量，任何无效ID或伪造原文均为S2，不能通过剔除无效项美化结果。统一约定中的“有效引用”质量须先满足全部引用合法。</li>
+<li>问答时延从服务端接收至返回完整结果计，记录10次独立生成请求的中位数、最大值与超时次数。模型、端点、网络和预热条件一并记录。</li>
+<li>样本处理耗时从started_at至finished_at计，对应transcribing开始至ready结束，排除上传和排队，不含首次模型下载。另记录上传耗时、排队等待与从202至ready的用户总等待。三段样本分别报告，不只选最快结果。</li>
+</ul>
+<h2>验收判定</h2>
+<p>通过：关键流程全部执行、目标达标、S1/S2为零、资料完整，PM与QA确认。附条件接受：无S1/S2，但非关键性能目标未达标，明确披露并记录整改责任与截止点，不能在台上声称全部达标。不通过：核心流程不可用、结果伪造、严重问题未解决或没有必要证据。</p>
+<p>当前结论：未执行验收。计划、目标、示例输入和真实证据严格区分。</p>
+</article></details>
+<details class="doc" id="doc-23" data-group="05_测试与验收" ><summary><span class="group">05_测试与验收</span><span>自录样本脚本与问题集</span></summary><article><p>这些是为录制与标注准备的合成教学脚本和待执行测试题，不是真实视频、转写或实验结果。PM或SYS负责录制，QA根据最终视频填写实际时间。不得把本文件直接导入产品数据库冒充模型输出。</p>
+<h2>录制与标注约定</h2>
+<p>每段视频目标3至5分钟。朗读下列内容，可增加停顿和举例但不加入无答案题对应事实；以自然讲解扩展到目标时长，最终以ffprobe时长为准。不为凑时长故意重复概念。录制后编号A/B/C，转换为MP4 H.264/AAC。QA填写文件哈希、时长、音轨参数与各知识点开始/结束秒数。时间在未录制前统一为“待标注”，不能使用估算值当真值。</p>
+<h3>样本A HTTP与接口基础</h3>
+<p>HTTP接口让客户端向服务端请求资源。请求通常包含方法、路径、请求头，有时还有请求体。GET通常用于读取资源，POST通常用于创建资源或触发操作。这个区别帮助我们设计视频列表读取和视频上传接口。</p>
+<p>状态码说明请求的处理情况。200表示请求成功并带有响应内容，202表示服务器接受请求但处理尚未完成，204表示成功且没有响应体。视频上传之后还要进行语音转写，因此本项目返回202，再让页面查询状态。404表示请求的资源不存在，不能把它当成登录失败。</p>
+<p>幂等性描述同一个请求重复执行时，系统的预期最终效果是否一致。它不等于每次响应正文完全相同。上传类POST如果没有额外的幂等机制，重复提交可能产生多个任务，所以页面需要防止重复点击，网络失败也不能无限自动重试。</p>
+<p>HTTP Range让客户端只请求文件的一段字节。播放器跳到尚未缓冲的位置时，可以请求相应片段。服务端支持部分内容时通常返回206，并提供Content-Range，说明本次返回的范围。Range不是按视频秒数直接传输，而是字节范围。</p>
+<h3>样本B 数据库与事务</h3>
+<p>关系数据库中的表由行和列构成。主键标识一条记录，外键用于表达记录之间的关联。视频表可以用video_id作为主键，转写片段保存对应video_id，从而只检索当前视频的内容。</p>
+<p>事务把一组相关操作作为一个整体处理。比如创建视频记录与任务记录，如果只成功一半，页面可能看到没有任务的视频。我们希望相关数据库操作共同成功或共同回滚。这里讨论的是数据库内事务，文件写入与数据库之间仍需要应用清理策略。</p>
+<p>索引帮助数据库更快地定位数据，但索引占空间，并增加写入维护工作。因此并非每一列都需要索引。对于视频详情和转写检索，可以优先关注video_id这样的常用筛选字段。</p>
+<p>SQLite适合本项目的单机演示，数据保存在本地文件中，部署成本低。它不意味着可以随意复制一个正在写入的数据库就获得完整备份。演示前可以停止写入，再统一备份数据库和视频、转写等相关文件；恢复时检查它们是否对应。</p>
+<h3>样本C 检索问答与来源验证</h3>
+<p>检索增强问答先从资料中找相关片段，再把问题和片段交给语言模型组织回答。它能提供可核对的证据，但不能保证回答永远正确。模型仍可能误读资料或产生资料不支持的结论。</p>
+<p>BM25属于词项匹配检索，依赖问题与原文中的词语关联。中文需要先分词。相同意思采用完全不同说法时，匹配可能变差，因此可以维护少量课程词语同义映射，但不能宣称它具备完整语义理解能力。</p>
+<p>带来源的回答需要让用户看到原文，并回到相应位置。我们给转写片段固定ID，后端用ID查回原文和时间。不能让模型自由编一个时间戳就认为证据可信。引用确实存在，也仍需判断原文是否支持回答。</p>
+<p>如果当前资料没有足够依据，系统应该明确说明未找到，不能用课外常识补成课程答案。外部API断网时，可以退回原文检索，但页面必须说明没有生成综合回答。此前生成过的结果如果回放，也要标明是历史结果。</p>
+<h2>固定验收题集</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>样本</th>
+<th>问题</th>
+<th>人工判断要点</th>
+<th>真值时间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A01</td>
+<td>A</td>
+<td>HTTP请求通常包含哪些部分？</td>
+<td>方法、路径、请求头，可有请求体</td>
+<td>待标注</td>
+</tr>
+<tr>
+<td>A02</td>
+<td>A</td>
+<td>GET和POST在这节课中分别用于什么？</td>
+<td>GET读取，POST创建或触发操作</td>
+<td>待标注</td>
+</tr>
+<tr>
+<td>A03</td>
+<td>A</td>
+<td>视频上传为什么返回202？</td>
+<td>已接受但转写未完成，后续查询状态</td>
+<td>待标注</td>
+</tr>
+<tr>
+<td>A04</td>
+<td>A</td>
+<td>204和200的响应有何区别？</td>
+<td>204无响应体，200成功且可有内容</td>
+<td>待标注</td>
+</tr>
+<tr>
+<td>A05</td>
+<td>A</td>
+<td>幂等性意味着响应正文必须完全相同吗？</td>
+<td>不意味着，关注重复请求的最终效果</td>
+<td>待标注</td>
+</tr>
+<tr>
+<td>A06</td>
+<td>A</td>
+<td>为什么不能对上传请求无限自动重试？</td>
+<td>无幂等机制时可能生成重复任务</td>
+<td>待标注</td>
+</tr>
+<tr>
+<td>A07</td>
+<td>A</td>
+<td>Range请求按什么单位取内容，通常对应什么状态码？</td>
+<td>字节范围，206，Content-Range说明范围</td>
+<td>待标注</td>
+</tr>
+<tr>
+<td>B01</td>
+<td>B</td>
+<td>主键和外键在课程里的作用分别是什么？</td>
+<td>主键标识记录，外键关联记录</td>
+<td>待标注</td>
+</tr>
+<tr>
+<td>B02</td>
+<td>B</td>
+<td>为什么创建视频和任务记录要考虑事务？</td>
+<td>避免部分成功，相关DB操作共同成功或回滚</td>
+<td>待标注</td>
+</tr>
+<tr>
+<td>B03</td>
+<td>B</td>
+<td>数据库事务能自动解决视频文件写入吗？</td>
+<td>不能，文件仍需应用层清理策略</td>
+<td>待标注</td>
+</tr>
+<tr>
+<td>B04</td>
+<td>B</td>
+<td>为什么不应给所有列都建立索引？</td>
+<td>额外空间和写入维护成本</td>
+<td>待标注</td>
+</tr>
+<tr>
+<td>B05</td>
+<td>B</td>
+<td>查询某视频转写时应关注哪个筛选字段？</td>
+<td>video_id</td>
+<td>待标注</td>
+</tr>
+<tr>
+<td>B06</td>
+<td>B</td>
+<td>本项目为什么选择SQLite？</td>
+<td>单机、本地文件、部署成本低</td>
+<td>待标注</td>
+</tr>
+<tr>
+<td>B07</td>
+<td>B</td>
+<td>演示前备份数据库和视频应怎样处理？</td>
+<td>停止写入，统一备份，恢复核对对应</td>
+<td>待标注</td>
+</tr>
+<tr>
+<td>C01</td>
+<td>C</td>
+<td>检索增强问答先做什么，再做什么？</td>
+<td>先找片段，再让模型结合问题组织回答</td>
+<td>待标注</td>
+</tr>
+<tr>
+<td>C02</td>
+<td>C</td>
+<td>BM25为什么可能漏掉同义表达的问题？</td>
+<td>词项匹配依赖词语关联，同义说法匹配可能差</td>
+<td>待标注</td>
+</tr>
+<tr>
+<td>C03</td>
+<td>C</td>
+<td>模型提供时间戳能直接证明引用可信吗？</td>
+<td>不能，要查真实片段ID与原文时间</td>
+<td>待标注</td>
+</tr>
+<tr>
+<td>C04</td>
+<td>C</td>
+<td>有引用是否就能保证回答正确？</td>
+<td>不能，仍需判断原文是否支持结论</td>
+<td>待标注</td>
+</tr>
+<tr>
+<td>C05</td>
+<td>C</td>
+<td>资料没有答案时系统应该怎么处理？</td>
+<td>明确未找到，不能拿课外知识补成课程答案</td>
+<td>待标注</td>
+</tr>
+<tr>
+<td>C06</td>
+<td>C</td>
+<td>断网后展示原文检索和历史结果需要怎样标注？</td>
+<td>原文检索说明未生成综合回答，历史结果标回放</td>
+<td>待标注</td>
+</tr>
+<tr>
+<td>N01</td>
+<td>A</td>
+<td>这节课推荐的HTTP连接超时具体是多少秒？</td>
+<td>未讲具体超时，应not_found</td>
+<td>不适用</td>
+</tr>
+<tr>
+<td>N02</td>
+<td>B</td>
+<td>这节课规定SQLite的page_size是多少？</td>
+<td>未讲该参数，应not_found</td>
+<td>不适用</td>
+</tr>
+<tr>
+<td>N03</td>
+<td>C</td>
+<td>这节课设置的BM25参数k1具体是多少？</td>
+<td>未讲该参数，应not_found</td>
+<td>不适用</td>
+</tr>
+<tr>
+<td>N04</td>
+<td>A</td>
+<td>这段课程建议早餐吃什么？</td>
+<td>无关且未讲，应not_found</td>
+<td>不适用</td>
+</tr>
+<tr>
+<td>N05</td>
+<td>C</td>
+<td>这段课程说明了哪家餐厅最好吃？</td>
+<td>无关且未讲，应not_found</td>
+<td>不适用</td>
+</tr>
+</tbody></table>
+<p>开发调试另用8题，例如“HTTP路径是什么”“404表示什么”“视频表如何关联转写”“事务失败怎么办”“索引有什么代价”“中文为什么分词”“证据不足怎么办”“回放结果如何标注”。这些调试题不计正式分数。正式问题集和样本一经M1冻结，调整均须留变更记录。</p>
+</article></details>
+<details class="doc" id="doc-24" data-group="05_测试与验收" ><summary><span class="group">05_测试与验收</span><span>测试结果与发布验收记录</span></summary><article><p>文档状态为系统发布验收待执行。负责人 QA，最终验收人 PM。本页记录候选系统的实际结果。PM-05 对 V1.2 交互原型的独立验收结论与浏览器证据见<a href="#doc-25" class="doclink">原型产品验收报告</a>。</p>
+<h2>环境与版本</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>实际值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>测试时间/执行人</td>
+<td>待执行</td>
+</tr>
+<tr>
+<td>发布候选版本/提交ID</td>
+<td>待执行</td>
+</tr>
+<tr>
+<td>操作系统、CPU、内存</td>
+<td>待记录</td>
+</tr>
+<tr>
+<td>Node/Python/FFmpeg/faster-whisper实际版本</td>
+<td>待记录</td>
+</tr>
+<tr>
+<td>转写模型、量化、语言、线程数</td>
+<td>待记录</td>
+</tr>
+<tr>
+<td>LLM模型、端点地区、调用参数</td>
+<td>待记录，密钥禁止写入</td>
+</tr>
+<tr>
+<td>样本A/B/C哈希、时长、来源</td>
+<td>待录制和登记</td>
+</tr>
+<tr>
+<td>题库版本/标注人/复核人</td>
+<td>待登记</td>
+</tr>
+</tbody></table>
+<h2>问答逐题记录</h2>
+<p>复制一行直到覆盖A01至C06及N01至N05全部25题，或以关联CSV/表格保存。不能只记录通过项。</p>
+<table>
+<thead>
+<tr>
+<th>题号</th>
+<th>返回状态与模式</th>
+<th>回答证据路径</th>
+<th>事实正确</th>
+<th>引用支持</th>
+<th>每条引用时间偏差</th>
+<th>耗时秒</th>
+<th>判定/缺陷ID</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>待执行</td>
+<td>未测试</td>
+<td>待保存响应JSON与截图</td>
+<td>待判断</td>
+<td>待判断</td>
+<td>待测</td>
+<td>待测</td>
+<td>未执行</td>
+</tr>
+</tbody></table>
+<p>证据建议保存到本目录下“实际测试证据/候选版本/题号”，包含响应JSON、实际视频片段时间标注、必要截图和日志request_id。当前不创建虚假截图或测试输出。所有证据目录在执行时由QA建立。</p>
+<h2>功能回归</h2>
+<p>按测试计划F01至F36逐条记录：用例ID、版本、输入、预期、实际、通过/失败、缺陷ID和证据路径。真实状态只允许未执行/通过/失败/阻塞，不用“基本没问题”等模糊结论。修复后保留原失败记录，新增复测版本和结果。</p>
+<h2>汇总</h2>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>门槛</th>
+<th>实际结果</th>
+<th>当前状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>有答案题正确且引用有效</td>
+<td>≥16/20</td>
+<td>待测，拒答/降级/错误均计失败</td>
+<td>未执行</td>
+</tr>
+<tr>
+<td>无答案题拒答</td>
+<td>5/5</td>
+<td>待测</td>
+<td>未执行</td>
+</tr>
+<tr>
+<td>引用合法性</td>
+<td>不存在伪造ID、原文或跨视频引用</td>
+<td>待测</td>
+<td>未执行</td>
+</tr>
+<tr>
+<td>时间定位</td>
+<td>合法引用中偏差≤5秒比例≥90%，另报全部引用</td>
+<td>待测，分子/分母必填</td>
+<td>未执行</td>
+</tr>
+<tr>
+<td>三段处理耗时</td>
+<td>3至5分钟样本每段目标≤8分钟</td>
+<td>待测，A/B/C分别填写</td>
+<td>未执行</td>
+</tr>
+<tr>
+<td>10次问答耗时</td>
+<td>目标每次≤20秒，超25秒降级</td>
+<td>待测，中位数/最大值/超时次数</td>
+<td>未执行</td>
+</tr>
+<tr>
+<td>未解决S1/S2</td>
+<td>0</td>
+<td>尚未执行测试，不能填写0</td>
+<td>未执行</td>
+</tr>
+<tr>
+<td>重启与备份恢复</td>
+<td>全部成功</td>
+<td>待测</td>
+<td>未执行</td>
+</tr>
+<tr>
+<td>展示和彩排</td>
+<td>按用户要求暂缓，不作为当前发布门槛</td>
+<td>不适用</td>
+<td>暂缓</td>
+</tr>
+</tbody></table>
+<h2>发布决定</h2>
+<p>当前决定：未验收，未发布。执行时由QA写建议，PM选择通过/附条件接受/不通过，并写理由。附条件接受要列出限制、用户影响、整改人、截止点和展示披露话术，不能掩盖S1/S2。</p>
+<p>验收签字：QA待确认；PM待确认；SYS待确认可启动、备份和回退。确认信息必须包含时间及版本。推荐展示版本仅在这三个确认完成后填写。</p>
+</article></details>
+<details class="doc" id="doc-25" data-group="05_测试与验收" ><summary><span class="group">05_测试与验收</span><span>课程视频复习助手原型产品验收报告</span></summary><article><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>本轮记录</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PM任务</td>
+<td>PM-05 产品原型验收</td>
+</tr>
+<tr>
+<td>对象</td>
+<td><a href="01_%E9%9C%80%E6%B1%82%E4%B8%8E%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/03_%E5%8F%AF%E7%82%B9%E5%87%BB%E4%BA%A4%E4%BA%92%E5%8E%9F%E5%9E%8B.html">可点击交互原型 V1.2</a></td>
+</tr>
+<tr>
+<td>依据</td>
+<td><a href="#doc-3" class="doclink">PRD 的 R01 至 R10</a>和<a href="#doc-4" class="doclink">交互规则</a></td>
+</tr>
+<tr>
+<td>环境与时间</td>
+<td>Windows，Microsoft Edge 156.0.4314.58。2026年11月5日 22:01:53 首轮，22:03:08 复测，均为北京时间</td>
+</tr>
+<tr>
+<td>实际结果</td>
+<td>首轮 10/12 通过。完成两项修订后，12/12 项浏览器检查通过</td>
+</tr>
+<tr>
+<td>验收决定</td>
+<td><strong>通过原型产品验收。V1.2 用于四岗实施与联调对齐</strong></td>
+</tr>
+<tr>
+<td>可复核证据</td>
+<td><a href="05_%E6%B5%8B%E8%AF%95%E4%B8%8E%E9%AA%8C%E6%94%B6/04_%E5%8E%9F%E5%9E%8B%E4%BA%A4%E4%BA%92%E9%AA%8C%E8%AF%81%E8%AF%81%E6%8D%AE.json">两轮浏览器结果与原型文件摘要</a></td>
+</tr>
+</tbody></table>
+<p>浏览器直接打开本地 HTML，并逐项操作页面。每个用例从独立页面会话开始，记录输入、控件状态、页面文本和位置示意值。课程内容、问答、文件输入及任务阶段均为模拟素材，验收结果是对页面实际行为的观察。R01 至 R10 的工程验收由 QA 按候选版本、真实样本与运行证据执行。正式结果填入<a href="#doc-24" class="doclink">系统发布验收记录</a>。</p>
+<h2>复测结果与工程验证项</h2>
+<table>
+<thead>
+<tr>
+<th>用例</th>
+<th>需求</th>
+<th>浏览器操作</th>
+<th>V1.2 实际观察</th>
+<th>结果</th>
+<th>工程候选版需补的证据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PA01</td>
+<td>R01 上传</td>
+<td>分别选择错误后缀、空 MP4 和非空模拟 MP4，点击开始处理</td>
+<td>前两项禁用提交。非空样例进入排队，页面标注仅在本地选择</td>
+<td>通过</td>
+<td>上传 API 202 与视频 id，大小、容器、编解码、音轨、时长和队列满校验</td>
+</tr>
+<tr>
+<td>PA02</td>
+<td>R02 处理阶段</td>
+<td>用评审工具依次切换 queued、transcribing、indexing、ready、failed，再返回列表</td>
+<td>五种中文状态及示意耗时正常显示，未出现百分比。列表同步显示失败</td>
+<td>通过</td>
+<td>服务端实际状态流转、超时、轮询及刷新后恢复</td>
+</tr>
+<tr>
+<td>PA03</td>
+<td>R03 章节提要</td>
+<td>打开就绪样例并展开原文。另将新选文件切换为就绪示意</td>
+<td>四段时间依次为 00:00、01:00、02:00、03:00，提要与预置原文逐段一致。新文件隐藏分析区域</td>
+<td>通过</td>
+<td>从真实转写按 60 秒分窗、截取原句和跳过空窗</td>
+</tr>
+<tr>
+<td>PA04</td>
+<td>R04 当前视频提问</td>
+<td>提交空白、1 字、300 字、301 字，再发送预置的 202 问题</td>
+<td>空白和 301 字提示限制。1 字与 300 字进入结果分支。202 问题显示预置回答</td>
+<td>通过</td>
+<td>后端参数、重复请求、实际检索及跨视频隔离</td>
+</tr>
+<tr>
+<td>PA05</td>
+<td>R05 引用来源</td>
+<td>提交 202 问题，将回答卡片引文与 01:00 原文比较</td>
+<td>卡片原文与样例片段逐字相同，显示可点击的 01:00。片段说明“已接收”与“处理完成”的差异</td>
+<td>通过</td>
+<td><code>segment_id</code>、起止秒数、原文一致性和实际语义支持</td>
+</tr>
+<tr>
+<td>PA06</td>
+<td>R06 跳转回看</td>
+<td>点 02:00 章节，随后点 01:00 问答引用，再继续播放示意</td>
+<td>位置先到 02:00，再到 01:00。引用定位后显示暂停，继续按钮可切换播放示意</td>
+<td>通过</td>
+<td>真实视频定位误差、暂停与播放、媒体 Range 响应</td>
+</tr>
+<tr>
+<td>PA07</td>
+<td>R07 无依据拒答</td>
+<td>发送“这节课规定的连接超时是多少秒？”</td>
+<td>显示未找到足够依据，引文为空。提示换更具体的问法，或查看提要与原文</td>
+<td>通过</td>
+<td>5 道真实无答案题正确拒答，引用为空</td>
+</tr>
+<tr>
+<td>PA08</td>
+<td>R08 重试与降级</td>
+<td>打开失败样例，执行重试。切换就绪样例问答为原文检索</td>
+<td>显示服务中断原因，重试回到排队且隐藏重试按钮。原文检索带可定位引文和未生成标记</td>
+<td>通过</td>
+<td>实际失败原因、可重试判定、派生数据清理、API 断网或超时降级</td>
+</tr>
+<tr>
+<td>PA09</td>
+<td>R09 列表与删除</td>
+<td>打开样例，先取消删除，再验证处理中禁用，最后依次删除就绪与失败样例</td>
+<td>取消保留详情。三种处理中状态禁用删除。确认删除更新列表，全部删除后显示空态</td>
+<td>通过</td>
+<td>204、409、404，以及原文件和关联数据清理</td>
+</tr>
+<tr>
+<td>PA10</td>
+<td>R10 刷新边界</td>
+<td>新增模拟条目，返回列表并刷新</td>
+<td>三条会话记录刷新后恢复为两条预置记录，模拟条目消失。此项通过用于确认原型边界</td>
+<td>通过</td>
+<td>SQLite、本地文件、就绪状态持久化、重启及备份恢复</td>
+</tr>
+<tr>
+<td>PA11</td>
+<td>R06 重开详情</td>
+<td>跳到 01:00 并进入播放示意，返回列表后重新打开详情</td>
+<td>从 00:00 开始，按钮显示播放示意，初始状态为暂停</td>
+<td>通过</td>
+<td>切换真实视频时初始化播放器，避免跨视频沿用位置</td>
+</tr>
+<tr>
+<td>PA12</td>
+<td>通用交互</td>
+<td>分别以 390、1366、1920 像素宽打开首页和详情</td>
+<td>三种宽度均未检测到页面整体横向溢出</td>
+<td>通过</td>
+<td>候选版在目标设备上的播放器、长引文和操作控件布局</td>
+</tr>
+</tbody></table>
+<h2>发现的问题与复验</h2>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>首轮实际结果</th>
+<th>V1.2 修订</th>
+<th>复验</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PA07 拒答后的操作提示</td>
+<td>说明了依据不足，但页面停在结果提示</td>
+<td>补上换更具体的问法、查看提要或原文</td>
+<td>通过。拒答区显示下一步，无引用卡片</td>
+</tr>
+<tr>
+<td>PA11 详情沿用位置</td>
+<td>定位至 01:00 后返回列表，再次打开仍显示 01:00</td>
+<td>每次打开详情初始化位置、播放状态和回看提示</td>
+<td>通过。重新打开回到 00:00 并暂停</td>
+</tr>
+</tbody></table>
+<h2>验收后的责任交接</h2>
+<ul>
+<li>FE 将确认过的状态、按钮规则、引文定位和失败文案映射到正式页面。详情初始化和拒答下一步纳入回归。</li>
+<li>BE 与 SYS 按接口及运行约定提交真实上传、转写、问答、持久化和恢复证据。预置时间和输出保留模拟标识。</li>
+<li>QA 依据 <a href="#doc-22" class="doclink">F01 至 F36 和验收门槛</a>执行候选版验证。正式通过率、真实定位误差和耗时等数值在有运行证据后录入。</li>
+<li>PM 已完成本轮原型产品验收。M4 的系统放行依据候选版本、真实样本、QA 结果与运行恢复证明。</li>
+</ul>
+</article></details>
+<details class="doc" id="doc-26" data-group="05_测试与验收" ><summary><span class="group">05_测试与验收</span><span>工程验收演练与模拟数据</span></summary><article><p>V1.2 · 2026年11月5日 · 产品经理兼组长</p>
+<p><strong>数据属性为模拟。</strong> 本页的候选版本、样本时间、问答输出、耗时和缺陷是课程原型的演练输入。使用 A01 至 N05 演示如何计算指标、判断缺陷等级并做出发布决策。实际浏览器走查单列在<a href="#doc-25" class="doclink">原型验收报告</a>，工程证据留在<a href="#doc-24" class="doclink">测试结果记录</a>。</p>
+<h2>演练条件与结论</h2>
+<p>设定 11 月 11 日 M3 上午预审候选版本 <code>SIM-RC-01</code>。模拟使用 3 段 3 至 5 分钟的中文录课，按<a href="#doc-23" class="doclink">固定题集</a>给出 20 道正题和 5 道无答案题。转写按预热后记录。片段秒数按视频起点计算，表中用「目标秒 → 点击后秒」表示定位对照。</p>
+<p><strong>模拟发布裁决为退回整改。</strong> 正题和拒答达到数量门槛。B03 的答案把 SQLite 事务错误地说成能回滚视频文件写入，引用内容与结论相反，记为 S2。另有一次问答超过 20 秒的目标。先修复 B03 并复测同类题，再按同一分母跑完整题集，复核时延和备份恢复证据。</p>
+<h2>逐题模拟记录</h2>
+<p>下表文字为模拟响应摘要。除 A06、N01 至 N05 外，每题带一条模拟引用。A07 带两条。B03 的片段 ID 与原文摘录在演练设定中合法，但原文无法支持回答。</p>
+<table>
+<thead>
+<tr>
+<th>题号</th>
+<th>模式</th>
+<th>模拟响应摘要</th>
+<th>引用定位对照（秒）</th>
+<th>正题或拒答判定</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A01</td>
+<td>answered</td>
+<td>方法、路径、请求头，可有请求体</td>
+<td>18 → 20</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>A02</td>
+<td>answered</td>
+<td>GET 读取，POST 创建或触发操作</td>
+<td>40 → 42</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>A03</td>
+<td>answered</td>
+<td>已接受上传，转写尚未完成</td>
+<td>78 → 77</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>A04</td>
+<td>answered</td>
+<td>204 无响应体，200 可带内容</td>
+<td>64 → 66</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>A05</td>
+<td>answered</td>
+<td>幂等关注最终效果，响应正文可不同</td>
+<td>108 → 111</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>A06</td>
+<td>not_found</td>
+<td>当前片段未找到足够依据</td>
+<td>—</td>
+<td>未通过，模拟漏召回</td>
+</tr>
+<tr>
+<td>A07</td>
+<td>answered</td>
+<td>Range 按字节请求，部分响应通常为 206</td>
+<td>168 → 171，183 → 189</td>
+<td>问答通过，第二条定位超差</td>
+</tr>
+<tr>
+<td>B01</td>
+<td>answered</td>
+<td>主键标识行，外键关联记录</td>
+<td>20 → 22</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>B02</td>
+<td>answered</td>
+<td>避免视频记录与任务记录只成功一半</td>
+<td>65 → 68</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>B03</td>
+<td>answered</td>
+<td>SQLite 事务可自动回滚视频文件写入</td>
+<td>83 → 85</td>
+<td>未通过，引用原文与结论相反，S2</td>
+</tr>
+<tr>
+<td>B04</td>
+<td>answered</td>
+<td>索引占空间，也有写入维护成本</td>
+<td>121 → 122</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>B05</td>
+<td>answered</td>
+<td>用 video_id 筛选对应片段</td>
+<td>138 → 141</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>B06</td>
+<td>answered</td>
+<td>本地文件存储，适合单机，部署简单</td>
+<td>159 → 160</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>B07</td>
+<td>answered</td>
+<td>停写后统一备份，恢复时核对数据与文件</td>
+<td>181 → 179</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>C01</td>
+<td>answered</td>
+<td>先检索片段，再交由模型组织答案</td>
+<td>22 → 24</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>C02</td>
+<td>degraded</td>
+<td>仅显示 BM25 依赖词语匹配的课程原文</td>
+<td>76 → 75</td>
+<td>未通过，按降级计入分母</td>
+</tr>
+<tr>
+<td>C03</td>
+<td>answered</td>
+<td>由已有片段 ID 找回原文和时间</td>
+<td>137 → 139</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>C04</td>
+<td>answered</td>
+<td>有引用仍需人工检查是否支持结论</td>
+<td>154 → 157</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>C05</td>
+<td>answered</td>
+<td>明确未找到依据，避免用常识补全</td>
+<td>183 → 182</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>C06</td>
+<td>answered</td>
+<td>原文模式说明未生成，历史结果标回放</td>
+<td>218 → 215</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>N01</td>
+<td>not_found</td>
+<td>当前视频未给出该超时秒数</td>
+<td>—</td>
+<td>正确拒答，0 条引用</td>
+</tr>
+<tr>
+<td>N02</td>
+<td>not_found</td>
+<td>当前视频未给出 page_size 数值</td>
+<td>—</td>
+<td>正确拒答，0 条引用</td>
+</tr>
+<tr>
+<td>N03</td>
+<td>not_found</td>
+<td>当前视频未给出 k1 数值</td>
+<td>—</td>
+<td>正确拒答，0 条引用</td>
+</tr>
+<tr>
+<td>N04</td>
+<td>not_found</td>
+<td>课程未讨论早餐</td>
+<td>—</td>
+<td>正确拒答，0 条引用</td>
+</tr>
+<tr>
+<td>N05</td>
+<td>not_found</td>
+<td>课程未讨论餐厅推荐</td>
+<td>—</td>
+<td>正确拒答，0 条引用</td>
+</tr>
+</tbody></table>
+<h2>指标复算</h2>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>模拟结果</th>
+<th>与门槛的关系</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>正题正确且有支持引用</td>
+<td>17/20 = 85%，1 道漏召回、1 道答错、1 道降级</td>
+<td>达到 16/20 的门槛，B03 仍单独阻断发布</td>
+</tr>
+<tr>
+<td>无答案题正确拒答</td>
+<td>5/5，全部引用为空</td>
+<td>达到 5/5</td>
+</tr>
+<tr>
+<td>定位误差在 5 秒内且引用有效</td>
+<td>18/20 = 90%。剔除计分的两条分别是 A07 第二条超差、B03 语义不支持。全部 20 条都保留在分母</td>
+<td>达到 90%，语义缺陷仍按 S2</td>
+</tr>
+<tr>
+<td>引用结构合法性</td>
+<td>20/20 来自模拟片段，0 个虚构或跨视频片段 ID，1 条语义不支持</td>
+<td>ID 合法仍需检查语义支持</td>
+</tr>
+<tr>
+<td>预热后处理</td>
+<td>A 185 秒，B 227 秒，C 269 秒</td>
+<td>各低于 480 秒</td>
+</tr>
+<tr>
+<td>10 次独立生成时延</td>
+<td>7.8、9.2、11.5、8.6、10.1、12.7、14.2、9.8、22.4、11.2 秒。中位数 10.65 秒，最大 22.4 秒，0 次外部请求超时</td>
+<td>9/10 在 20 秒内，有 1 次未达目标</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>样本</th>
+<th>模拟片长</th>
+<th>上传秒</th>
+<th>排队秒</th>
+<th>处理秒</th>
+<th>用户总等待秒</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>238 秒</td>
+<td>2</td>
+<td>0</td>
+<td>185</td>
+<td>187</td>
+</tr>
+<tr>
+<td>B</td>
+<td>224 秒</td>
+<td>3</td>
+<td>11</td>
+<td>227</td>
+<td>241</td>
+</tr>
+<tr>
+<td>C</td>
+<td>260 秒</td>
+<td>2</td>
+<td>19</td>
+<td>269</td>
+<td>290</td>
+</tr>
+</tbody></table>
+<h2>PM 整改裁决</h2>
+<table>
+<thead>
+<tr>
+<th>模拟问题</th>
+<th>主责</th>
+<th>验收动作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SIM-QA-01，B03 结论违背原文，S2</td>
+<td>BE 修复，QA 复测</td>
+<td>复查 B03 和同类证据支持题。答案须讲清数据库事务与文件清理的边界。保留失败证据和修复后响应</td>
+</tr>
+<tr>
+<td>SIM-QA-02，A07 第二条定位差 6 秒</td>
+<td>FE 与 QA</td>
+<td>先核 start_sec 和播放器跳转，再用原视频检查每条引用。复算全部返回引用的分母</td>
+</tr>
+<tr>
+<td>SIM-QA-03，单次生成耗时 22.4 秒</td>
+<td>BE 与 SYS</td>
+<td>记录端到端、检索和外部调用分段耗时，复跑同口径 10 次，说明仍超时的原因</td>
+</tr>
+<tr>
+<td>SIM-QA-04，A06 漏召回与 C02 降级</td>
+<td>BE 与 SYS</td>
+<td>分别定位检索命中和外部服务原因。正题按原题集复跑，降级留在分母</td>
+</tr>
+</tbody></table>
+<p>模拟场景中由 PM 在 11 月 11 日先复核 S2 修复，第二轮候选和 11 月 13 日时延复验见<a href="#doc-29" class="doclink">里程碑推进演练</a>。正式工程放行取决于候选版本、P0 回归、模型实测、S1/S2 缺陷状态、恢复记录和实际交接。</p>
+</article></details>
+<details class="doc" id="doc-27" data-group="07_管理记录" ><summary><span class="group">07_管理记录</span><span>风险与变更管理</span></summary><article><p>版本：V1.1。维护人：PM。风险预案已编制，分工和技术路线已确定；运行风险尚未经过实机验证，不表示已经发生故障。展示相关风险暂缓。</p>
+<h2>处理原则</h2>
+<p>由最接近问题的角色提交证据，PM判断对范围、节点和展示的影响。技术问题由BE/SYS/FE提出可行方案，QA说明测试影响。变更涉及基线时同步修改<a href="#doc-0" class="doclink">统一约定</a>，避免实现、测试和展示各用一套口径。</p>
+<p>阻塞预计超过半个工作日，或将影响下一里程碑时，主责人及时通知PM和直接依赖人。密钥、数据或结果正确性问题立即处理。风险优先级是项目判断，不能当作发生概率的统计结果。</p>
+<h2>初始风险清单</h2>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>风险与影响</th>
+<th>检查/触发条件</th>
+<th>主责与协作</th>
+<th>处理方案</th>
+<th>关键节点</th>
+<th>当前状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R-01</td>
+<td>本机转写慢或识别差，主流程无法稳定演示</td>
+<td>M1真实样本试跑未完成，或3至5分钟样本预热后处理超过8分钟目标</td>
+<td>SYS；BE、QA</td>
+<td>记录硬件、模型、参数与耗时；优先短清晰样本；调整模型需PM/QA记录并复测</td>
+<td>M1验证，M3复查</td>
+<td>待验证</td>
+</tr>
+<tr>
+<td>R-02</td>
+<td>模型下载、依赖或编解码问题阻塞开发</td>
+<td>本地模型无法加载，ffprobe不支持目标样本，依赖不可复现</td>
+<td>SYS；BE</td>
+<td>M1落定版本与缓存；保留成功环境；不依赖演示现场下载或GPU</td>
+<td>M1</td>
+<td>待验证</td>
+</tr>
+<tr>
+<td>R-03</td>
+<td>API端点、网络、权限或额度不可用</td>
+<td>M1服务端调用失败，或后续出现超时/鉴权/限额错误</td>
+<td>SYS；BE、PM</td>
+<td>验证选定模型和账户地区端点；配置环境变量；故障切原文检索且明确标识</td>
+<td>M1验证，M4复查</td>
+<td>待验证</td>
+</tr>
+<tr>
+<td>R-04</td>
+<td>API费用超出项目控制额度</td>
+<td>使用记录接近PM确认额度，或重复请求明显增加</td>
+<td>PM；SYS、BE</td>
+<td>暂按30元内部总上限规划；调用前确认；限制同时生成1个请求，记录用量，不把内部预算当报价</td>
+<td>M1确认，贯穿项目</td>
+<td>待验证（额度设置）</td>
+</tr>
+<tr>
+<td>R-05</td>
+<td>回答编造或引用无效，验收失真</td>
+<td>正题低于16/20、无答案题未全部拒答、引用映射或时间错误</td>
+<td>BE；QA、PM</td>
+<td>后端校验引用ID和真实时间；改检索/提示后全量回归；保留原始结果并披露未达项</td>
+<td>M2起，M3/M4评估</td>
+<td>待验证</td>
+</tr>
+<tr>
+<td>R-06</td>
+<td>样本许可或人工标注不足，无法证明价值</td>
+<td>3段授权视频或25题标注不齐，正题依据不明</td>
+<td>QA；PM</td>
+<td>使用自录或明确许可的短课；逐题标原文与秒数；不编造访谈和测试结果</td>
+<td>M1</td>
+<td>待验证（真实素材待准备）</td>
+</tr>
+<tr>
+<td>R-07</td>
+<td>前后端字段、状态或Range支持不一致</td>
+<td>模拟页面能跑，真实接口不能跳转或错误显示失真</td>
+<td>BE；FE、QA</td>
+<td>M1冻结契约，M2先跑真实纵向流程；字段变化通知全部依赖人</td>
+<td>M1/M2</td>
+<td>待验证</td>
+</tr>
+<tr>
+<td>R-08</td>
+<td>后端负载过重，单人承担全部AI工作</td>
+<td>转写、API、检索与部署均压给BE，任务明显受阻</td>
+<td>PM；BE、SYS</td>
+<td>已在正式分工中由SYS负责音视频/转写和环境，BE负责业务与问答；M2按证据检查落实</td>
+<td>M1接收，M2复查</td>
+<td>预防中（分工已定稿，落实待核）</td>
+</tr>
+<tr>
+<td>R-09</td>
+<td>范围持续增加导致核心功能没完成</td>
+<td>新增跨视频、多轮、OCR、账号、Docker等占用P0时间</td>
+<td>PM；全组</td>
+<td>M3冻结，扩展进入后续版本；涉及P0替换需书面说明损益和回归影响</td>
+<td>全程，M3冻结</td>
+<td>预防中</td>
+</tr>
+<tr>
+<td>R-10</td>
+<td>重启、重试或删除造成数据错配</td>
+<td>重启后任务假ready、旧片段混入新结果、删除后文件残留</td>
+<td>BE；SYS、QA</td>
+<td>固定状态恢复规则；派生数据清理；仅ready/failed允许删除；一致备份与恢复验证</td>
+<td>M3</td>
+<td>待验证</td>
+</tr>
+<tr>
+<td>R-11</td>
+<td>展示设备或现场网络故障</td>
+<td>用户后续恢复展示安排时检查</td>
+<td>SYS；全组</td>
+<td>既有展示预案保留，本轮不安排彩排或上台检查</td>
+<td>暂不安排</td>
+<td>暂缓（用户要求）</td>
+</tr>
+<tr>
+<td>R-12</td>
+<td>文档把目标写成成绩，验收失真</td>
+<td>需求、报告或交接记录出现无证据的正确率、用户反馈或签收</td>
+<td>PM；QA</td>
+<td>文档产出、实际调研、实现和验收分别记录，未测标待测</td>
+<td>全程，M4复核</td>
+<td>预防中</td>
+</tr>
+</tbody></table>
+<h2>风险更新方式</h2>
+<p>风险状态使用：待验证、预防中、已发生、处理中、已缓解、已关闭、暂缓。关闭需说明证据和残余影响；暂缓不等于已解决。模型、环境或样本变更后，原关闭结论可能失效，须重新检查。</p>
+<table>
+<thead>
+<tr>
+<th>更新日期</th>
+<th>风险ID</th>
+<th>新证据与影响</th>
+<th>当前状态</th>
+<th>处理人</th>
+<th>下一检查节点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>尚未发生</td>
+<td>—</td>
+<td>项目执行后追加，不预填实际故障</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<h2>需求变更流程</h2>
+<ol>
+<li>提出人写明原需求、新需求、原因，以及不改会有什么影响。</li>
+<li>FE/BE/SYS评估实现工作量与依赖，QA评估测试和数据影响，PM评估用户价值与节点。</li>
+<li>PM作出接受、延后或拒绝决定。涉及预算与学校要求时记录确认依据，不自行推定外部规则。</li>
+<li>接受后更新基线、PRD、接口、任务与用例，并通知接收人重新确认。</li>
+<li>完成实现和回归后关闭变更。范围决定与实现完成分别记录。</li>
+</ol>
+<p>M3后默认只接收阻断/严重缺陷修复和必要合规/数据处理修正。P1体验功能留到后续版本。</p>
+<h2>需要记录的典型变更</h2>
+<ul>
+<li>small改为base或更换转写方案：可能改变准确性与性能，需QA复测。</li>
+<li>qwen-plus或地区端点变化：需重新验证鉴权、响应与费用控制。</li>
+<li>文件大小/时长上限、队列数、超时修改：影响前后端校验与边界用例。</li>
+<li>删除或重试策略、时间字段、API包装变化：影响已有数据与多方实现。</li>
+<li>验收门槛变化：必须保留原门槛、理由与实际结果，不能为了掩盖失败而降低统计要求。</li>
+<li>展示日期变化：同步M4/M5、演示设备与成员在场安排。</li>
+</ul>
+<h2>变更登记表</h2>
+<table>
+<thead>
+<tr>
+<th>变更ID</th>
+<th>提出日期/人</th>
+<th>原要求与新要求</th>
+<th>原因</th>
+<th>工期/技术/测试影响</th>
+<th>PM决定</th>
+<th>受影响文档与任务</th>
+<th>实现/回归状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CR-001</td>
+<td>2026年11月5日 用户</td>
+<td>原含展示准备；现先完成PM、组长分工和技术定栈，展示暂缓</td>
+<td>用户最新要求</td>
+<td>M4改产品验收，11月13日整改缓冲；不新增展示任务</td>
+<td>按用户要求执行，文档V1.1定稿</td>
+<td>基线、分工、任务、交接、记录；06原文件保留</td>
+<td>文档调整完成；软件实现无新增完成声明</td>
+</tr>
+</tbody></table>
+<p>记录示例格式：<code>CR-001，某日期，某角色，原字段A改B，原因，影响FE/BE/QA，PM接受或拒绝，更新文档版本，修复提交与回归证据</code>。此句只是填写说明，不是已发生的变更。</p>
+<h2>已知方案取舍</h2>
+<p>以下为PM兼组长授权定稿的技术决定：使用BM25而不引入向量数据库；提要采用提取式；Windows本地启动，首版不做Docker；大模型走联网API，故障保留原文检索。M1由工程师验证兼容性与性能并锁依赖，不要求重新选一套技术栈。确有不可用证据时，按上述变更流程提出替代方案。</p>
+</article></details>
+<details class="doc" id="doc-28" data-group="07_管理记录" ><summary><span class="group">07_管理记录</span><span>决策与交接确认记录</span></summary><article><p>V1.2 · 2026 年 11 月 5 日 · 产品经理维护</p>
+<p>本文件记录立项决定、实际原型检查和团队交接状态。调研及项目推进的模拟记录单列归档。正式工程运行、QA 结果与成员接收均按实际证据登记。<a href="#doc-6" class="doclink">模拟调研</a> · <a href="#doc-29" class="doclink">推进演练</a></p>
+<h2>已明确条件与正式立项决定</h2>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>决定</th>
+<th>依据与当前状态</th>
+<th>后续执行责任</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>D-01</td>
+<td>五人团队为PM兼组长、FE、BE、QA、SYS各一人</td>
+<td>用户已明确；分工V1.1已定稿</td>
+<td>按唯一岗位开工，姓名可后补，不阻止接收</td>
+</tr>
+<tr>
+<td>D-02</td>
+<td>五个核心开发日到11月11日，11月12日产品验收，11月13日整改缓冲</td>
+<td>用户给定11月5、6和9至13日；阶段编排已定稿</td>
+<td>PM按M1至M4看证据，成员报阻塞</td>
+</tr>
+<tr>
+<td>D-03</td>
+<td>允许联网大模型API，优先完成可运行版本</td>
+<td>用户已明确</td>
+<td>SYS验证账户、端点和额度，BE接入</td>
+</tr>
+<tr>
+<td>D-04</td>
+<td>展示、彩排和上台工作暂缓</td>
+<td>用户最新明确“展示先不用管”</td>
+<td>06既有文件保留，不列本轮验收前置</td>
+</tr>
+<tr>
+<td>D-05</td>
+<td>课程视频复习助手，单视频单轮、音轨转写、来源回看</td>
+<td>用户选择方向，PRD 和范围已定稿</td>
+<td>四岗按工单实现</td>
+</tr>
+<tr>
+<td>D-06</td>
+<td>前端Vue 3，后端FastAPI/SQLite，转写faster-whisper small CPU int8，检索BM25，生成通义千问API</td>
+<td>PM兼组长授权定稿，完整技术栈见03目录</td>
+<td>SYS/FE/BE实机验证、落锁文件，不重新各自选栈</td>
+</tr>
+<tr>
+<td>D-07</td>
+<td>音视频和转写归SYS；业务API、队列、检索和问答归BE；FE做页面；QA独立验证</td>
+<td>四岗任务书已定稿</td>
+<td>接收人检查依赖和交付，阻塞半个工作日报PM</td>
+</tr>
+<tr>
+<td>D-08</td>
+<td>正题、拒答、引用和耗时门槛为目标，不是成绩</td>
+<td>测试计划、题库和记录表已编制</td>
+<td>QA录制、标注、执行，PM据真实证据验收</td>
+</tr>
+<tr>
+<td>D-09</td>
+<td>文档完成与成员接收、软件实现、测试通过分别记录</td>
+<td>本次执行口径已定稿</td>
+<td>未执行事项保留真实状态，不批量填完成</td>
+</tr>
+<tr>
+<td>D-10</td>
+<td>课程原型用模拟数据完成调研和项目推进演练</td>
+<td>用户授权，记录按模拟标识归档</td>
+<td>分发时沿用资料属性，实际状态另登记</td>
+</tr>
+<tr>
+<td>D-11</td>
+<td>原型 V1.2 用于四岗实现与联调</td>
+<td>拒答补充操作提示，打开详情时重置播放器。浏览器复测 12/12</td>
+<td>FE 和 QA 按原型与工单复核</td>
+</tr>
+</tbody></table>
+<p>技术小版本、账户实际地区端点和模型连通属于工程执行验证，不能因为技术决策已确定就预填“已可用”。预算以文档管理目标执行，实际付款或上限设置仍需真实账户操作；本次未进行付费调用。</p>
+<h2>本次实际完成的文档交付</h2>
+<table>
+<thead>
+<tr>
+<th>工作ID</th>
+<th>已完成内容</th>
+<th>证据</th>
+<th>状态边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PM-01</td>
+<td>产品定位、P0、用户故事与验收规则</td>
+<td><a href="#doc-3" class="doclink">PRD</a>、<a href="#doc-14" class="doclink">需求工单</a></td>
+<td>文档已定稿</td>
+</tr>
+<tr>
+<td>PM-02</td>
+<td>页面流程、交互规范与可点击原型</td>
+<td><a href="#doc-4" class="doclink">交互</a>、<a href="01_%E9%9C%80%E6%B1%82%E4%B8%8E%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/03_%E5%8F%AF%E7%82%B9%E5%87%BB%E4%BA%A4%E4%BA%92%E5%8E%9F%E5%9E%8B.html">原型</a></td>
+<td>产品侧原型已备齐，不是实际AI应用</td>
+</tr>
+<tr>
+<td>PM-03</td>
+<td>需求依据、竞品取舍与调研/测试方案</td>
+<td><a href="#doc-5" class="doclink">需求依据</a>、<a href="#doc-6" class="doclink">模拟调研</a></td>
+<td>已完成，调研数据为模拟</td>
+</tr>
+<tr>
+<td>PM-04</td>
+<td>进度、阻塞、需求裁决与交接演练</td>
+<td><a href="#doc-29" class="doclink">推进演练</a>、<a href="#doc-30" class="doclink">项目总结</a></td>
+<td>模拟推进归档，实际回执待登记</td>
+</tr>
+<tr>
+<td>PM-05</td>
+<td>原型验收与工程裁决演练</td>
+<td><a href="#doc-25" class="doclink">原型验收</a>、<a href="#doc-26" class="doclink">模拟工程验收</a></td>
+<td>原型复测通过，工程演练已完成</td>
+</tr>
+<tr>
+<td>LEAD-01</td>
+<td>团队任务、职责、节点、依赖与接收标准</td>
+<td><a href="#doc-13" class="doclink">四岗任务书</a></td>
+<td>分工决定已定稿，尚未实际通知/签收</td>
+</tr>
+<tr>
+<td>LEAD-02</td>
+<td>技术路线、模块边界和协议</td>
+<td><a href="#doc-15" class="doclink">技术方案</a>、<a href="#doc-16" class="doclink">API</a></td>
+<td>技术决定已定稿，实机验证和代码未执行</td>
+</tr>
+</tbody></table>
+<h2>交接签收规则</h2>
+<p>“材料已备齐”表示文件已在本项目交付给用户；“已提交”表示实际交出人已给接收人；“已接收”表示接收人按标准检查；“退回”须写缺项或失败证据。任何状态均不可代签成员意见。</p>
+<p>交接清单详见<a href="#doc-19" class="doclink">产品交接</a>、<a href="#doc-20" class="doclink">研发交接</a>、<a href="#doc-21" class="doclink">运行交接</a>。产品最终验收由PM根据QA证据决定。</p>
+<h2>交接台账</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>内容</th>
+<th>材料责任与接收人</th>
+<th>节点</th>
+<th>已有材料或证据</th>
+<th>当前状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>H-01</td>
+<td>产品需求、原型、范围和分工</td>
+<td>PM 交，FE、BE、QA、SYS 分别收</td>
+<td>M1</td>
+<td>V1.2 交付包。<a href="#doc-3" class="doclink">PRD</a>、<a href="01_%E9%9C%80%E6%B1%82%E4%B8%8E%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/03_%E5%8F%AF%E7%82%B9%E5%87%BB%E4%BA%A4%E4%BA%92%E5%8E%9F%E5%9E%8B.html">原型</a>、<a href="#doc-13" class="doclink">任务书</a></td>
+<td>材料已备齐，待实际交付和接收</td>
+</tr>
+<tr>
+<td>H-02</td>
+<td>API契约和接口样例</td>
+<td>产品侧协议已编制；BE实现，FE/QA/SYS检查</td>
+<td>M1</td>
+<td><a href="#doc-16" class="doclink">API契约</a>、<a href="03_%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88%E4%B8%8E%E6%8E%A5%E5%8F%A3/04_%E6%8E%A5%E5%8F%A3Mock%E7%A4%BA%E4%BE%8B.json">Mock</a></td>
+<td>文档已备齐；真实接口待开发/接收</td>
+</tr>
+<tr>
+<td>H-03</td>
+<td>实际环境与模型试跑</td>
+<td>SYS交；BE、QA收，PM看取舍</td>
+<td>M1</td>
+<td><a href="#doc-17" class="doclink">配置约定</a>已备齐；实际日志待产生</td>
+<td>待工程执行</td>
+</tr>
+<tr>
+<td>H-04</td>
+<td>音视频转写模块</td>
+<td>SYS交；BE收</td>
+<td>M2</td>
+<td>既有模块契约；真实模块与输出待开发</td>
+<td>待工程执行</td>
+</tr>
+<tr>
+<td>H-05</td>
+<td>前后端真实联通</td>
+<td>FE/BE分别交；互验，QA复核</td>
+<td>M2</td>
+<td>既有协议与原型；运行证据待产生</td>
+<td>待工程执行</td>
+</tr>
+<tr>
+<td>H-06</td>
+<td>测试候选版</td>
+<td>FE/BE/SYS交；QA收</td>
+<td>M3</td>
+<td>交付清单已编制；候选版本、自测与日志待提交</td>
+<td>待工程执行</td>
+</tr>
+<tr>
+<td>H-07</td>
+<td>运行包与备份恢复</td>
+<td>SYS交；QA复核，PM收</td>
+<td>M3至M4</td>
+<td>备份规范已编制；实际副本与恢复证据待提交</td>
+<td>待工程执行</td>
+</tr>
+<tr>
+<td>H-08</td>
+<td>最终报告与验收建议</td>
+<td>QA交；PM收</td>
+<td>M4</td>
+<td><a href="#doc-24" class="doclink">测试记录表</a>已备齐；真实结果待填</td>
+<td>待后续执行，未验收</td>
+</tr>
+<tr>
+<td>H-09</td>
+<td>展示与现场保障</td>
+<td>原PM/SYS任务</td>
+<td>暂不安排</td>
+<td>06目录V1.0既有材料保留</td>
+<td>用户要求暂缓</td>
+</tr>
+<tr>
+<td>H-10</td>
+<td>展示现场版本检查</td>
+<td>原SYS/BE/FE/QA任务</td>
+<td>原M5暂缓</td>
+<td>无实际检查记录</td>
+<td>用户要求暂缓；产品冷启动和恢复归H-07</td>
+</tr>
+</tbody></table>
+<p>材料版本以文件头为准，交付包版本为 V1.2。实际接收发生时追加日期、双方角色、操作与证据。</p>
+<h2>后续签收详细记录</h2>
+<p>每次真实交接追加：交接ID、时间、文件/代码版本、交出人、接收人、接收人执行的步骤与样本、实际结果和证据、缺项、结论、整改主责与下一节点。当前尚无实际签收记录。</p>
+<h2>会议与执行中新增决定</h2>
+<p>目前未代替团队开启动会、未实际发出成员通知，也没有运行与测试会议记录。后续只记录真实变化：日期/参与人、已有证据、阻塞影响、决定、主责和下一检查点。已有分工和技术定稿不因尚未开会而退回“未决定”；确有问题再按变更流程修订。</p>
+</article></details>
+<details class="doc" id="doc-29" data-group="07_管理记录" ><summary><span class="group">07_管理记录</span><span>里程碑推进与变更演练</span></summary><article><p>适用项目为课程视频复习助手，记录范围为 PM-04。演练编制日期为 2026 年 11 月 5 日，里程碑采用北京时间。</p>
+<p><strong>本文件中编号以 SIM 开头的反馈、日期、环境、版本、缺陷、签收和指标均为模拟演练数据。</strong> 实际文档产出见第一节。真实接收、代码实现和发布结果登记在<a href="#doc-28" class="doclink">决策与交接确认记录</a>。</p>
+<h2>一 实际交付状态</h2>
+<table>
+<thead>
+<tr>
+<th>工作</th>
+<th>截至本次编制已具备</th>
+<th>后续执行所需事实</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PM 需求与产品范围</td>
+<td>R01 至 R10、首版约束、异常规则和验收目标。见<a href="#doc-3" class="doclink">PRD</a></td>
+<td>软件候选版中的逐项实现证据</td>
+</tr>
+<tr>
+<td>PM 原型与产品侧交接</td>
+<td>可点击 HTML、交互说明、交出清单和退回条件。见<a href="01_%E9%9C%80%E6%B1%82%E4%B8%8E%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/03_%E5%8F%AF%E7%82%B9%E5%87%BB%E4%BA%A4%E4%BA%92%E5%8E%9F%E5%9E%8B.html">可点击原型</a>、<a href="#doc-19" class="doclink">产品交接</a></td>
+<td>FE、BE、QA、SYS 各自确认收件与疑点</td>
+</tr>
+<tr>
+<td>组长分工与技术决策</td>
+<td>四岗主责、五个核心开发日、技术栈及接口约定。见<a href="#doc-12" class="doclink">任务总表</a>、<a href="#doc-10" class="doclink">阶段计划</a>、<a href="#doc-13" class="doclink">四岗任务书</a>、<a href="#doc-18" class="doclink">技术栈</a></td>
+<td>组员实际承接、目标环境试跑和版本证据</td>
+</tr>
+<tr>
+<td>PM 管理闭环</td>
+<td>本文件交付了节点检查、阻塞升级、范围裁决、签收和验收决策的模拟记录</td>
+<td>项目实际执行时按事件新增真实记录</td>
+</tr>
+</tbody></table>
+<h2>二 关键路径与检查点</h2>
+<ol>
+<li>M1，11 月 6 日下班前。PM 发出同一版本的需求、原型和任务书，四岗明确接收。SYS 试跑转写和服务端 API，QA 完成素材与依据标注，BE、FE 核对接口字段和状态。FE 可用 Mock 做页面骨架，BE 可并行准备队列与接口。</li>
+<li>M2，11 月 10 日中午前。SYS 把带时间的转写交给 BE。BE 提供上传、状态、提要、问答和媒体读取。FE 接入同一个真实视频的播放、提问、引用定位。QA 独立验证全流程。真实生成和引用回看是两项关键退出条件。</li>
+<li>M3，11 月 11 日下班前。处理核心缺陷，QA 复测原用例和相邻路径。FE、BE、SYS 交同一候选版本与可复现运行说明，锁定代码、模型、配置和依赖。未解决 S1/S2 的候选版本留在整改状态。</li>
+<li>M4，11 月 12 日下班前。QA 按固定分母提交量化验收及冒烟记录，SYS 验证一致备份和恢复。PM 按同一版本的证据作验收决定。11 月 13 日下班前处理遗留问题并归档，留出必要复验时间。</li>
+</ol>
+<p>转写和 API 连通影响 M2 的真实链路，媒体 Range 影响引用回看，二者都影响 M3 冻结。预计受阻超过半个工作日或影响下一节点时，主责同时通知 PM 与直接依赖人。PM 登记影响和复查时间，技术主责提交修复，接收方或 QA 独立复测。涉及密钥、数据和结果正确性的情况立即升级。详细条件见<a href="#doc-27" class="doclink">风险与变更管理</a>和<a href="#doc-20" class="doclink">研发联调交接</a>。</p>
+<h2>三 里程碑记录（模拟）</h2>
+<table>
+<thead>
+<tr>
+<th>记录</th>
+<th>节点</th>
+<th>模拟进展与事实输入</th>
+<th>PM 演练结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SIM-M1</td>
+<td>11 月 6 日 16:30</td>
+<td>四岗完成范围与字段演练确认。SYS 在目标设备用 CPU int8 转写一段短课，并在 SIM-B01 恢复后完成一次真实调用的场景演练。QA 提交 3 段授权短视频与 25 题人工依据的模拟清单。</td>
+<td>通过 M1 演练门槛，转写输出交 BE 接入，准入 M2。</td>
+</tr>
+<tr>
+<td>SIM-M2</td>
+<td>11 月 10 日 11:15</td>
+<td>SIM-B02 复测完成。QA 在模拟候选版 SIM-dev.2 上从上传新样本开始，复核五状态、提要、一道生成正题、一条引用回看和一道无依据题。</td>
+<td>通过 M2 演练门槛，进入异常回归。保留源视频、版本、request_id 和原文依据。</td>
+</tr>
+<tr>
+<td>SIM-M3-PRE</td>
+<td>11 月 11 日 10:00</td>
+<td>M3 上午预审以 <code>SIM-RC-01</code> 为输入。正题 17/20、拒答 5/5。B03 为有答案题，系统回答把 SQLite 事务错误地说成能自动回滚视频文件写入，引用原文无法支持结论。详见<a href="#doc-26" class="doclink">第一轮工程验收演练</a>。</td>
+<td>B03 记 S2，退回整改，<code>SIM-RC-01</code> 暂不冻结。</td>
+</tr>
+<tr>
+<td>SIM-M3</td>
+<td>11 月 11 日 17:00</td>
+<td><code>SIM-RC-02</code> 修正 B03。QA 复测原题、5 道无答案题、相邻正题、错误引用和上游故障路径。演练输入显示 P0 已回归且未解决 S1/S2 为零，FE、BE、SYS 的版本说明和恢复操作一致。</td>
+<td>冻结 <code>SIM-RC-02</code> 供次日 M4 演练。后续改动经缺陷流程，受影响用例重测。</td>
+</tr>
+<tr>
+<td>SIM-M4</td>
+<td>11 月 12 日 16:00</td>
+<td>QA 提交 <code>SIM-RC-02</code> 的模拟量化摘要，SYS 提交冷启动和独立目录恢复演练结果。一次独立生成请求为 21.4 秒，超过 20 秒目标，未触发 25 秒降级。</td>
+<td>对 <code>SIM-RC-02</code> 作附条件接受，保留耗时未达项并安排 11 月 13 日复验，详见第六节。</td>
+</tr>
+</tbody></table>
+<h2>四 阻塞与缺陷处理（模拟）</h2>
+<table>
+<thead>
+<tr>
+<th>编号与触发</th>
+<th>影响与主责</th>
+<th>PM 调度决定</th>
+<th>复查证据与演练状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SIM-B01，11 月 6 日 10:00。SYS 试跑服务端模型请求收到鉴权失败。关联 R-03、SYS-01、BE-04、H-03。</td>
+<td>阻塞 M1 连通验证与 M2 生成问答。SYS 查账户权限与服务端配置，BE 核对请求和错误映射。</td>
+<td>优先查既定模型权限、地区端点和进程读取的环境变量。FE 同时校验拒答和原文检索状态的展示，QA 先整理真实联调用例。</td>
+<td>11 月 6 日 15:20 模拟验证通过，SYS 提供脱敏请求标识 SIM-REQ-01，BE/QA 核对成功生成与一次上游故障分支。演练关闭。</td>
+</tr>
+<tr>
+<td>SIM-B02，11 月 9 日 14:10。点击引用后播放器无法取到目标时间点的视频分段，单段 Range 请求返回了 200 全文件。关联 R-07、R06、FE-03、BE-02、F17/F26。</td>
+<td>S2。影响 M2 原文回看。BE 修正媒体响应，FE 核对 <code>start_sec</code> 使用秒和设置 <code>currentTime</code> 的时机，QA 复现。</td>
+<td>当日把媒体响应修复提到最高联调优先级。上传、转写和文本呈现可并行验证，引用定位按待复测记录。</td>
+<td>11 月 10 日 10:20 模拟回归收到 206 与正确的 <code>Content-Range</code>，同一已就绪样本点引用可定位并暂停。演练关闭。</td>
+</tr>
+<tr>
+<td>SIM-B03，11 月 11 日 10:00。<code>SIM-RC-01</code> 的正题 B03 把 SQLite 事务与视频文件写入混在一起，引用原文无法支持结论。关联风险 R-05、需求 R05、任务 BE-04、用例 F12/F16/F28，对应<a href="#doc-26" class="doclink">首轮缺陷 SIM-QA-01</a>。</td>
+<td>S2。影响 M3 冻结和 M4 正确性。BE 修订答案与证据的约束，QA 复核原文与输出。</td>
+<td>退回初轮候选并保留失败证据。QA 保持固定 25 题，复测原题、同类正题、5 道无答案题、无效引用和上游失败。</td>
+<td>11 月 11 日 16:30 模拟在 <code>SIM-RC-02</code> 复测。B03 返回 <code>answered</code>，答案说明事务只能回滚数据库写入，视频文件由应用单独清理，所引片段支持结论。5 道无答案题均正确返回 <code>not_found</code> 且无引用。演练关闭。</td>
+</tr>
+</tbody></table>
+<p>原文检索可保住故障场景的复习入口，生成问答仍按独立退出条件检查。媒体修复按<a href="#doc-16" class="doclink">接口契约</a>核对 206、有效 <code>Content-Range</code>、416 边界与定位表现。结果正确性等级依照<a href="#doc-22" class="doclink">测试计划</a>。</p>
+<h2>五 范围裁决与四岗交接（模拟）</h2>
+<table>
+<thead>
+<tr>
+<th>模拟变更</th>
+<th>需求与影响</th>
+<th>PM 裁决</th>
+<th>后续执行</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SIM-CR-01，11 月 6 日，提出人 FE</td>
+<td>在提问框旁解释问答只针对当前视频与课程音轨，避免把页面上未讲的内容当作可答。仅涉及现有页面文案和 QA 复核。</td>
+<td>接受为既有 R04、R07 的交付口径澄清。沿用现有产品范围和接口。</td>
+<td>FE 在问答区沿用已定稿的范围提示，QA 核对无依据和故障文案，M2 检查。</td>
+</tr>
+<tr>
+<td>SIM-CR-02，11 月 9 日，提出人模拟体验者</td>
+<td>希望上传多个录课并一次横跨多课提问。会增加检索范围选择、引用归属、索引隔离和多素材用例。</td>
+<td>延后。首版继续按单个视频、单轮问答执行。</td>
+<td>PM 记入后续探索项。当前任务维持 F27 跨视频隔离验证。</td>
+</tr>
+<tr>
+<td>SIM-CR-03，11 月 10 日，提出人模拟体验者</td>
+<td>希望本轮把单段上限改到 500 MiB、60 分钟。会影响探测、容量、超时和恢复证据。</td>
+<td>拒绝本轮修改。维持 200 MiB、20 分钟上限以及现有并发和超时口径。</td>
+<td>FE 按规则提示切分。BE、SYS 和 QA 保留原有输入边界，M3 复查。</td>
+</tr>
+</tbody></table>
+<p>下表演练成员如何复述职责和接收条件。实际签收以<a href="#doc-28" class="doclink">交接台账</a>为准。</p>
+<table>
+<thead>
+<tr>
+<th>交出与接收</th>
+<th>交接ID</th>
+<th>模拟收件反馈和结果</th>
+<th>当前实际状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PM → FE、BE、QA、SYS</td>
+<td>H-01</td>
+<td>FE 复述五状态和引用跳转。BE 确认上传 202、秒数与错误结构。QA 复述正确性分母和拒答规则。SYS 确认转写、环境和恢复主责。模拟四岗接收。</td>
+<td>材料已备齐，成员回执待实际发生。</td>
+</tr>
+<tr>
+<td>BE → FE、QA、SYS</td>
+<td>H-02/H-05</td>
+<td>FE 初次演练按 SIM-B02 退回媒体响应，修复后在同一版本复测。QA 收到候选版接口和请求证据。</td>
+<td>接口文档和 Mock 已备齐，真实服务及签收待执行。</td>
+</tr>
+<tr>
+<td>SYS → BE、QA、PM</td>
+<td>H-03/H-04/H-07</td>
+<td>BE 演练接收转写结构与失败回传方式。QA 演练按版本独立恢复，PM 核对运行边界。</td>
+<td>环境、运行和恢复规范已备齐，真实试跑、恢复及签收待执行。</td>
+</tr>
+<tr>
+<td>FE、BE、SYS → QA</td>
+<td>H-06</td>
+<td>QA 对照 <code>SIM-RC-02</code> 的提交、环境、脚本和样本清单演练接收，并保留缺陷复查结果。</td>
+<td>测试接收条件已备齐，实际候选版本待提交。</td>
+</tr>
+<tr>
+<td>QA → PM</td>
+<td>H-08</td>
+<td>PM 核对固定题集、引文、耗时和未解决缺陷的模拟摘要，给出附条件接受演练结论。</td>
+<td>实际报告和软件验收待执行。</td>
+</tr>
+</tbody></table>
+<h2>六 验收裁决与结项（模拟）</h2>
+<p><code>SIM-RC-01</code> 用于 11 月 11 日 M3 上午预审，<code>SIM-RC-02</code> 用于 11 月 12 日 M4 验收演练。两轮采用相同的 20 道正题和 5 道无答案题，但使用不同的模拟响应、定位记录和运行耗时。B03 修复后通过，第二轮仍为 17/20，三道未通过正题改为一道漏召回和两道按规则降级。每轮独立按<a href="#doc-22" class="doclink">测试计划</a>复算。第一轮的逐题记录见<a href="#doc-26" class="doclink">工程验收演练与模拟数据</a>。</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>模拟输入</th>
+<th>演练判断</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>课程问答</td>
+<td>17/20 正题通过。B03 已通过。A06 漏召回，C02 和 C06 按上游故障规则降级。</td>
+<td>达到至少 16/20 的题集目标。降级 2 题单列，仍计入 20 题分母。</td>
+</tr>
+<tr>
+<td>无答案题</td>
+<td>5/5 正确拒答，引用为空。</td>
+<td>达标。</td>
+</tr>
+<tr>
+<td>引用时间</td>
+<td>22 条返回引用全部合法，21 条与标注相差不超过 5 秒。</td>
+<td>21/22，约 95.5%，达标。</td>
+</tr>
+<tr>
+<td>样本处理</td>
+<td>3 段 3 至 5 分钟短课，预热后处理分别用时 4 分 42 秒、5 分 15 秒、6 分 08 秒。</td>
+<td>均在单段 8 分钟目标内。</td>
+</tr>
+<tr>
+<td>独立生成时延</td>
+<td>10 次为 10.1、10.8、11.4、11.8、12.4、13.0、13.6、14.2、16.5、21.4 秒，中位数 12.7 秒，最大值 21.4 秒。</td>
+<td>9/10 在 20 秒内，1 次目标未达。演练输入中 0 次超时。</td>
+</tr>
+<tr>
+<td>回归与恢复</td>
+<td>S1/S2 未解决数为 0。候选版冷启动、回归、重启和一致备份恢复的演练结果齐备。</td>
+<td>满足演练准入条件。</td>
+</tr>
+</tbody></table>
+<p><strong><code>SIM-RC-02</code> 的 PM 演练决定为附条件接受。</strong> 限制为偶发生成等待超过 20 秒，影响问答等待体验。BE 查模型调用与应用内分段耗时，SYS 复核目标设备和网络。QA 于 11 月 13 日下班前用同版本、同口径补跑 10 次，记录最大值、中位数和超时。若复验改变代码或配置，记录新版本并回归受影响的路径。复验达到目标后再更新结论。出现新的 S1/S2 时退回整改。演练不消耗实际额度，实际调用按项目预算约定另行记录。</p>
+<p>进入真实结项时，PM 收齐四岗接收记录、同一候选版和启动说明、真实样本与人工标注、QA 逐题结果及分母、P0 回归与缺陷证据、SYS 的一致备份和独立恢复证据。每份记录应可定位版本、环境、输入、执行人、实际日期与结果。检查后，PM 将决定、已知限制和遗留项负责人写入<a href="#doc-24" class="doclink">实际验收记录</a>。运行包和回退细节以<a href="#doc-21" class="doclink">部署发布与回退交接</a>为准。实际结项状态为待工程候选版与 QA 证据。</p>
+</article></details>
+<details class="doc" id="doc-30" data-group="07_管理记录" ><summary><span class="group">07_管理记录</span><span>课程视频复习助手项目总结报告</span></summary><article><p>V1.3 · 2026 年 11 月 7 日复核 · 产品经理兼组长。产品侧已交付需求、原型、分工、技术决定和验收材料。用户调研和两轮工程验收演练使用标注过的模拟数据。外部研究与真实试点评估为立项提供依据。工程结项依据候选版本、QA 报告和成员回执。<a href="#doc-31" class="doclink">立项复核</a></p>
+<h2>一 项目概况</h2>
+<p>项目服务于使用中文录课复习的大学生。学生上传一段视频，浏览章节，针对当前视频提问，再通过引用回看课程原话。首版聚焦单视频音轨与单轮问答，覆盖上传、处理、提要、答复、来源、定位、拒答、失败恢复、视频管理和持久化共 10 条需求。</p>
+<p>团队为五个岗位。PM 兼组长负责产品与推进，FE 负责页面和播放，BE 负责业务接口、队列和问答，SYS 负责音视频转写、环境和恢复，QA 负责样本标注、独立测试和报告。实施窗口计划为 11 月 5、6、9、10、11 日开发，12 日验收，13 日整改与归档。汇报开场以立项依据 PPT 交付。<a href="#doc-3" class="doclink">需求文档</a> · <a href="#doc-13" class="doclink">四岗任务书</a> · <a href="#doc-10" class="doclink">阶段计划</a></p>
+<h2>二 项目目标回顾与达成情况</h2>
+<table>
+<thead>
+<tr>
+<th>目标</th>
+<th>当前交付与证据</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>定义复习场景和首版需求</td>
+<td>R01 至 R10、产品边界、用户故事、状态与异常规则。<a href="#doc-3" class="doclink">需求文档</a></td>
+<td>产品侧材料已交付</td>
+</tr>
+<tr>
+<td>研究用户任务并明确取舍</td>
+<td>桌面竞品资料、5 个虚构角色和 10 条查找任务记录、痛点编码与需求映射。<a href="#doc-5" class="doclink">竞品取舍</a> · <a href="#doc-6" class="doclink">模拟用户调研</a> · <a href="01_%E9%9C%80%E6%B1%82%E4%B8%8E%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/06_%E6%A8%A1%E6%8B%9F%E8%B0%83%E7%A0%94%E5%8E%9F%E5%A7%8B%E6%95%B0%E6%8D%AE.json">模拟原始数据</a></td>
+<td>桌面分析与模拟研究已编制</td>
+</tr>
+<tr>
+<td>交付可体验的页面原型</td>
+<td>可点击页面、交互规则、预置状态和问答案例。首轮浏览器走查 10/12 通过，两项修订后复测 12/12 通过。<a href="01_%E9%9C%80%E6%B1%82%E4%B8%8E%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/03_%E5%8F%AF%E7%82%B9%E5%87%BB%E4%BA%A4%E4%BA%92%E5%8E%9F%E5%9E%8B.html">可点击原型</a> · <a href="#doc-25" class="doclink">原型验收</a></td>
+<td>V1.2 原型验收通过，供四岗实施与联调对齐</td>
+</tr>
+<tr>
+<td>明确职责、技术和交接</td>
+<td>四岗任务、版本依赖、API 契约、Mock、三类交接及签收台账。<a href="#doc-12" class="doclink">任务总表</a> · <a href="#doc-18" class="doclink">技术定稿</a> · <a href="#doc-28" class="doclink">交接台账</a></td>
+<td>方案与材料已交付，实际签收待登记</td>
+</tr>
+<tr>
+<td>建立质量门槛并演练放行</td>
+<td>固定 25 题、验收口径、M1 至 M4 处置和两轮模拟候选版本裁决。<a href="#doc-22" class="doclink">测试计划</a> · <a href="05_%E6%B5%8B%E8%AF%95%E4%B8%8E%E9%AA%8C%E6%94%B6/06_%E8%B4%A8%E9%87%8F%E6%A3%80%E6%9F%A5%E5%8D%95%EF%BC%88%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%EF%BC%89.xlsx">质量检查单</a> · <a href="#doc-29" class="doclink">管理演练</a></td>
+<td>口径与模拟裁决已交付，实际工程放行待 QA 证据</td>
+</tr>
+</tbody></table>
+<p>模拟研究使用两道知识点定位任务和 180 秒时限，记录原播放器情景与 HTML 原型路径各 5 条。模拟通过数为 3/5 和 4/5，中位耗时为 151 秒和 69 秒，超时按 180 秒计入。角色交替使用界面和题目，原型走的是预置入口与文本。数据支持本轮把章节、原文和时间点入口放在核心流程，并保留无依据时的继续操作提示。耗时与成败均为合成数据，实际用户效率留待真实样本验证。<a href="#doc-6" class="doclink">模拟用户调研</a> · <a href="01_%E9%9C%80%E6%B1%82%E4%B8%8E%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/06_%E6%A8%A1%E6%8B%9F%E8%B0%83%E7%A0%94%E5%8E%9F%E5%A7%8B%E6%95%B0%E6%8D%AE.json">模拟原始数据</a></p>
+<h2>三 进度与成本分析</h2>
+<table>
+<thead>
+<tr>
+<th>节点</th>
+<th>计划</th>
+<th>实际可核实进展与当前差距</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>M1，11 月 6 日下班前</td>
+<td>冻结范围和协议，完成四岗交接及环境验证</td>
+<td>需求、交互、任务书、接口、测试方案已交出成稿。四岗回执、目标设备转写及 API 连通待登记。</td>
+</tr>
+<tr>
+<td>M2，11 月 10 日中午前</td>
+<td>上传到引用回看的完整工程流程可复现</td>
+<td>本地 HTML 原型、Mock 和检查路径已备齐。真实音轨、模型调用与浏览器媒体回看的联合证据待开发。</td>
+</tr>
+<tr>
+<td>M3，11 月 11 日下班前</td>
+<td>P0 回归、严重缺陷修复、冻结同一候选版</td>
+<td>已演练因 S2 暂缓冻结及修复后复审。实际版本、代码依赖和 QA 回归待提交。</td>
+</tr>
+<tr>
+<td>M4，11 月 12 日下班前</td>
+<td>正式指标、恢复证据与 PM 裁决</td>
+<td>已演练两种裁决及 11 月 13 日复验安排。实际 QA 报告、冷启动与备份恢复待验证。</td>
+</tr>
+</tbody></table>
+<p>截至 11 月 7 日的资料核查，可核实进展集中在立项、原型验收和交接准备。11 月 9 日开工前复核 M1 回执与首个工程证据，之后按实际情况判断 M2。工程链路依赖目标环境、授权音视频、API 连通与四岗交接。模拟鉴权、媒体 Range 和引用语义问题用于演练依赖失效时的处置。<a href="#doc-31" class="doclink">复核与行动</a> · <a href="#doc-29" class="doclink">里程碑推进与变更演练</a></p>
+<p>成本按现行文档暂设人民币 30 元内部控制目标，首次调用前确认。实际支出、调用量和工时尚未登记。SYS 提供额度设置与账单，BE 记录调用与耗时，PM 复核预算偏差。<a href="#doc-17" class="doclink">环境配置与运行部署</a></p>
+<h2>四 产品质量总结与缺陷分析</h2>
+<p>质量记录按三个层次保存。页面交互的执行证据和范围见原型验收。工程验收演练用固定题集计算指标并练习缺陷裁决。正式工程成绩由 QA 针对同一候选版本填写实际结果记录。<a href="#doc-25" class="doclink">原型验收报告</a> · <a href="#doc-26" class="doclink">工程验收演练</a> · <a href="#doc-24" class="doclink">实际工程验收记录</a></p>
+<p>实际浏览器走查首轮发现两项交互问题。PA07 的拒答提示缺少后续操作，补充换问法、查看提要或原文的引导。PA11 在重开详情时沿用了上次的位置，改为从 00:00 和暂停状态开始。V1.2 复测 12/12 通过，覆盖 R01 至 R10 在原型范围内可观察的行为以及三种宽度的页面布局。原型使用预置内容和模拟任务，媒体、后端持久化与模型效果留待工程验收。<a href="#doc-25" class="doclink">原型验收报告</a> · <a href="05_%E6%B5%8B%E8%AF%95%E4%B8%8E%E9%AA%8C%E6%94%B6/04_%E5%8E%9F%E5%9E%8B%E4%BA%A4%E4%BA%92%E9%AA%8C%E8%AF%81%E8%AF%81%E6%8D%AE.json">浏览器验证证据</a></p>
+<table>
+<thead>
+<tr>
+<th>模拟候选与阶段</th>
+<th>指标摘要</th>
+<th>缺陷与 PM 裁决</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>SIM-RC-01</code>，11 月 11 日 M3 上午预审</td>
+<td>正题 17/20，拒答 5/5，定位 18/20。10 次生成中位 10.65 秒，最大 22.4 秒。</td>
+<td>B03 关于 SQLite 事务与视频文件写入的回答与引用原文不一致，记 S2，退回整改。另登记 A07 定位超差、单次时延超目标、漏召回和降级。</td>
+</tr>
+<tr>
+<td><code>SIM-RC-02</code>，11 月 12 日 M4 验收</td>
+<td>正题 17/20，拒答 5/5，定位 21/22。10 次生成中位 12.7 秒，最大 21.4 秒。</td>
+<td>B03 修复后正确回答且有支持引用，5 道无答案题正确拒答。三道未通过正题由一次漏召回和两次降级组成。演练无未解决 S1/S2，按时延限制附条件接受，安排 11 月 13 日补测。</td>
+</tr>
+</tbody></table>
+<p>两轮沿用 20 道正题和 5 道无答案题，分别使用各自的模拟响应、定位与耗时。管理演练记录三个问题，分别是鉴权失败、媒体 Range 回看失败和 B03 语义错误。首轮工程预审列出四条模拟问题，其中 B03 与管理演练重复。两处记录的缺陷数量各按自身阶段统计。真实工程缺陷数待 QA 实测后汇总。<a href="#doc-26" class="doclink">第一轮逐题记录</a> · <a href="#doc-29" class="doclink">两轮衔接与第二轮记录</a></p>
+<h2>五 经验与教训</h2>
+<ol>
+<li>用复习任务约束范围。让学生快速找到原话比扩充功能清单更贴近首版目标，因此把章节和来源定位纳入 P0，并延后跨视频问答、OCR 等扩展。</li>
+<li>把引用结构和语义支持分开验。B03 演练中的片段 ID 和定位有效，正文仍有事实错误。QA 需要核对引用原话和答案是否互相支持，S2 未解决时不冻结候选版本。</li>
+<li>先检查工程依赖。SYS 负责转写和环境，BE 负责状态、数据与 API，FE 负责呈现和交互。用单个真实样本串起四岗，再扩展到固定题集和异常用例。</li>
+<li>采用可追溯的验收证据。预置原型、模拟研究、模拟工程结果和实测报告分别记录。候选版本变更后保留失败输入、修复版本和复查结果。</li>
+</ol>
+<h2>六 遗留问题与改进</h2>
+<table>
+<thead>
+<tr>
+<th>遗留项</th>
+<th>责任与下一步</th>
+<th>关闭条件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>四岗实际签收</td>
+<td>PM 发送交接包，FE、BE、QA、SYS 分别核对材料并登记回执。</td>
+<td>实际时间、接收角色、版本、结论及待处理问题入台账。</td>
+</tr>
+<tr>
+<td>工程候选版和全链路</td>
+<td>SYS 提供实机转写与 API 试跑。FE、BE 交付同一候选版本，QA 用授权录课独立跑完整主流程。</td>
+<td>样本、版本、请求证据、原文与引用可复查。</td>
+</tr>
+<tr>
+<td>实际指标和恢复</td>
+<td>QA 按 25 题和 10 次时延口径执行。SYS 交一致备份与独立目录恢复结果，PM 对照门槛裁决。</td>
+<td>逐题结果、缺陷等级、耗时及恢复证据同版可追溯。</td>
+</tr>
+<tr>
+<td>漏召回与等待体验</td>
+<td>BE 与 SYS 在真实联调时分别检查中文口语召回和外部调用耗时，QA 用原题集验证受影响路径。</td>
+<td>留存分阶段耗时、失败响应、修复版本和复测结果。</td>
+</tr>
+</tbody></table>
+<p>实际交接和工程结项由 PM 按现有记录补签。归档以实际验收结论、版本标识、运行说明、QA 证据、备份恢复和已知限制为准。<a href="#doc-28" class="doclink">决策与交接确认记录</a> · <a href="#doc-24" class="doclink">实际验收记录</a> · <a href="#doc-21" class="doclink">部署发布与回退交接</a></p>
+</article></details>
+<details class="doc" id="doc-31" data-group="07_管理记录" ><summary><span class="group">07_管理记录</span><span>立项复核与工程跟进</span></summary><article><p>V1.3 · 2026 年 11 月 7 日 · 产品经理兼组长</p>
+<p><strong>课程原型立项继续推进。</strong> 团队用单段、获准使用的中文录课验证「找到正确讲解、核对原话、回到时间点」的完整任务。市场已有可解决类似需求的服务。项目采用本机可复现的课程原型，以字幕或原播放器作对照，检查生成问答是否带来额外价值。首版范围、技术路线和 25 题工程标准沿用定稿。<a href="#doc-3" class="doclink">PRD</a> · <a href="#doc-7" class="doclink">外部研究</a> · <a href="#doc-8" class="doclink">竞品核查</a> · <a href="#doc-9" class="doclink">试点评估</a></p>
+<h2>复核记录</h2>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>依据</th>
+<th>PM 决定</th>
+<th>落到哪里</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>D-12</td>
+<td>课程录像的片段复看和文本检索已有外部研究，当前项目也有模拟调研</td>
+<td>按真实资料与模拟输入分层写立项理由。只把同一课中的查找、核对和回看作为首版目标</td>
+<td>立项研究、竞品对照、PPT 开场</td>
+</tr>
+<tr>
+<td>D-13</td>
+<td>已有工具能处理字幕、转写、问答或时间定位，适用条件各异</td>
+<td>自建用于验证课程场景、边界和质量。原播放器与可用字幕作为试点基线</td>
+<td>试点分组、成功口径与准备成本</td>
+</tr>
+<tr>
+<td>D-14</td>
+<td>生成内容与引用可能不一致，B03 的模拟预审演练了此类失败</td>
+<td>引用语义仍由 QA 核对。S2 阻断发布。原型交互复测与工程放行分别登记</td>
+<td>R05/R07、F16/F18/F28、质量检查单</td>
+</tr>
+<tr>
+<td>D-15</td>
+<td>原型已实际浏览器复测，M1 工程回执在台账中尚无记录</td>
+<td>11 月 9 日开工前按实际回执复核四岗。先查缺失的输入，再决定是否调整 M2</td>
+<td>交接台账、下面的复核行动</td>
+</tr>
+<tr>
+<td>D-16</td>
+<td>用户授权恢复汇报开场</td>
+<td>本轮 PPT 只讲选题与立项依据，采用大创项目常见论证结构。课程项目按自身状态表述</td>
+<td>立项依据 PPT</td>
+</tr>
+</tbody></table>
+<h2>11 月 9 日复核行动</h2>
+<p>M1 原计划截止为 11 月 6 日下班前。截至本次资料核查，主目录已有 PM 开工材料与原型证据，四岗实际签收、实机环境和正式样本仍需在台账登记。复核先收下面四项证据。依赖齐备时沿用原 M2 至 M4 计划。依赖缺失时记录责任人、影响的工单和下次检查时间。</p>
+<table>
+<thead>
+<tr>
+<th>主责</th>
+<th>首个必须能打开的证据</th>
+<th>复核判断</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FE</td>
+<td>页面入口或录屏、与 Mock 对齐的状态、对拒答下一步和重开详情初始化的检查</td>
+<td>现有原型可以独立复查，交互缺项进入具体 R 工单</td>
+</tr>
+<tr>
+<td>BE</td>
+<td>候选分支或版本、最小接口运行记录、上传 202 与状态结构</td>
+<td>将真实服务接入界面，标出依赖 SYS 的地方</td>
+</tr>
+<tr>
+<td>SYS</td>
+<td>目标设备与锁定版本、ffprobe 和短课转写记录、脱敏 API 连通证据</td>
+<td>实机短视频与接口可用性分别记录，优先解决阻断生成和转写的输入</td>
+</tr>
+<tr>
+<td>QA</td>
+<td>三段授权短课及 25 题标注表、候选版本与复现步骤</td>
+<td>逐题保留依据。需填实测位置和错误类型，模拟题表用于演练计算</td>
+</tr>
+</tbody></table>
+<p>PM 在复核时登记实际反馈。M2 优先保证一段真实视频从上传走到可核对回看。失效的生成服务可以用标注清楚的原文检索路径继续核查，其生成问答条件仍待满足。M3 与 M4 仅在有同版证据时作冻结和放行判断。<a href="#doc-10" class="doclink">里程碑计划</a> · <a href="#doc-28" class="doclink">实际交接</a> · <a href="#doc-24" class="doclink">测试与发布验收</a></p>
+<h2>交付完成口径</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>已归档证据</th>
+<th>下一次实际确认</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>产品定义、需求与设计</td>
+<td>PRD、任务旅程、10 张需求工单、四岗任务、外部研究和模拟原始数据</td>
+<td>同步接收后的问题和变更</td>
+</tr>
+<tr>
+<td>原型评审</td>
+<td>原型 V1.2，两处修订，浏览器复测 12/12</td>
+<td>候选版界面和真实播放器联调</td>
+</tr>
+<tr>
+<td>质量检查与项目管理</td>
+<td>模板检查单、两轮模拟放行演练、项目总结、阻塞和决策记录</td>
+<td>独立工程 QA、实机运行与恢复、成员回执</td>
+</tr>
+<tr>
+<td>使用价值</td>
+<td>待测的 8 人配对试点，按任务成功、就绪查找、引文准确与准备成本判断</td>
+<td>授权课程和可运行候选版齐备后执行</td>
+</tr>
+<tr>
+<td>汇报开场</td>
+<td>立项依据、场景与外部证据</td>
+<td>合并到最终汇报时由组内继续负责后续内容</td>
+</tr>
+</tbody></table>
+</article></details>
+<details class="doc" id="doc-32" data-group="岗位开工单" ><summary><span class="group">岗位开工单</span><span>测试工程师 开工单</span></summary><article><p>版本V1.1。组长已确定需求、分工和技术路线；按本单立即开工。完整要求以<a href="#doc-13" class="doclink">正式任务书</a>和<a href="#doc-18" class="doclink">技术决策</a>为准。</p>
+<p>你负责真实样本和真值、用例执行、缺陷、指标与最终验收建议。工具采用pytest/httpx、浏览器和人工语义核验，不要求为本轮增加复杂自动化框架。</p>
+<p><strong>先读：</strong> <a href="#doc-22" class="doclink">测试计划</a>、<a href="#doc-23" class="doclink">样本脚本和25题</a>、<a href="#doc-24" class="doclink">结果记录</a>、<a href="#doc-16" class="doclink">API契约</a>。</p>
+<p><strong>现在开始：</strong> 按已有脚本录制或组织录制3段授权课程，检查格式，逐题标原文和真实秒数，登记文件哈希，锁定20道正题及5道无答案题。题目文字已写好，不能把尚未录制的视频时间写成已标注。M1前交真实素材和标注。</p>
+<p><strong>M2交：</strong> 在真实服务上独立走完整流程，验证输入、5状态、3类回答、来源定位，提交有版本和复现步骤的缺陷。</p>
+<p><strong>M3交：</strong> 完整正题分母、拒答、全部引用检查、10次时延、三段处理耗时与回归结果。<strong>M4交：</strong> 最终报告、冷启动与备份恢复复核、未解决问题及验收建议。所有目标值须与真实结果分开，降级不能算生成通过。</p>
+<p><strong>输出：</strong> 证据保存在<code>05_测试与验收/实际测试证据/&lt;候选版本&gt;/</code>，每题保存响应、真值、结论和必要日志。开发组提供固定候选版后再出最终报告；PM接收报告并作业务验收。当前不安排彩排计时。</p>
+<h2>提交要求</h2>
+<p>写任务ID、代码/材料版本、复现步骤、实际结果、已知问题、交给谁。预计阻塞半个工作日就报告影响与所需输入。角色对应唯一成员，不以未填姓名为由等待。</p>
+<p><a href="#doc-1" class="doclink">返回组员阅读说明</a> · <a href="%E5%BC%80%E5%A7%8B%E9%98%85%E8%AF%BB.html">打开全部资料</a></p>
+</article></details>
+<details class="doc" id="doc-33" data-group="岗位开工单" ><summary><span class="group">岗位开工单</span><span>后端工程师 开工单</span></summary><article><p>版本V1.1。组长已确定需求、分工和技术路线；按本单立即开工。完整要求以<a href="#doc-13" class="doclink">正式任务书</a>和<a href="#doc-18" class="doclink">技术决策</a>为准。</p>
+<p>你负责业务API、数据、任务队列、检索问答与引用验证，技术固定为Python 3.11、FastAPI、Uvicorn单worker、SQLAlchemy 2、SQLite、jieba、rank-bm25和httpx。</p>
+<p><strong>先读：</strong> <a href="#doc-3" class="doclink">PRD</a>、<a href="#doc-15" class="doclink">架构</a>、<a href="#doc-16" class="doclink">API与模型契约</a>、<a href="#doc-17" class="doclink">配置约定</a>。</p>
+<p><strong>现在开始：</strong> 按现有契约建表和路由骨架、错误结构、上传与状态接口；和SYS对齐转写调用，不重新设计另一套字段。M1前交可启动API骨架和协议核对结论。</p>
+<p><strong>M2交：</strong> 上传校验、持久队列、转写接入、约60秒原文提要、BM25索引、真实Qwen问答、引用回填、无依据拒答和API降级。上传202的响应字段是视频对象id，后续路径以该值作为video_id。任何模型输出的时间戳均不能直接当真值。</p>
+<p><strong>M3交：</strong> Range、重试删除、重启恢复、期限控制、脱敏日志与自测。代码放<code>course-review/backend/app/</code>，接口测试放<code>backend/tests/</code>。服务导出<code>backend/app/main.py</code>中的app，默认本机8000端口、单worker。</p>
+<p><strong>依赖与接收：</strong> SYS交transcribe模块、模型目录和环境，FE按你的真实服务联调。SYS不写业务数据库；你不代替SYS重新搭整套转写环境。FE验协议，QA验接口和正确性，SYS接服务启动入口。</p>
+<h2>提交要求</h2>
+<p>写任务ID、代码/材料版本、复现步骤、实际结果、已知问题、交给谁。预计阻塞半个工作日就报告影响与所需输入。角色对应唯一成员，不以未填姓名为由等待。</p>
+<p><a href="#doc-1" class="doclink">返回组员阅读说明</a> · <a href="%E5%BC%80%E5%A7%8B%E9%98%85%E8%AF%BB.html">打开全部资料</a></p>
+</article></details>
+<details class="doc" id="doc-34" data-group="岗位开工单" ><summary><span class="group">岗位开工单</span><span>前端工程师 开工单</span></summary><article><p>版本V1.1。组长已确定需求、分工和技术路线；按本单立即开工。完整要求以<a href="#doc-13" class="doclink">正式任务书</a>和<a href="#doc-18" class="doclink">技术决策</a>为准。</p>
+<p>你负责全部用户页面与播放器交互，技术固定为Vue 3、TypeScript、Vite、Element Plus、Axios和HTML5 video。</p>
+<p><strong>先读：</strong> <a href="#doc-3" class="doclink">PRD</a>、<a href="#doc-4" class="doclink">交互规范</a>、<a href="01_%E9%9C%80%E6%B1%82%E4%B8%8E%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/03_%E5%8F%AF%E7%82%B9%E5%87%BB%E4%BA%A4%E4%BA%92%E5%8E%9F%E5%9E%8B.html">可点击原型</a>、<a href="#doc-16" class="doclink">接口契约</a>和<a href="03_%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88%E4%B8%8E%E6%8E%A5%E5%8F%A3/04_%E6%8E%A5%E5%8F%A3Mock%E7%A4%BA%E4%BE%8B.json">Mock</a>。</p>
+<p><strong>现在开始：</strong> 建立首页和详情页、路由与接口类型；用既定Mock实现空态、等待态、失败态、生成回答、拒答和原文检索模式。Mock需要标明，不能当真实AI结果。M1前交页面骨架和字段核对结论。</p>
+<p><strong>M2交：</strong> 真实上传、视频列表、2秒状态轮询、播放器、转写和提要、提问与引用定位。点击引用设置start_sec并暂停，由用户继续播放。禁止在页面或产物中保存LLM密钥。</p>
+<p><strong>M3交：</strong> 删除、重试、输入边界、错误提示、生产build和构建说明。代码放<code>course-review/frontend/</code>，锁文件放<code>frontend/package-lock.json</code>，构建产物放<code>frontend/dist/</code>。这些是工程待创建的约定路径，不是当前已存在的软件。</p>
+<p><strong>依赖与接收：</strong> BE提供服务和字段，SYS提供运行地址。等待服务时先完成Mock页面；M2必须切真实接口。BE验字段，QA验行为，PM验与原型一致，SYS接收build。</p>
+<h2>提交要求</h2>
+<p>写任务ID、代码/材料版本、复现步骤、实际结果、已知问题、交给谁。预计阻塞半个工作日就报告影响与所需输入。角色对应唯一成员，不以未填姓名为由等待。</p>
+<p><a href="#doc-1" class="doclink">返回组员阅读说明</a> · <a href="%E5%BC%80%E5%A7%8B%E9%98%85%E8%AF%BB.html">打开全部资料</a></p>
+</article></details>
+<details class="doc" id="doc-35" data-group="岗位开工单" ><summary><span class="group">岗位开工单</span><span>系统工程师 开工单</span></summary><article><p>版本V1.1。组长已确定需求、分工和技术路线；按本单立即开工。完整要求以<a href="#doc-13" class="doclink">正式任务书</a>和<a href="#doc-18" class="doclink">技术决策</a>为准。</p>
+<p>你负责环境、音视频校验与语音转写模块、部署和数据恢复。技术固定为FFmpeg/ffprobe、faster-whisper small多语言模型、CPU int8、Windows本地运行、Python 3.11和Node.js 22 LTS。</p>
+<p><strong>先读：</strong> <a href="#doc-15" class="doclink">技术方案</a>、<a href="#doc-16" class="doclink">转写模块契约</a>、<a href="#doc-17" class="doclink">配置和运行约定</a>、<a href="#doc-21" class="doclink">部署交接</a>。</p>
+<p><strong>现在开始：</strong> 在目标电脑准备隔离环境、FFmpeg与模型缓存，用一段真实视频验证small CPU int8并记录版本、耗时和识别问题；从实际账户控制台取得Qwen地区端点，以服务端环境变量验证调用。M1前交真实试跑与依赖锁定证据，不能把方案上的版本当已验证版本。</p>
+<p><strong>M2交：</strong> <code>course-review/modules/transcriber/</code>模块，公开transcribe(video_path, output_dir)及契约规定的预热/取消能力，输出真实带秒数分段和受控错误。给BE独立调用成功，不写业务SQLite。</p>
+<p><strong>M3交：</strong> Windows本地启动脚本、前端同源托管、脱敏配置、日志、依赖/模型清单和一致备份方法。<strong>M4交：</strong> 在目标电脑冷启动与恢复副本复现，交付最终运行包和已知限制。代码与脚本按<code>course-review/</code>约定目录组织；本轮不做Docker和展示设备包装。</p>
+<p><strong>依赖与接收：</strong> BE给服务入口和数据结构，FE给生产build，QA核对环境与恢复，PM接运行包。密钥不进入前端、仓库或普通交接文件。额度与付费使用按既定配置和PM管理决定执行。</p>
+<h2>提交要求</h2>
+<p>写任务ID、代码/材料版本、复现步骤、实际结果、已知问题、交给谁。预计阻塞半个工作日就报告影响与所需输入。角色对应唯一成员，不以未填姓名为由等待。</p>
+<p><a href="#doc-1" class="doclink">返回组员阅读说明</a> · <a href="%E5%BC%80%E5%A7%8B%E9%98%85%E8%AF%BB.html">打开全部资料</a></p>
+</article></details><p class="empty" id="empty">没有匹配的文档，请换一个关键词。</p></main></div><footer>版本 V1.3 · 更新日期 2026年11月7日 · 本地阅读，无需联网</footer><script>
+const docs=[...document.querySelectorAll('.doc')];const s=document.querySelector('#search'),g=document.querySelector('#group');function filter(){const q=s.value.trim().toLocaleLowerCase();let n=0;for(const d of docs){const show=(!g.value||d.dataset.group===g.value)&&(!q||d.textContent.toLocaleLowerCase().includes(q));d.classList.toggle('hidden',!show);if(show){n++;if(q)d.open=true}}document.querySelector('#empty').style.display=n?'none':'block'}s.addEventListener('input',filter);g.addEventListener('change',filter);document.querySelector('#expand').onclick=()=>docs.filter(d=>!d.classList.contains('hidden')).forEach(d=>d.open=true);document.querySelector('#collapse').onclick=()=>docs.forEach(d=>d.open=false);document.querySelector('#print').onclick=()=>{docs.forEach(d=>d.open=true);window.print()};document.querySelectorAll('a.doclink').forEach(a=>a.onclick=()=>{const d=document.querySelector(a.getAttribute('href'));if(d){s.value='';g.value='';filter();d.open=true}});window.addEventListener('beforeprint',()=>docs.forEach(d=>d.open=true));if(location.hash){const d=document.querySelector(location.hash);if(d)d.open=true}
+</script></body></html>

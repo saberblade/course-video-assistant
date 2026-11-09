@@ -1,0 +1,127 @@
+{
+  "study_id": "PM-04-SIM-01",
+  "version": "1.0",
+  "prepared_on": "2026-11-05",
+  "data_type": "synthetic_scenario_rehearsal",
+  "disclosure": "所有角色、访谈台词、观察、任务耗时和成败均为模拟编制，供产品原型研究演练。",
+  "method": {
+    "scope": "单段中文录课的知识点查找与原文核对",
+    "comparison": "概念化原播放器时间轴和现有HTML原型中的预置页面路径",
+    "timeout_s": 180,
+    "pass_rule": "在180秒内说出要点并给出偏离预置位置不超过5秒的起点",
+    "counting_rule": "同一痛点按角色去重。严重度1为轻微不便，2为需要绕路，3为阻断或可能误用。",
+    "timing_rule": "总耗时包含找入口、查找、核对和定位，超时记180秒。生成等待、转写耗时和媒体加载均未作为实测项。",
+    "task_order": "每个角色先用一种界面做一道题，再切换界面和题目。角色分配3人原播放器先做、2人原型先做，切换顺序和题目保留在各记录内。",
+    "seeded_material": "03_可点击交互原型.html 内 HTTP 接口基础预置文本。时间点为界面样例，不对应已录制媒体的真值。"
+  },
+  "tasks": {
+    "A": {
+      "prompt": "视频上传为什么返回202？找到讲解的位置。",
+      "expected_key_point": "服务端已接收，后续转写尚未完成，页面需要查询状态。",
+      "seeded_start_s": 60,
+      "prototype_path": "点击预置提问，发送后点击01:00原文位置。"
+    },
+    "B": {
+      "prompt": "上传类POST缺少幂等机制，重复提交可能发生什么？找到讲解的位置。",
+      "expected_key_point": "重复提交可能产生多个任务。",
+      "seeded_start_s": 120,
+      "prototype_path": "打开02:00章节提要，核对原句和位置。原型答复只配置了202问答样例。"
+    }
+  },
+  "pain_codes": {
+    "P01": "定位知识点费力",
+    "P02": "回答缺少可核对来源",
+    "P03": "没有依据与正常回答难区分",
+    "P04": "处理状态或失败后动作不清楚",
+    "P05": "文件限制、音轨或上传授权需要说明",
+    "P06": "关闭后需要找回资料或删除旧视频",
+    "P07": "希望先扫章节再决定回看",
+    "P08": "口语提问与课程术语不一致"
+  },
+  "roles": [
+    {
+      "id": "SIM-01",
+      "profile": "考前集中复习型",
+      "habit": "一周集中回看数次，先拖动进度条再整理笔记。",
+      "scripted_quote": "我知道老师解释过202，但记不得在哪一段。能先扫小节、直接跳回去听原话会更方便。",
+      "coded_observations": [
+        {"code": "P01", "severity": 3, "scenario": "三次错过目标讲解才定位。"},
+        {"code": "P02", "severity": 3, "scenario": "需要对照原文核对自己记下的定义。"},
+        {"code": "P03", "severity": 2, "scenario": "答案若无出处会先改问法再回看。"},
+        {"code": "P07", "severity": 2, "scenario": "先扫章节，再打开有内容的小节。"}
+      ],
+      "runs": [
+        {"order": 1, "mode": "player", "task": "A", "elapsed_s": 151, "key_point_correct": true, "location_s": 58, "success": true, "observation": "多次拖动进度条后确认已接收但转写未完成。"},
+        {"order": 2, "mode": "prototype", "task": "B", "elapsed_s": 45, "key_point_correct": true, "location_s": 120, "success": true, "observation": "通过02:00章节找到重复提交可能创建多个任务。"}
+      ]
+    },
+    {
+      "id": "SIM-02",
+      "profile": "按项目作业查漏型",
+      "habit": "遇到具体开发问题时才打开录课，会分两次完成复习。",
+      "scripted_quote": "卡在上传时我想知道后台还在处理吗。今天关掉页面，明天还得从视频列表打开。",
+      "coded_observations": [
+        {"code": "P01", "severity": 3, "scenario": "多次尝试仍无法区分状态码对应的章节。"},
+        {"code": "P02", "severity": 2, "scenario": "要在作业里回看老师解释过的原句。"},
+        {"code": "P04", "severity": 3, "scenario": "等待期间误以为任务未提交，考虑重复点击。"},
+        {"code": "P06", "severity": 2, "scenario": "希望第二天重开视频，且能清理旧样本。"}
+      ],
+      "runs": [
+        {"order": 1, "mode": "prototype", "task": "B", "elapsed_s": 69, "key_point_correct": true, "location_s": 120, "success": true, "observation": "用口语提问进入无依据分支，随后浏览章节并核对02:00原文。"},
+        {"order": 2, "mode": "player", "task": "A", "elapsed_s": 180, "key_point_correct": false, "location_s": null, "success": false, "observation": "反复回看状态码附近，时限内无法确认目标讲解。"}
+      ]
+    },
+    {
+      "id": "SIM-03",
+      "profile": "偶尔复习的本地资料型",
+      "habit": "保存少量获准使用的录屏，平时以课件为主。",
+      "scripted_quote": "我想知道录屏格式不对怎么换，也想先看到这段视频大概讲了哪几件事。",
+      "coded_observations": [
+        {"code": "P01", "severity": 2, "scenario": "能靠时间轴找到讲解，仍需前后多次确认。"},
+        {"code": "P04", "severity": 2, "scenario": "处理失败后无法仅凭失败标记判断应重试还是换文件。"},
+        {"code": "P05", "severity": 3, "scenario": "希望明确什么文件可选，以及处理和生成使用哪些材料。"},
+        {"code": "P07", "severity": 2, "scenario": "先用章节判断内容是否与复习目标相关。"}
+      ],
+      "runs": [
+        {"order": 1, "mode": "player", "task": "B", "elapsed_s": 102, "key_point_correct": true, "location_s": 123, "success": true, "observation": "手动定位幂等性讲解并确认重复提交后果。"},
+        {"order": 2, "mode": "prototype", "task": "A", "elapsed_s": 60, "key_point_correct": true, "location_s": 60, "success": true, "observation": "点击示例问题，阅读回复并定位到01:00。"}
+      ]
+    },
+    {
+      "id": "SIM-04",
+      "profile": "做笔记时核对术语型",
+      "habit": "每周回看，按章节摘录老师的定义和例子。",
+      "scripted_quote": "用我自己的话问容易问得太模糊。我需要看到老师怎么说，还想删掉之前已经记完的视频。",
+      "coded_observations": [
+        {"code": "P01", "severity": 2, "scenario": "能找到相关主题，精确到一句话需要多次回看。"},
+        {"code": "P02", "severity": 3, "scenario": "只有答案时无法确认课程是否真的说过。"},
+        {"code": "P03", "severity": 3, "scenario": "如果问题超出课程，需明说依据不足。"},
+        {"code": "P06", "severity": 3, "scenario": "需要打开上次复习的视频并删除过时材料。"},
+        {"code": "P07", "severity": 2, "scenario": "用章节先建立笔记结构。"},
+        {"code": "P08", "severity": 2, "scenario": "习惯说‘多点几次’，不一定能想到‘幂等’。"}
+      ],
+      "runs": [
+        {"order": 1, "mode": "prototype", "task": "A", "elapsed_s": 80, "key_point_correct": true, "location_s": 60, "success": true, "observation": "先读章节，再点问答来源核对原句。"},
+        {"order": 2, "mode": "player", "task": "B", "elapsed_s": 125, "key_point_correct": true, "location_s": 117, "success": true, "observation": "靠拖动和回放确认重复提交会生成多个任务。"}
+      ]
+    },
+    {
+      "id": "SIM-05",
+      "profile": "碎片时间复习和弱网型",
+      "habit": "会在网络不稳定时打开本地课程，提问多用口语。",
+      "scripted_quote": "我常问‘连点会怎样’这种问题。要是接口暂时不可用，我也想知道下面显示的是原文还是新回答。",
+      "coded_observations": [
+        {"code": "P01", "severity": 3, "scenario": "定位未完成就因时间不足退出。"},
+        {"code": "P02", "severity": 3, "scenario": "必须看到原句才能确认答复来自本视频。"},
+        {"code": "P03", "severity": 3, "scenario": "容易混淆检索降级和课程没有讲。"},
+        {"code": "P04", "severity": 2, "scenario": "服务断开后，希望有明确的可继续动作。"},
+        {"code": "P05", "severity": 2, "scenario": "希望确认本地视频和问答内容各自在哪里处理。"},
+        {"code": "P08", "severity": 3, "scenario": "口语表达未命中预置问答后，没有转到章节。"}
+      ],
+      "runs": [
+        {"order": 1, "mode": "player", "task": "A", "elapsed_s": 180, "key_point_correct": false, "location_s": null, "success": false, "observation": "找到状态码附近但未确认202具体含义，记录超时。"},
+        {"order": 2, "mode": "prototype", "task": "B", "elapsed_s": 180, "key_point_correct": false, "location_s": null, "success": false, "observation": "使用‘连点会怎样’等口语提问，看到预置无依据提示后未改用章节，记录超时。"}
+      ]
+    }
+  ]
+}

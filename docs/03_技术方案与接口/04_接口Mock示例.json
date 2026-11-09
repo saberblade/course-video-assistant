@@ -1,0 +1,352 @@
+{
+  "_meta": {
+    "project": "课程视频复习助手",
+    "version": "1.1",
+    "created_on": "2026-11-05",
+    "purpose": "虚构联调样例，供FE、BE、QA对齐协议；不是运行中的服务，也不是课程实测证据。",
+    "base_url": "http://127.0.0.1:8000",
+    "time_unit": "seconds",
+    "record_timezone": "UTC",
+    "notes": [
+      "cases中的response_body就是API实际JSON对象，不额外包装data。",
+      "视频、分段、章节和问答ID均为UUID。",
+      "媒体字节不会嵌入JSON，媒体用headers和body_description描述。",
+      "测试真实服务前需读取实际上传响应的id并作为路径video_id，不要依赖示例UUID存在。",
+      "转写片段使用id，问答引用使用segment_id，映射关系为Citation.segment_id=TranscriptSegment.id。"
+    ]
+  },
+  "cases": [
+    {
+      "name": "health_ok",
+      "method": "GET",
+      "path": "/api/health",
+      "response_status": 200,
+      "response_body": {
+        "status": "ok",
+        "version": "0.1.0",
+        "database": "ok",
+        "transcriber": "ready",
+        "llm_configured": true
+      }
+    },
+    {
+      "name": "upload_accepted",
+      "method": "POST",
+      "path": "/api/videos",
+      "request_content_type": "multipart/form-data",
+      "request_form": {"file": "<binary MP4 H.264 AAC file>"},
+      "response_status": 202,
+      "response_headers": {"Location": "/api/videos/43b4b091-630e-4819-8f56-f20b9120c001"},
+      "response_body": {
+        "id": "43b4b091-630e-4819-8f56-f20b9120c001",
+        "title": "分类模型评估_虚构联调样例",
+        "status": "queued",
+        "processing_mode": "audio_only",
+        "duration_sec": 180.0,
+        "size_bytes": 15728640,
+        "created_at": "2026-11-05T02:00:00Z",
+        "updated_at": "2026-11-05T02:00:00Z",
+        "started_at": null,
+        "finished_at": null,
+        "elapsed_sec": 0,
+        "attempt": 1,
+        "error": null
+      }
+    },
+    {
+      "name": "video_transcribing",
+      "method": "GET",
+      "path": "/api/videos/43b4b091-630e-4819-8f56-f20b9120c001",
+      "response_status": 200,
+      "response_body": {
+        "id": "43b4b091-630e-4819-8f56-f20b9120c001",
+        "title": "分类模型评估_虚构联调样例",
+        "status": "transcribing",
+        "processing_mode": "audio_only",
+        "duration_sec": 180.0,
+        "size_bytes": 15728640,
+        "created_at": "2026-11-05T02:00:00Z",
+        "updated_at": "2026-11-05T02:00:01Z",
+        "started_at": "2026-11-05T02:00:01Z",
+        "finished_at": null,
+        "elapsed_sec": 45,
+        "attempt": 1,
+        "error": null
+      }
+    },
+    {
+      "name": "video_ready",
+      "method": "GET",
+      "path": "/api/videos/43b4b091-630e-4819-8f56-f20b9120c001",
+      "response_status": 200,
+      "response_body": {
+        "id": "43b4b091-630e-4819-8f56-f20b9120c001",
+        "title": "分类模型评估_虚构联调样例",
+        "status": "ready",
+        "processing_mode": "audio_only",
+        "duration_sec": 180.0,
+        "size_bytes": 15728640,
+        "created_at": "2026-11-05T02:00:00Z",
+        "updated_at": "2026-11-05T02:02:01Z",
+        "started_at": "2026-11-05T02:00:01Z",
+        "finished_at": "2026-11-05T02:02:01Z",
+        "elapsed_sec": 120,
+        "attempt": 1,
+        "error": null
+      }
+    },
+    {
+      "name": "video_failed",
+      "method": "GET",
+      "path": "/api/videos/43b4b091-630e-4819-8f56-f20b9120c001",
+      "response_status": 200,
+      "response_body": {
+        "id": "43b4b091-630e-4819-8f56-f20b9120c001",
+        "title": "分类模型评估_虚构联调样例",
+        "status": "failed",
+        "processing_mode": "audio_only",
+        "duration_sec": 180.0,
+        "size_bytes": 15728640,
+        "created_at": "2026-11-05T02:00:00Z",
+        "updated_at": "2026-11-05T02:02:01Z",
+        "started_at": "2026-11-05T02:00:01Z",
+        "finished_at": "2026-11-05T02:02:01Z",
+        "elapsed_sec": 120,
+        "attempt": 1,
+        "error": {"code": "PROCESS_INTERRUPTED", "message": "上次处理因服务重启中断，可重试", "retryable": true}
+      }
+    },
+    {
+      "name": "list_videos",
+      "method": "GET",
+      "path": "/api/videos?limit=20&offset=0",
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "43b4b091-630e-4819-8f56-f20b9120c001",
+            "title": "分类模型评估_虚构联调样例",
+            "status": "ready",
+            "processing_mode": "audio_only",
+            "duration_sec": 180.0,
+            "size_bytes": 15728640,
+            "created_at": "2026-11-05T02:00:00Z",
+            "updated_at": "2026-11-05T02:02:01Z",
+            "started_at": "2026-11-05T02:00:01Z",
+            "finished_at": "2026-11-05T02:02:01Z",
+            "elapsed_sec": 120,
+            "attempt": 1,
+            "error": null
+          }
+        ],
+        "total": 1,
+        "limit": 20,
+        "offset": 0
+      }
+    },
+    {
+      "name": "transcript_ready",
+      "method": "GET",
+      "path": "/api/videos/43b4b091-630e-4819-8f56-f20b9120c001/transcript",
+      "response_status": 200,
+      "response_body": {
+        "video_id": "43b4b091-630e-4819-8f56-f20b9120c001",
+        "segments": [
+          {"id": "7c388118-4875-4125-9383-40513670c001", "start_sec": 32.5, "end_sec": 39.0, "text": "精确率等于真正例除以真正例与假正例之和。"},
+          {"id": "7c388118-4875-4125-9383-40513670c002", "start_sec": 62.0, "end_sec": 70.0, "text": "召回率等于真正例除以真正例与假反例之和。"}
+        ]
+      }
+    },
+    {
+      "name": "summary_ready",
+      "method": "GET",
+      "path": "/api/videos/43b4b091-630e-4819-8f56-f20b9120c001/summary",
+      "response_status": 200,
+      "response_body": {
+        "video_id": "43b4b091-630e-4819-8f56-f20b9120c001",
+        "mode": "extractive",
+        "chapters": [
+          {"id": "a738bafe-7487-47c5-8c3d-45226d90c001", "start_sec": 0.0, "end_sec": 60.0, "title": "00:00 章节提要", "text": "精确率等于真正例除以真正例与假正例之和。", "segment_ids": ["7c388118-4875-4125-9383-40513670c001"]},
+          {"id": "a738bafe-7487-47c5-8c3d-45226d90c002", "start_sec": 60.0, "end_sec": 120.0, "title": "01:00 章节提要", "text": "召回率等于真正例除以真正例与假反例之和。", "segment_ids": ["7c388118-4875-4125-9383-40513670c002"]}
+        ]
+      }
+    },
+    {
+      "name": "question_answered",
+      "method": "POST",
+      "path": "/api/videos/43b4b091-630e-4819-8f56-f20b9120c001/questions",
+      "request_body": {"question": "召回率怎样计算？"},
+      "response_status": 200,
+      "response_body": {
+        "id": "7b557ffc-54e6-4ed4-9119-a6961b70c001",
+        "video_id": "43b4b091-630e-4819-8f56-f20b9120c001",
+        "question": "召回率怎样计算？",
+        "answer_status": "answered",
+        "mode": "generative",
+        "answer": "召回率是真正例数量除以真正例与假反例之和。",
+        "citations": [{"segment_id": "7c388118-4875-4125-9383-40513670c002", "start_sec": 62.0, "end_sec": 70.0, "text": "召回率等于真正例除以真正例与假反例之和。"}],
+        "created_at": "2026-11-05T02:03:10Z",
+        "latency_ms": 1800
+      }
+    },
+    {
+      "name": "question_not_found",
+      "method": "POST",
+      "path": "/api/videos/43b4b091-630e-4819-8f56-f20b9120c001/questions",
+      "request_body": {"question": "课程如何做随机森林超参数搜索？"},
+      "response_status": 200,
+      "response_body": {
+        "id": "7b557ffc-54e6-4ed4-9119-a6961b70c002",
+        "video_id": "43b4b091-630e-4819-8f56-f20b9120c001",
+        "question": "课程如何做随机森林超参数搜索？",
+        "answer_status": "not_found",
+        "mode": "extractive",
+        "answer": "当前视频中未找到足够依据，请换一种问法或回看课程。",
+        "citations": [],
+        "created_at": "2026-11-05T02:04:10Z",
+        "latency_ms": 100
+      }
+    },
+    {
+      "name": "question_degraded",
+      "method": "POST",
+      "path": "/api/videos/43b4b091-630e-4819-8f56-f20b9120c001/questions",
+      "request_body": {"question": "召回率怎样计算？"},
+      "precondition": "命中真实原文，但外部模型接口在25秒总截止时间内未响应。",
+      "response_status": 200,
+      "response_body": {
+        "id": "7b557ffc-54e6-4ed4-9119-a6961b70c003",
+        "video_id": "43b4b091-630e-4819-8f56-f20b9120c001",
+        "question": "召回率怎样计算？",
+        "answer_status": "degraded",
+        "mode": "extractive",
+        "answer": "生成服务暂不可用，以下是检索到的课程原文。",
+        "citations": [{"segment_id": "7c388118-4875-4125-9383-40513670c002", "start_sec": 62.0, "end_sec": 70.0, "text": "召回率等于真正例除以真正例与假反例之和。"}],
+        "created_at": "2026-11-05T02:05:25Z",
+        "latency_ms": 25100
+      }
+    },
+    {
+      "name": "retry_accepted",
+      "method": "POST",
+      "path": "/api/videos/43b4b091-630e-4819-8f56-f20b9120c001/retry",
+      "precondition": "原视频存在、当前failed、未完成任务少于3。",
+      "response_status": 202,
+      "response_body": {
+        "id": "43b4b091-630e-4819-8f56-f20b9120c001",
+        "title": "分类模型评估_虚构联调样例",
+        "status": "queued",
+        "processing_mode": "audio_only",
+        "duration_sec": 180.0,
+        "size_bytes": 15728640,
+        "created_at": "2026-11-05T02:00:00Z",
+        "updated_at": "2026-11-05T02:10:00Z",
+        "started_at": null,
+        "finished_at": null,
+        "elapsed_sec": 0,
+        "attempt": 2,
+        "error": null
+      }
+    },
+    {
+      "name": "delete_completed_video",
+      "method": "DELETE",
+      "path": "/api/videos/43b4b091-630e-4819-8f56-f20b9120c001",
+      "precondition": "当前ready或failed，且没有该视频的活动问答。",
+      "response_status": 204,
+      "response_body": null
+    },
+    {
+      "name": "media_full",
+      "method": "GET",
+      "path": "/api/videos/43b4b091-630e-4819-8f56-f20b9120c001/content",
+      "response_status": 200,
+      "response_headers": {"Content-Type": "video/mp4", "Accept-Ranges": "bytes", "Content-Length": "15728640"},
+      "body_description": "完整MP4二进制文件，不是JSON。"
+    },
+    {
+      "name": "media_partial",
+      "method": "GET",
+      "path": "/api/videos/43b4b091-630e-4819-8f56-f20b9120c001/content",
+      "request_headers": {"Range": "bytes=0-1023"},
+      "response_status": 206,
+      "response_headers": {"Content-Type": "video/mp4", "Accept-Ranges": "bytes", "Content-Range": "bytes 0-1023/15728640", "Content-Length": "1024"},
+      "body_description": "MP4前1024字节。"
+    },
+    {
+      "name": "media_unsatisfiable",
+      "method": "GET",
+      "path": "/api/videos/43b4b091-630e-4819-8f56-f20b9120c001/content",
+      "request_headers": {"Range": "bytes=20000000-"},
+      "response_status": 416,
+      "response_headers": {"Content-Range": "bytes */15728640"},
+      "response_body": {"error": {"code": "RANGE_NOT_SATISFIABLE", "message": "请求的媒体字节范围无效", "retryable": false}, "request_id": "a56a2ed3-0198-4c1a-8a4d-921efce0a599"}
+    },
+    {
+      "name": "upload_too_large",
+      "method": "POST",
+      "path": "/api/videos",
+      "precondition": "实际接收字节大于209715200。",
+      "response_status": 413,
+      "response_body": {"error": {"code": "FILE_TOO_LARGE", "message": "视频不能超过200 MiB，请换较小文件", "retryable": false}, "request_id": "a56a2ed3-0198-4c1a-8a4d-921efce0a599"}
+    },
+    {
+      "name": "upload_unsupported_media",
+      "method": "POST",
+      "path": "/api/videos",
+      "precondition": "扩展名为mp4，但实际视频编码不是H.264。",
+      "response_status": 415,
+      "response_body": {"error": {"code": "UNSUPPORTED_MEDIA", "message": "请使用MP4容器、H.264视频和AAC音频", "retryable": false}, "request_id": "a56a2ed3-0198-4c1a-8a4d-921efce0a599"}
+    },
+    {
+      "name": "queue_full",
+      "method": "POST",
+      "path": "/api/videos",
+      "precondition": "queued、transcribing和indexing合计已有3个任务。",
+      "response_status": 429,
+      "response_headers": {"Retry-After": "10"},
+      "response_body": {"error": {"code": "QUEUE_FULL", "message": "处理队列已满，请等待已有任务完成", "retryable": true}, "request_id": "a56a2ed3-0198-4c1a-8a4d-921efce0a599"}
+    },
+    {
+      "name": "video_not_ready",
+      "method": "GET",
+      "path": "/api/videos/43b4b091-630e-4819-8f56-f20b9120c001/summary",
+      "precondition": "视频当前处于transcribing。",
+      "response_status": 409,
+      "response_body": {"error": {"code": "VIDEO_NOT_READY", "message": "视频尚未处理完成，请稍后再试", "retryable": true}, "request_id": "a56a2ed3-0198-4c1a-8a4d-921efce0a599"}
+    },
+    {
+      "name": "question_invalid",
+      "method": "POST",
+      "path": "/api/videos/43b4b091-630e-4819-8f56-f20b9120c001/questions",
+      "request_body": {"question": "   "},
+      "response_status": 422,
+      "response_body": {"error": {"code": "INVALID_QUESTION", "message": "请输入1至300个字符的问题", "retryable": false}, "request_id": "a56a2ed3-0198-4c1a-8a4d-921efce0a599"}
+    },
+    {
+      "name": "question_busy",
+      "method": "POST",
+      "path": "/api/videos/43b4b091-630e-4819-8f56-f20b9120c001/questions",
+      "request_body": {"question": "召回率怎样计算？"},
+      "precondition": "另一个生成请求尚未完成。",
+      "response_status": 429,
+      "response_headers": {"Retry-After": "3"},
+      "response_body": {"error": {"code": "QUESTION_BUSY", "message": "正在回答上一个问题，请稍后再试", "retryable": true}, "request_id": "a56a2ed3-0198-4c1a-8a4d-921efce0a599"}
+    },
+    {
+      "name": "delete_processing_video",
+      "method": "DELETE",
+      "path": "/api/videos/43b4b091-630e-4819-8f56-f20b9120c001",
+      "precondition": "当前transcribing。",
+      "response_status": 409,
+      "response_body": {"error": {"code": "VIDEO_BUSY", "message": "视频正在处理或回答问题，暂时不能删除", "retryable": true}, "request_id": "a56a2ed3-0198-4c1a-8a4d-921efce0a599"}
+    },
+    {
+      "name": "video_not_found",
+      "method": "GET",
+      "path": "/api/videos/43b4b091-630e-4819-8f56-f20b9120c099",
+      "response_status": 404,
+      "response_body": {"error": {"code": "VIDEO_NOT_FOUND", "message": "视频不存在或已删除", "retryable": false}, "request_id": "a56a2ed3-0198-4c1a-8a4d-921efce0a599"}
+    }
+  ]
+}

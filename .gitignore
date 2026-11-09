@@ -1,0 +1,56 @@
+# Local secrets
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Dependencies and build outputs
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+coverage/
+htmlcov/
+.coverage
+*.tsbuildinfo
+
+# Local runtime files
+/data/*
+!/data/.gitkeep
+/models/*
+!/models/faster-whisper-small/
+/models/faster-whisper-small/*
+!/models/faster-whisper-small/.gitkeep
+/logs/*
+!/logs/.gitkeep
+/backups/*
+!/backups/.gitkeep
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+*.log
+*.mp4
+*.mkv
+*.mov
+*.avi
+*.wav
+*.mp3
+*.aac
+
+# Machine and editor files
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+~$*
