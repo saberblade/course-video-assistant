@@ -6,17 +6,17 @@
 
 ## 当前进展
 
-前端源码、依赖锁文件和构建配置已合入 `main`，前端包含产品首页、知识云台、课程列表、视频复习页和悬浮助教。开发环境默认使用前端 Mock，可先查看界面和交互。
+前端和后端源码已合入 `main`。前端包含产品首页、知识云台、课程列表、视频复习页和悬浮助教，开发环境默认使用前端 Mock。后端已提交 FastAPI 服务、SQLite 数据模型、视频接口、章节提要、BM25 检索、模型问答逻辑及自动化测试源码。当前转写任务执行器、模型模块和前端静态托管仍待接入。
 
 | 模块 | 当前仓库状态 | 后续交付 |
 | --- | --- | --- |
 | 产品与协作资料 | 已提供 V1.3 需求、原型、分工、接口和交接资料 | 按实际交付持续维护验收记录 |
 | 前端 | 已提交页面源码、Mock、API 适配和构建配置 | 与真实后端联调并提交运行、构建和验收证据 |
-| 后端 | 已准备目录和接口契约 | 实现 FastAPI 服务、数据库、队列、检索和问答 |
+| 后端 | 已提交 API、数据库、媒体校验、章节、检索、问答和重试删除逻辑 | 接入实际转写任务执行器，完成前后端联调与真实样本验收 |
 | 转写与部署 | 已准备目录、环境配置样例和交接要求 | 实现本地转写模块、运行脚本和部署交付 |
-| 测试 | 已提供产品验收资料和工程验收要求 | 完成真实样本、真实接口和端到端验收 |
+| 测试 | 已提供产品验收资料，并提交 `backend/tests/` 后端测试源码 | 在目标环境执行并记录结果，补齐真实媒体、模型服务和端到端验收 |
 
-Mock 中的上传、处理进度和问答结果为前端模拟。知识地图、学习分析和薄弱预警使用预设教学数据。悬浮助教默认使用内置的站内使用指引。真实录课转写、模型问答和数据持久化需要后端及转写模块实现后验证。
+Mock 中的上传、处理进度和问答结果为前端模拟。知识地图、学习分析和薄弱预警使用预设教学数据。悬浮助教默认使用内置的站内使用指引。后端已有 SQLite 持久化和问答逻辑，但新上传视频当前只进入 `queued`，尚无后台执行器推进转写与索引，真实录课全流程需在转写模块接入后验证。问答依赖数据库中已有的 `ready` 视频与对应转写片段。
 
 ## 快速启动前端
 
@@ -46,11 +46,33 @@ npm.cmd --prefix frontend run dev
 
 默认开发模式下无需模型密钥即可浏览前端 Mock。刷新页面后 Mock 课程记录恢复初始状态。课程内容提问入口位于具体视频的复习页，悬浮助教用于项目介绍和站内操作指引。
 
+## 启动后端服务
+
+按项目技术基线使用 Python 3.11。在仓库根目录打开 PowerShell，首次准备时执行以下命令。
+
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r backend/requirements.txt
+if (-not (Test-Path .env.local)) { Copy-Item .env.example .env.local }
+```
+
+随后启动服务，保持该终端运行。
+
+```powershell
+.\.venv\Scripts\python.exe -m uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8000 --workers 1
+```
+
+接口文档位于 `http://127.0.0.1:8000/docs`，健康检查为 `GET /api/health`。当前缺少转写模块时，健康接口按代码返回 HTTP 503、`status=not_ready`、`transcriber=missing`，其他已实现接口可分别检查。健康检查中的 `llm_configured` 仅检查配置是否齐全，真实模型连通需要另测。
+
+视频上传需要 FFmpeg 套件中的 `ffprobe` 可用，或通过 `FFPROBE_BIN` 指定其路径。后端默认将数据库与视频写入仓库根目录 `data/`。当前 SQLite 路径由 `DATA_DIR` 派生为 `app.db`，旧环境样例中的 `DATABASE_URL` 尚未被实现读取。
+
+后端直接依赖列在 `backend/requirements.txt`，开发测试依赖列在 `backend/requirements-dev.txt`。本轮 README 更新根据源码核对运行配置，后端依赖安装、服务启动和测试结果仍需在目标环境执行并留存证据。详见[后端运行说明](backend/README.md)。
+
 ## 后端联调与配置
 
 课程 API 适配已经放在 `frontend/src/api/videos.ts`，公共类型放在 `frontend/src/types/index.ts`。接口以[团队 API 契约](docs/03_技术方案与接口/02_API与数据模型契约.md)为基线。
 
-后端实现并运行在 `http://127.0.0.1:8000` 后，在 `frontend/.env.local` 写入以下配置，重启前端开发服务即可切换真实课程接口。
+后端服务运行在 `http://127.0.0.1:8000` 后，在 `frontend/.env.local` 写入以下配置，重启前端开发服务即可切换真实课程接口。当前可先核对列表、上传受理和错误响应，转写到问答的完整链路需继续接入任务执行器。
 
 ```dotenv
 VITE_USE_MOCK=false
@@ -60,9 +82,11 @@ VITE_USE_MOCK=false
 
 悬浮助教有独立开关 `VITE_ASSISTANT_USE_API=true`，对应 `POST /api/assistant/chat`。这是前端预留的扩展接口，当前仓库尚无对应后端实现。后端工程师和产品经理确认接口及范围后再开启，具体格式见[前端说明](frontend/README.md)。
 
-根目录 `.env.example` 是后端与转写模块的配置样例，后续由后端实现配置加载，系统工程师在本机 `.env.local` 配置账户端点、模型路径和密钥。它与 `frontend/.env.local` 的前端开关分别维护。模型密钥仅由服务端读取。
+后端已实现根目录 `.env.local` 的配置加载，系统环境变量优先。系统工程师按实际账户配置 `LLM_BASE_URL`、`LLM_API_KEY` 和 `LLM_MODEL=qwen-plus`。缺失模型配置、生成被关闭或模型请求故障时，命中原文的问答走提取式降级分支；无有效原文依据时返回 `not_found`。模型密钥仅由服务端读取。
 
-## 类型检查与构建
+根目录 `.env.example` 同时包含未来转写模块所需的字段，具体读取情况见后端说明。它与 `frontend/.env.local` 的前端开关分别维护。
+
+## 检查与构建
 
 在仓库根目录执行以下命令。
 
@@ -71,19 +95,28 @@ npm.cmd --prefix frontend run typecheck
 npm.cmd --prefix frontend run build
 ```
 
-构建产物位于 `frontend/dist/`。交付方案由 FastAPI 在 `127.0.0.1:8000` 同源托管前端，系统工程师需配置前端页面路由回退到 `index.html`，并将 `/api` 交给后端处理。真实转写和问答需按验收文档另行测试，类型检查和构建结果不能代替业务验收。
+构建产物位于 `frontend/dist/`。当前后端仅注册 API 路由，前端静态托管和页面路由回退尚待实现。开发期在第二个终端运行 Vite，浏览器访问 `http://localhost:5173/`；正式交付方案为 FastAPI 同源托管。
+
+后端已有媒体校验、上传与文件响应、数据库、检索、章节和问答分支等测试源码。在仓库根目录执行以下命令。
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r backend/requirements-dev.txt
+.\.venv\Scripts\python.exe -m pytest -c backend/pytest.ini backend/tests -q
+```
+
+测试使用临时数据、模拟媒体探测或模型响应等方式检查代码行为，真实转写、模型 API 连通和端到端产品验收需分别记录结果。
 
 ## 技术栈
 
 | 层次 | 采用方案 |
 | --- | --- |
 | 已提交前端 | Vue 3、TypeScript 5、Vite 7、Vue Router 4、Element Plus 2、Axios 1 |
-| 后端实施方案 | Python 3.11、FastAPI、Pydantic 2、SQLAlchemy 2、SQLite |
+| 已提交后端 | FastAPI、Pydantic 2、SQLAlchemy、SQLite；项目运行基线为 Python 3.11 |
 | 音视频与转写方案 | FFmpeg / ffprobe、faster-whisper 多语言 small、CPU int8 |
-| 检索与问答方案 | jieba、BM25、百炼 qwen-plus API |
+| 已提交检索与问答逻辑 | jieba、rank-bm25、httpx 调用百炼 qwen-plus；真实连通待验证 |
 | 演示交付方案 | Windows 本机、FastAPI 同源托管前端构建产物 |
 
-前端依赖按 `frontend/package-lock.json` 安装。后端和转写依赖由系统工程师组织实机验证后锁定，详细决定见[技术栈定稿](docs/03_技术方案与接口/05_技术栈定稿与选型决策.md)。
+前端依赖按 `frontend/package-lock.json` 安装。后端已提交精确版本的直接依赖清单，当前包括 SQLAlchemy 2.1.8；完整传递依赖锁定、目标环境安装和转写依赖仍由系统工程师组织验证。详细技术基线见[技术栈定稿](docs/03_技术方案与接口/05_技术栈定稿与选型决策.md)。
 
 ## 项目目录与负责人
 
@@ -93,7 +126,8 @@ npm.cmd --prefix frontend run build
 | `backend/app/` | API、数据库、任务、检索与问答 | 后端工程师 |
 | `modules/transcriber/` | 本地语音模型及转写进程封装 | 系统工程师 |
 | `scripts/`、`deploy/` | 环境准备、运行、部署与备份交付 | 系统工程师 |
-| `tests/` | 用例、脱敏样例与实际验收证据 | 测试工程师 |
+| `backend/tests/` | 后端自动化测试源码 | 后端工程师、测试工程师 |
+| `tests/` | 团队用例、脱敏样例与实际验收证据 | 测试工程师 |
 | `docs/` | 需求、任务、接口、交接与管理记录 | 产品经理兼组长统筹，各岗位协作 |
 | `data/`、`models/`、`logs/`、`backups/` | 本机数据、模型、日志与备份 | 本机准备和运行生成 |
 
