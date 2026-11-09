@@ -13,6 +13,7 @@ if str(BACKEND_ROOT) not in sys.path:
 @pytest.fixture()
 def client(tmp_path, monkeypatch):
     monkeypatch.setenv("DATA_DIR", str(tmp_path / "data"))
+    monkeypatch.setenv("TASK_EXECUTOR_ENABLED", "0")  # SYS：单测不开执行器，避免真实转写竞态
     monkeypatch.delenv("LLM_API_KEY", raising=False)
     monkeypatch.delenv("LLM_BASE_URL", raising=False)
     from app.config import get_settings

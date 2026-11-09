@@ -1,0 +1,164 @@
+{
+  "steps": [
+    {
+      "step": "health",
+      "status": 200,
+      "body": {
+        "status": "ok",
+        "version": "0.1.0",
+        "database": "ok",
+        "transcriber": "ready",
+        "llm_configured": true
+      },
+      "request_id": "d117bd8c-8c80-4f7e-92d2-fb45e370bde9"
+    },
+    {
+      "step": "pre_clean",
+      "removed": 1
+    },
+    {
+      "step": "upload",
+      "status": 202,
+      "body": {
+        "id": "2b3bf19a-ac70-45be-bbab-cbe35d4887a1",
+        "title": "sample_lecture",
+        "status": "queued",
+        "processing_mode": "audio_only",
+        "duration_sec": 116.88,
+        "size_bytes": 1050195,
+        "created_at": "2026-11-09T11:10:05Z",
+        "updated_at": "2026-11-09T11:10:05Z",
+        "started_at": null,
+        "finished_at": null,
+        "elapsed_sec": 0.0,
+        "attempt": 1,
+        "error": null
+      },
+      "took": 0.1
+    },
+    {
+      "step": "poll_to_ready",
+      "total_sec": 68.3,
+      "elapsed_sec": 66.0,
+      "trace": [
+        {
+          "t": 0.1,
+          "status": "queued",
+          "elapsed": 0.0
+        },
+        {
+          "t": 10.1,
+          "status": "transcribing",
+          "elapsed": 10.0
+        },
+        {
+          "t": 20.2,
+          "status": "transcribing",
+          "elapsed": 20.0
+        },
+        {
+          "t": 30.2,
+          "status": "transcribing",
+          "elapsed": 30.0
+        },
+        {
+          "t": 40.2,
+          "status": "transcribing",
+          "elapsed": 40.0
+        },
+        {
+          "t": 50.2,
+          "status": "transcribing",
+          "elapsed": 50.0
+        },
+        {
+          "t": 60.3,
+          "status": "transcribing",
+          "elapsed": 60.0
+        }
+      ]
+    },
+    {
+      "step": "transcript",
+      "status": 200,
+      "segments": 16,
+      "first": {
+        "id": "3c92749f-f4dc-4ba7-9181-6610a7597190",
+        "start_sec": 0.0,
+        "end_sec": 5.0,
+        "text": "大家好,我们开始今天的机器学习导论课程。"
+      },
+      "last": {
+        "id": "699c64f6-6f66-4210-9f76-13ece846d494",
+        "start_sec": 113.0,
+        "end_sec": 116.88,
+        "text": "今天的内容就到这里,谢谢大家。"
+      }
+    },
+    {
+      "step": "summary",
+      "status": 200,
+      "chapters": 2,
+      "first": {
+        "id": "77a6e6b3-5e9b-41b7-8d6c-7acaea6163d7",
+        "start_sec": 0.0,
+        "end_sec": 60.0,
+        "title": "00:00 章节提要",
+        "text": "大家好,我们开始今天的机器学习导论课程。在分类任务中,我们经常会用到两个重要的评价指标——精确率和召回率。精确率等于真正力的个数,除以真正力与价正力之和。它可以理解为,模型预测为正类的样本中,真正是正类的比例。",
+        "segment_ids": [
+          "3c92749f-f4dc-4ba7-9181-6610a7597190",
+          "cd7bf942-190e-46ba-aa7f-d426881f06ac",
+          "56f19da2-73af-4d96-9a0d-fb0e7bb0334b",
+          "9a6cea75-7207-4dbd-91b9-9c880776a7fc",
+          "b21807ba-701a-4ad5-b841-e27102f290fe",
+          "c1529253-a79d-4971-9359-0e894f64f52e",
+          "6df08a5b-b60b-4bee-a15f-62a0402c4f31",
+          "9e0bb3aa-bcef-4965-b7e0-10b91aa6f845",
+          "ad361ce0-3ccd-453d-9415-32db4ac1ec5d"
+        ]
+      }
+    },
+    {
+      "step": "question1",
+      "id": "1a54952a-2eb7-4418-ac56-8226415f66e9",
+      "video_id": "2b3bf19a-ac70-45be-bbab-cbe35d4887a1",
+      "question": "召回率怎样计算？",
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "召回率等于真正例的个数除以真正例与假反例之和，它衡量的是所有真实的正类样本中被模型成功找出来的比例。",
+      "citations": [
+        {
+          "segment_id": "b21807ba-701a-4ad5-b841-e27102f290fe",
+          "start_sec": 26.0,
+          "end_sec": 32.0,
+          "text": "召回率等于真正力的个数,除以真正力与价复利之和。"
+        },
+        {
+          "segment_id": "c1529253-a79d-4971-9359-0e894f64f52e",
+          "start_sec": 32.0,
+          "end_sec": 39.0,
+          "text": "它衡量的是所有真实的正类样本中,被模型成功找出来的比例。"
+        }
+      ],
+      "created_at": "2026-11-09T11:11:17Z",
+      "latency_ms": 4676
+    },
+    {
+      "step": "question2_no_evidence",
+      "status": 200,
+      "answer_status": "not_found",
+      "citations": 0,
+      "llm_on": true,
+      "note": "密钥有效：期望 not_found（诚实拒答）；answered 需引用逐字一致"
+    },
+    {
+      "step": "delete",
+      "first": 204,
+      "second": 404
+    },
+    {
+      "step": "list_after_delete",
+      "total": 0
+    }
+  ]
+}

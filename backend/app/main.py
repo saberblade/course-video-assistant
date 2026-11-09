@@ -3,13 +3,15 @@
 from __future__ import annotations
 
 import logging
+import os
 import threading
 from contextlib import asynccontextmanager
 from uuid import uuid4
 
 from fastapi import FastAPI, Request
+from fastapi.staticfiles import StaticFiles
 
-from app.config import get_settings
+from app.config import PROJECT_ROOT, get_settings
 from app.database import Base, make_engine, session_factory_for
 from app.errors import register_error_handlers
 from app.lifecycle import recover_interrupted
@@ -36,7 +38,18 @@ def create_app() -> FastAPI:
             recover_interrupted(db)
         finally:
             db.close()
+        executor = None
+        # 任务执行器默认开启；backend/tests 与联调可通过 TASK_EXECUTOR_ENABLED=0 关闭
+        enabled = os.getenv("TASK_EXECUTOR_ENABLED", "1") != "0"
+        if enabled:
+            from app.executor import SerialTaskExecutor
+
+            executor = SerialTaskExecutor(session_factory, logger)
+            executor.start()
+        app.state.task_executor = executor
         yield
+        if executor is not None:
+            executor.stop()
         engine.dispose()
 
     app = FastAPI(title="课程视频复习助手", version=settings.app_version, lifespan=lifespan)
@@ -56,6 +69,14 @@ def create_app() -> FastAPI:
     register_error_handlers(app)
     app.include_router(health.router)
     app.include_router(videos.router)
+
+    # 同源托管前端构建产物（契约03：托管frontend/dist）。未构建时跳过并记日志。
+    dist_dir = PROJECT_ROOT / "frontend" / "dist"
+    if (dist_dir / "index.html").is_file():
+        app.mount("/", StaticFiles(directory=dist_dir, html=True), name="frontend")
+        logger.info("static hosting served from %s", dist_dir)
+    else:
+        logger.info("frontend/dist not built yet, static hosting skipped")
     return app
 
 

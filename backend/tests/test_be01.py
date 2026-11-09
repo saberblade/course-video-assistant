@@ -1,4 +1,5 @@
 import sqlite3
+import pathlib
 from dataclasses import replace
 from uuid import uuid4
 
@@ -12,10 +13,11 @@ from app.media import MediaInfo, _interpret, probe_media
 def test_health_says_transcriber_is_missing(client):
     response = client.get("/api/health")
     body = response.json()
-    assert response.status_code == 503
-    assert body["status"] == "not_ready"
+    expected_ok = (pathlib.Path("modules") / "transcriber" / "__init__.py").is_file()
+    assert response.status_code == 200 if expected_ok else response.status_code == 503
+    assert body["status"] == ("ok" if expected_ok else "not_ready")
     assert body["database"] == "ok"
-    assert body["transcriber"] == "missing"
+    assert body["transcriber"] == ("ready" if expected_ok else "missing")
     assert body["llm_configured"] is False
     assert response.headers["x-request-id"]
     assert "detail" not in body
@@ -232,6 +234,7 @@ def test_retry_and_delete(client, make_video):
 
 def test_restart_marks_unfinished_processing_failed(tmp_path, monkeypatch):
     monkeypatch.setenv("DATA_DIR", str(tmp_path / "data"))
+    monkeypatch.setenv("TASK_EXECUTOR_ENABLED", "0")  # SYS：单测不开执行器
     from app.config import get_settings
 
     get_settings.cache_clear()

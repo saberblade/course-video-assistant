@@ -1,0 +1,39 @@
+{
+  "results": [
+    {
+      "name": "warmup 预热",
+      "status": "PASS",
+      "note": "首次加载 1.08s"
+    },
+    {
+      "name": "transcribe 正常路径",
+      "status": "PASS",
+      "note": "16 段 / 墙钟 43.5s / transcript.json ✓"
+    },
+    {
+      "name": "busy 并发防御 + 超时终止",
+      "status": "PASS",
+      "note": "busy 拒绝 ✓ + 超时真终止 TASK_TIMEOUT ✓"
+    },
+    {
+      "name": "cancel_current 取消恢复",
+      "status": "PASS",
+      "note": "取消→PROCESS_INTERRUPTED→重启恢复成功(16段)"
+    },
+    {
+      "name": "无效视频受控错误",
+      "status": "PASS",
+      "note": "不存在/损坏 → INVALID_VIDEO ✓"
+    },
+    {
+      "name": "无音轨受控错误",
+      "status": "PASS",
+      "note": "无音轨 → AUDIO_REQUIRED ✓"
+    },
+    {
+      "name": "shutdown 关闭",
+      "status": "PASS",
+      "note": "shutdown ✓ is_healthy ✓"
+    }
+  ]
+}
