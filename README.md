@@ -1,26 +1,26 @@
 # 课迹 · 课程视频复习助手
 
-北京邮电大学专业实训课设。面向中文录课复习，围绕章节提要、课程问答、原文引用和时间定位，帮助学生找到相关讲解并核对课堂原话。
+北京邮电大学专业实训课设。面向中文录课复习，通过章节提要、课程问答、原文引用和时间定位，帮助学生找到相关讲解并核对课堂原话。
 
-项目仓库为 [saberblade/course-video-assistant](https://github.com/saberblade/course-video-assistant)。团队由产品经理兼组长、前端工程师、后端工程师、测试工程师和系统工程师组成。
+[项目仓库](https://github.com/saberblade/course-video-assistant)由产品经理兼组长、前端工程师、后端工程师、测试工程师和系统工程师共同维护。
 
 ## 当前进展
 
-前端和后端源码已合入 `main`。前端包含产品首页、知识云台、课程列表、视频复习页和悬浮助教，开发环境默认使用前端 Mock。后端已提交 FastAPI 服务、SQLite 数据模型、视频接口、章节提要、BM25 检索、模型问答逻辑及自动化测试源码。转写模块（faster-whisper small CPU int8，本地模型目录已就位）、顺序任务执行器、启动/停止/备份脚本和 `frontend/dist` 同源托管已接入并通过本机端到端冒烟（详见 `deploy/01_SYS环境与部署记录.md`）；qwen-plus 真实调用仍在等待密钥配置。
+前端、后端、转写模块、顺序任务执行器和部署脚本均已合入 `main`。上传视频的处理链路已接通 `queued → transcribing → indexing → ready/failed`，后端可在构建产物存在时挂载 `frontend/dist/`。
 
-| 模块 | 当前仓库状态 | 后续交付 |
+| 模块 | 已提交内容 | 待完成事项 |
 | --- | --- | --- |
-| 产品与协作资料 | 已提供 V1.3 需求、原型、分工、接口和交接资料 | 按实际交付持续维护验收记录 |
-| 前端 | 已提交页面源码、Mock、API 适配和构建配置 | 与真实后端联调并提交运行、构建和验收证据 |
-| 后端 | 已提交 API、数据库、媒体校验、章节、检索、问答和重试删除逻辑 | 复核 `app/executor.py` 执行器接线，完成前后端联调与真实样本验收 |
-| 转写与部署 | 已提交本地转写模块、依赖锁文件、模型目录说明、启动/停止/备份/恢复脚本与端到端冒烟脚本 | qwen-plus 真实调用验收、正式 3–5 分钟样本复测、git 提交/tag 冻结 |
-| 测试 | 已提供产品验收资料，并提交 `backend/tests/` 后端测试源码 | 在目标环境执行并记录结果，补齐真实媒体、模型服务和端到端验收 |
+| 产品与协作 | V1.3 需求、原型、分工、接口与交接资料 | 按实际交付更新产品验收记录 |
+| 前端 | 首页、知识云台、视频复习页、Mock、课程 API 适配及悬浮助教 | 目标设备上的浏览器联调与深层路由刷新检查 |
+| 后端 | 视频 API、SQLite、章节、BM25 检索、问答、任务执行器及静态托管接线 | BE 复核 SYS 的接线改动，完成正式样本验收 |
+| 转写与部署 | faster-whisper 子进程模块、44 包依赖锁、启动/停止/备份/恢复脚本与冒烟脚本 | 每台运行设备准备模型、工具、密钥及前端构建产物 |
+| 测试与证据 | 后端测试源码及 SYS 上传的环境、转写与端到端记录 | QA 复测正式授权样本和完整验收题集，冻结发布版本 |
 
-Mock 中的上传、处理进度和问答结果为前端模拟。知识地图、学习分析和薄弱预警使用预设教学数据。悬浮助教默认使用内置的站内使用指引。后端已有 SQLite 持久化和问答逻辑；`modules/transcriber` 与顺序执行器已接线，上传视频会经 `queued → transcribing → indexing → ready` 推进（本机 116.88 秒样本端到端约 46 秒完成转写），无密钥时问答返回 `degraded` 原文检索模式。问答生成式验收待 qwen-plus 真实调用完成后进行。
+SYS 提交的记录包含 Qwen 真实调用，以及合成中文样本的上传、转写、章节、生成式问答、拒答和删除结果。下文列出证据入口。克隆仓库只获取源码和文档，虚拟环境、工具二进制、模型、密钥、样本视频及构建产物需要在运行设备上另行准备。
 
-## 快速启动前端
+## 先查看前端界面
 
-准备 Node.js 22，版本至少为 22.12。首次获取项目可执行以下命令，仓库目录可放在自己的开发目录中。
+准备 Node.js 22，版本至少为 22.12。首次获取项目时执行以下命令。
 
 ```powershell
 git clone https://github.com/saberblade/course-video-assistant.git
@@ -29,107 +29,130 @@ npm.cmd --prefix frontend ci
 npm.cmd --prefix frontend run dev
 ```
 
-已经有本地仓库的成员，在工作区干净时使用 `git pull --ff-only` 同步代码，再从仓库根目录执行两条 npm 命令。本机现有项目位于 `D:\code\course-video-assistant`。
+已有本地仓库的成员在工作区干净时运行 `git pull --ff-only`，再执行 npm 命令。本机项目目录为 `D:\code\course-video-assistant`，其他成员可使用自己的目录。Windows PowerShell 使用 `npm.cmd`，其他终端可使用 `npm`。
 
-浏览器打开 `http://localhost:5173/`。若 5173 端口已被占用，可运行 `npm.cmd --prefix frontend run dev -- --port 5174`，以终端实际输出的地址为准。Windows PowerShell 使用 `npm.cmd`，其他终端可使用 `npm`。
+打开 `http://localhost:5173/`。若端口已占用，可运行 `npm.cmd --prefix frontend run dev -- --port 5174`，以终端显示的地址为准。
 
-### 可查看的页面
-
-| 路径 | 内容 |
+| 页面 | 内容 |
 | --- | --- |
 | `/` | 产品介绍，点击“进入知识云台”进入工作区 |
 | `/screen` | 示例知识地图 |
-| `/screen?view=library` | 上传、课程列表和模拟处理进度 |
+| `/screen?view=library` | 上传、课程列表与处理进度 |
 | `/screen?view=analysis` | 示例学习分析 |
 | `/screen?view=weak` | 示例薄弱预警 |
-| `/videos/:id` | 从课程列表打开具体视频，查看播放器、转写、章节提要和课程问答 |
+| `/videos/:id` | 从课程列表打开具体视频，查看播放器、转写、章节与课程问答 |
 
-默认开发模式下无需模型密钥即可浏览前端 Mock。刷新页面后 Mock 课程记录恢复初始状态。课程内容提问入口位于具体视频的复习页，悬浮助教用于项目介绍和站内操作指引。
+开发环境默认使用前端 Mock，刷新后 Mock 课程记录恢复初始状态。知识地图、学习分析和薄弱预警使用预设教学数据。悬浮助教默认提供内置的站内使用指引。课程问答位于具体视频的复习页。
 
-## 启动后端服务
+## 准备完整运行环境
 
-按项目技术基线使用 Python 3.11。在仓库根目录打开 PowerShell，首次准备时执行以下命令。
+以下命令均在仓库根目录的 PowerShell 中执行。Python 基线为 3.11，后端与转写依赖按根目录锁文件安装。
 
 ```powershell
 py -3.11 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r backend/requirements.txt
+.\.venv\Scripts\python.exe -m pip install -r requirements.lock.txt
 if (-not (Test-Path .env.local)) { Copy-Item .env.example .env.local }
 ```
 
-随后启动服务，保持该终端运行。
+首次启动前，由 SYS 准备以下本机文件和配置。
+
+| 项目 | 准备要求 |
+| --- | --- |
+| FFmpeg / ffprobe | 安装后加入 PATH，或在根目录 `.env.local` 中为 `FFMPEG_BIN`、`FFPROBE_BIN` 设置实际路径。便携工具可放在 `tools/ffmpeg/` |
+| 转写模型 | 准备完整的 faster-whisper small 模型目录，默认 `models/faster-whisper-small/`，多语言、CPU int8 |
+| 模型 API | 按实际百炼账户填写 `LLM_BASE_URL`、`LLM_API_KEY`、`LLM_MODEL=qwen-plus` |
+| 前端构建 | 使用 Node.js 22 与前端锁文件执行 `npm ci` 和 `npm run build` |
+
+模型下载器 `scripts/download_model_bin.py` 仅下载并校验 `model.bin`。完整模型还需相同模型仓库与 revision 的配置、分词等配套文件，来源以脚本中的 `REPO` 和 `REVISION` 为准。按[模型准备说明](deploy/02_模型准备说明.md)组织文件，再执行转写验收确认可加载。模型文件和便携工具均未包含在 Git 仓库中。
+
+根目录 `.env.local` 由后端读取，系统环境变量优先。前端开关写在独立的 `frontend/.env.local`。密钥仅由服务端保存与读取。当前 SQLite 路径为 `DATA_DIR/app.db`，旧配置样例中的 `DATABASE_URL` 尚未被代码读取。
+
+## 构建与启动完整版本
+
+环境、模型和配置就绪后执行以下命令。
 
 ```powershell
-.\.venv\Scripts\python.exe -m uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8000 --workers 1
+npm.cmd --prefix frontend ci
+npm.cmd --prefix frontend run build
+powershell -ExecutionPolicy Bypass -File .\deploy\start.ps1
 ```
 
-接口文档位于 `http://127.0.0.1:8000/docs`，健康检查为 `GET /api/health`。当前缺少转写模块时，健康接口按代码返回 HTTP 503、`status=not_ready`、`transcriber=missing`，其他已实现接口可分别检查。健康检查中的 `llm_configured` 仅检查配置是否齐全，真实模型连通需要另测。
+默认访问地址如下，修改 `APP_PORT` 后以脚本输出为准。
 
-视频上传需要 FFmpeg 套件中的 `ffprobe` 可用，或通过 `FFPROBE_BIN` 指定其路径。后端默认将数据库与视频写入仓库根目录 `data/`。当前 SQLite 路径由 `DATA_DIR` 派生为 `app.db`，旧环境样例中的 `DATABASE_URL` 尚未被实现读取。
+| 地址 | 用途 |
+| --- | --- |
+| `http://127.0.0.1:8000/` | 同源前端页面 |
+| `http://127.0.0.1:8000/docs` | API 文档 |
+| `http://127.0.0.1:8000/api/health` | 健康检查 |
 
-后端直接依赖列在 `backend/requirements.txt`，开发测试依赖列在 `backend/requirements-dev.txt`。本轮 README 更新根据源码核对运行配置，后端依赖安装、服务启动和测试结果仍需在目标环境执行并留存证据。详见[后端运行说明](backend/README.md)。
+启动脚本使用本机 `.venv`，默认前台运行，一个 Uvicorn worker，端口从根目录 `.env.local` 的 `APP_PORT` 读取。后端在启动时检查 `frontend/dist/index.html`，存在则挂载静态页面，缺失则仅启动 API；先构建再启动，构建后需重启服务。`/screen`、`/videos/:id` 等深层路由的直接访问和刷新回退仍需 FE/SYS 验证，当前使用 `StaticFiles(html=True)` 挂载。
 
-## 后端联调与配置
+执行器默认开启，后台预热模型并按顺序处理上传任务。模型缺失或加载失败时查看服务日志与具体任务错误。`/api/health` 当前按模块入口文件是否存在报告 `transcriber`，按配置字段是否齐全报告 `llm_configured`，实际转写和模型连通需要分别验证。
 
-课程 API 适配已经放在 `frontend/src/api/videos.ts`，公共类型放在 `frontend/src/types/index.ts`。接口以[团队 API 契约](docs/03_技术方案与接口/02_API与数据模型契约.md)为基线。
+## 开发联调与问答模式
 
-后端服务运行在 `http://127.0.0.1:8000` 后，在 `frontend/.env.local` 写入以下配置，重启前端开发服务即可切换真实课程接口。当前可先核对列表、上传受理和错误响应，转写到问答的完整链路需继续接入任务执行器。
+开发期可同时运行后端与 Vite。在 `frontend/.env.local` 写入以下配置，重启前端开发服务以使用真实课程接口。
 
 ```dotenv
 VITE_USE_MOCK=false
 ```
 
-开发服务通过 `frontend/vite.config.ts` 将 `/api` 请求代理到后端，保留 `/api` 路径。开发环境未设置开关时默认启用 Mock，生产构建未设置开关时默认使用真实课程 API。
+Vite 将 `/api` 代理到 `http://127.0.0.1:8000`。未设置开关时，开发模式默认启用 Mock，生产构建默认使用真实课程 API。构建所用的 `VITE_*` 配置在构建时生效，修改后重新构建。
 
-悬浮助教有独立开关 `VITE_ASSISTANT_USE_API=true`，对应 `POST /api/assistant/chat`。这是前端预留的扩展接口，当前仓库尚无对应后端实现。后端工程师和产品经理确认接口及范围后再开启，具体格式见[前端说明](frontend/README.md)。
+后端在有有效转写依据、生成开启且模型调用成功时返回 `answered/generative`。无有效依据时返回 `not_found`。关闭生成、缺少配置或模型故障且检索命中原文时走 `degraded/extractive` 分支，不能据此判定生成式问答已验收。
 
-后端已实现根目录 `.env.local` 的配置加载，系统环境变量优先。系统工程师按实际账户配置 `LLM_BASE_URL`、`LLM_API_KEY` 和 `LLM_MODEL=qwen-plus`。缺失模型配置、生成被关闭或模型请求故障时，命中原文的问答走提取式降级分支；无有效原文依据时返回 `not_found`。模型密钥仅由服务端读取。
+悬浮助教的 `VITE_ASSISTANT_USE_API=true` 开关对应扩展接口 `POST /api/assistant/chat`，该路由当前尚未实现。默认使用内置指引；后端实现并确认扩展范围后再开启。课程问答接口为 `POST /api/videos/{video_id}/questions`。详见[前端说明](frontend/README.md)与[后端说明](backend/README.md)。
 
-根目录 `.env.example` 同时包含未来转写模块所需的字段，具体读取情况见后端说明。它与 `frontend/.env.local` 的前端开关分别维护。
+## 检查与现有证据
 
-## 检查与构建
-
-在仓库根目录执行以下命令。
+安装完整锁文件后，可在仓库根目录执行后端测试和前端类型检查。
 
 ```powershell
-npm.cmd --prefix frontend run typecheck
-npm.cmd --prefix frontend run build
-```
-
-构建产物位于 `frontend/dist/`。当前后端仅注册 API 路由，前端静态托管和页面路由回退尚待实现。开发期在第二个终端运行 Vite，浏览器访问 `http://localhost:5173/`；正式交付方案为 FastAPI 同源托管。
-
-后端已有媒体校验、上传与文件响应、数据库、检索、章节和问答分支等测试源码。在仓库根目录执行以下命令。
-
-```powershell
-.\.venv\Scripts\python.exe -m pip install -r backend/requirements-dev.txt
 .\.venv\Scripts\python.exe -m pytest -c backend/pytest.ini backend/tests -q
+npm.cmd --prefix frontend run typecheck
 ```
 
-测试使用临时数据、模拟媒体探测或模型响应等方式检查代码行为，真实转写、模型 API 连通和端到端产品验收需分别记录结果。
+后端单元测试通过 fixture 设置 `TASK_EXECUTOR_ENABLED=0`，避免启动真实转写队列。真实模型连通、转写与端到端测试分别由 `scripts/llm_smoke_test.py`、`scripts/test_transcriber.py`、`scripts/e2e_smoke.py` 提供，准备要求见[运行脚本说明](scripts/README.md)。
 
-## 技术栈
+`e2e_smoke.py` 使用 `data/tmp/sample_lecture.mp4`，会先尝试删除列表第一页的已有可删除视频，结束时删除本次上传样本，仅在专用演示测试数据中执行。`scripts/make_sample_video.ps1` 可通过 Windows 中文 TTS 与 FFmpeg 生成链路样本。
 
-| 层次 | 采用方案 |
-| --- | --- |
-| 已提交前端 | Vue 3、TypeScript 5、Vite 7、Vue Router 4、Element Plus 2、Axios 1 |
-| 已提交后端 | FastAPI、Pydantic 2、SQLAlchemy、SQLite；项目运行基线为 Python 3.11 |
-| 音视频与转写方案 | FFmpeg / ffprobe、faster-whisper 多语言 small、CPU int8 |
-| 已提交检索与问答逻辑 | jieba、rank-bm25、httpx 调用百炼 qwen-plus；真实连通待验证 |
-| 演示交付方案 | Windows 本机、FastAPI 同源托管前端构建产物 |
+以下为 SYS 上传的 2026 年 11 月 9 日记录，代表其测试机和对应样本的结果。本轮 README 更新核对了源码与存档，未在当前电脑重新安装环境、下载模型或复跑这些测试。
 
-前端依赖按 `frontend/package-lock.json` 安装。后端已提交精确版本的直接依赖清单，当前包括 SQLAlchemy 2.1.8；完整传递依赖锁定、目标环境安装和转写依赖仍由系统工程师组织验证。详细技术基线见[技术栈定稿](docs/03_技术方案与接口/05_技术栈定稿与选型决策.md)。
-
-## 项目目录与负责人
-
-| 路径 | 用途 | 主责 |
+| 检查 | 已提交的记录 | 证据入口 |
 | --- | --- | --- |
-| `frontend/` | 页面、交互、播放器、Mock 与接口适配 | 前端工程师 |
-| `backend/app/` | API、数据库、任务、检索与问答 | 后端工程师 |
-| `modules/transcriber/` | 本地语音模型及转写进程封装 | 系统工程师 |
-| `scripts/`、`deploy/` | 环境准备、运行、部署与备份交付 | 系统工程师 |
-| `backend/tests/` | 后端自动化测试源码 | 后端工程师、测试工程师 |
-| `tests/` | 团队用例、脱敏样例与实际验收证据 | 测试工程师 |
-| `docs/` | 需求、任务、接口、交接与管理记录 | 产品经理兼组长统筹，各岗位协作 |
-| `data/`、`models/`、`logs/`、`backups/` | 本机数据、模型、日志与备份 | 本机准备和运行生成 |
+| 环境与构建 | Python 3.11、Node 22、FFmpeg 版本及前端构建记录；后端锁文件共 44 个包 | [环境版本清单](docs/environment-versions.md) |
+| 后端测试 | SYS 记录为 36 passed，完整目标机复测由 QA 登记 | [SYS 部署记录](deploy/01_SYS环境与部署记录.md) |
+| 转写模块 | 7 项 PASS，覆盖预热、正常转写、并发、取消恢复、无效文件、无音轨与关闭 | [转写验收 JSON](deploy/evidence/logs_transcriber_acceptance.json) |
+| 端到端 | 116.88 秒 TTS 样本，处理 elapsed_sec 为 66.0，上传至就绪轮询用时 68.3 秒；16 段转写、2 个章节、生成式回答和无依据拒答均有记录 | [端到端 JSON](deploy/evidence/logs_e2e_local_run.json) |
+
+正式 3–5 分钟授权录课的处理时间目标、20 道正题加 5 道无依据题的验收、完整备份回退及发布 tag 冻结仍待团队完成。单段合成样本和单次问答结果不足以代表正式性能与产品质量验收。
+
+## 停止、备份与恢复
+
+等待任务与问答结束后，可在启动终端按 Ctrl+C 停止服务。部署脚本位于 `deploy/`，SYS 已上传演练记录，实际操作先核对服务状态和备份目录。
+
+| 脚本 | 当前用途 |
+| --- | --- |
+| `deploy/start.ps1` | 检查环境并前台启动服务 |
+| `deploy/stop.ps1` | 按 Uvicorn 命令行匹配终止进程，使用前核对目标 PID |
+| `deploy/backup.ps1` | 停服后备份数据、源码、构建产物及清单，默认保留 7 份 |
+| `deploy/restore.ps1 -BackupPath backups/实际备份目录` | 停服后恢复数据与 `frontend/dist`，代码版本需另外匹配 |
+
+备份与恢复脚本按默认 `data/` 目录工作。修改 `DATA_DIR` 的环境需由 SYS 对齐脚本后执行。恢复采用复制方式，正式回退还需检查现有文件、数据和代码版本是否一致，按[部署说明](deploy/README.md)及交接清单验证。
+
+## 技术栈与目录
+
+| 路径或层次 | 内容 | 主责 |
+| --- | --- | --- |
+| `frontend/` | Vue 3、TypeScript 5、Vite 7、Vue Router 4、Element Plus 2、Axios 1 | FE |
+| `backend/app/` | FastAPI、Pydantic 2、SQLAlchemy、SQLite、jieba、BM25、httpx 与顺序执行器 | BE，SYS 协作 |
+| `modules/transcriber/` | faster-whisper 多语言 small、CPU int8、可终止子进程 | SYS |
+| `scripts/`、`deploy/` | 环境准备、测试、启动与备份恢复 | SYS |
+| `backend/tests/`、`tests/` | 自动化测试、团队用例与实际验收证据 | BE、QA |
+| `docs/` | 需求、任务、接口、交接与管理记录 | PM 统筹，各岗位协作 |
+| `data/`、`models/`、`logs/`、`backups/`、`tools/` | 本机运行数据、模型、工具和产物 | 在各自电脑准备 |
+
+前端按 `frontend/package-lock.json` 安装，完整 Python 依赖按 `requirements.lock.txt` 安装。大模型采用百炼 qwen-plus，具体账户地区与可用基础地址由 SYS 在本机配置。原有[技术选型](docs/03_技术方案与接口/05_技术栈定稿与选型决策.md)与[实际环境版本](docs/environment-versions.md)共同作为交接依据。
 
 ## 团队资料与协作
 
@@ -137,11 +160,11 @@ npm.cmd --prefix frontend run build
 - [项目基线与阶段节点](docs/00_项目导航与统一约定.md)
 - [需求工单与验收追踪](docs/02_任务分配与进度/05_需求工单与验收追踪.md)
 - [各岗位开工单](docs/岗位开工单)
-- [环境准备与启动约定](docs/03_技术方案与接口/03_环境配置与运行部署.md)
+- [团队 API 契约](docs/03_技术方案与接口/02_API与数据模型契约.md)
 - [产品与工程验收资料](docs/05_测试与验收)
 
-需要分类查阅资料时，将仓库克隆或下载到本地，再用浏览器打开 `docs/开始阅读.html`。历史交接文档中的 `course-review` 指本仓库根目录，各岗位按实际工程提交和证据更新状态。模拟调研、演练数据和真实实测记录需保持明确标注。
+分类查阅资料时，将仓库克隆或下载到本地，再用浏览器打开 `docs/开始阅读.html`。历史交接文档中的 `course-review` 指本仓库根目录，阶段完成情况以对应提交、实测证据和成员回执为准。
 
-每项任务写清负责人、交付节点和验收条件。开发前同步代码，在各自功能分支修改，完成后提交 Pull Request，由相关工程师检查，产品经理确认需求与范围。新增后端接口或扩展功能时同步更新契约和验收要求。
+开发前同步代码，在各自功能分支修改，完成后提交 Pull Request。BE 复核本次 `executor.py`、`main.py` 及测试 fixture 的接线改动，QA 按同一题集复测。新增接口或功能时同步更新契约和验收要求。模拟调研、预设教学数据、合成链路样本和正式授权录课应分别标明来源。
 
-本仓库已配置 `.gitignore`，本机密钥、依赖目录、模型、视频、数据库、日志和构建产物按规则忽略。授权课程样本和模型文件另行准备，在交接记录中注明来源和获取方法。前端校徽素材来源见[前端说明](frontend/README.md)。
+仓库已配置 `.gitignore`，本机密钥、依赖、模型、录课、数据库、日志、工具和构建产物按规则忽略。授权课程样本与模型另行准备。前端校徽素材来源见[前端说明](frontend/README.md)。
