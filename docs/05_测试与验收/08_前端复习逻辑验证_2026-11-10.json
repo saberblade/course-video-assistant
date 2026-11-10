@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-10",
+  "scope": "课程知识导航、复习进度、待复习清单；保留我的课程",
+  "frontend_typecheck_and_build": "PASS",
+  "backend_tests": { "passed": 46, "failed": 0 },
+  "browser_main": { "result": "PASS", "checks": 11, "evidence": "logs/review-workspace/report.json" },
+  "browser_edges": { "result": "PASS", "checks": 4, "evidence": "logs/review-workspace/edges.json" },
+  "viewports": [320, 390, 768, 1440],
+  "browser_runtime_errors": [],
+  "records_storage": "当前来源的浏览器 localStorage，Mock 与真实模式隔离，暂不跨设备同步",
+  "backend_video_mutations_in_browser_checks": false,
+  "preserved_component_sha256": {
+    "frontend/src/components/screen/ScreenLibrary.vue": "57BA1F61C4A190E1A7A2D41617E392774170D00E268EAE9D5A4D8755A038B562",
+    "frontend/src/components/UploadPanel.vue": "E9C1C30A54A307172DBB92D275462590DCA7462F419D01A6E7199F702AF7CE19",
+    "frontend/src/components/VideoList.vue": "F6130655BB0B1B2184E10BC2BCD6F7850F16F5952339046DA562F547B50B4CED"
+  },
+  "database_regression": {
+    "before_fix": "8 个线程同时持有连接时复现 Cannot operate on a closed database",
+    "after_fix": "PASS，使用 NullPool 保持独立文件连接",
+    "test": "backend/tests/test_database_concurrency.py"
+  }
+}

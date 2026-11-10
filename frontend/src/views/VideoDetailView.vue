@@ -48,8 +48,8 @@ const backView = computed(() => {
   if (view === "library" || view === "analysis" || view === "weak") return view;
   return route.query.from === "screen" ? "map" : "library";
 });
-const backTarget = computed(() => ({ name: "screen", query: backView.value === "map" ? {} : { view: backView.value } }));
-const backLabel = computed(() => ({ map: "返回知识云台", library: "返回我的课程", analysis: "返回学习分析", weak: "返回薄弱预警" })[backView.value]);
+const backTarget = computed(() => ({ name: "screen", query: { ...(backView.value === "map" ? {} : { view: backView.value }), ...(backView.value !== "library" ? { video: videoId.value } : {}) } }));
+const backLabel = computed(() => ({ map: "返回课程知识导航", library: "返回我的课程", analysis: "返回复习进度", weak: "返回待复习清单" })[backView.value]);
 
 const processing = computed(() => Boolean(video.value && ["queued", "transcribing", "indexing"].includes(video.value.status)));
 const canDelete = computed(() => Boolean(video.value && ["ready", "failed"].includes(video.value.status)));

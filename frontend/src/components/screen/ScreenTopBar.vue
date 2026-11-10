@@ -6,10 +6,10 @@ const props = defineProps<{ active: string }>();
 const emit = defineEmits<{ nav: [key: string]; exit: [] }>();
 
 const menus = [
-  { key: "map", name: "知识地图" },
+  { key: "map", name: "课程知识导航" },
   { key: "library", name: "我的课程" },
-  { key: "analysis", name: "学习分析" },
-  { key: "weak", name: "薄弱预警" },
+  { key: "analysis", name: "复习进度" },
+  { key: "weak", name: "待复习清单" },
 ];
 
 const clock = ref("");
