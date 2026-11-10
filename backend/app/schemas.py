@@ -88,6 +88,24 @@ class QuestionIn(BaseModel):
     question: str = Field(min_length=1)
 
 
+class AssistantMessageIn(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    role: Literal["user", "assistant"]
+    content: str = Field(min_length=1, max_length=4000)
+
+
+class AssistantChatIn(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    messages: list[AssistantMessageIn] = Field(min_length=1, max_length=20)
+
+
+class AssistantChatOut(BaseModel):
+    answer: str
+    mode: Literal["generative", "guide"]
+
+
 class HealthOut(BaseModel):
     status: Literal["ok", "not_ready"]
     version: str

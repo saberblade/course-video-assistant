@@ -11,7 +11,7 @@
 | 模块 | 已提交内容 | 待完成事项 |
 | --- | --- | --- |
 | 产品与协作 | V1.3 需求、原型、分工、接口与交接资料 | 按实际交付更新产品验收记录 |
-| 前端 | 首页、知识云台、视频复习页、Mock、课程 API 适配及悬浮助教 | 目标设备上的浏览器联调与深层路由刷新检查 |
+| 前端 | 首页、知识云台、视频复习页、Mock、课程 API 适配及悬浮助教；本机真实接口浏览器联调已通过 | 正式授权课程与生成式回答验收 |
 | 后端 | 视频 API、SQLite、章节、BM25 检索、问答、任务执行器及静态托管接线 | 补齐模型响应异常处理、队列异常恢复、就绪判断与生产路由回退，完成正式样本验收 |
 | 转写与部署 | faster-whisper 子进程模块、44 包依赖锁、部署/冒烟脚本与新机冷启动手册 | 目标设备准备资源并执行冷启动、正式转写和完整恢复验收 |
 | 测试与证据 | 后端测试源码及 SYS 上传的环境、转写与端到端记录 | QA 复测正式授权样本和完整验收题集，冻结发布版本 |
@@ -50,13 +50,13 @@ npm.cmd --prefix frontend run dev
 | 页面 | 内容 |
 | --- | --- |
 | `/` | 产品介绍，点击“进入知识云台”进入工作区 |
-| `/screen` | 示例知识地图 |
+| `/screen` | 课程知识导航：从真实章节和来源原文进入回看 |
 | `/screen?view=library` | 上传、课程列表与处理进度 |
-| `/screen?view=analysis` | 示例学习分析 |
-| `/screen?view=weak` | 示例薄弱预警 |
+| `/screen?view=analysis` | 复习进度：当前视频的手动章节标记 |
+| `/screen?view=weak` | 待复习清单：本地疑问备注、回看与解决状态 |
 | `/videos/:id` | 从课程列表打开具体视频，查看播放器、转写、章节与课程问答 |
 
-开发环境默认使用前端 Mock，刷新后 Mock 课程记录恢复初始状态。知识地图、学习分析和薄弱预警使用预设教学数据。悬浮助教默认提供内置的站内使用指引。课程问答位于具体视频的复习页。
+开发环境默认使用前端 Mock，刷新后 Mock 课程记录恢复初始状态。连接真实接口后，课程知识导航按视频章节展示来源和回看入口；复习进度与待复习清单基于用户在当前浏览器留下的手动标记和备注，不计算知识掌握程度。复习记录暂不跨设备同步，8000 与 5173 的本地存储相互独立。悬浮助教默认提供内置的站内使用指引。课程问答位于具体视频的复习页。详见[前端调整记录](docs/07_管理记录/06_前端复习逻辑调整_2026-11-10.md)。
 
 ## 准备完整运行环境
 
@@ -101,7 +101,7 @@ powershell -ExecutionPolicy Bypass -File .\deploy\start.ps1
 | `http://127.0.0.1:8000/docs` | API 文档 |
 | `http://127.0.0.1:8000/api/health` | 健康检查 |
 
-启动脚本使用本机 `.venv`，默认前台运行，一个 Uvicorn worker，端口从根目录 `.env.local` 的 `APP_PORT` 读取。后端在启动时检查 `frontend/dist/index.html`，存在则挂载静态页面，缺失则仅启动 API；先构建再启动，构建后需重启服务。`/screen`、`/videos/:id` 等深层路由的直接访问和刷新回退仍需 FE/SYS 验证，当前使用 `StaticFiles(html=True)` 挂载。
+启动脚本使用本机 `.venv`，默认前台运行，一个 Uvicorn worker，端口从根目录 `.env.local` 的 `APP_PORT` 读取。后端在启动时检查 `frontend/dist/index.html`，存在则挂载静态页面，缺失则仅启动 API；先构建再启动，构建后需重启服务。`FrontendFiles` 为 `/screen`、`/videos/:id` 提供页面入口，开发版与同源部署版的直接访问和刷新已在 Windows Chrome 验证；缺失 API 和静态资源仍返回 404。
 
 执行器默认开启，后台预热模型并按顺序处理上传任务。模型缺失或加载失败时查看服务日志与具体任务错误。`/api/health` 当前按模块入口文件是否存在报告 `transcriber`，按配置字段是否齐全报告 `llm_configured`，实际转写和模型连通需要分别验证。
 
@@ -113,11 +113,13 @@ powershell -ExecutionPolicy Bypass -File .\deploy\start.ps1
 VITE_USE_MOCK=false
 ```
 
+也可复制 `frontend/.env.example` 为 `frontend/.env.local`；该示例默认关闭悬浮助教扩展 API。本次联调的本机配置、结果和重启步骤见[前后端联调记录（2026-11-10）](docs/05_测试与验收/07_前后端联调记录_2026-11-10.md)。
+
 Vite 将 `/api` 代理到 `http://127.0.0.1:8000`。未设置开关时，开发模式默认启用 Mock，生产构建默认使用真实课程 API。构建所用的 `VITE_*` 配置在构建时生效，修改后重新构建。
 
 后端在有有效转写依据、生成开启且模型调用成功时返回 `answered/generative`。无有效依据时返回 `not_found`。关闭生成、缺少配置或模型故障且检索命中原文时走 `degraded/extractive` 分支，不能据此判定生成式问答已验收。
 
-悬浮助教的 `VITE_ASSISTANT_USE_API=true` 开关对应扩展接口 `POST /api/assistant/chat`，该路由当前尚未实现。默认使用内置指引；后端实现并确认扩展范围后再开启。课程问答接口为 `POST /api/videos/{video_id}/questions`。详见[前端说明](frontend/README.md)与[后端说明](backend/README.md)。
+悬浮助教的 `VITE_ASSISTANT_USE_API=true` 开关对应 `POST /api/assistant/chat`，请求体为 `{"messages":[{"role":"user","content":"…"}]}`，响应为 `{"answer":"…","mode":"generative|guide"}`。该接口只回答站内使用问题，不读课程数据、不写数据库；同一时刻只放一个请求进模型（并发时返回 429 `ASSISTANT_BUSY`），未配置模型或模型超时降级为 `guide` 并在正文说明，问题超过 300 字符返回 422。前端默认仍使用内置指引，确认后再打开开关并重新构建。课程问答接口为 `POST /api/videos/{video_id}/questions`。详见[前端说明](frontend/README.md)与[后端说明](backend/README.md)。
 
 ## 检查与现有证据
 

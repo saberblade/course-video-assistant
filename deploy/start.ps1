@@ -1,4 +1,4 @@
-# course-video-assistant deployment scripts (SYS)
+﻿# course-video-assistant deployment scripts (SYS)
 # start.ps1 - run the FastAPI service on the local presentation machine.
 #
 # Usage (from repo root):
@@ -64,6 +64,15 @@ Write-Host "stop   : deploy\stop.ps1  (wait for empty queue first)"
 
 $uvArgs = @("-X","utf8","-m","uvicorn","app.main:app","--app-dir","backend","--host","127.0.0.1","--port","$appPort","--workers","1")
 if ($NewConsole) {
+    # 本机同时存在 http_proxy/HTTP_PROXY 这类大小写重复的变量时，PowerShell 5.1 的
+    # Start-Process 复制环境变量会报“已添加项”，先按小写重建一份再启动。
+    foreach ($proxyName in 'http_proxy', 'https_proxy', 'no_proxy') {
+        $proxyValue = [Environment]::GetEnvironmentVariable($proxyName, 'Process')
+        if ($null -ne $proxyValue) {
+            [Environment]::SetEnvironmentVariable($proxyName, $null, 'Process')
+            [Environment]::SetEnvironmentVariable($proxyName, $proxyValue, 'Process')
+        }
+    }
     Start-Process -FilePath $py -ArgumentList $uvArgs -WorkingDirectory $root
     Write-Host "started in a new console window."
 } else {

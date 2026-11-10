@@ -34,7 +34,7 @@ powershell -ExecutionPolicy Bypass -File .\deploy\start.ps1
 .\.venv\Scripts\python.exe -m uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8000 --workers 1
 ```
 
-存在 `frontend/dist/index.html` 时，服务会在 API 路由之后挂载静态页面。未构建时跳过挂载并写日志，构建后重启服务。当前挂载为 `StaticFiles(html=True)`，Vue 深层路由的直接访问及刷新回退需要 FE/SYS 复测。
+存在 `frontend/dist/index.html` 时，服务会在 API 路由之后挂载静态页面。未构建时跳过挂载并写日志，构建后重启服务。`app/frontend.py` 的 `FrontendFiles` 为 `/screen`、`/videos/:id` 返回 Vue 入口，兼容 Windows 路径分隔符；缺失 API 与静态资源仍保留 404。浏览器刷新与直接访问已完成本机验证。
 
 ## 配置与健康检查
 
@@ -63,7 +63,7 @@ powershell -ExecutionPolicy Bypass -File .\deploy\start.ps1
 
 在 `frontend/.env.local` 设置 `VITE_USE_MOCK=false` 并重启 Vite，`/api` 会代理到 `http://127.0.0.1:8000`。生产构建默认使用真实课程接口，修改前端环境变量后重新构建。
 
-悬浮助教扩展接口 `POST /api/assistant/chat` 仍未实现，默认继续使用内置站内指引。课程问答路由为 `POST /api/videos/{video_id}/questions`。
+悬浮助教路由为 `POST /api/assistant/chat`：只回答站内使用问题，不读课程数据、不写数据库；同一时刻只放一个请求进模型，并发时返回 429 `ASSISTANT_BUSY`；未配置模型、模型超时或空回答降级为 `mode: "guide"`；问题超过 300 字符、最后一条不是用户消息或带未知字段返回 422；单次对话最多 20 条、合计 6000 字符。课程问答路由为 `POST /api/videos/{video_id}/questions`。
 
 ## 测试与证据
 
@@ -81,7 +81,7 @@ fixture 设置 `TASK_EXECUTOR_ENABLED=0`，使用临时数据库并模拟相应�
 
 - BE 复核 SYS 新增的执行器、生命周期接线及测试调整，检查并发、取消、异常恢复和事务一致性。
 - QA 使用正式授权的 3–5 分钟样本和既定 20+5 题集，分别验证处理时间、答案质量、拒答和引用。
-- FE/SYS 检查深层路由刷新、真实接口浏览器流程及最终同源交付版本。
+- FE 已完成本机真实接口流程和同源深层路由刷新检查，见[联调记录](../docs/05_测试与验收/07_前后端联调记录_2026-11-10.md)；QA/SYS 在正式交付设备复核。
 - SYS/QA 完成目标机复测、完整备份回退与发布版本冻结。恢复脚本当前恢复数据和 dist，源码需另外切换到匹配提交。
 
 [后端岗位开工单](../docs/岗位开工单/后端工程师.md) · [团队 API 契约](../docs/03_技术方案与接口/02_API与数据模型契约.md) · [环境版本清单](../docs/environment-versions.md)

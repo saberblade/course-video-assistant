@@ -9,14 +9,14 @@ from contextlib import asynccontextmanager
 from uuid import uuid4
 
 from fastapi import FastAPI, Request
-from fastapi.staticfiles import StaticFiles
 
 from app.config import PROJECT_ROOT, get_settings
 from app.database import Base, make_engine, session_factory_for
 from app.errors import register_error_handlers
+from app.frontend import FrontendFiles
 from app.lifecycle import recover_interrupted
 from app.models import Chapter, Question, Segment, Video  # noqa: F401  注册四张表
-from app.routers import health, videos
+from app.routers import assistant, health, videos
 
 
 def create_app() -> FastAPI:
@@ -69,11 +69,12 @@ def create_app() -> FastAPI:
     register_error_handlers(app)
     app.include_router(health.router)
     app.include_router(videos.router)
+    app.include_router(assistant.router)
 
     # 同源托管前端构建产物（契约03：托管frontend/dist）。未构建时跳过并记日志。
     dist_dir = PROJECT_ROOT / "frontend" / "dist"
     if (dist_dir / "index.html").is_file():
-        app.mount("/", StaticFiles(directory=dist_dir, html=True), name="frontend")
+        app.mount("/", FrontendFiles(directory=dist_dir, html=True), name="frontend")
         logger.info("static hosting served from %s", dist_dir)
     else:
         logger.info("frontend/dist not built yet, static hosting skipped")

@@ -1,0 +1,133 @@
+{
+  "date": "2026-11-10",
+  "timezone": "Asia/Shanghai",
+  "base_commit": "c729928",
+  "includes_local_fixes": true,
+  "frontend_build": "PASS",
+  "backend_tests": {
+    "passed": 45,
+    "failed": 0
+  },
+  "pip_check": "No broken requirements found",
+  "generative_answer_verified": true,
+  "browser": {
+    "date": "2026-11-10",
+    "sample": "Windows Huihui TTS, H.264/AAC, 119.4s",
+    "checks": [
+      {
+        "check": "Vite proxy and real course list",
+        "result": "PASS"
+      },
+      {
+        "check": "Invalid media gives backend error and request ID",
+        "result": "PASS"
+      },
+      {
+        "check": "Browser upload and automatic detail navigation",
+        "detail": {
+          "status": "queued",
+          "id": "e39e38a5-9050-4d2a-a98e-494cff84a4a8"
+        },
+        "result": "PASS"
+      },
+      {
+        "check": "Real transcription, polling, player and chapter render",
+        "detail": {
+          "segments": 16,
+          "chapters": 2,
+          "processingSeconds": 28.554
+        },
+        "result": "PASS"
+      },
+      {
+        "check": "Video Range streaming",
+        "detail": "bytes 0-1023/1058527",
+        "result": "PASS"
+      },
+      {
+        "check": "Chapter sources and pause-on-seek",
+        "detail": 60,
+        "result": "PASS"
+      },
+      {
+        "check": "Backend extractive Q&A, real citations and seek",
+        "detail": {
+          "status": "degraded",
+          "citations": 5,
+          "time": 5
+        },
+        "result": "PASS"
+      },
+      {
+        "check": "Unsupported question returns not_found",
+        "result": "PASS"
+      },
+      {
+        "check": "Tab changes preserve question results",
+        "result": "PASS"
+      },
+      {
+        "check": "Development deep route reload",
+        "result": "PASS"
+      },
+      {
+        "check": "Production deep route, query panel and pending seek",
+        "result": "PASS"
+      },
+      {
+        "check": "Production deep route refresh",
+        "result": "PASS"
+      },
+      {
+        "check": "Missing API and assets retain 404",
+        "result": "PASS"
+      },
+      {
+        "check": "Mobile real course layout",
+        "result": "PASS"
+      },
+      {
+        "check": "Production library loads uploaded real course",
+        "result": "PASS"
+      },
+      {
+        "check": "No browser runtime errors",
+        "result": "PASS"
+      }
+    ],
+    "browserErrors": [],
+    "statuses": [
+      "queued",
+      "transcribing",
+      "ready"
+    ],
+    "videoId": "e39e38a5-9050-4d2a-a98e-494cff84a4a8",
+    "transcriptSegments": 16,
+    "chapters": 2,
+    "processingSeconds": 28.554,
+    "result": "PASS"
+  },
+  "deletion": {
+    "date": "2026-11-10",
+    "checks": [
+      "Delete cancellation preserves video",
+      "Confirmed deletion removes video and associated resources",
+      "Return to library retains original course"
+    ],
+    "videoId": "bc39b6a5-9a3a-4f01-8925-d33c91b80e73",
+    "result": "PASS"
+  },
+  "initial_llm_configured": false,
+  "final_llm_configured": true,
+  "generative_answer": {
+    "date": "2026-11-10",
+    "video_id": "e39e38a5-9050-4d2a-a98e-494cff84a4a8",
+    "http_status": 200,
+    "answer_status": "answered",
+    "mode": "generative",
+    "citations": 2,
+    "latency_ms": 3581,
+    "citations_verified_against_transcript": true,
+    "result": "PASS"
+  }
+}

@@ -9,6 +9,7 @@ from fastapi import Request
 from sqlalchemy import create_engine, event
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
+from sqlalchemy.pool import NullPool
 
 
 class Base(DeclarativeBase):
@@ -21,7 +22,9 @@ def make_engine(database_path) -> Engine:
     def connect() -> sqlite3.Connection:
         return sqlite3.connect(database_path, check_same_thread=False, timeout=30)
 
-    engine = create_engine("sqlite://", creator=connect)
+    # creator 指向文件库，但 sqlite:// 会默认选用 SingletonThreadPool；
+    # 超过其线程容量时会关闭仍在使用的连接。每次借用独立连接，归还后关闭。
+    engine = create_engine("sqlite://", creator=connect, poolclass=NullPool)
 
     @event.listens_for(engine, "connect")
     def enable_foreign_keys(dbapi_connection, _connection_record) -> None:
