@@ -1,6 +1,6 @@
 # 部署交付
 
-系统工程师在此维护部署配置和实际操作说明。Windows 本机为演示交付路径，FastAPI 在 127.0.0.1:8000 同源托管前端构建产物（`frontend/dist` 存在时自动挂载）。实际环境版本清单写入 [docs/environment-versions.md](../docs/environment-versions.md)，执行与偏差记录见 [01_SYS环境与部署记录.md](01_SYS环境与部署记录.md)。
+系统工程师在此维护部署配置和实际操作说明。Windows 本机为演示交付路径，FastAPI 在 127.0.0.1:8000 同源托管前端构建产物（`frontend/dist` 存在时自动挂载）。实际环境版本清单写入 [docs/environment-versions.md](../docs/environment-versions.md)，执行与偏差记录见 [01_SYS环境与部署记录.md](01_SYS环境与部署记录.md)。在**另一台机器**从零部署（M4 冷启动验收/中途换机）按 [03_新机冷启动部署手册.md](03_新机冷启动部署手册.md) 执行，含验收记录签字模板。
 
 ## 部署脚本（已实机演练）
 
