@@ -74,6 +74,22 @@ function sourceSegments(chapter: Chapter): TranscriptSegment[] {
 
 <style scoped>
 .chapter-list { margin-top: 4px; }
+@media (min-width: 1081px) {
+  .chapter-list {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #cfdedb transparent;
+    margin-right: -10px;
+    padding-right: 10px;
+  }
+  .chapter-list::-webkit-scrollbar { width: 6px; }
+  .chapter-list::-webkit-scrollbar-track { background: transparent; }
+  .chapter-list::-webkit-scrollbar-thumb { border-radius: 99px; background: #d8e5e2; }
+  .chapter-list::-webkit-scrollbar-thumb:hover { background: #b9cfcb; }
+}
 .chapter { padding: 15px 0; border-top: 1px solid #edf1f1; }
 .chapter:first-child { border-top: 0; padding-top: 3px; }
 .chapter__title { display: flex; align-items: center; gap: 8px; width: 100%; padding: 0; border: 0; background: transparent; color: var(--ink); text-align: left; cursor: pointer; }

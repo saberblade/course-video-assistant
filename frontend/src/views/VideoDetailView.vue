@@ -429,6 +429,21 @@ onBeforeUnmount(() => {
 .review-tabs :deep(.el-tabs__nav-wrap::after), .review-tabs :deep(.el-tabs__active-bar) { display: none; }
 .review-tabs :deep(.el-tabs__item) { height: 36px; padding: 0 8px; border-radius: 6px; color: var(--muted); }
 .review-tabs :deep(.el-tabs__item.is-active) { background: var(--teal-soft); color: var(--teal-dark); font-weight: 700; }
+@media (min-width: 1081px) {
+  .review-tabs {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    height: clamp(360px, calc(100vh - 249px), 900px);
+    height: clamp(360px, calc(100dvh - 249px), 900px);
+  }
+  .review-tabs :deep(.el-tabs__header) { flex-shrink: 0; }
+  .review-tabs :deep(.el-tabs__content) { flex: 1; min-height: 0; }
+  .review-tabs :deep(.el-tab-pane) { height: 100%; }
+  .review-tabs :deep(.el-tab-pane > .panel) { height: 100%; }
+  .chapter-card { display: flex; flex-direction: column; min-height: 0; }
+}
 .card-title { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 16px; }
 .card-title h2 { margin: 0; color: var(--ink); font-size: 20px; }
 .source-tag { display: inline-flex; align-items: center; gap: 4px; color: #819499; font-size: 11px; white-space: nowrap; }

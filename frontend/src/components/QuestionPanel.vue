@@ -18,17 +18,6 @@ const results = ref<QuestionResult[]>([]);
 const mockMode = ref<MockAnswerMode>("answered");
 const trimmedCount = computed(() => draft.value.trim().length);
 
-const suggestions = [
-  "召回率怎样计算？",
-  "精确率和召回率有什么区别？",
-  "F1 值在什么场景下更有参考价值？",
-];
-
-function chooseSuggestion(question: string) {
-  draft.value = question;
-  inputError.value = "";
-}
-
 function changeMockMode(value: MockAnswerMode) {
   mockMode.value = value;
   setMockAnswerMode(value);
@@ -115,14 +104,12 @@ function openCitation(citation: Citation) {
       <p v-if="inputError" class="input-error" role="alert">{{ inputError }}</p>
     </div>
 
-    <div v-if="!results.length && !asking" class="suggestions">
-      <span>可以这样问</span>
-      <button v-for="question in suggestions" :key="question" type="button" @click="chooseSuggestion(question)">
-        {{ question }}
-      </button>
-    </div>
-
     <div class="results" role="log" aria-live="polite" aria-label="当前页面的问答结果">
+      <div v-if="!results.length && !asking" class="results-empty">
+        <span>还没有提问</span>
+        <p>回答会出现在这里，只依据当前视频原文，并标注可直接回看的时间点。</p>
+      </div>
+
       <div v-if="asking" class="answer-loading">
         <span class="answer-loading__icon"><Search /></span>
         <div><strong>正在检索课程原文…</strong><span>回答只依据本视频的转写内容</span></div>
@@ -184,10 +171,6 @@ function openCitation(citation: Citation) {
 .session-label svg { width: 12px; }
 .mock-control { display: flex; align-items: center; gap: 8px; margin-top: 14px; padding: 7px 9px; border-radius: 7px; background: #fff9ed; color: #806733; font-size: 12px; }
 .mock-control small { margin-left: auto; color: #a08b60; font-size: 11px; }
-.suggestions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 17px; }
-.suggestions > span { color: #84979c; font-size: 11px; margin-right: 2px; }
-.suggestions button { padding: 4px 9px; border: 1px solid #e0e8e9; border-radius: 99px; background: white; color: #61777e; font-size: 11px; cursor: pointer; transition: 0.15s ease; }
-.suggestions button:hover { border-color: #a7c8c5; color: var(--teal); background: #f7fbfa; }
 .composer { margin-top: 15px; }
 .composer__footer { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
 .counter { color: #8b9ba0; font-family: Consolas, monospace; font-size: 11px; }
@@ -195,6 +178,9 @@ function openCitation(citation: Citation) {
 .shortcut { margin-left: auto; color: #a0afb2; font-size: 11px; }
 .input-error { margin: 5px 0 0; color: #a03e26; font-size: 12px; }
 .results { margin-top: 20px; }
+.results-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; min-height: 130px; text-align: center; }
+.results-empty span { color: #6f868b; font-size: 12px; font-weight: 600; }
+.results-empty p { max-width: 250px; margin: 7px 0 0; color: #93a4a7; font-size: 11px; line-height: 1.85; }
 .qa-item + .qa-item { margin-top: 22px; padding-top: 22px; border-top: 1px dashed #e2eaeb; }
 .question-bubble { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 9px; }
 .question-bubble > span { padding: 2px 6px; border-radius: 4px; background: #f0f4f4; color: #70868b; font-size: 10px; flex-shrink: 0; margin-top: 2px; }
@@ -223,6 +209,23 @@ function openCitation(citation: Citation) {
 .answer-loading__icon { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 8px; background: #eaf6f3; color: var(--teal); }
 .answer-loading strong { display: block; color: #3a625f; font-size: 11px; }
 .answer-loading span:not(.answer-loading__icon) { display: block; color: #8a9b9e; font-size: 9px; }
+@media (min-width: 1081px) {
+  .question-panel { display: flex; flex-direction: column; min-height: 0; }
+  .results {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #cfdedb transparent;
+    margin-right: -10px;
+    padding-right: 10px;
+  }
+  .results::-webkit-scrollbar { width: 6px; }
+  .results::-webkit-scrollbar-track { background: transparent; }
+  .results::-webkit-scrollbar-thumb { border-radius: 99px; background: #d8e5e2; }
+  .results::-webkit-scrollbar-thumb:hover { background: #b9cfcb; }
+}
 @media (max-width: 520px) {
   .question-panel { padding: 17px; }
   .mock-control small, .session-label, .shortcut { display: none; }
