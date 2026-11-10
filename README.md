@@ -83,6 +83,24 @@ if (-not (Test-Path .env.local)) { Copy-Item .env.example .env.local }
 
 根目录 `.env.local` 由后端读取，系统环境变量优先。前端开关写在独立的 `frontend/.env.local`。密钥仅由服务端保存与读取。当前 SQLite 路径为 `DATA_DIR/app.db`，旧配置样例中的 `DATABASE_URL` 尚未被代码读取。
 
+## 一条命令启动
+
+依赖装好、`.env.local` 配置就绪后，在项目根目录执行：
+
+```powershell
+.\start.cmd
+```
+
+后端（8000）与 Vite 开发服（5173）各开一个窗口，两边就绪后自动打开浏览器；已在运行的端口会被跳过，不会被强杀。首次使用前仍需执行一次 `npm.cmd --prefix frontend ci`；缺少 `frontend/dist` 时会提示先构建。
+
+关闭：
+
+```powershell
+.\stop.cmd
+```
+
+`stop.cmd` 先查任务队列，存在 `queued/transcribing/indexing` 的任务时拒绝关闭，避免任务变成 `PROCESS_INTERRUPTED`；确实要强行关闭用 `.\stop.cmd -Force`。直接关掉那两个窗口也可以。脚本实现在 `deploy/start-all.ps1` 与 `deploy/stop-all.ps1`，根目录的 `.cmd` 只是免去敲长命令的封装。
+
 ## 构建与启动完整版本
 
 环境、模型和配置就绪后执行以下命令。
@@ -151,6 +169,9 @@ npm.cmd --prefix frontend run typecheck
 
 | 脚本 | 当前用途 |
 | --- | --- |
+| `start.cmd` / `stop.cmd` | 根目录入口，一条命令启停前后端两个窗口 |
+| `deploy/start-all.ps1` | 启动后端与 Vite 开发服，轮询 `/api/health` 确认就绪后打开浏览器 |
+| `deploy/stop-all.ps1` | 先查任务队列再停止两个服务，队列未清零时需 `-Force` |
 | `deploy/start.ps1` | 检查环境并前台启动服务 |
 | `deploy/stop.ps1` | 按 Uvicorn 命令行匹配终止进程，使用前核对目标 PID |
 | `deploy/backup.ps1` | 停服后备份数据、源码、构建产物及清单，默认保留 7 份 |
