@@ -13,12 +13,14 @@ import VideoPlayer from "@/components/VideoPlayer.vue";
 import { api, isMock } from "@/api";
 import { toApiError } from "@/api/http";
 import { mockApi } from "@/api/mock";
+import { useCurrentCourse } from "@/composables/useCurrentCourse";
 import type { Chapter, TranscriptSegment, Video, VideoStatus } from "@/types";
 import { formatDate, formatDuration } from "@/utils/format";
 import "@/styles/screen.css";
 
 const route = useRoute();
 const router = useRouter();
+const { selectedId } = useCurrentCourse();
 const videoId = computed(() => String(route.params.id));
 const video = ref<Video | null>(null);
 const segments = ref<TranscriptSegment[]>([]);
@@ -48,7 +50,7 @@ const backView = computed(() => {
   if (view === "library" || view === "analysis" || view === "weak") return view;
   return route.query.from === "screen" ? "map" : "library";
 });
-const backTarget = computed(() => ({ name: "screen", query: { ...(backView.value === "map" ? {} : { view: backView.value }), ...(backView.value !== "library" ? { video: videoId.value } : {}) } }));
+const backTarget = computed(() => ({ name: "screen", query: { ...(backView.value === "map" ? {} : { view: backView.value }), ...(selectedId.value ? { video: selectedId.value } : {}) } }));
 const backLabel = computed(() => ({ map: "返回课程知识导航", library: "返回我的课程", analysis: "返回复习进度", weak: "返回待复习清单" })[backView.value]);
 
 const processing = computed(() => Boolean(video.value && ["queued", "transcribing", "indexing"].includes(video.value.status)));
@@ -110,6 +112,7 @@ async function refreshVideo(manual = false) {
     if (disposed) return;
     const becameReady = nextVideo.status === "ready" && (!contentLoaded.value || video.value?.status !== "ready");
     video.value = nextVideo;
+    if (nextVideo.status === "ready") selectedId.value = nextVideo.id;
     initialError.value = "";
     initialLoading.value = false;
     connectionError.value = "";
@@ -139,7 +142,7 @@ function onVisibilityChange() {
 }
 
 function onNav(key: string) {
-  router.push({ name: "screen", query: key === "map" ? {} : { view: key } });
+  router.push({ name: "screen", query: { ...(key === "map" ? {} : { view: key }), ...(selectedId.value ? { video: selectedId.value } : {}) } });
 }
 
 function seekTo(seconds: number) {
@@ -197,6 +200,7 @@ async function deleteVideo() {
   deleting.value = true;
   try {
     await api.deleteVideo(video.value.id);
+    if (selectedId.value === video.value.id) selectedId.value = "";
     ElMessage.success("视频及相关记录已删除");
     await router.push(backTarget.value);
   } catch (error) {

@@ -4,7 +4,7 @@ import { Refresh } from "@element-plus/icons-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import UploadPanel from "@/components/UploadPanel.vue";
 import VideoList from "@/components/VideoList.vue";
-import { api, isMock } from "@/api";
+import { api } from "@/api";
 import { toApiError } from "@/api/http";
 import type { Video } from "@/types";
 import { formatDuration } from "@/utils/format";
@@ -56,7 +56,7 @@ async function removeVideo(video: Video) {
   <section class="lib" aria-labelledby="library-title">
     <header class="lib-head">
       <div>
-        <span class="section-kicker">MY COURSES · {{ isMock ? "演示数据" : "真实接口" }}</span>
+        <span class="section-kicker">MY COURSES</span>
         <h1 id="library-title">我的课程</h1>
         <p>上传课程视频并查看处理进度。处理完成后，可以查看提要、提问并按引用回看。</p>
       </div>

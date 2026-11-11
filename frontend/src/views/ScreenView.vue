@@ -4,13 +4,18 @@ import { useRoute, useRouter } from "vue-router";
 import ScreenTopBar from "@/components/screen/ScreenTopBar.vue";
 import ScreenLibrary from "@/components/screen/ScreenLibrary.vue";
 import ReviewWorkspace from "@/components/screen/ReviewWorkspace.vue";
-import { api, isMock } from "@/api";
+import { api } from "@/api";
 import { toApiError } from "@/api/http";
 import type { Video } from "@/types";
+import { useCurrentCourse } from "@/composables/useCurrentCourse";
 import "@/styles/screen.css";
 
 const router = useRouter();
 const route = useRoute();
+const { selectedId } = useCurrentCourse();
+watch(() => route.query.video, id => {
+  if (typeof id === "string" && id) selectedId.value = id;
+}, { immediate: true });
 const view = computed<"map" | "library" | "analysis" | "weak">(() => {
   const key = route.query.view;
   return key === "library" || key === "analysis" || key === "weak" ? key : "map";
@@ -29,9 +34,10 @@ const reviewLayer = ref<HTMLElement>();
 watch(view, () => reviewLayer.value?.scrollTo({ top: 0 }), { flush: "post" });
 
 function onNav(key: string) {
-  void router.push({ name: "screen", query: { ...(key === "map" ? {} : { view: key }), ...(key !== "library" && typeof route.query.video === "string" ? { video: route.query.video } : {}) } });
+  void router.push({ name: "screen", query: { ...(key === "map" ? {} : { view: key }), ...(selectedId.value ? { video: selectedId.value } : {}) } });
 }
 function openVideo(video: Video) {
+  if (video.status === "ready") selectedId.value = video.id;
   void router.push({ name: "video-detail", params: { id: video.id }, query: { from: "screen", view: "library" } });
 }
 async function loadVideos(pageNumber = page.value) {
@@ -67,7 +73,7 @@ onBeforeUnmount(() => { disposed = true; listRequest++; });
       <div v-if="view !== 'library'" ref="reviewLayer" class="workspace-layer" :class="{ 'workspace-layer--map': view === 'map' }">
         <ReviewWorkspace :view="view" @nav="onNav" />
       </div>
-      <footer v-if="view === 'library'" class="library-status"><span>课程列表 · {{ isMock ? '演示数据' : '真实接口' }}</span><span v-if="!loadingVideos && !loadError">共 {{ total }} 门课程</span></footer>
+      <footer v-if="view === 'library'" class="library-status"><span>课程列表</span><span v-if="!loadingVideos && !loadError">共 {{ total }} 门课程</span></footer>
     </main>
   </div>
 </template>

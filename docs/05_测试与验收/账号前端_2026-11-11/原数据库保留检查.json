@@ -1,0 +1,27 @@
+{
+  "backup": "backups/before-account-20261111-152516/app.db",
+  "tables": {
+    "videos": {
+      "before": 2,
+      "after": 2,
+      "original_fields_unchanged": true
+    },
+    "segments": {
+      "before": 619,
+      "after": 619,
+      "original_fields_unchanged": true
+    },
+    "chapters": {
+      "before": 22,
+      "after": 22,
+      "original_fields_unchanged": true
+    },
+    "questions": {
+      "before": 11,
+      "after": 11,
+      "original_fields_unchanged": true
+    }
+  },
+  "unowned_videos_still_unowned": 2,
+  "passed": true
+}

@@ -22,7 +22,7 @@ def hosted_client(client, tmp_path, monkeypatch):
         yield browser
 
 
-@pytest.mark.parametrize("path", ["/", "/screen", "/screen?view=library", "/videos/43b4b091-630e-4819-8f56-f20b9120c099?t=62"])
+@pytest.mark.parametrize("path", ["/", "/login", "/login?redirect=%2Fscreen", "/screen", "/screen?view=library", "/videos/43b4b091-630e-4819-8f56-f20b9120c099?t=62"])
 def test_frontend_routes_survive_refresh(hosted_client, path):
     response = hosted_client.get(path)
     assert response.status_code == 200

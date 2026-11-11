@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, watch } from "vue";
+import { computed, nextTick, onBeforeUnmount, ref, watch } from "vue";
 import { CircleCheck, VideoCamera } from "@element-plus/icons-vue";
 import { isMock } from "@/api";
 import type { Video } from "@/types";
@@ -72,6 +72,10 @@ watch(
 );
 
 defineExpose({ seekTo });
+onBeforeUnmount(() => {
+  const element = videoElement.value;
+  if (element) { element.pause(); element.removeAttribute("src"); element.load(); }
+});
 </script>
 
 <template>

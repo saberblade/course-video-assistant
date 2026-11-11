@@ -8,18 +8,18 @@
 
 ## 当前版本
 
-2026 年 11 月 11 日按 [`ea57c26`](https://github.com/saberblade/course-video-assistant/tree/ea57c26) 核对。项目已完成前后端、转写模块与小样本链路接入，正在推进正式样本回归和目标设备验收。
+2026 年 11 月 11 日本地已更新主分支 `bc930f5`，并在 `feat/account-learning-ui` 合入账号后端 `b90ddad`、补充前端真实登录。项目已完成转写与小样本链路接入；服务端学习档案和混合检索仍待相应模块合入，尚未完成最终验收。见[账号前端联调记录](docs/05_测试与验收/09_账号前端联调_2026-11-11.md)。
 
 | 能力 | 当前实现 | 使用边界 |
 | --- | --- | --- |
+| 账号 | 注册、登录、退出、刷新恢复、未登录拦截和会话过期处理 | HttpOnly 会话 + CSRF，课程按账号隔离；旧视频不自动认领 |
 | 我的课程 | 上传 MP4、分页列表、处理状态、失败重试、删除 | H.264 视频 + AAC 音轨，须有中文讲课音频；上限 200 MiB、20 分钟 |
 | 视频复习 | 播放、转写原文、章节提要、来源原句与时间定位 | 章节按 60 秒窗口抽取原句，属于基础提要 |
 | 课程问答 | 基于当前视频检索、生成回答、引用回填、无依据拒答和故障降级 | 本页会话刷新后清空，尚无历史问答查询 API |
 | 课程知识导航 | 读取实际视频章节，以时间路线组织，支持搜索、拖动画布、滚动平移及查看来源 | 连线表示时间先后，不表示知识先修关系；Mock 模式使用样例数据 |
-| 复习进度 | 统计当前视频的手动章节标记，提供继续复习入口 | 不自动判断知识掌握程度 |
-| 待复习清单 | 章节收藏、疑问备注、回看、提问及已解决状态 | 保存在当前浏览器，暂不跨设备同步 |
-| 悬浮助教 | 默认内置站内指引；可开启后端使用问答接口 | 只用于产品操作指引，不读取课程内容 |
-| 同源部署 | 后端托管 `frontend/dist`，支持 `/screen`、`/videos/:id` 直接访问和刷新 | 缺失 API、静态资源保持 404；构建后重启后端 |
+| 复习进度 / 待复习清单 | 真实模式明确显示账号学习档案待接通，不显示假统计或假保存；开发 Mock 保留原演示 | 进度、备注、历史查询后端未提交；旧匿名记录保留且不绑定账号 |
+| 悬浮助教 | 匿名首页提供内置指引；登录后按配置调用后端并展示真实回答状态 | 只用于产品操作指引，不读取课程内容；退出清空会话 |
+| 同源部署 | 后端托管 `frontend/dist`，支持 `/login`、`/screen`、`/videos/:id` 直接访问和刷新 | 缺失 API、静态资源保持 404；构建后重启后端 |
 
 本次新增了复习工作区、SQLite 并发连接回归修复、站内助教接口、SPA 页面回退及一键启停脚本。原有课程视频处理链路继续使用 `queued → transcribing → indexing → ready/failed`。
 
@@ -61,7 +61,7 @@ if (-not (Test-Path frontend/.env.local)) { Copy-Item frontend/.env.example fron
 | FFmpeg / ffprobe | 可在 PATH 中找到，或在根目录 `.env.local` 填写 `FFMPEG_BIN`、`FFPROBE_BIN` 的实际路径 |
 | 转写模型 | 完整的 `models/faster-whisper-small/`，或通过 `WHISPER_MODEL_DIR` 指向实际目录；默认 CPU int8、中文 |
 | 模型 API | 根目录 `.env.local` 配置 `LLM_BASE_URL`、`LLM_API_KEY`、`LLM_MODEL=qwen-plus`；基础地址与账户地区匹配 |
-| 前端模式 | `frontend/.env.example` 默认 `VITE_USE_MOCK=false`，连接真实课程 API；悬浮助教 API 默认关闭 |
+| 前端模式 | 默认真实 API，样例配置 `VITE_USE_MOCK=false`、`VITE_ASSISTANT_USE_API=true`；匿名首页仅使用内置指引 |
 
 `scripts/download_model_bin.py` 只下载并校验 `model.bin`，还需同一模型仓库与 revision 的配置、分词等配套文件。按[模型准备说明](deploy/02_模型准备说明.md)和[新机冷启动手册](deploy/03_新机冷启动部署手册.md)准备，再用实际预热和转写验证。
 
@@ -107,6 +107,7 @@ powershell -ExecutionPolicy Bypass -File .\deploy\start.ps1
 | 地址 | 用途 |
 | --- | --- |
 | `/` | 项目首页 |
+| `/login` | 注册 / 登录，支持返回原目标页面 |
 | `/screen` | 课程知识导航，选择已处理视频、查找章节与原文 |
 | `/screen?view=library` | 我的课程：上传、列表、处理进度 |
 | `/screen?view=analysis` | 复习进度：当前视频的手动标记概况 |
@@ -114,17 +115,19 @@ powershell -ExecutionPolicy Bypass -File .\deploy\start.ps1
 | `/videos/:id` | 播放、转写、章节与课程问答 |
 | `/docs` | 后端 API 文档，使用后端端口访问 |
 
-复习标记和疑问通过 `localStorage` 保存，以视频、处理次数和章节关联，Mock 与真实模式隔离。记录只属于当前浏览器和来源地址：5173 与 8000、`localhost` 与 `127.0.0.1` 分别保存；清除站点存储或换设备不会自动恢复。
+旧匿名 `localStorage` 记录原样保留，不会因登录自动上传或绑定账号。真实模式不再用这些记录统计进度或显示保存成功，待服务端学习档案接通后以数据库为准。仅开发 Mock 继续使用独立的浏览器样例记录。
 
 视频、转写、章节和提交过的问答由后端保存。本页问答显示暂不从数据库恢复，刷新后会清空；切换章节/问答选项卡会保留当前页面结果。复习标记与问答历史是两套记录。
 
 ## 接口与问答模式
 
-开发环境的 `/api` 由 Vite 代理到 `http://127.0.0.1:8000`。`VITE_USE_MOCK=true` 使用样例；未设置时开发模式默认 Mock、生产构建默认真实接口。修改前端变量后重启 Vite，生产环境则重新构建。
+开发环境的 `/api` 由 Vite 代理到 `http://127.0.0.1:8000`。默认真实接口；仅开发环境显式 `VITE_USE_MOCK=true` 使用样例，生产构建不跳过认证。修改前端变量后重启 Vite，生产环境则重新构建。
 
 | 接口 | 用途 |
 | --- | --- |
 | `GET /api/health` | 数据库可查询性、转写入口文件及模型配置字段检查 |
+| `POST /api/auth/register`、`POST /api/auth/login` | 注册 / 登录，登录返回用户摘要与 CSRF，Cookie 由浏览器管理 |
+| `GET /api/auth/me`、`POST /api/auth/logout` | 刷新恢复身份 / 退出，退出要求 CSRF |
 | `POST /api/videos`、`GET /api/videos` | 上传、分页列表 |
 | `GET /api/videos/{id}`、`GET /api/videos/{id}/content` | 状态详情、支持 Range 的视频内容 |
 | `GET /api/videos/{id}/transcript`、`GET /api/videos/{id}/summary` | 转写与提取式章节提要 |
@@ -140,7 +143,7 @@ powershell -ExecutionPolicy Bypass -File .\deploy\start.ps1
 | 无有效依据或引用校验不通过 | `not_found / extractive` | 明确未找到依据，无引用 |
 | 有命中原文，但关闭生成、缺少配置或模型请求故障 | `degraded / extractive` | 原文检索模式，不能记为生成式问答验收通过 |
 
-悬浮助教默认使用前端内置指引。需要后端助教时，在 `frontend/.env.local` 设置 `VITE_ASSISTANT_USE_API=true`，重启或重新构建。请求示例为 `{"messages":[{"role":"user","content":"怎么上传课程？"}]}`，响应含 `answer` 和 `mode`（`generative` 或 `guide`）。未配置模型、受控模型故障或空回答会返回使用指引；同一时刻助教只接纳一个请求，忙时返回 429。最后一个用户问题上限 300 字符，对话最多 20 条、合计 6000 字符。
+悬浮助教在匿名首页提供内置指引，登录后使用 `VITE_ASSISTANT_USE_API=true` 可调用后端。请求示例为 `{"messages":[{"role":"user","content":"怎么上传课程？"}]}`，响应含 `answer` 和 `mode`（`generative` 或 `guide`），前端展示真实模型/指引状态。未配置模型、受控模型故障或空回答会返回使用指引；同一时刻助教只接纳一个请求，忙时返回 429。最后一个用户问题上限 300 字符，对话最多 20 条、合计 6000 字符。
 
 `health.transcriber=ready` 当前只说明入口文件存在，`llm_configured=true` 只说明配置字段齐全；都不能代替真实模型加载、执行器存活和联网调用检查。
 
@@ -169,7 +172,7 @@ npm.cmd --prefix frontend run build
 ## 仍需完善与验收
 
 - BE：补齐模型返回非 JSON、空 `choices`、错误字段的受控处理；增强执行器认领和写入失败后的恢复；完善真实就绪检查。SPA 页面回退已实现，不再列为未实现功能。
-- FE / QA：复核后端助教开关开启后的浏览器行为、弱相关问题拒答与异常恢复。账号、服务端复习记录、历史问答查询及混合检索按[最终阶段规划](docs/中期到答辩之前的规划/README.md)实施，当前版本尚未提供这些新增能力。
+- FE / QA：账号及后端助教接入已完成本地回归；服务端复习记录、续播、历史问答查询及混合检索仍按[最终阶段规划](docs/中期到答辩之前的规划/README.md)实施，当前未提供这些新增能力，不能标为最终阶段全部完成。
 - QA：用正式授权的三段 3–5 分钟录课、20 道正题和 5 道无依据题验证答案、引用、处理耗时、问答期限和重启恢复。合成样本链路记录不能代替该验收。
 - SYS / QA：在目标设备完成新机冷启动、一键启停及完整备份恢复演练。启停脚本已提交且语法检查通过，实机结果需登记；恢复数据、构建与源码版本需相互匹配。
 - PM：按同一候选提交核对证据与未解决问题，正式验收通过后再冻结发布版本。

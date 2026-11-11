@@ -1,0 +1,58 @@
+{
+  "timestamp": "2026-11-11T12:32:11.326Z",
+  "service": "isolated FastAPI + production frontend; external LLM disabled",
+  "results": [
+    {
+      "name": "public home and private route redirect",
+      "result": "passed"
+    },
+    {
+      "name": "client validation, registration, duplicate username and incorrect credentials",
+      "result": "passed"
+    },
+    {
+      "name": "login restores destination; refresh retains HttpOnly session; no stored credentials",
+      "result": "passed"
+    },
+    {
+      "name": "write requests carry CSRF; invalid CSRF never silently retried",
+      "result": "passed"
+    },
+    {
+      "name": "legacy anonymous records remain untouched and outside account",
+      "result": "passed"
+    },
+    {
+      "name": "logout invalidates session; second account cannot access first account resources",
+      "result": "passed"
+    },
+    {
+      "name": "session expiration redirects and clears private page",
+      "result": "passed"
+    },
+    {
+      "name": "late old-account response cannot restore private content after logout",
+      "result": "passed"
+    },
+    {
+      "name": "external redirect rejected and independent browser recovers same-account courses",
+      "result": "passed"
+    },
+    {
+      "name": "account changes propagate across tabs without retaining previous courses",
+      "result": "passed"
+    },
+    {
+      "name": "login network failure remains recoverable and never signs in locally",
+      "result": "passed"
+    },
+    {
+      "name": "mobile registration, login and navigation fit 320/390/768/1366 widths",
+      "result": "passed"
+    },
+    {
+      "name": "current course shared by navigation and progress; full library and global todo remain independent",
+      "result": "passed"
+    }
+  ]
+}

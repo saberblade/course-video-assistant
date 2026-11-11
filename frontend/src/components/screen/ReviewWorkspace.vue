@@ -3,9 +3,10 @@ import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue"
 import { useRoute, useRouter } from "vue-router";
 import { ArrowRight, CollectionTag, Document, Refresh, Search, VideoCamera } from "@element-plus/icons-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { api, isMock } from "@/api";
+import { api } from "@/api";
 import { toApiError } from "@/api/http";
 import { useReviewRecords, type ReviewRecord } from "@/composables/useReviewRecords";
+import { useCurrentCourse } from "@/composables/useCurrentCourse";
 import type { Chapter, TranscriptSegment, Video } from "@/types";
 import { formatDate, formatDuration, formatTime } from "@/utils/format";
 import "@/styles/review-workspace.css";
@@ -17,12 +18,12 @@ const emit = defineEmits<{ nav: [key: string] }>();
 const router = useRouter();
 const route = useRoute();
 const store = useReviewRecords();
-const { records, storageError } = store;
+const { records, storageError, canSave } = store;
 const videos = ref<Video[]>([]);
 const total = ref(0);
 const loading = ref(false);
 const catalogError = ref("");
-const selectedId = ref(typeof route.query.video === "string" ? route.query.video : "");
+const { selectedId } = useCurrentCourse();
 const video = ref<Video>();
 const chapters = ref<Chapter[]>([]);
 const contentLoading = ref(false);
@@ -43,6 +44,7 @@ const openingKey = ref("");
 let request = 0;
 let disposed = false;
 let catalogOffset = 0;
+let catalogLoaded = false;
 
 const titles = { map: "课程知识导航", analysis: "复习进度", weak: "待复习清单" };
 const subtitles = {
@@ -76,6 +78,7 @@ async function loadVideos(more = false) {
   try {
     const result = await api.listVideos(100, more ? catalogOffset : 0);
     if (disposed) return;
+    catalogLoaded = true;
     total.value = result.total;
     catalogOffset = more ? catalogOffset + result.items.length : result.items.length;
     videos.value = more ? [...videos.value, ...result.items.filter(v => !videos.value.some(old => old.id === v.id))] : result.items;
@@ -86,7 +89,7 @@ async function loadVideos(more = false) {
     }
     const available = videos.value.filter(v => v.status === "ready");
     if (!available.some(v => v.id === selectedId.value)) selectedId.value = available[0]?.id ?? "";
-    else if (!more) void loadContent();
+    else if (!more) { syncSelectionQuery(); void loadContent(); }
   } catch (error) { catalogError.value = toApiError(error).message; }
   finally { loading.value = false; }
 }
@@ -107,27 +110,39 @@ async function loadContent() {
     const [detail, summary] = await Promise.all([api.getVideo(id), api.getSummary(id)]);
     if (disposed || ticket !== request) return;
     video.value = detail;
+    if (!videos.value.some(item => item.id === detail.id)) videos.value.push(detail);
     chapters.value = summary.chapters;
     selectedChapter.value = summary.chapters[0]?.id ?? "";
   } catch (error) { if (ticket === request && !disposed) contentError.value = toApiError(error).message; }
   finally { if (ticket === request && !disposed) contentLoading.value = false; }
 }
-watch(selectedId, id => {
-  if (id) void router.replace({ query: { ...route.query, video: id } });
+function syncSelectionQuery() {
+  if (route.name !== "screen" || (route.query.video ?? "") === selectedId.value) return;
+  const query = { ...route.query };
+  if (selectedId.value) query.video = selectedId.value;
+  else delete query.video;
+  void router.replace({ query });
+}
+watch(selectedId, () => {
+  syncSelectionQuery();
   void loadContent();
 });
 watch(selectedChapter, () => {
   showSources.value = false;
   void nextTick(() => chapterContent.value?.closest(".el-drawer__body")?.scrollTo({ top: 0 }));
 });
-watch(() => props.view, value => { if (value !== "map") atlasOpen.value = false; });
-onMounted(() => void loadVideos());
+watch(() => props.view, value => {
+  if (value !== "map") atlasOpen.value = false;
+  if (value !== "weak" && !catalogLoaded) void loadVideos();
+});
+onMounted(() => { if (props.view !== "weak") void loadVideos(); });
 onBeforeUnmount(() => { disposed = true; request++; });
 
 function openVideo(id: string, time = 0, question = false) {
   void router.push({ name: "video-detail", params: { id }, query: { from: "screen", view: props.view, t: String(time), ...(question ? { panel: "question" } : {}) } });
 }
 function toggleReviewed(chapter: Chapter) {
+  if (!canSave) { ElMessage.info("暂不支持保存标记与备注，你可以先回看课程。"); return; }
   if (video.value) store.update(video.value, chapter, { reviewed: !currentState(chapter)?.reviewed });
 }
 function openChapter(chapter: Chapter) {
@@ -135,6 +150,7 @@ function openChapter(chapter: Chapter) {
   atlasOpen.value = true;
 }
 function openNote(chapter: Chapter) {
+  if (!canSave) { ElMessage.info("暂不支持添加备注，请稍后再试。"); return; }
   if (!video.value) return;
   noteTarget.value = { video: video.value, chapter };
   noteDraft.value = currentState(chapter)?.note ?? "";
@@ -146,12 +162,13 @@ function editNote(record: ReviewRecord) {
   noteDialog.value = true;
 }
 function saveNote() {
+  if (!canSave) return;
   const target = noteTarget.value;
   if (!target) return;
   if ("record" in target) store.edit(target.record.key, { note: noteDraft.value.trim() });
   else store.update(target.video, target.chapter, { saved: true, resolved: false, note: noteDraft.value.trim() });
   noteDialog.value = false;
-  ElMessage.success(storageError.value ? "本次记录已暂存，请留意存储提示" : "复习线索已保存到此浏览器");
+  ElMessage.success(storageError.value ? "本次记录已暂存，请留意存储提示" : "复习线索已保存");
 }
 async function toggleSources() {
   showSources.value = !showSources.value;
@@ -191,7 +208,6 @@ async function removeRecord(record: ReviewRecord) {
   <section class="rw" :class="{ 'rw--route': view === 'map' }" :aria-label="titles[view]">
     <header class="rw-heading">
       <div><span class="section-kicker">{{ view === 'map' ? 'COURSE ATLAS' : view === 'analysis' ? 'YOUR REVIEW' : 'REVISIT & RESOLVE' }}</span><h1>{{ titles[view] }}</h1><p>{{ subtitles[view] }}</p></div>
-      <span class="rw-local"><i />复习标记 · 此浏览器保存</span>
     </header>
     <el-alert v-if="storageError" :title="storageError" type="warning" :closable="false" show-icon class="rw-alert" />
 
@@ -216,27 +232,31 @@ async function removeRecord(record: ReviewRecord) {
             <div class="rw-chapter-top"><span class="rw-pill">{{ formatTime(activeChapter.start_sec) }} — {{ formatTime(activeChapter.end_sec) }}</span><span class="rw-muted">提取式 · 课程原句</span></div>
             <h2>这一节讲了什么</h2><p class="rw-chapter-copy">{{ activeChapter.text }}</p>
             <div class="rw-chapter-actions"><el-button type="primary" @click="openVideo(video.id, activeChapter.start_sec)">回看这段讲解<el-icon><ArrowRight /></el-icon></el-button><el-button @click="openVideo(video.id, activeChapter.start_sec, true)">向课程提问</el-button></div>
-            <div class="rw-mark-box"><div><strong>你的复习标记</strong><p>按自己的复习情况标记，疑问可以留到下次回看。</p></div><div class="rw-mark-actions"><el-button :type="currentState(activeChapter)?.reviewed ? 'success' : 'default'" :aria-pressed="Boolean(currentState(activeChapter)?.reviewed)" @click="toggleReviewed(activeChapter)">{{ currentState(activeChapter)?.reviewed ? '已复习 · 撤销标记' : '标记已复习' }}</el-button><el-button @click="openNote(activeChapter)">{{ currentState(activeChapter)?.saved ? '编辑复习线索' : '加入待复习' }}</el-button></div><p v-if="currentState(activeChapter)?.note" class="rw-saved-note">我的备注：{{ currentState(activeChapter)?.note }}</p></div>
+            <div class="rw-mark-box">
+              <div><strong>你的复习标记</strong><p>{{ canSave ? '按自己的复习情况标记，疑问可以留到下次回看。' : '暂不支持保存标记与备注。' }}</p></div>
+              <div class="rw-mark-actions"><el-button :disabled="!canSave" :type="currentState(activeChapter)?.reviewed ? 'success' : 'default'" :aria-pressed="Boolean(currentState(activeChapter)?.reviewed)" @click="toggleReviewed(activeChapter)">{{ currentState(activeChapter)?.reviewed ? '已复习 · 撤销标记' : '标记已复习' }}</el-button><el-button :disabled="!canSave" @click="openNote(activeChapter)">{{ currentState(activeChapter)?.saved ? '编辑复习线索' : '加入待复习' }}</el-button></div>
+              <p v-if="currentState(activeChapter)?.note" class="rw-saved-note">我的备注：{{ currentState(activeChapter)?.note }}</p>
+            </div>
             <button class="rw-source-toggle" :aria-expanded="showSources" @click="toggleSources">{{ showSources ? '收起来源原文' : `查看 ${activeChapter.segment_ids.length} 条来源原文` }}</button>
             <div v-if="showSources" class="rw-sources"><p v-if="sourceLoading">正在读取原文…</p><div v-else-if="sourceError"><p>{{ sourceError }}</p><el-button @click="showSources = false; toggleSources()">重试读取</el-button></div><template v-else><button v-for="source in sources" :key="source.id" @click="openVideo(video.id, source.start_sec)"><time>{{ formatTime(source.start_sec) }}</time><span>{{ source.text }}</span><ArrowRight /></button><p v-if="!sources.length">当前来源片段暂不可用，请打开课程核对。</p></template></div>
-            <div class="rw-chapter-footer"><span>按视频起点每 60 秒整理 · 空白窗口跳过</span><span>{{ isMock ? '当前为演示课程' : '内容来自当前视频的转写' }}</span></div>
             <nav class="cr-detail-pager" aria-label="切换章节"><el-button :disabled="activeIndex <= 0" @click="selectedChapter = chapters[activeIndex - 1]!.id">上一节</el-button><span>{{ activeNumber }} / {{ chapters.length }}</span><el-button :disabled="activeIndex >= chapters.length - 1" @click="selectedChapter = chapters[activeIndex + 1]!.id">下一节</el-button></nav>
           </article>
         </el-drawer>
       </template>
 
+      <div v-else-if="!canSave" class="panel rw-empty"><CollectionTag /><h2>复习记录暂不可用</h2><p>你可以先浏览章节，回看课程中的重点片段。</p><el-button type="primary" @click="emit('nav', 'map')">查看课程章节</el-button></div>
       <template v-else>
         <ReviewProgressOverview :chapters="chapters" :reviewed-ids="reviewedIds" :pending-count="currentPending" @resume="openVideo(video.id, $event.start_sec)" @nav="emit('nav', $event)" />
       </template>
     </template>
 
+    <div v-else-if="!canSave" class="panel rw-empty"><CollectionTag /><h2>待复习清单暂不可用</h2><p>你可以继续回看课程，或围绕原文提问。</p><el-button type="primary" @click="emit('nav', 'library')">前往我的课程</el-button></div>
     <template v-else>
       <section class="rw-todo-summary"><div><CollectionTag /><span>待解决的线索<strong>{{ openCount }}</strong></span></div><p>每条记录都连着一段讲解。先处理你自己留下的问题。</p><span class="rw-resolved-total">已解决 {{ doneCount }} 条</span></section>
       <div class="rw-todo-tools"><div class="rw-filters" aria-label="筛选复习线索"><button v-for="filter in (['open', 'done', 'all'] as const)" :key="filter" :aria-pressed="todoFilter === filter" :class="{ 'is-active': todoFilter === filter }" @click="todoFilter = filter">{{ filter === 'open' ? `待解决 ${openCount}` : filter === 'done' ? `已解决 ${doneCount}` : `全部 ${saved.length}` }}</button></div><el-input v-model="todoKeyword" placeholder="搜索课程、原文或我的备注" clearable aria-label="搜索复习线索"><template #prefix><Search /></template></el-input></div>
       <div v-if="!todos.length" class="panel rw-empty"><CollectionTag /><h2>{{ todoKeyword ? '没有匹配的复习线索' : todoFilter === 'done' ? '还没有已解决的记录' : openCount === 0 && doneCount > 0 && todoFilter === 'open' ? '当前的疑问都已解决' : '把想回看的地方留在这里' }}</h2><p>{{ todoKeyword ? '试试课程名称或其他关键词。' : '在课程知识导航中选择章节，点击“加入待复习”，可以附上自己的疑问。' }}</p><el-button v-if="!todoKeyword" type="primary" @click="emit('nav', 'map')">前往课程知识导航</el-button></div>
       <div v-else class="rw-todo-list"><article v-for="record in todos" :key="record.key" class="panel rw-todo-card"><div class="rw-section-row"><span class="rw-state" :class="{ 'is-done': record.resolved }">{{ record.resolved ? '已解决' : '待解决' }}</span><span class="rw-muted">{{ formatDate(record.updatedAt) }}</span></div><h2>{{ record.videoTitle }}</h2><div class="rw-todo-time">{{ formatTime(record.start) }} — {{ formatTime(record.end) }} · 第 {{ record.attempt }} 次处理</div><p class="rw-todo-note">{{ record.note || '留给下一次复习的片段，回看后可以补充自己的理解。' }}</p><blockquote>{{ record.text }}</blockquote><div class="rw-todo-actions"><el-button type="primary" :loading="openingKey === record.key" @click="openRecord(record)">回到这段讲解</el-button><el-button @click="openRecord(record, true)">向课程提问</el-button><el-button @click="store.edit(record.key, { resolved: !record.resolved })">{{ record.resolved ? '重新待复习' : '标记已解决' }}</el-button><el-button text @click="editNote(record)">编辑备注</el-button><el-button text class="rw-remove" @click="removeRecord(record)">移出清单</el-button></div></article></div>
     </template>
-    <p v-if="view !== 'map'" class="rw-footnote">章节与原文{{ isMock ? '使用演示课程数据' : '来自课程接口' }}；复习标记和备注仅保存在此浏览器，暂不跨设备同步。重新处理视频后，旧版本标记不计入新章节进度。</p>
-    <el-dialog v-model="noteDialog" title="留下复习线索" width="min(540px, calc(100vw - 32px))" append-to-body :close-on-click-modal="false"><p class="rw-dialog-hint">写下哪里没理解，或下次想重点回看什么。备注可留空。</p><el-input v-model="noteDraft" type="textarea" :rows="4" maxlength="500" show-word-limit placeholder="例如：这里为什么要先调整工程参数？" aria-label="我的复习备注" /><p class="rw-dialog-hint">保存在此浏览器，不会修改课程原文。</p><template #footer><el-button @click="noteDialog = false">取消</el-button><el-button type="primary" @click="saveNote">保存复习线索</el-button></template></el-dialog>
+    <el-dialog v-model="noteDialog" title="留下复习线索" width="min(540px, calc(100vw - 32px))" append-to-body :close-on-click-modal="false"><p class="rw-dialog-hint">写下哪里没理解，或下次想重点回看什么。备注可留空。</p><el-input v-model="noteDraft" type="textarea" :rows="4" maxlength="500" show-word-limit placeholder="例如：这里为什么要先调整工程参数？" aria-label="我的复习备注" /><template #footer><el-button @click="noteDialog = false">取消</el-button><el-button type="primary" @click="saveNote">保存复习线索</el-button></template></el-dialog>
   </section>
 </template>

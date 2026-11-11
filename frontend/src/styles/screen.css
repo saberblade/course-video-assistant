@@ -224,7 +224,10 @@
 }
 
 @media (max-width: 1180px) {
+  .scr-brand__desc, .scr-brand__divider { display: none; }
   .scr-menu__item { padding: 8px 10px; font-size: 14px; }
+  .scr-clock { display: none; }
+  .scr-topbar__right { gap: 8px; padding-left: 10px; }
 }
 
 @media (max-width: 900px) {
@@ -248,6 +251,7 @@
 
 @media (max-width: 380px) {
   .scr-menu__item { padding-inline: 4px; font-size: 13px; }
+  .scr-mode { display: none; }
 }
 
 /* ===== 舞台 ===== */

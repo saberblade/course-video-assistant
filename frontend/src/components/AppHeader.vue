@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import AccountMenu from "./AccountMenu.vue";
+</script>
+
 <template>
   <header class="app-header">
     <div class="container app-header__inner">
@@ -7,6 +11,7 @@
         <span class="brand__divider" />
         <span class="brand__desc">课程视频复习助手</span>
       </RouterLink>
+      <AccountMenu />
     </div>
   </header>
 </template>
@@ -17,7 +22,7 @@
   background: rgba(255, 255, 255, 0.96);
   border-bottom: 1px solid var(--line);
 }
-.app-header__inner { height: 100%; display: flex; align-items: center; }
+.app-header__inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .brand { display: flex; align-items: center; color: var(--ink); text-decoration: none; flex-shrink: 0; }
 .brand__name { margin-left: 11px; font-size: 24px; font-weight: 750; letter-spacing: 2px; }
 .brand__divider { width: 1px; height: 18px; background: var(--line); margin: 0 14px; }

@@ -9,6 +9,6 @@ from starlette.types import Scope
 class FrontendFiles(StaticFiles):
     async def get_response(self, path: str, scope: Scope):
         route_path = path.replace("\\", "/")
-        if scope["method"] in {"GET", "HEAD"} and re.fullmatch(r"(?:screen|videos/[^/.]+)/*", route_path):
+        if scope["method"] in {"GET", "HEAD"} and re.fullmatch(r"(?:login|screen|videos/[^/.]+)/*", route_path):
             path = "index.html"
         return await super().get_response(path, scope)

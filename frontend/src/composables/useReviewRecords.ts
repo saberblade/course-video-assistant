@@ -1,5 +1,6 @@
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { isMock } from "@/api";
+import { sessionState } from "@/stores/session";
 import type { Chapter, Video } from "@/types";
 
 export interface ReviewRecord {
@@ -21,6 +22,8 @@ export interface ReviewRecord {
 const storageKey = `course-review:review-records:v1:${isMock ? "mock" : "real"}`;
 const storageError = ref("");
 function read(): ReviewRecord[] {
+  // Anonymous browser records are retained on disk, never assigned to a new account.
+  if (!isMock) return [];
   try {
     const raw = localStorage.getItem(storageKey);
     if (!raw) return [];
@@ -38,7 +41,10 @@ function read(): ReviewRecord[] {
   }
 }
 const records = ref<ReviewRecord[]>(read());
+const canSave = isMock; // Enable real saves only when DB-03 endpoints are delivered and integrated.
+watch(sessionState.revision, () => { if (!isMock) records.value = []; }, { flush: "sync" });
 function persist() {
+  if (!isMock) return;
   try {
     localStorage.setItem(storageKey, JSON.stringify(records.value));
     storageError.value = "";
@@ -53,6 +59,7 @@ function find(video: Video, chapter: Chapter) {
   return records.value.find(r => r.key === keyFor(video, chapter));
 }
 function update(video: Video, chapter: Chapter, changes: Partial<Pick<ReviewRecord, "reviewed" | "saved" | "resolved" | "note">>) {
+  if (!canSave) return;
   const previous = find(video, chapter);
   const next: ReviewRecord = {
     key: keyFor(video, chapter), videoId: video.id, videoTitle: video.title,
@@ -64,10 +71,12 @@ function update(video: Video, chapter: Chapter, changes: Partial<Pick<ReviewReco
   persist();
 }
 function edit(key: string, changes: Partial<Pick<ReviewRecord, "note" | "resolved">>) {
+  if (!canSave) return;
   records.value = records.value.map(r => r.key === key ? { ...r, ...changes, updatedAt: new Date().toISOString() } : r);
   persist();
 }
 function remove(key: string) {
+  if (!canSave) return;
   // 移出清单保留独立的手动复习标记。
   records.value = records.value.map(r => r.key === key ? { ...r, saved: false, resolved: false, note: "", updatedAt: new Date().toISOString() } : r);
   persist();
@@ -79,5 +88,5 @@ window.addEventListener("storage", onStorage);
 if (import.meta.hot) import.meta.hot.dispose(() => window.removeEventListener("storage", onStorage));
 
 export function useReviewRecords() {
-  return { records, storageError, find, update, edit, remove };
+  return { records, storageError, canSave, find, update, edit, remove };
 }

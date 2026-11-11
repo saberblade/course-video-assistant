@@ -1,4 +1,5 @@
 import { ApiError, http } from "./http";
+import { sessionState } from "@/stores/session";
 
 export interface AssistantMessage {
   role: "user" | "assistant";
@@ -6,6 +7,7 @@ export interface AssistantMessage {
 }
 
 export const assistantUsesApi = import.meta.env.VITE_ASSISTANT_USE_API === "true";
+export interface AssistantReply { answer: string; mode: "generative" | "guide" }
 
 const guide = [
   {
@@ -18,7 +20,7 @@ const guide = [
   },
   {
     topic: /薄弱|预警|掌握度|学习分析|复习进度|待复习|已解决|备注|标记/,
-    answer: "「复习进度」统计当前视频中你手动标记过的章节。「待复习清单」收集你自己留下的疑问，支持回看、提问和标为已解决。标记和备注仅保存在此浏览器，不代表知识掌握程度。",
+    answer: "复习记录和待复习清单暂不可用。你可以先在课程知识导航中查找章节、回看讲解，或打开课程的「向课程提问」核对原文。",
   },
   {
     topic: /知识地图|知识导航|知识点|地图怎么/,
@@ -34,7 +36,7 @@ const guide = [
   },
   {
     topic: /演示|模拟|真实接口|mock/i,
-    answer: "云台顶栏会标出「演示数据」或「真实接口」。演示模式使用内置样例。课程的视频处理与原文问答可由后端提供。",
+    answer: "上传课程后，可以在「我的课程」查看处理进度。显示「可以复习」后，打开课程即可查看章节提要、原文转写，并围绕当前课程提问。",
   },
   {
     topic: /课迹|介绍|什么项目|有什么用|能做什么|怎么用|你是谁|你好/,
@@ -42,17 +44,18 @@ const guide = [
   },
 ];
 
-export async function askAssistant(messages: AssistantMessage[]): Promise<string> {
-  if (!assistantUsesApi) {
+export async function askAssistant(messages: AssistantMessage[]): Promise<AssistantReply> {
+  if (!assistantUsesApi || !sessionState.user.value) {
     const question = messages.at(-1)?.content.replace(/\s+/g, "") ?? "";
-    return guide.find(({ topic }) => topic.test(question))?.answer
-      ?? "我目前能回答课迹的使用问题。可以问我怎么上传、怎么看处理进度，或者怎么用引用回看。想问课程里的知识，请打开该课程的「向课程提问」。";
+    return { mode: "guide", answer: guide.find(({ topic }) => topic.test(question))?.answer
+      ?? "我目前能回答课迹的使用问题。可以问我怎么上传、怎么看处理进度，或者怎么用引用回看。想问课程里的知识，请登录后打开该课程的「向课程提问」。" };
   }
 
-  const response = await http.post<{ answer: string }>("/assistant/chat", { messages });
+  const response = await http.post<AssistantReply>("/assistant/chat", { messages });
   const answer = response.data?.answer;
   if (typeof answer !== "string" || !answer.trim()) {
     throw new ApiError({ code: "ASSISTANT_INVALID_RESPONSE", message: "助教暂时没有返回有效回答，请重试" });
   }
-  return answer.trim();
+  if (!["generative", "guide"].includes(response.data.mode)) throw new ApiError({ code: "ASSISTANT_INVALID_RESPONSE", message: "助教返回的回答状态无效，请重试" });
+  return { answer: answer.trim(), mode: response.data.mode };
 }

@@ -4,6 +4,7 @@ import { Close, Position } from "@element-plus/icons-vue";
 import { askAssistant, assistantUsesApi, type AssistantMessage } from "@/api/assistant";
 import { toApiError } from "@/api/http";
 import { MAX_QUESTION_LENGTH } from "@/utils/format";
+import { sessionState } from "@/stores/session";
 
 interface Point { x: number; y: number }
 
@@ -22,6 +23,8 @@ const messages = ref<AssistantMessage[]>([]);
 const draft = ref("");
 const sending = ref(false);
 const error = ref("");
+const answerMode = ref<"generative" | "guide">();
+const assistantStatus = computed(() => !sessionState.user.value || !assistantUsesApi ? "站内使用指南 · 内置问答" : answerMode.value === "guide" ? "站内指引 · 当前使用基础回答" : answerMode.value === "generative" ? "在线助教 · 模型回答" : "在线助教 · 站内使用问答");
 const prompts = ["课迹能做什么？", "怎么上传课程？", "怎么用原文问答？"];
 
 let drag: { pointerId: number; origin: Point; start: Point } | undefined;
@@ -139,7 +142,8 @@ async function send(value: string) {
   sending.value = true;
   try {
     const answer = await askAssistant(messages.value.slice(-13));
-    messages.value.push({ role: "assistant", content: answer });
+    answerMode.value = answer.mode;
+    messages.value.push({ role: "assistant", content: answer.answer });
   } catch (cause) {
     messages.value.pop();
     draft.value = question;
@@ -186,7 +190,7 @@ onBeforeUnmount(() => {
         <span class="assistant-panel__icon"><img src="/assistant-mark.svg" width="25" height="25" alt="" /></span>
         <div>
           <h2 id="global-assistant-title">课迹助教</h2>
-          <span>{{ assistantUsesApi ? "在线问答" : "站内使用指南 · 内置问答" }}</span>
+          <span>{{ assistantStatus }}</span>
         </div>
         <button type="button" class="assistant-panel__close" aria-label="关闭课迹助教" @click="closePanel">
           <Close aria-hidden="true" />

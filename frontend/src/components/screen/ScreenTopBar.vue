@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from "vue";
-import { isMock } from "@/api";
+import AccountMenu from "@/components/AccountMenu.vue";
 
 const props = defineProps<{ active: string }>();
 const emit = defineEmits<{ nav: [key: string]; exit: [] }>();
@@ -54,10 +54,8 @@ onBeforeUnmount(() => window.clearInterval(timer));
     </nav>
 
     <div class="scr-topbar__right">
-      <span class="scr-mode" :class="{ 'scr-mode--mock': isMock }">
-        <i />{{ isMock ? "演示数据" : "真实接口" }}
-      </span>
       <span class="scr-clock">{{ clock }}</span>
+      <AccountMenu />
       <button type="button" class="scr-topbar__link" @click="emit('exit')">返回首页</button>
     </div>
   </header>
