@@ -106,6 +106,32 @@ class AssistantChatOut(BaseModel):
     mode: Literal["generative", "guide"]
 
 
+class RegisterIn(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    username: str
+    password: str
+    display_name: str
+
+
+class LoginIn(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    username: str
+    password: str
+
+
+class UserOut(BaseModel):
+    id: str
+    username: str
+    display_name: str
+
+
+class AuthOut(BaseModel):
+    user: UserOut
+    csrf_token: str
+
+
 class HealthOut(BaseModel):
     status: Literal["ok", "not_ready"]
     version: str

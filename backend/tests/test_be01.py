@@ -27,7 +27,7 @@ def test_four_tables_exist(client):
     connection = sqlite3.connect(client.app.state.settings.database_path)
     names = {row[0] for row in connection.execute("SELECT name FROM sqlite_master WHERE type='table'")}
     connection.close()
-    assert {"videos", "segments", "chapters", "questions"} <= names
+    assert {"videos", "segments", "chapters", "questions", "users", "sessions"} <= names
 
 
 def test_missing_video_and_bad_id(client):
@@ -253,9 +253,13 @@ def test_restart_marks_unfinished_processing_failed(tmp_path, monkeypatch):
             from app.models import Video
 
             db = client.app.state.session_factory()
+            from tests.conftest import sign_in
+
+            owner_id = sign_in(client)
             db.add(
                 Video(
                     id=video_id,
+                    owner_id=owner_id,
                     title="示例课",
                     status=status,
                     processing_mode="audio_only",
@@ -278,6 +282,9 @@ def test_restart_marks_unfinished_processing_failed(tmp_path, monkeypatch):
     get_settings.cache_clear()
     second = create_app()
     with TestClient(second) as client:
+        from tests.conftest import sign_in
+
+        sign_in(client)
         processing = client.get(f"/api/videos/{processing_id}").json()
         queued = client.get(f"/api/videos/{queued_id}").json()
     second.state.engine.dispose()
