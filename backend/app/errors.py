@@ -59,6 +59,8 @@ def register_error_handlers(app: FastAPI) -> None:
 
 def _validation_message(request: Request, exc: RequestValidationError) -> tuple[str, str]:
     path = request.url.path
+    if path.startswith("/api/auth/"):
+        return "INVALID_PARAMETER", "账号或密码格式不正确"
     if path.endswith("/assistant/chat"):
         return "INVALID_QUESTION", "对话消息格式不正确"
     if path.endswith("/questions"):

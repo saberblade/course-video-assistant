@@ -14,6 +14,7 @@ from sqlalchemy import delete, func, select
 from sqlalchemy.orm import Session
 
 from app import media
+from app.auth import csrf_header, owned_or_missing, require_csrf, require_user
 from app.clock import safe_title, utc_now
 from app.database import get_db
 from app.errors import AppError
@@ -23,7 +24,7 @@ from app import qa
 from app.schemas import QuestionIn, QuestionResultOut, SummaryOut, TranscriptOut, VideoListOut
 from app.storage import save_upload
 
-router = APIRouter(prefix="/api")
+router = APIRouter(prefix="/api", dependencies=[Depends(csrf_header)])
 
 
 def parse_video_id(value: str) -> str:
@@ -36,6 +37,14 @@ def parse_video_id(value: str) -> str:
 def get_video(db: Session, video_id: str) -> Video:
     video = db.get(Video, parse_video_id(video_id))
     if video is None:
+        raise AppError(404, "VIDEO_NOT_FOUND", "视频不存在或已删除", False)
+    return video
+
+
+def current_video(request: Request, db: Session, video_id: str) -> Video:
+    user = require_user(request, db)
+    video = get_video(db, video_id)
+    if not owned_or_missing(video.owner_id, user.id):
         raise AppError(404, "VIDEO_NOT_FOUND", "视频不存在或已删除", False)
     return video
 
@@ -73,6 +82,8 @@ def upload_video(
     file: UploadFile = File(...),
     db: Session = Depends(get_db),
 ) -> JSONResponse:
+    user = require_user(request, db)
+    require_csrf(request)
     settings = request.app.state.settings
     if unfinished_count(db) >= settings.max_unfinished_jobs:
         raise queue_full()
@@ -97,6 +108,7 @@ def upload_video(
             now = utc_now()
             video = Video(
                 id=video_id,
+                owner_id=user.id,
                 title=safe_title(file.filename),
                 status="queued",
                 processing_mode="audio_only",
@@ -128,25 +140,28 @@ def upload_video(
 
 @router.get("/videos")
 def list_videos(
+    request: Request,
     limit: int = Query(default=20, ge=1, le=100),
     offset: int = Query(default=0, ge=0),
     db: Session = Depends(get_db),
 ) -> VideoListOut:
-    total = int(db.scalar(select(func.count()).select_from(Video)) or 0)
+    user = require_user(request, db)
+    owned = Video.owner_id == user.id
+    total = int(db.scalar(select(func.count()).select_from(Video).where(owned)) or 0)
     rows = db.scalars(
-        select(Video).order_by(Video.created_at.desc(), Video.id.desc()).limit(limit).offset(offset)
+        select(Video).where(owned).order_by(Video.created_at.desc(), Video.id.desc()).limit(limit).offset(offset)
     ).all()
     return VideoListOut(items=[video_out(row) for row in rows], total=total, limit=limit, offset=offset)
 
 
 @router.get("/videos/{video_id}")
-def read_video(video_id: str, db: Session = Depends(get_db)) -> JSONResponse:
-    return JSONResponse(content=video_out(get_video(db, video_id)).model_dump())
+def read_video(video_id: str, request: Request, db: Session = Depends(get_db)) -> JSONResponse:
+    return JSONResponse(content=video_out(current_video(request, db, video_id)).model_dump())
 
 
 @router.get("/videos/{video_id}/content")
 def read_content(video_id: str, request: Request, db: Session = Depends(get_db)):
-    video = get_video(db, video_id)
+    video = current_video(request, db, video_id)
     path = Path(video.local_path)
     if not path.is_file():
         raise AppError(409, "SOURCE_MISSING", "原视频文件丢失", False)
@@ -166,8 +181,8 @@ def read_content(video_id: str, request: Request, db: Session = Depends(get_db))
 
 
 @router.get("/videos/{video_id}/transcript")
-def read_transcript(video_id: str, db: Session = Depends(get_db)) -> TranscriptOut:
-    video = get_video(db, video_id)
+def read_transcript(video_id: str, request: Request, db: Session = Depends(get_db)) -> TranscriptOut:
+    video = current_video(request, db, video_id)
     ensure_ready(video)
     rows = db.scalars(
         select(Segment).where(Segment.video_id == video.id).order_by(Segment.start_sec, Segment.id)
@@ -178,8 +193,8 @@ def read_transcript(video_id: str, db: Session = Depends(get_db)) -> TranscriptO
 
 
 @router.get("/videos/{video_id}/summary")
-def read_summary(video_id: str, db: Session = Depends(get_db)) -> SummaryOut:
-    video = get_video(db, video_id)
+def read_summary(video_id: str, request: Request, db: Session = Depends(get_db)) -> SummaryOut:
+    video = current_video(request, db, video_id)
     ensure_ready(video)
     rows = db.scalars(select(Chapter).where(Chapter.video_id == video.id).order_by(Chapter.start_sec, Chapter.id)).all()
     if not rows:
@@ -192,7 +207,8 @@ def ask_question(video_id: str, body: QuestionIn, request: Request, db: Session 
     question = body.question.strip()
     if not question or len(question) > 300:
         raise AppError(422, "INVALID_QUESTION", "请输入1至300个字符的问题", False)
-    video = get_video(db, video_id)
+    video = current_video(request, db, video_id)
+    require_csrf(request)
     ensure_ready(video)
     if not qa.try_begin_question(video.id):
         raise AppError(429, "QUESTION_BUSY", "正在回答上一个问题，请稍后再试", True, {"Retry-After": "3"})
@@ -232,7 +248,8 @@ def ask_question(video_id: str, body: QuestionIn, request: Request, db: Session 
 @router.post("/videos/{video_id}/retry", status_code=202)
 def retry_video(video_id: str, request: Request, db: Session = Depends(get_db)) -> JSONResponse:
     settings = request.app.state.settings
-    video = get_video(db, video_id)
+    video = current_video(request, db, video_id)
+    require_csrf(request)
     _ensure_retryable(video)
     with request.app.state.queue_lock:
         db.refresh(video)
@@ -258,7 +275,8 @@ def retry_video(video_id: str, request: Request, db: Session = Depends(get_db)) 
 @router.delete("/videos/{video_id}", status_code=204)
 def delete_video(video_id: str, request: Request, db: Session = Depends(get_db)) -> Response:
     settings = request.app.state.settings
-    video = get_video(db, video_id)
+    video = current_video(request, db, video_id)
+    require_csrf(request)
     if qa.question_in_progress(video.id) or video.status not in ("ready", "failed"):
         raise AppError(409, "VIDEO_BUSY", "视频正在处理或回答问题，暂时不能删除", True)
     source = Path(video.local_path).parent
