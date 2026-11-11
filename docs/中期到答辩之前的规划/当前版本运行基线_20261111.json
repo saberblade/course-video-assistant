@@ -1,0 +1,192 @@
+{
+  "date": "2026-11-11",
+  "sourceCommit": "f49acbdcdafaceb71f05e3620d48e8bba9a60c69",
+  "sample": {
+    "kind": "Windows Chinese TTS; pipeline test, not formal authorized lecture",
+    "file": "sample_lecture.mp4",
+    "durationSec": 119.266667
+  },
+  "checks": [
+    {
+      "check": "health",
+      "result": "PASS",
+      "details": {
+        "status": "ok",
+        "version": "0.1.0",
+        "database": "ok",
+        "transcriber": "ready",
+        "llm_configured": true
+      }
+    },
+    {
+      "check": "route /",
+      "result": "PASS",
+      "details": {
+        "status": 200
+      }
+    },
+    {
+      "check": "route /screen?view=library",
+      "result": "PASS",
+      "details": {
+        "status": 200
+      }
+    },
+    {
+      "check": "route /api/no-such-route",
+      "result": "PASS",
+      "details": {
+        "status": 404
+      }
+    },
+    {
+      "check": "route /assets/missing.js",
+      "result": "PASS",
+      "details": {
+        "status": 404
+      }
+    },
+    {
+      "check": "upload",
+      "result": "PASS",
+      "details": {
+        "id": "6eaa36c9-ea34-4940-b2d0-073f4a226bf8",
+        "status": "queued",
+        "durationSec": 119.266667
+      }
+    },
+    {
+      "check": "processing",
+      "result": "PASS",
+      "details": {
+        "trace": [
+          {
+            "status": "queued",
+            "sinceUploadSec": 0.02
+          },
+          {
+            "status": "transcribing",
+            "sinceUploadSec": 1.03
+          },
+          {
+            "status": "ready",
+            "sinceUploadSec": 23.19
+          }
+        ],
+        "pollUntilReadySec": 23.19,
+        "backendElapsedSec": 22.0
+      }
+    },
+    {
+      "check": "transcript and chapters",
+      "result": "PASS",
+      "details": {
+        "segments": 16,
+        "chapters": 2,
+        "mode": "extractive"
+      }
+    },
+    {
+      "check": "media Range",
+      "result": "PASS",
+      "details": {
+        "status": 206,
+        "contentRange": "bytes 0-1023/1058404"
+      }
+    },
+    {
+      "check": "course Q&A 召回率怎样计算？",
+      "result": "PASS",
+      "details": {
+        "answerStatus": "answered",
+        "mode": "generative",
+        "citations": 1,
+        "latencyMs": 3157,
+        "answer": "召回率等于真正例的个数除以真正例与假负例之和。"
+      }
+    },
+    {
+      "check": "course Q&A 这节课讲解量子纠缠和贝尔不等式了吗？",
+      "result": "PASS",
+      "details": {
+        "answerStatus": "not_found",
+        "mode": "extractive",
+        "citations": 0,
+        "latencyMs": 3147,
+        "answer": "当前视频中未找到足够依据，请换一种问法或回看课程。"
+      }
+    },
+    {
+      "check": "assistant API",
+      "result": "PASS",
+      "details": {
+        "answer": "进入「知识云台」→「我的课程」，点击上传，选择符合要求的MP4文件（H.264+AAC，≤200 MiB、20分钟、含中文讲课音轨）即可。系统将自动排队处理。",
+        "mode": "generative"
+      }
+    },
+    {
+      "check": "sample retained",
+      "result": "PASS",
+      "details": {
+        "detailUrl": "http://127.0.0.1:8000/videos/6eaa36c9-ea34-4940-b2d0-073f4a226bf8",
+        "note": "No existing video was deleted; synthetic sample remains for viewing."
+      }
+    }
+  ],
+  "videoId": "6eaa36c9-ea34-4940-b2d0-073f4a226bf8",
+  "answers": [
+    {
+      "id": "d5373067-2870-4b1e-81b2-ca40ca5af030",
+      "video_id": "6eaa36c9-ea34-4940-b2d0-073f4a226bf8",
+      "question": "召回率怎样计算？",
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "召回率等于真正例的个数除以真正例与假负例之和。",
+      "citations": [
+        {
+          "segment_id": "6204c160-dfa2-4da1-a428-269bdd1f87d1",
+          "start_sec": 26.0,
+          "end_sec": 32.0,
+          "text": "召回率等于真正力的个数,除以真正力与价负力之和。"
+        }
+      ],
+      "created_at": "2026-11-11T02:00:00Z",
+      "latency_ms": 3157
+    },
+    {
+      "id": "ae637a40-f78e-4f52-95c5-81b89378355c",
+      "video_id": "6eaa36c9-ea34-4940-b2d0-073f4a226bf8",
+      "question": "这节课讲解量子纠缠和贝尔不等式了吗？",
+      "answer_status": "not_found",
+      "mode": "extractive",
+      "answer": "当前视频中未找到足够依据，请换一种问法或回看课程。",
+      "citations": [],
+      "created_at": "2026-11-11T02:00:03Z",
+      "latency_ms": 3147
+    }
+  ],
+  "environment": {
+    "python": "3.11.9",
+    "node": "22.14.0",
+    "ffmpeg": "9.0.2",
+    "backendTestsPassed": 56,
+    "backendTestSeconds": 6.05,
+    "frontendBuild": "PASS",
+    "pipCheck": "PASS"
+  },
+  "browserVerification": {
+    "generativeAnswerDisplayed": true,
+    "uiLatencySeconds": 2.8,
+    "citationSeekSeconds": 26,
+    "videoPausedAfterSeek": true,
+    "consoleErrorsObserved": 0,
+    "screenshot": "运行页面.jpg"
+  },
+  "finalServiceCheck": {
+    "status": "ok",
+    "port": 8000,
+    "pid": 45464,
+    "videos": 1,
+    "sampleStatus": "ready"
+  }
+}

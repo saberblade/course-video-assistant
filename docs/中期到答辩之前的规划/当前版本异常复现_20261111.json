@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-11",
+  "scope": "Real imported functions with local HTTP MockTransport and synthetic dependencies. No external request, credentials, live database or running service modified.",
+  "results": [
+    {
+      "case": "HTTP200非JSON",
+      "observed": "JSONDecodeError",
+      "controlled": false
+    },
+    {
+      "case": "HTTP200空choices",
+      "observed": "IndexError",
+      "controlled": false
+    },
+    {
+      "case": "HTTP200缺choices",
+      "observed": "KeyError",
+      "controlled": false
+    },
+    {
+      "case": "has_evidence为字符串false",
+      "observed": "answered",
+      "expected": "reject invalid type or not_found"
+    },
+    {
+      "case": "任务认领异常",
+      "observed": "RuntimeError",
+      "loopRecovered": false
+    }
+  ]
+}
