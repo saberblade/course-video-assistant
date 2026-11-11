@@ -6,3 +6,4 @@ python-multipart==0.0.33
 httpx==0.28.1
 jieba==0.42.1
 rank-bm25==0.2.2
+argon2-cffi==25.1.0

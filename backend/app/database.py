@@ -45,3 +45,12 @@ def get_db(request: Request) -> Generator[Session, None, None]:
 
 def session_factory_for(engine: Engine):
     return sessionmaker(bind=engine, autoflush=False, autocommit=False)
+
+
+def ensure_video_owner_column(engine: Engine) -> None:
+    """旧库只有视频表时补上归属列。正式迁移仍由学习档案负责人用 Alembic 合并。"""
+    with engine.begin() as connection:
+        rows = connection.exec_driver_sql("PRAGMA table_info(videos)").fetchall()
+        if not rows or any(row[1] == "owner_id" for row in rows):
+            return
+        connection.exec_driver_sql("ALTER TABLE videos ADD COLUMN owner_id VARCHAR(36)")

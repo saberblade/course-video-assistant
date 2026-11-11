@@ -9,6 +9,8 @@ BACKEND_ROOT = Path(__file__).resolve().parents[1]
 if str(BACKEND_ROOT) not in sys.path:
     sys.path.insert(0, str(BACKEND_ROOT))
 
+_CURRENT_OWNER = object()
+
 
 @pytest.fixture()
 def client(tmp_path, monkeypatch):
@@ -24,6 +26,7 @@ def client(tmp_path, monkeypatch):
 
     application = create_app()
     with TestClient(application) as test_client:
+        sign_in(test_client)
         yield test_client
     application.state.engine.dispose()
     get_settings.cache_clear()
@@ -31,7 +34,7 @@ def client(tmp_path, monkeypatch):
 
 @pytest.fixture()
 def make_video(client):
-    def _make(status="queued", *, retryable=True, created_at="2026-11-05T02:00:00Z"):
+    def _make(status="queued", *, retryable=True, created_at="2026-11-05T02:00:00Z", owner_id=_CURRENT_OWNER):
         from app.models import Video
 
         settings = client.app.state.settings
@@ -53,9 +56,12 @@ def make_video(client):
             error_message = "未识别到有效讲课语音，请更换清晰中文视频" if not retryable else "上次处理因服务重启中断，可重试"
             error_retryable = 0 if not retryable else 1
         db = client.app.state.session_factory()
+        if owner_id is _CURRENT_OWNER:
+            owner_id = client.get("/api/auth/me").json()["user"]["id"]
         db.add(
             Video(
                 id=video_id,
+                owner_id=owner_id,
                 title="示例课",
                 status=status,
                 processing_mode="audio_only",
@@ -77,3 +83,20 @@ def make_video(client):
         return video_id
 
     return _make
+
+
+def sign_in(client, username="student_one", password="password-1"):
+    origin = {"Origin": "http://testserver"}
+    login = client.post("/api/auth/login", json={"username": username, "password": password}, headers=origin)
+    if login.status_code != 200:
+        created = client.post(
+            "/api/auth/register",
+            json={"username": username, "password": password, "display_name": "同学"},
+            headers=origin,
+        )
+        assert created.status_code == 201, created.text
+        login = client.post("/api/auth/login", json={"username": username, "password": password}, headers=origin)
+    assert login.status_code == 200, login.text
+    client.headers["Origin"] = "http://testserver"
+    client.headers["X-CSRF-Token"] = login.json()["csrf_token"]
+    return login.json()["user"]["id"]
