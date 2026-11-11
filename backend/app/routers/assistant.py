@@ -2,22 +2,17 @@
 
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, Request
-from sqlalchemy.orm import Session
+from fastapi import APIRouter, Request
 
 from app import assistant
-from app.auth import csrf_header, require_csrf, require_user
-from app.database import get_db
 from app.errors import AppError
 from app.schemas import AssistantChatIn, AssistantChatOut
 
-router = APIRouter(prefix="/api", dependencies=[Depends(csrf_header)])
+router = APIRouter(prefix="/api")
 
 
 @router.post("/assistant/chat")
-def chat(body: AssistantChatIn, request: Request, db: Session = Depends(get_db)) -> AssistantChatOut:
-    require_user(request, db)
-    require_csrf(request)
+def chat(body: AssistantChatIn, request: Request) -> AssistantChatOut:
     messages = [{"role": item.role, "content": item.content.strip()} for item in body.messages]
     last = messages[-1]
     if last["role"] != "user":

@@ -16,9 +16,6 @@ def hosted_client(client, tmp_path, monkeypatch):
     monkeypatch.setattr(main, "PROJECT_ROOT", root)
     application = main.create_app()
     with TestClient(application) as browser:
-        from tests.conftest import sign_in
-
-        sign_in(browser)
         yield browser
 
 

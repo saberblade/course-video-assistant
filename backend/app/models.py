@@ -1,4 +1,4 @@
-"""视频、转写、章节、问答，以及账号和登录会话。"""
+"""四本账：视频、转写句子、章节、问答。"""
 
 from __future__ import annotations
 
@@ -10,33 +10,10 @@ from app.database import Base
 UNFINISHED_STATUSES = ("queued", "transcribing", "indexing")
 
 
-class User(Base):
-    __tablename__ = "users"
-
-    id: Mapped[str] = mapped_column(String(36), primary_key=True)
-    username_normalized: Mapped[str] = mapped_column(String(32), unique=True, index=True)
-    display_name: Mapped[str] = mapped_column(String(32))
-    password_hash: Mapped[str] = mapped_column(Text)
-    is_active: Mapped[int] = mapped_column(Integer, default=1)
-    created_at: Mapped[str] = mapped_column(String(40))
-
-
-class Session(Base):
-    __tablename__ = "sessions"
-
-    id: Mapped[str] = mapped_column(String(36), primary_key=True)
-    user_id: Mapped[str] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
-    token_hash: Mapped[str] = mapped_column(String(64), unique=True)
-    csrf_token: Mapped[str] = mapped_column(String(64))
-    expires_at: Mapped[str] = mapped_column(String(40), index=True)
-    created_at: Mapped[str] = mapped_column(String(40))
-
-
 class Video(Base):
     __tablename__ = "videos"
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True)
-    owner_id: Mapped[str | None] = mapped_column(ForeignKey("users.id"), nullable=True, index=True)
     title: Mapped[str] = mapped_column(String(120))
     status: Mapped[str] = mapped_column(String(20), index=True)
     processing_mode: Mapped[str] = mapped_column(String(20), default="audio_only")
