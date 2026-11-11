@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-11",
+  "model": "text-embedding-v4",
+  "requestedDimension": 1024,
+  "httpStatus": 200,
+  "seconds": 1.16,
+  "scope": "single API availability probe; hybrid retrieval is not implemented",
+  "returnedDimension": 1024,
+  "usage": {
+    "prompt_tokens": 6,
+    "total_tokens": 6
+  }
+}
