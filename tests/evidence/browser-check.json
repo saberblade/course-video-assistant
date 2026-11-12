@@ -1,0 +1,70 @@
+{
+  "testedAt": "2026-11-12T03:46:23.856Z",
+  "baseUrl": "http://127.0.0.1:8765",
+  "results": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "httpStatus": 200,
+      "title": "课迹 · 课程视频复习助手",
+      "libraryUrl": "http://127.0.0.1:8765/screen?view=library",
+      "noHorizontalOverflowOnLibrary": true,
+      "noHorizontalOverflowOnAtlas": true,
+      "uploadVisible": true,
+      "startDisabledWithoutFile": true,
+      "realApiVisible": true,
+      "libraryRefreshOk": true,
+      "atlasVisible": true,
+      "atlasRefreshOk": true,
+      "assistantReply": "助教回复\n在知识云台打开「我的课程」，选择或拖入 MP4 后点「开始处理」。视频须使用 H.264 编码和 AAC 音轨，最多 200 MiB、20 分钟，并包含清晰中文讲课音轨。",
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "viewport": {
+        "name": "desktop-1366",
+        "width": 1366,
+        "height": 768
+      },
+      "httpStatus": 200,
+      "title": "课迹 · 课程视频复习助手",
+      "libraryUrl": "http://127.0.0.1:8765/screen?view=library",
+      "noHorizontalOverflowOnLibrary": true,
+      "noHorizontalOverflowOnAtlas": true,
+      "uploadVisible": true,
+      "startDisabledWithoutFile": true,
+      "realApiVisible": true,
+      "libraryRefreshOk": true,
+      "atlasVisible": true,
+      "atlasRefreshOk": true,
+      "assistantReply": "助教回复\n在知识云台打开「我的课程」，选择或拖入 MP4 后点「开始处理」。视频须使用 H.264 编码和 AAC 音轨，最多 200 MiB、20 分钟，并包含清晰中文讲课音轨。",
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "viewport": {
+        "name": "desktop-1920",
+        "width": 1920,
+        "height": 1080
+      },
+      "httpStatus": 200,
+      "title": "课迹 · 课程视频复习助手",
+      "libraryUrl": "http://127.0.0.1:8765/screen?view=library",
+      "noHorizontalOverflowOnLibrary": true,
+      "noHorizontalOverflowOnAtlas": true,
+      "uploadVisible": true,
+      "startDisabledWithoutFile": true,
+      "realApiVisible": true,
+      "libraryRefreshOk": true,
+      "atlasVisible": true,
+      "atlasRefreshOk": true,
+      "assistantReply": "助教回复\n在知识云台打开「我的课程」，选择或拖入 MP4 后点「开始处理」。视频须使用 H.264 编码和 AAC 音轨，最多 200 MiB、20 分钟，并包含清晰中文讲课音轨。",
+      "consoleErrors": [],
+      "pageErrors": []
+    }
+  ],
+  "pass": true
+}
