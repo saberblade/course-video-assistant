@@ -1,0 +1,35 @@
+{
+  "tested_at": "2026-11-12T11:35:25+08:00",
+  "candidate_commit": "e16c2136ef4a05b80cf289a25a4922f1e4440cd0",
+  "backup_name": "20261112_113510",
+  "backup_database_sha256": "5c965426edc4548927bdeeb5e167eefd152f7e54daa95711b9b61d038c8c5782",
+  "seed_video": {
+    "id": "77777777-7777-4777-8777-777777777777",
+    "title": "验收恢复样本",
+    "media_sha256_before_backup": "b9f0d668f789a08a3d4a0ece22438baefff76a2cbd882a2baca6cf55b46591b7"
+  },
+  "mutation_before_restore": {
+    "database_title": "已损坏的恢复前标题",
+    "media_replaced_with": "corrupted"
+  },
+  "restore_verification": {
+    "database_title": "验收恢复样本",
+    "media_sha256": "b9f0d668f789a08a3d4a0ece22438baefff76a2cbd882a2baca6cf55b46591b7",
+    "decoded_video_frames": 48,
+    "segment_count": 1,
+    "chapter_count": 1,
+    "api_list_total": 1,
+    "api_video_status": "ready",
+    "api_content_status": 206,
+    "api_content_range": "bytes 0-31/8735",
+    "api_request_id": "f9b4e6e6-df42-4e3c-a74a-176f5bbee39e"
+  },
+  "environment_limitations": {
+    "whisper_model_missing": true,
+    "ffmpeg_and_ffprobe_missing": true,
+    "llm_not_configured": true,
+    "independent_clean_directory_restore_not_executed": true,
+    "formal_authorized_video_not_used": true
+  },
+  "result": "PARTIAL_PASS"
+}
