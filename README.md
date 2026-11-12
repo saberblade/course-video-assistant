@@ -8,20 +8,28 @@
 
 ## 当前版本
 
-2026 年 11 月 11 日本地已更新主分支 `bc930f5`，并在 `feat/account-learning-ui` 合入账号后端 `b90ddad`、补充前端真实登录。项目已完成转写与小样本链路接入；服务端学习档案和混合检索仍待相应模块合入，尚未完成最终验收。见[账号前端联调记录](docs/05_测试与验收/09_账号前端联调_2026-11-11.md)。
+2026 年 11 月 12 日完成最终阶段整合：账号与资源隔离、服务端学习档案、混合检索 RAG、Alembic 迁移链、
+维护 CLI 与交付文档均已合入 `feat/account-learning-ui` 并快进到 `main`。交付入口见
+[最终交付](docs/最终交付/README.md)，逐项结论见[需求追溯表](docs/最终交付/需求追溯表.md)。
+
+本轮验证：后端测试 **121 项全通过**；25 题验收 **有依据 20/20、无依据 5/5、引用全部合法**；
+上传→转写→章节→索引→问答→删除端到端冒烟通过。详见[验收报告](docs/最终交付/验收报告.md)。
 
 | 能力 | 当前实现 | 使用边界 |
 | --- | --- | --- |
-| 账号 | 注册、登录、退出、刷新恢复、未登录拦截和会话过期处理 | HttpOnly 会话 + CSRF，课程按账号隔离；旧视频不自动认领 |
+| 账号 | 注册、登录、退出、刷新恢复、未登录拦截和会话过期处理 | HttpOnly 会话 + CSRF，Argon2id 哈希；课程按账号隔离，旧视频需维护 CLI 认领 |
 | 我的课程 | 上传 MP4、分页列表、处理状态、失败重试、删除 | H.264 视频 + AAC 音轨，须有中文讲课音频；上限 200 MiB、20 分钟 |
-| 视频复习 | 播放、转写原文、章节提要、来源原句与时间定位 | 章节按 60 秒窗口抽取原句，属于基础提要 |
-| 课程问答 | 基于当前视频检索、生成回答、引用回填、无依据拒答和故障降级 | 本页会话刷新后清空，尚无历史问答查询 API |
-| 课程知识导航 | 读取实际视频章节，以时间路线组织，支持搜索、拖动画布、滚动平移及查看来源 | 连线表示时间先后，不表示知识先修关系；Mock 模式使用样例数据 |
-| 复习进度 / 待复习清单 | 真实模式明确显示账号学习档案待接通，不显示假统计或假保存；开发 Mock 保留原演示 | 进度、备注、历史查询后端未提交；旧匿名记录保留且不绑定账号 |
+| 视频复习 | 播放、续播、转写原文、章节提要、来源原句与时间定位 | 章节按 60 秒窗口抽取原句，属于基础提要；进度约 15 秒保存一次 |
+| 课程问答 | 基于当前视频混合检索、生成回答、引用回填、无依据拒答和故障降级 | 历史问答分页可恢复；引用 ID/原文/时间全部从数据库回填 |
+| 课程知识导航 | 读取实际视频章节，以时间路线组织，支持搜索、拖动画布、滚动平移及查看来源 | 连线表示时间先后，不表示知识先修关系 |
+| 复习进度 / 待复习清单 | 服务端保存已复习、待复习、备注与已解决，支持跨浏览器恢复 | 旧匿名 `localStorage` 记录保留但不绑定账号、不批量导入 |
+| 混合检索 RAG | 块级 BM25 + 向量 RRF，索引在线程内构建，未就绪时如实回退 `bm25_fallback` | 向量用百炼 `text-embedding-v4`（1024 维）；无密钥时降级为 BM25 |
 | 悬浮助教 | 匿名首页提供内置指引；登录后按配置调用后端并展示真实回答状态 | 只用于产品操作指引，不读取课程内容；退出清空会话 |
-| 同源部署 | 后端托管 `frontend/dist`，支持 `/login`、`/screen`、`/videos/:id` 直接访问和刷新 | 缺失 API、静态资源保持 404；构建后重启后端 |
+| 同源部署 | 后端托管 `frontend/dist`，支持 `/login`、`/screen`、`/videos/:id` 直接访问和刷新 | 启动前自动执行 `alembic upgrade head`；构建后重启后端 |
 
-本次新增了复习工作区、SQLite 并发连接回归修复、站内助教接口、SPA 页面回退及一键启停脚本。原有课程视频处理链路继续使用 `queued → transcribing → indexing → ready/failed`。
+原有课程视频处理链路继续使用 `queued → transcribing → indexing → ready/failed`。
+转写落库前会做专业术语纠正（如 ASR 把 SQLite 听成 `SaoCAT`），历史转写可用
+`scripts/repair_terms.py` 修复。
 
 ## 技术栈
 
@@ -30,7 +38,8 @@
 | 前端 | Vue 3、TypeScript 5、Vite 7、Vue Router 4、Element Plus、Axios；Node.js 22，至少 22.12 |
 | 后端 | Python 3.11 基线、FastAPI、Pydantic 2、SQLAlchemy、SQLite；文件连接使用 `NullPool` |
 | 转写 | faster-whisper 多语言 small、CPU int8、独立子进程，FFmpeg / ffprobe |
-| 检索与问答 | jieba、BM25、百炼 qwen-plus；从当前视频原文回填引用 |
+| 检索与问答 | jieba、BM25、百炼 `text-embedding-v4` 向量 + RRF 混合检索、qwen 系列生成；从当前视频原文回填引用 |
+| 迁移与运维 | Alembic 迁移链、`scripts/maintain_accounts.py`、`scripts/rag_index.py`、`scripts/repair_terms.py` |
 | 运行 | Windows PowerShell、单个 Uvicorn worker、顺序任务执行器 |
 
 前端依赖按 `frontend/package-lock.json` 安装，Python 完整依赖按 `requirements.lock.txt` 安装。历史联调曾使用 Python 3.12，团队发布基线仍为 3.11；实际设备版本写入[环境版本清单](docs/environment-versions.md)。
@@ -52,6 +61,12 @@ py -3.11 -m venv .venv
 npm.cmd --prefix frontend ci
 if (-not (Test-Path .env.local)) { Copy-Item .env.example .env.local }
 if (-not (Test-Path frontend/.env.local)) { Copy-Item frontend/.env.example frontend/.env.local }
+
+# 数据库结构升级到最新（deploy\start.ps1 也会自动执行）
+.\.venv\Scripts\python.exe -m alembic upgrade head
+
+# 生产托管需要先构建前端
+npm.cmd --prefix frontend run build
 ```
 
 启动前准备这些资源：
