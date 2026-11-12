@@ -1,9 +1,10 @@
 {
-  "generated_at": "2026-11-12T16:14:52",
+  "note": "清单描述 source.commit 这一版代码状态。模型、FFmpeg、密钥与前端口令产物不入库，见 README「克隆后最少五步」。",
+  "generated_at": "2026-11-12T17:47:20",
   "source": {
-    "commit": "e472f4c834f4f8fc0664aa2737914b6cc29cef28",
+    "commit": "0c943c40b2bdcb37791abbdbf8c114026cbb631f",
     "branch": "feat/account-learning-ui",
-    "commit_time": "2026-11-12T16:14:44+08:00",
+    "commit_time": "2026-11-12T17:44:36+08:00",
     "dirty": false
   },
   "database": {
@@ -54,7 +55,7 @@
     "build_dir": "frontend/dist",
     "assets": [
       {
-        "name": "index-DS8WEE2D.js",
+        "name": "index-Bjra3TOm.js",
         "bytes": 22570
       },
       {
@@ -62,7 +63,7 @@
         "bytes": 11108
       },
       {
-        "name": "LoginView-8XOZytLR.js",
+        "name": "LoginView-D-rxX1R7.js",
         "bytes": 8785
       },
       {
@@ -74,16 +75,16 @@
         "bytes": 10191
       },
       {
-        "name": "screen-QohAI12u.js",
+        "name": "screen-BlRySr4t.js",
         "bytes": 3746
+      },
+      {
+        "name": "ScreenView-CbSd3dHe.js",
+        "bytes": 46494
       },
       {
         "name": "ScreenView-D-9Qm1RI.css",
         "bytes": 36410
-      },
-      {
-        "name": "ScreenView-LS2bxxmH.js",
-        "bytes": 46494
       },
       {
         "name": "vendor-axios-CJL1IU5Z.js",
@@ -106,14 +107,14 @@
         "bytes": 112301
       },
       {
-        "name": "VideoDetailView-D_-cmYcM.css",
+        "name": "VideoDetailView-CShOPY9D.css",
         "bytes": 20139
       },
       {
-        "name": "VideoDetailView-DWKBFvh_.js",
-        "bytes": 26037
+        "name": "VideoDetailView-DFc3nJhB.js",
+        "bytes": 26595
       }
     ],
-    "total_js_bytes": 1207782
+    "total_js_bytes": 1208340
   }
 }
