@@ -55,3 +55,7 @@ Thumbs.db
 Desktop.ini
 .idea/
 ~$*
+
+# 本地验证临时文件
+.tmp-e2e/
+/migrations/_tmp/

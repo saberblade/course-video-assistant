@@ -1,8 +1,8 @@
-"""视频、转写、章节、问答，以及账号和登录会话。"""
+"""视频、转写、章节、问答、账号会话与学习档案。"""
 
 from __future__ import annotations
 
-from sqlalchemy import ForeignKey, Integer, String, Text
+from sqlalchemy import Float, ForeignKey, Integer, String, Text, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.database import Base
@@ -85,5 +85,56 @@ class Question(Base):
     mode: Mapped[str] = mapped_column(String(20))
     answer: Mapped[str] = mapped_column(Text)
     citations_json: Mapped[str] = mapped_column(Text)
-    created_at: Mapped[str] = mapped_column(String(40))
+    created_at: Mapped[str] = mapped_column(String(40), index=True)
     latency_ms: Mapped[int] = mapped_column(Integer)
+    # 契约 02：检索方式与索引版本单独记录，旧记录迁移为 bm25，不伪称 hybrid。
+    retrieval_mode: Mapped[str | None] = mapped_column(String(20), nullable=True, default="bm25")
+    retrieval_version: Mapped[str | None] = mapped_column(String(32), nullable=True)
+
+
+class PlaybackProgress(Base):
+    """一个用户在一个视频一个处理批次上的播放位置。version 用于并发校验。"""
+
+    __tablename__ = "playback_progress"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True)
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    video_id: Mapped[str] = mapped_column(ForeignKey("videos.id", ondelete="CASCADE"), index=True)
+    attempt: Mapped[int] = mapped_column(Integer)
+    position_sec: Mapped[float] = mapped_column(Float)
+    furthest_sec: Mapped[float] = mapped_column(Float)
+    version: Mapped[int] = mapped_column(Integer, default=1)
+    updated_at: Mapped[str] = mapped_column(String(40))
+
+    __table_args__ = (UniqueConstraint("user_id", "video_id", "attempt", name="uq_progress_user_video_attempt"),)
+
+
+class ReviewRecord(Base):
+    """章节复习标记与备注。原章节 ID 只是快照标识，重试后旧备注仍然保留。"""
+
+    __tablename__ = "review_records"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True)
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    video_id: Mapped[str] = mapped_column(ForeignKey("videos.id", ondelete="CASCADE"), index=True)
+    source_attempt: Mapped[int] = mapped_column(Integer)
+    chapter_id_snapshot: Mapped[str] = mapped_column(String(36))
+    start_sec: Mapped[float] = mapped_column(Float)
+    end_sec: Mapped[float] = mapped_column(Float)
+    text_snapshot: Mapped[str] = mapped_column(Text)
+    reviewed: Mapped[int] = mapped_column(Integer, default=0)
+    saved: Mapped[int] = mapped_column(Integer, default=0)
+    resolved: Mapped[int] = mapped_column(Integer, default=0)
+    note: Mapped[str] = mapped_column(Text, default="")
+    version: Mapped[int] = mapped_column(Integer, default=1)
+    updated_at: Mapped[str] = mapped_column(String(40))
+
+    __table_args__ = (
+        UniqueConstraint(
+            "user_id",
+            "video_id",
+            "source_attempt",
+            "chapter_id_snapshot",
+            name="uq_review_user_video_attempt_chapter",
+        ),
+    )

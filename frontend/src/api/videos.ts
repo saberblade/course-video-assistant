@@ -1,6 +1,13 @@
 import { http } from "./http";
 import type {
+  ChapterReviewInput,
+  PlaybackProgress,
+  ProgressSaveInput,
+  QuestionHistoryResponse,
   QuestionResult,
+  ReviewEditInput,
+  ReviewListResponse,
+  ReviewRecordPayload,
   Summary,
   TranscriptResponse,
   UploadProgress,
@@ -52,5 +59,43 @@ export const realApi = {
 
   async deleteVideo(id: string): Promise<void> {
     await http.delete(`/videos/${id}`);
+  },
+
+  async listQuestions(id: string, limit = 20, offset = 0): Promise<QuestionHistoryResponse> {
+    const response = await http.get<QuestionHistoryResponse>(`/videos/${id}/questions`, { params: { limit, offset } });
+    return response.data;
+  },
+
+  async getProgress(id: string): Promise<PlaybackProgress> {
+    const response = await http.get<PlaybackProgress>(`/videos/${id}/progress`);
+    return response.data;
+  },
+
+  async saveProgress(id: string, body: ProgressSaveInput): Promise<PlaybackProgress> {
+    const response = await http.put<PlaybackProgress>(`/videos/${id}/progress`, body);
+    return response.data;
+  },
+
+  async listReviewRecords(id: string, limit = 200, offset = 0): Promise<ReviewListResponse> {
+    const response = await http.get<ReviewListResponse>(`/videos/${id}/review-records`, { params: { limit, offset } });
+    return response.data;
+  },
+
+  async patchChapterReview(id: string, chapterId: string, body: ChapterReviewInput): Promise<ReviewRecordPayload> {
+    const response = await http.patch<ReviewRecordPayload>(
+      `/videos/${id}/chapters/${chapterId}/review`,
+      body,
+    );
+    return response.data;
+  },
+
+  async listMyReviewRecords(status: "open" | "resolved" | "all" = "all", limit = 100, offset = 0): Promise<ReviewListResponse> {
+    const response = await http.get<ReviewListResponse>("/me/review-records", { params: { status, limit, offset } });
+    return response.data;
+  },
+
+  async patchMyReviewRecord(recordId: string, body: ReviewEditInput): Promise<ReviewRecordPayload> {
+    const response = await http.patch<ReviewRecordPayload>(`/me/review-records/${recordId}`, body);
+    return response.data;
   },
 };

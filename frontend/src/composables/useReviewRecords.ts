@@ -1,10 +1,14 @@
-import { ref, watch } from "vue";
-import { isMock } from "@/api";
+import { computed, ref, watch } from "vue";
+import { api, isMock } from "@/api";
+import { toApiError } from "@/api/http";
 import { sessionState } from "@/stores/session";
-import type { Chapter, Video } from "@/types";
+import type { Chapter, ReviewRecordPayload, Video } from "@/types";
 
+/** 页面展示用的复习记录：服务端字段 + 便于本地索引的 key。 */
 export interface ReviewRecord {
   key: string;
+  id: string;
+  version: number;
   videoId: string;
   videoTitle: string;
   attempt: number;
@@ -17,76 +21,213 @@ export interface ReviewRecord {
   resolved: boolean;
   note: string;
   updatedAt: string;
+  isStale: boolean;
 }
 
-const storageKey = `course-review:review-records:v1:${isMock ? "mock" : "real"}`;
+export type SaveState = "idle" | "saving" | "saved" | "failed";
+
+const records = ref<ReviewRecord[]>([]);
+const saveState = ref<SaveState>("idle");
 const storageError = ref("");
-function read(): ReviewRecord[] {
-  // Anonymous browser records are retained on disk, never assigned to a new account.
-  if (!isMock) return [];
-  try {
-    const raw = localStorage.getItem(storageKey);
-    if (!raw) return [];
-    const value: unknown = JSON.parse(raw);
-    if (!Array.isArray(value)) throw new Error("invalid records");
-    return value.filter((r): r is ReviewRecord => Boolean(r && typeof r === "object"
-      && typeof r.key === "string" && typeof r.videoId === "string" && typeof r.videoTitle === "string"
-      && typeof r.chapterId === "string" && Number.isInteger(r.attempt) && r.attempt >= 1
-      && Number.isFinite(r.start) && r.start >= 0 && Number.isFinite(r.end) && r.end > r.start
-      && typeof r.text === "string" && typeof r.note === "string" && typeof r.updatedAt === "string"
-      && typeof r.reviewed === "boolean" && typeof r.saved === "boolean" && typeof r.resolved === "boolean"));
-  } catch {
-    storageError.value = "无法读取浏览器复习记录。课程内容仍可使用，新标记会尝试重新保存。";
-    return [];
-  }
+const loading = ref(false);
+const loaded = ref(false);
+
+function toRecord(payload: ReviewRecordPayload): ReviewRecord {
+  return {
+    key: `${payload.video_id}:${payload.attempt}:${payload.chapter_id}`,
+    id: payload.id,
+    version: payload.version,
+    videoId: payload.video_id,
+    videoTitle: payload.video_title,
+    attempt: payload.attempt,
+    chapterId: payload.chapter_id,
+    start: payload.start_sec,
+    end: payload.end_sec,
+    text: payload.text,
+    reviewed: payload.reviewed,
+    saved: payload.saved,
+    resolved: payload.resolved,
+    note: payload.note,
+    updatedAt: payload.updated_at,
+    isStale: payload.is_stale,
+  };
 }
-const records = ref<ReviewRecord[]>(read());
-const canSave = isMock; // Enable real saves only when DB-03 endpoints are delivered and integrated.
-watch(sessionState.revision, () => { if (!isMock) records.value = []; }, { flush: "sync" });
-function persist() {
-  if (!isMock) return;
+
+function merge(incoming: ReviewRecord[]) {
+  const byKey = new Map(records.value.map(item => [item.key, item]));
+  for (const item of incoming) byKey.set(item.key, item);
+  records.value = [...byKey.values()];
+}
+
+async function refresh(): Promise<void> {
+  if (isMock) {
+    loading.value = true;
+    try {
+      const result = await api.listMyReviewRecords("all", 100, 0);
+      records.value = result.items.map(toRecord);
+      loaded.value = true;
+    } catch (error) {
+      storageError.value = toApiError(error).message;
+    } finally {
+      loading.value = false;
+    }
+    return;
+  }
+  if (!sessionState.user.value) {
+    records.value = [];
+    loaded.value = false;
+    return;
+  }
+  loading.value = true;
   try {
-    localStorage.setItem(storageKey, JSON.stringify(records.value));
+    const collected: ReviewRecord[] = [];
+    let offset = 0;
+    // 清单按 updated_at 倒序，分页拉满，避免超过一页后旧记录丢失。
+    for (let guard = 0; guard < 20; guard += 1) {
+      const page = await api.listMyReviewRecords("all", 100, offset);
+      collected.push(...page.items.map(toRecord));
+      offset += page.items.length;
+      if (!page.items.length || offset >= page.total) break;
+    }
+    records.value = collected;
+    loaded.value = true;
     storageError.value = "";
-  } catch {
-    storageError.value = "浏览器暂时无法保存记录，本次标记仅在当前页面有效。请检查浏览器存储设置。";
+  } catch (error) {
+    storageError.value = `无法读取复习记录：${toApiError(error).message}`;
+  } finally {
+    loading.value = false;
   }
 }
+
 function keyFor(video: Video, chapter: Chapter) {
   return `${video.id}:${video.attempt}:${chapter.id}`;
 }
+
 function find(video: Video, chapter: Chapter) {
-  return records.value.find(r => r.key === keyFor(video, chapter));
+  return records.value.find(record => record.key === keyFor(video, chapter));
 }
-function update(video: Video, chapter: Chapter, changes: Partial<Pick<ReviewRecord, "reviewed" | "saved" | "resolved" | "note">>) {
-  if (!canSave) return;
+
+/** 冲突时重新读取服务端，并把提示留给页面显示。 */
+async function recoverFromConflict(message: string) {
+  saveState.value = "failed";
+  storageError.value = message;
+  await refresh();
+}
+
+async function update(
+  video: Video,
+  chapter: Chapter,
+  changes: Partial<Pick<ReviewRecord, "reviewed" | "saved" | "resolved" | "note">>,
+) {
   const previous = find(video, chapter);
-  const next: ReviewRecord = {
-    key: keyFor(video, chapter), videoId: video.id, videoTitle: video.title,
-    attempt: video.attempt, chapterId: chapter.id, start: chapter.start_sec, end: chapter.end_sec,
-    text: chapter.text, reviewed: false, saved: false, resolved: false, note: "",
-    ...previous, ...changes, updatedAt: new Date().toISOString(),
+  const expectedVersion = previous?.version ?? 0;
+  const optimistic: ReviewRecord = {
+    key: keyFor(video, chapter),
+    id: previous?.id ?? "",
+    version: expectedVersion,
+    videoId: video.id,
+    videoTitle: video.title,
+    attempt: video.attempt,
+    chapterId: chapter.id,
+    start: chapter.start_sec,
+    end: chapter.end_sec,
+    text: chapter.text,
+    reviewed: false,
+    saved: false,
+    resolved: false,
+    note: "",
+    updatedAt: new Date().toISOString(),
+    isStale: false,
+    ...previous,
+    ...changes,
   };
-  records.value = [...records.value.filter(r => r.key !== next.key), next];
-  persist();
+  merge([optimistic]);
+  saveState.value = "saving";
+  try {
+    const payload = await api.patchChapterReview(video.id, chapter.id, {
+      attempt: video.attempt,
+      expected_version: expectedVersion,
+      ...changes,
+    });
+    merge([toRecord(payload)]);
+    saveState.value = "saved";
+    storageError.value = "";
+  } catch (error) {
+    const apiError = toApiError(error);
+    if (apiError.code === "VERSION_CONFLICT" || apiError.code === "STALE_ATTEMPT") {
+      await recoverFromConflict("这个章节已在另一个窗口更新，已为你刷新最新状态，请重新标记。");
+      return;
+    }
+    // 失败就回滚乐观更新，不能显示成已保存。
+    if (previous) {
+      merge([previous]);
+    } else {
+      records.value = records.value.filter(record => record.key !== optimistic.key);
+    }
+    saveState.value = "failed";
+    storageError.value = `保存未完成：${apiError.message}`;
+  }
 }
-function edit(key: string, changes: Partial<Pick<ReviewRecord, "note" | "resolved">>) {
-  if (!canSave) return;
-  records.value = records.value.map(r => r.key === key ? { ...r, ...changes, updatedAt: new Date().toISOString() } : r);
-  persist();
+
+function recordByKey(key: string) {
+  return records.value.find(record => record.key === key);
 }
-function remove(key: string) {
-  if (!canSave) return;
-  // 移出清单保留独立的手动复习标记。
-  records.value = records.value.map(r => r.key === key ? { ...r, saved: false, resolved: false, note: "", updatedAt: new Date().toISOString() } : r);
-  persist();
+
+async function edit(key: string, changes: Partial<Pick<ReviewRecord, "note" | "resolved" | "saved" | "reviewed">>) {
+  const target = recordByKey(key);
+  if (!target || !target.id) {
+    storageError.value = "这条记录还没有保存到服务器，请重新标记后再编辑。";
+    saveState.value = "failed";
+    return;
+  }
+  const snapshot = { ...target };
+  merge([{ ...target, ...changes, updatedAt: new Date().toISOString() }]);
+  saveState.value = "saving";
+  try {
+    const payload = await api.patchMyReviewRecord(target.id, {
+      expected_version: target.version,
+      ...changes,
+    });
+    merge([toRecord(payload)]);
+    saveState.value = "saved";
+    storageError.value = "";
+  } catch (error) {
+    const apiError = toApiError(error);
+    if (apiError.code === "VERSION_CONFLICT") {
+      await recoverFromConflict("这条记录已在另一个窗口更新，已为你刷新最新状态。");
+      return;
+    }
+    merge([snapshot]);
+    saveState.value = "failed";
+    storageError.value = `保存未完成：${apiError.message}`;
+  }
 }
-function onStorage(event: StorageEvent) {
-  if (event.key === storageKey || event.key === null) records.value = read();
+
+async function remove(key: string) {
+  // 移出清单：保留独立 reviewed 标记，只清 saved/resolved/note。
+  await edit(key, { saved: false, resolved: false, note: "" });
 }
-window.addEventListener("storage", onStorage);
-if (import.meta.hot) import.meta.hot.dispose(() => window.removeEventListener("storage", onStorage));
+
+watch(sessionState.revision, () => {
+  records.value = [];
+  loaded.value = false;
+  storageError.value = "";
+  saveState.value = "idle";
+  if (sessionState.user.value) void refresh();
+}, { flush: "sync" });
 
 export function useReviewRecords() {
-  return { records, storageError, canSave, find, update, edit, remove };
+  return {
+    records,
+    storageError,
+    canSave: computed(() => Boolean(sessionState.user.value)),
+    saveState,
+    loading,
+    loaded,
+    refresh,
+    find,
+    update,
+    edit,
+    remove,
+  };
 }

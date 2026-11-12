@@ -1,7 +1,14 @@
 import { ApiError } from "./http";
 import type {
+  ChapterReviewInput,
   MockAnswerMode,
+  PlaybackProgress,
+  ProgressSaveInput,
+  QuestionHistoryResponse,
   QuestionResult,
+  ReviewEditInput,
+  ReviewListResponse,
+  ReviewRecordPayload,
   Summary,
   TranscriptResponse,
   TranscriptSegment,
@@ -120,6 +127,20 @@ export function setMockAnswerMode(mode: MockAnswerMode): void {
   answerMode = mode;
 }
 
+// 演示模式的本地学习档案。真实模式一律走服务端接口。
+const mockProgress = new Map<string, PlaybackProgress>();
+let mockRecords: ReviewRecordPayload[] = [];
+let mockQuestions: QuestionResult[] = [];
+
+function recordKey(videoId: string, attempt: number, chapterId: string): string {
+  return `${videoId}:${attempt}:${chapterId}`;
+}
+
+function upsertRecord(next: ReviewRecordPayload): ReviewRecordPayload {
+  mockRecords = [next, ...mockRecords.filter(item => item.id !== next.id)];
+  return next;
+}
+
 export const mockApi = {
   async listVideos(limit = 20, offset = 0): Promise<VideoListResponse> {
     await wait();
@@ -192,7 +213,8 @@ export const mockApi = {
       created_at: new Date().toISOString(),
       latency_ms: answerMode === "degraded" ? 25_100 : 900,
     };
-    return result;
+    mockQuestions = [result, ...mockQuestions];
+    return clone(result);
   },
 
   async retryVideo(id: string): Promise<Video> {
@@ -233,5 +255,120 @@ export const mockApi = {
       : null;
     video.elapsed_sec = status === "queued" ? 0 : status === "ready" || status === "failed" ? 120 : 45;
     return clone(video);
+  },
+
+  async listQuestions(id: string, limit = 20, offset = 0): Promise<QuestionHistoryResponse> {
+    await wait(160);
+    requireVideo(id);
+    const items = mockQuestions.filter(item => item.video_id === id);
+    return { items: clone(items.slice(offset, offset + limit)), total: items.length, limit, offset };
+  },
+
+  async getProgress(id: string): Promise<PlaybackProgress> {
+    await wait(120);
+    const video = requireVideo(id);
+    return clone(
+      mockProgress.get(recordKey(id, video.attempt, "")) ?? {
+        video_id: id,
+        attempt: video.attempt,
+        position_sec: 0,
+        furthest_sec: 0,
+        version: 0,
+        updated_at: "",
+        saved: false,
+      },
+    );
+  },
+
+  async saveProgress(id: string, body: ProgressSaveInput): Promise<PlaybackProgress> {
+    await wait(140);
+    const video = requireVideo(id);
+    if (body.attempt !== video.attempt) {
+      throw new ApiError({ code: "STALE_ATTEMPT", message: "视频已重新处理，请刷新后再继续", status: 409 });
+    }
+    const key = recordKey(id, video.attempt, "");
+    const current = mockProgress.get(key);
+    const currentVersion = current?.version ?? 0;
+    if (body.expected_version !== currentVersion) {
+      throw new ApiError({ code: "VERSION_CONFLICT", message: "进度已在另一个窗口更新，请先刷新", status: 409 });
+    }
+    const next: PlaybackProgress = {
+      video_id: id,
+      attempt: video.attempt,
+      position_sec: body.position_sec,
+      furthest_sec: Math.max(current?.furthest_sec ?? 0, body.position_sec),
+      version: currentVersion + 1,
+      updated_at: new Date().toISOString(),
+      saved: true,
+    };
+    mockProgress.set(key, next);
+    return clone(next);
+  },
+
+  async listReviewRecords(id: string, limit = 200, offset = 0): Promise<ReviewListResponse> {
+    await wait(150);
+    const video = requireVideo(id);
+    const items = mockRecords.filter(item => item.video_id === id && item.attempt === video.attempt);
+    return { items: clone(items.slice(offset, offset + limit)), total: items.length, limit, offset };
+  },
+
+  async patchChapterReview(id: string, chapterId: string, body: ChapterReviewInput): Promise<ReviewRecordPayload> {
+    await wait(180);
+    const video = requireVideo(id);
+    if (body.attempt !== video.attempt) {
+      throw new ApiError({ code: "STALE_ATTEMPT", message: "视频已重新处理，请刷新后再标记", status: 409 });
+    }
+    const chapter = summary.chapters.find(item => item.id === chapterId);
+    if (!chapter) throw new ApiError({ code: "CHAPTER_NOT_FOUND", message: "章节不存在", status: 404 });
+    const existing = mockRecords.find(item => item.video_id === id && item.attempt === video.attempt && item.chapter_id === chapterId);
+    const version = existing?.version ?? 0;
+    if (body.expected_version !== version) {
+      throw new ApiError({ code: "VERSION_CONFLICT", message: "标记已在另一个窗口更新，请先刷新", status: 409 });
+    }
+    return clone(upsertRecord({
+      id: existing?.id ?? crypto.randomUUID(),
+      video_id: id,
+      video_title: video.title,
+      chapter_id: chapterId,
+      attempt: video.attempt,
+      start_sec: chapter.start_sec,
+      end_sec: chapter.end_sec,
+      text: chapter.text,
+      reviewed: body.reviewed ?? existing?.reviewed ?? false,
+      saved: body.saved ?? existing?.saved ?? false,
+      resolved: body.resolved ?? existing?.resolved ?? false,
+      note: body.note ?? existing?.note ?? "",
+      version: version + 1,
+      is_stale: false,
+      updated_at: new Date().toISOString(),
+    }));
+  },
+
+  async listMyReviewRecords(status: "open" | "resolved" | "all" = "all", limit = 100, offset = 0): Promise<ReviewListResponse> {
+    await wait(150);
+    const filtered = mockRecords.filter(item => {
+      if (status === "open") return item.saved && !item.resolved;
+      if (status === "resolved") return item.resolved;
+      return item.saved || item.resolved || item.reviewed;
+    });
+    return { items: clone(filtered.slice(offset, offset + limit)), total: filtered.length, limit, offset };
+  },
+
+  async patchMyReviewRecord(recordId: string, body: ReviewEditInput): Promise<ReviewRecordPayload> {
+    await wait(160);
+    const existing = mockRecords.find(item => item.id === recordId);
+    if (!existing) throw new ApiError({ code: "RECORD_NOT_FOUND", message: "记录不存在", status: 404 });
+    if (body.expected_version !== existing.version) {
+      throw new ApiError({ code: "VERSION_CONFLICT", message: "记录已在另一个窗口更新，请先刷新", status: 409 });
+    }
+    return clone(upsertRecord({
+      ...existing,
+      reviewed: body.reviewed ?? existing.reviewed,
+      saved: body.saved ?? existing.saved,
+      resolved: body.resolved ?? existing.resolved,
+      note: body.note ?? existing.note,
+      version: existing.version + 1,
+      updated_at: new Date().toISOString(),
+    }));
   },
 };

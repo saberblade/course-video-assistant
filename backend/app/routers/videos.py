@@ -18,10 +18,18 @@ from app.auth import csrf_header, owned_or_missing, require_csrf, require_user
 from app.clock import safe_title, utc_now
 from app.database import get_db
 from app.errors import AppError
-from app.models import UNFINISHED_STATUSES, Chapter, Question, Segment, Video
+from app.models import UNFINISHED_STATUSES, Chapter, PlaybackProgress, Question, ReviewRecord, Segment, Video
 from app.present import chapter_out, segment_out, video_out
 from app import qa
-from app.schemas import QuestionIn, QuestionResultOut, SummaryOut, TranscriptOut, VideoListOut
+from app.schemas import (
+    CitationOut,
+    QuestionHistoryOut,
+    QuestionIn,
+    QuestionResultOut,
+    SummaryOut,
+    TranscriptOut,
+    VideoListOut,
+)
 from app.storage import save_upload
 
 router = APIRouter(prefix="/api", dependencies=[Depends(csrf_header)])
@@ -202,6 +210,49 @@ def read_summary(video_id: str, request: Request, db: Session = Depends(get_db))
     return SummaryOut(video_id=video.id, mode="extractive", chapters=[chapter_out(row) for row in rows])
 
 
+@router.get("/videos/{video_id}/questions")
+def list_questions(
+    video_id: str,
+    request: Request,
+    limit: int = Query(default=20, ge=1, le=100),
+    offset: int = Query(default=0, ge=0),
+    db: Session = Depends(get_db),
+) -> QuestionHistoryOut:
+    """历史问答分页。按创建时间倒序、再按 id 稳定排序，刷新可恢复。"""
+    video = current_video(request, db, video_id)
+    total = int(db.scalar(select(func.count()).select_from(Question).where(Question.video_id == video.id)) or 0)
+    rows = db.scalars(
+        select(Question)
+        .where(Question.video_id == video.id)
+        .order_by(Question.created_at.desc(), Question.id.desc())
+        .limit(limit)
+        .offset(offset)
+    ).all()
+    return QuestionHistoryOut(
+        items=[_question_out(row) for row in rows],
+        total=total,
+        limit=limit,
+        offset=offset,
+    )
+
+
+def _question_out(row: Question) -> QuestionResultOut:
+    return QuestionResultOut(
+        id=row.id,
+        video_id=row.video_id,
+        question=row.question,
+        answer_status=row.answer_status,  # type: ignore[arg-type]
+        mode=row.mode,  # type: ignore[arg-type]
+        answer=row.answer,
+        citations=[CitationOut(**item) for item in json.loads(row.citations_json or "[]")],
+        created_at=row.created_at,
+        latency_ms=row.latency_ms,
+        # 契约 02：旧记录按 bm25 呈现，不伪称走过混合检索。
+        retrieval_mode=row.retrieval_mode or "bm25",
+        retrieval_version=row.retrieval_version,
+    )
+
+
 @router.post("/videos/{video_id}/questions")
 def ask_question(video_id: str, body: QuestionIn, request: Request, db: Session = Depends(get_db)) -> QuestionResultOut:
     question = body.question.strip()
@@ -215,7 +266,14 @@ def ask_question(video_id: str, body: QuestionIn, request: Request, db: Session 
     started = time.perf_counter()
     try:
         segments = db.scalars(select(Segment).where(Segment.video_id == video.id)).all()
-        draft = qa.draft_answer(list(segments), question, video.duration_sec, request.app.state.settings)
+        draft = qa.draft_answer(
+            list(segments),
+            question,
+            video.duration_sec,
+            request.app.state.settings,
+            db=db,
+            video_id=video.id,
+        )
         latency_ms = int((time.perf_counter() - started) * 1000)
         record = Question(
             id=str(uuid4()),
@@ -227,6 +285,8 @@ def ask_question(video_id: str, body: QuestionIn, request: Request, db: Session 
             citations_json=json.dumps([item.model_dump() for item in draft.citations], ensure_ascii=False),
             created_at=utc_now(),
             latency_ms=latency_ms,
+            retrieval_mode=draft.retrieval_mode,
+            retrieval_version=draft.retrieval_version,
         )
         db.add(record)
         db.commit()
@@ -242,6 +302,8 @@ def ask_question(video_id: str, body: QuestionIn, request: Request, db: Session 
         citations=draft.citations,
         created_at=record.created_at,
         latency_ms=latency_ms,
+        retrieval_mode=draft.retrieval_mode,
+        retrieval_version=draft.retrieval_version,
     )
 
 
@@ -292,6 +354,9 @@ def delete_video(video_id: str, request: Request, db: Session = Depends(get_db))
         db.execute(delete(Segment).where(Segment.video_id == video.id))
         db.execute(delete(Chapter).where(Chapter.video_id == video.id))
         db.execute(delete(Question).where(Question.video_id == video.id))
+        db.execute(delete(PlaybackProgress).where(PlaybackProgress.video_id == video.id))
+        db.execute(delete(ReviewRecord).where(ReviewRecord.video_id == video.id))
+        _delete_rag_rows(db, video.id)
         db.delete(video)
         db.commit()
     except Exception as exc:
@@ -301,6 +366,22 @@ def delete_video(video_id: str, request: Request, db: Session = Depends(get_db))
         raise AppError(500, "DELETE_FAILED", "删除没有完成，请把请求编号交给系统工程师", True) from exc
     shutil.rmtree(trash, ignore_errors=True)
     return Response(status_code=204)
+
+
+def _delete_rag_rows(db: Session, video_id: str) -> None:
+    """清理该视频的 RAG 索引登记、块与向量。模块缺失时静默跳过，不阻断删除。"""
+    try:
+        from sqlalchemy import select as _select
+
+        from modules.retriever.tables import ChunkEmbedding, RagChunk, RagIndex
+
+        chunk_ids = db.scalars(_select(RagChunk.id).where(RagChunk.video_id == video_id)).all()
+        if chunk_ids:
+            db.execute(delete(ChunkEmbedding).where(ChunkEmbedding.chunk_id.in_(chunk_ids)))
+        db.execute(delete(RagChunk).where(RagChunk.video_id == video_id))
+        db.execute(delete(RagIndex).where(RagIndex.video_id == video_id))
+    except Exception:  # noqa: BLE001 表不存在等情况不影响视频本体删除
+        pass
 
 
 def _ensure_retryable(video: Video) -> None:

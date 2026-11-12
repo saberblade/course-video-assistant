@@ -24,6 +24,8 @@
 .rw-local { display: inline-flex; align-items: center; gap: 7px; flex-shrink: 0; padding: 7px 12px; background: #fff; border: 1px solid #dde8e5; border-radius: 99px; color: #597c73; font-size: 11px; }
 .rw-local i { width: 6px; height: 6px; background: #299a7c; border-radius: 50%; }
 .rw-alert { margin-bottom: 18px; }
+.rw-save-hint { margin: -10px 0 16px; color: #8d774a; font-size: 11px; }
+.rw-save-hint.is-saved { color: #508071; }
 .rw-course { display: flex; align-items: center; gap: 15px; padding: 16px 20px; margin-bottom: 24px; }
 .rw-course-icon { width: 42px; height: 42px; padding: 10px; flex-shrink: 0; background: #e9f5f2; border-radius: 12px; color: #0f7d80; }
 .rw-course-select { min-width: 0; flex: 1; }

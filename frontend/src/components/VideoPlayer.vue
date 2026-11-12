@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, ref, watch } from "vue";
 import { CircleCheck, VideoCamera } from "@element-plus/icons-vue";
-import { isMock } from "@/api";
+import { api, isMock } from "@/api";
+import { toApiError } from "@/api/http";
 import type { Video } from "@/types";
 import { formatDuration, formatTime } from "@/utils/format";
 
@@ -11,8 +12,24 @@ const pendingSeekSec = ref<number | null>(null);
 const notice = ref("");
 const playerError = ref("");
 const metadataReady = ref(false);
+const saveState = ref<"idle" | "saving" | "saved" | "failed" | "expired">("idle");
+const saveHint = ref("");
+let progressVersion = 0;
+let lastSavedSec = 0;
+let lastSentAt = 0;
+let saving = false;
+let explicitSeek = false;
+let resumeApplied = false;
+let disposed = false;
+
+const SAVE_INTERVAL_MS = 15_000;
+const MIN_SAVE_SECONDS = 1;
 
 const contentUrl = computed(() => `/api/videos/${encodeURIComponent(props.video.id)}/content`);
+const saveLabel = computed(() => {
+  if (isMock) return "";
+  return ({ idle: "", saving: "正在保存进度", saved: "进度已保存", failed: "进度保存失败", expired: "进度已在其他窗口更新" })[saveState.value];
+});
 
 function applyPendingSeek() {
   if (pendingSeekSec.value === null) return;
@@ -37,6 +54,7 @@ async function seekTo(seconds: number) {
     notice.value = `已定位至 ${formatTime(Math.min(seconds, props.video.duration_sec))}`;
     return;
   }
+  explicitSeek = true;
   playerError.value = "";
   await nextTick();
   if (!videoElement.value || !metadataReady.value) {
@@ -47,9 +65,69 @@ async function seekTo(seconds: number) {
   performSeek(seconds);
 }
 
+async function restoreProgress() {
+  if (isMock || resumeApplied || explicitSeek || disposed) return;
+  resumeApplied = true;
+  try {
+    const progress = await api.getProgress(props.video.id);
+    progressVersion = progress.version;
+    lastSavedSec = progress.position_sec;
+    if (!progress.saved || progress.position_sec < MIN_SAVE_SECONDS) return;
+    // 已接近结尾就不自动跳回，避免打开即“看完”。
+    if (progress.position_sec >= props.video.duration_sec - 3) return;
+    performSeek(progress.position_sec);
+    notice.value = `已回到上次看到的位置 ${formatTime(progress.position_sec)}，点击播放继续`;
+  } catch {
+    // 读取失败不影响正常播放，下一次播放仍会尝试保存。
+  }
+}
+
+async function persistProgress(force = false) {
+  const element = videoElement.value;
+  if (isMock || !element || saving || props.video.status !== "ready") return;
+  const position = element.currentTime;
+  if (!Number.isFinite(position)) return;
+  const now = Date.now();
+  if (!force && now - lastSentAt < SAVE_INTERVAL_MS) return;
+  if (!force && Math.abs(position - lastSavedSec) < 0.5) return;
+  saving = true;
+  lastSentAt = now;
+  saveState.value = "saving";
+  try {
+    const saved = await api.saveProgress(props.video.id, {
+      attempt: props.video.attempt,
+      position_sec: position,
+      expected_version: progressVersion,
+    });
+    progressVersion = saved.version;
+    lastSavedSec = saved.position_sec;
+    saveState.value = "saved";
+    saveHint.value = "";
+  } catch (error) {
+    const apiError = toApiError(error);
+    if (apiError.code === "VERSION_CONFLICT" || apiError.code === "STALE_ATTEMPT") {
+      // 另一个窗口已经写过：重新读版本，不覆盖对方，也不假装成功。
+      saveState.value = "expired";
+      saveHint.value = "这个视频的进度已在另一个窗口更新，本次未覆盖。刷新页面可取回最新位置。";
+      try {
+        const latest = await api.getProgress(props.video.id);
+        progressVersion = latest.version;
+      } catch {
+        progressVersion = 0;
+      }
+    } else {
+      saveState.value = "failed";
+      saveHint.value = apiError.message;
+    }
+  } finally {
+    saving = false;
+  }
+}
+
 function onMetadataLoaded() {
   metadataReady.value = true;
   applyPendingSeek();
+  void restoreProgress();
 }
 
 function onVideoError() {
@@ -61,6 +139,18 @@ function onPlay() {
   if (notice.value) notice.value = "";
 }
 
+function onTimeUpdate() {
+  void persistProgress();
+}
+
+function onPause() {
+  void persistProgress(true);
+}
+
+function onVisibilityChange() {
+  if (document.hidden) void persistProgress(true);
+}
+
 watch(
   () => props.video.id,
   () => {
@@ -68,11 +158,22 @@ watch(
     notice.value = "";
     playerError.value = "";
     metadataReady.value = false;
+    progressVersion = 0;
+    lastSavedSec = 0;
+    lastSentAt = 0;
+    explicitSeek = false;
+    resumeApplied = false;
+    saveState.value = "idle";
+    saveHint.value = "";
   },
 );
 
+document.addEventListener("visibilitychange", onVisibilityChange);
 defineExpose({ seekTo });
 onBeforeUnmount(() => {
+  disposed = true;
+  document.removeEventListener("visibilitychange", onVisibilityChange);
+  void persistProgress(true);
   const element = videoElement.value;
   if (element) { element.pause(); element.removeAttribute("src"); element.load(); }
 });
@@ -91,6 +192,8 @@ onBeforeUnmount(() => {
         @loadedmetadata="onMetadataLoaded"
         @error="onVideoError"
         @play="onPlay"
+        @timeupdate="onTimeUpdate"
+        @pause="onPause"
       >
         当前浏览器不支持 HTML5 视频播放。
       </video>
@@ -106,8 +209,12 @@ onBeforeUnmount(() => {
         <el-icon><CircleCheck /></el-icon>
         仅使用音轨转写内容
       </span>
-      <span>引用定位会暂停视频，由你决定何时继续</span>
+      <span class="player-caption__save" :class="`is-${saveState}`" aria-live="polite">
+        <template v-if="saveLabel">{{ saveLabel }}</template>
+        <template v-else>引用定位会暂停视频，由你决定何时继续</template>
+      </span>
     </div>
+    <el-alert v-if="saveHint" :title="saveHint" type="warning" :closable="false" show-icon />
     <el-alert v-if="playerError" :title="playerError" type="error" :closable="false" show-icon />
     <p v-if="notice" class="seek-notice" aria-live="polite">
       <span>{{ notice }}</span>
@@ -129,6 +236,10 @@ onBeforeUnmount(() => {
 .player-caption { display: flex; justify-content: space-between; gap: 14px; padding: 11px 2px 0; color: #72868d; font-size: 11px; }
 .player-caption__status { display: inline-flex; align-items: center; gap: 4px; color: #508071; }
 .player-caption__status svg { width: 13px; }
+.player-caption__save { color: #72868d; }
+.player-caption__save.is-saving { color: #8d774a; }
+.player-caption__save.is-saved { color: #508071; }
+.player-caption__save.is-failed, .player-caption__save.is-expired { color: #ad5638; }
 .seek-notice { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 12px 0 0; padding: 8px 11px; border: 1px solid #d3e5df; border-radius: 7px; background: #f1f9f5; color: #326c5d; font-size: 12px; }
 .seek-notice__mock { color: #8d774a; font-size: 10px; white-space: nowrap; }
 .el-alert { margin-top: 10px; }

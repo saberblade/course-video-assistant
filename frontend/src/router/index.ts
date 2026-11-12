@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
-import VideoDetailView from "@/views/VideoDetailView.vue";
 import { watch } from "vue";
 import { restoreSession, loginDestination } from "@/api/auth";
 import { isMock } from "@/api/http";
@@ -11,7 +10,12 @@ export const router = createRouter({
   routes: [
     { path: "/", name: "home", component: HomeView },
     { path: "/login", name: "login", component: () => import("@/views/LoginView.vue") },
-    { path: "/videos/:id", name: "video-detail", component: VideoDetailView, meta: { requiresAuth: true } },
+    {
+      path: "/videos/:id",
+      name: "video-detail",
+      component: () => import("@/views/VideoDetailView.vue"),
+      meta: { requiresAuth: true },
+    },
     {
       path: "/screen",
       name: "screen",

@@ -80,12 +80,95 @@ class QuestionResultOut(BaseModel):
     citations: list[CitationOut]
     created_at: str
     latency_ms: int
+    retrieval_mode: str | None = None
+    retrieval_version: str | None = None
 
 
 class QuestionIn(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     question: str = Field(min_length=1)
+
+
+class QuestionHistoryOut(BaseModel):
+    items: list[QuestionResultOut]
+    total: int
+    limit: int
+    offset: int
+
+
+class ProgressOut(BaseModel):
+    video_id: str
+    attempt: int
+    position_sec: float
+    furthest_sec: float
+    version: int
+    updated_at: str
+    saved: bool
+
+
+class ProgressIn(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    attempt: int = Field(ge=1)
+    position_sec: float
+    expected_version: int = Field(ge=0)
+
+
+class ReviewRecordOut(BaseModel):
+    id: str
+    video_id: str
+    video_title: str
+    chapter_id: str
+    attempt: int
+    start_sec: float
+    end_sec: float
+    text: str
+    reviewed: bool
+    saved: bool
+    resolved: bool
+    note: str
+    version: int
+    is_stale: bool
+    updated_at: str
+
+
+class ReviewListOut(BaseModel):
+    items: list[ReviewRecordOut]
+    total: int
+    limit: int
+    offset: int
+
+
+class ChapterReviewIn(BaseModel):
+    """章节标记的部分更新。至少给一个 changed 字段，未提供的字段保持原值。"""
+
+    model_config = ConfigDict(extra="forbid")
+
+    attempt: int = Field(ge=1)
+    expected_version: int = Field(ge=0)
+    reviewed: bool | None = None
+    saved: bool | None = None
+    resolved: bool | None = None
+    note: str | None = Field(default=None, max_length=2000)
+
+    def changed_fields(self) -> dict[str, object]:
+        return {name: value for name, value in self.model_dump(exclude={"attempt", "expected_version"}).items() if value is not None}
+
+
+class ReviewEditIn(BaseModel):
+    """待复习清单里的记录编辑。不再需要 attempt：记录本身带着快照批次。"""
+
+    model_config = ConfigDict(extra="forbid")
+
+    expected_version: int = Field(ge=0)
+    reviewed: bool | None = None
+    saved: bool | None = None
+    resolved: bool | None = None
+    note: str | None = Field(default=None, max_length=2000)
+
+    def changed_fields(self) -> dict[str, object]:
+        return {name: value for name, value in self.model_dump(exclude={"expected_version"}).items() if value is not None}
 
 
 class AssistantMessageIn(BaseModel):
@@ -138,3 +221,8 @@ class HealthOut(BaseModel):
     database: str
     transcriber: str
     llm_configured: bool
+    transcriber_model: str = "unknown"
+    queue_pending: int = 0
+    rag_status: str = "disabled"
+    rag_indexes_ready: int = 0
+    rag_indexes_failed: int = 0

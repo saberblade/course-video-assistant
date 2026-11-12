@@ -55,6 +55,16 @@ if (-not (Test-Path $distIndex)) {
     Write-Warning "frontend/dist/index.html missing: the service will start but same-origin hosting is skipped."
 }
 
+# ---------- 5.5) database migration before serving ----------
+# 旧库会被自动标记到基线再跑增量迁移，不删库、不重建。
+Write-Host "migrate: alembic upgrade head"
+& $py -m alembic upgrade head
+if ($LASTEXITCODE -ne 0) {
+    throw "alembic upgrade head failed (exit $LASTEXITCODE); service not started to avoid serving an old schema."
+}
+$revision = (& $py -m alembic current) -join " "
+Write-Host "schema : $revision"
+
 # ---------- 6) start ----------
 Write-Host "python : $py"
 Write-Host "config : $envLocal"

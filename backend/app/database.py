@@ -54,3 +54,20 @@ def ensure_video_owner_column(engine: Engine) -> None:
         if not rows or any(row[1] == "owner_id" for row in rows):
             return
         connection.exec_driver_sql("ALTER TABLE videos ADD COLUMN owner_id VARCHAR(36)")
+
+
+def ensure_question_metadata_columns(engine: Engine) -> None:
+    """旧库的 questions 表补上检索元数据列。
+
+    create_all 只建新表，不会给已存在的表加列。旧记录保持 NULL，
+    读取时按契约呈现为 bm25，不伪称 hybrid。
+    """
+    with engine.begin() as connection:
+        rows = connection.exec_driver_sql("PRAGMA table_info(questions)").fetchall()
+        if not rows:
+            return
+        existing = {row[1] for row in rows}
+        if "retrieval_mode" not in existing:
+            connection.exec_driver_sql("ALTER TABLE questions ADD COLUMN retrieval_mode VARCHAR(20)")
+        if "retrieval_version" not in existing:
+            connection.exec_driver_sql("ALTER TABLE questions ADD COLUMN retrieval_version VARCHAR(32)")

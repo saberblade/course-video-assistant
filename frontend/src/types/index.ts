@@ -76,6 +76,72 @@ export interface QuestionResult {
   citations: Citation[];
   created_at: string;
   latency_ms: number;
+  retrieval_mode?: string | null;
+  retrieval_version?: string | null;
+}
+
+export interface QuestionHistoryResponse {
+  items: QuestionResult[];
+  total: number;
+  limit: number;
+  offset: number;
+}
+
+export interface PlaybackProgress {
+  video_id: string;
+  attempt: number;
+  position_sec: number;
+  furthest_sec: number;
+  version: number;
+  updated_at: string;
+  saved: boolean;
+}
+
+export interface ProgressSaveInput {
+  attempt: number;
+  position_sec: number;
+  expected_version: number;
+}
+
+export interface ReviewRecordPayload {
+  id: string;
+  video_id: string;
+  video_title: string;
+  chapter_id: string;
+  attempt: number;
+  start_sec: number;
+  end_sec: number;
+  text: string;
+  reviewed: boolean;
+  saved: boolean;
+  resolved: boolean;
+  note: string;
+  version: number;
+  is_stale: boolean;
+  updated_at: string;
+}
+
+export interface ReviewListResponse {
+  items: ReviewRecordPayload[];
+  total: number;
+  limit: number;
+  offset: number;
+}
+
+export interface ReviewChangeSet {
+  reviewed?: boolean;
+  saved?: boolean;
+  resolved?: boolean;
+  note?: string;
+}
+
+export interface ChapterReviewInput extends ReviewChangeSet {
+  attempt: number;
+  expected_version: number;
+}
+
+export interface ReviewEditInput extends ReviewChangeSet {
+  expected_version: number;
 }
 
 export interface ApiErrorBody {

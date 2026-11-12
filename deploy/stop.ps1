@@ -17,6 +17,37 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+# ---------- 忙状态检查：在途任务会变成 PROCESS_INTERRUPTED ----------
+$root = Split-Path -Parent $PSScriptRoot
+$py = Join-Path $root ".venv\Scripts\python.exe"
+if (-not $Force -and (Test-Path $py)) {
+    $probe = @'
+import sqlite3, sys
+from pathlib import Path
+data = Path(sys.argv[1]) / "app.db"
+if not data.is_file():
+    print("none")
+    raise SystemExit(0)
+con = sqlite3.connect(data)
+busy = con.execute("select count(*) from videos where status in ('queued','transcribing','indexing')").fetchone()[0]
+rag = 0
+try:
+    rag = con.execute("select count(*) from rag_indexes where status in ('pending','building')").fetchone()[0]
+except sqlite3.Error:
+    rag = 0
+print(f"{busy} {rag}")
+'@
+    $state = (& $py -c $probe $root) -join ""
+    $parts = $state.Trim() -split "\s+"
+    $busy = [int]$parts[0]
+    $ragBusy = if ($parts.Count -gt 1) { [int]$parts[1] } else { 0 }
+    if ($busy -gt 0 -or $ragBusy -gt 0) {
+        Write-Warning ("still busy: {0} video task(s), {1} RAG index task(s)." -f $busy, $ragBusy)
+        Write-Warning "stopping now will mark in-flight work as PROCESS_INTERRUPTED on next start. Use -Force to stop anyway."
+        return
+    }
+}
+
 $targets = Get-CimInstance Win32_Process -Filter "Name='python.exe' or Name='pythonw.exe'" |
     Where-Object { $_.CommandLine -match "uvicorn.{0,40}app\.main:app" -and $_.CommandLine -match "--app-dir.{0,10}backend" }
 

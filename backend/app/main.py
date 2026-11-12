@@ -14,12 +14,18 @@ from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.staticfiles import StaticFiles
 
 from app.config import PROJECT_ROOT, get_settings
-from app.database import Base, ensure_video_owner_column, make_engine, session_factory_for
+from app.database import (
+    Base,
+    ensure_question_metadata_columns,
+    ensure_video_owner_column,
+    make_engine,
+    session_factory_for,
+)
 from app.errors import register_error_handlers
 from app.frontend import FrontendFiles
 from app.lifecycle import recover_interrupted
-from app.models import Chapter, Question, Segment, Session, User, Video  # noqa: F401  注册数据表
-from app.routers import assistant, auth, health, videos
+from app.models import Chapter, PlaybackProgress, Question, ReviewRecord, Segment, Session, User, Video  # noqa: F401
+from app.routers import assistant, auth, health, profile, videos
 
 
 def create_app() -> FastAPI:
@@ -37,6 +43,7 @@ def create_app() -> FastAPI:
             (settings.data_dir / name).mkdir(parents=True, exist_ok=True)
         Base.metadata.create_all(engine)
         ensure_video_owner_column(engine)
+        ensure_question_metadata_columns(engine)
         db = session_factory()
         try:
             recover_interrupted(db)
@@ -79,6 +86,7 @@ def create_app() -> FastAPI:
     app.include_router(health.router)
     app.include_router(auth.router)
     app.include_router(videos.router)
+    app.include_router(profile.router)
     app.include_router(assistant.router)
 
     @app.get("/docs", include_in_schema=False)

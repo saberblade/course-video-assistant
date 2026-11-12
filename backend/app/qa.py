@@ -9,6 +9,7 @@ import time
 from dataclasses import dataclass
 
 import httpx
+from sqlalchemy.orm import Session
 
 from app.chapters import TranscriptPiece
 from app.config import Settings
@@ -19,6 +20,8 @@ logger = logging.getLogger("course_review")
 
 NOT_FOUND_ANSWER = "当前视频中未找到足够依据，请换一种问法或回看课程。"
 DEGRADED_ANSWER = "生成服务暂不可用，以下是检索到的课程原文。"
+RETRIEVAL_MODES = ("bm25", "hybrid", "bm25_fallback")
+RETRIEVAL_BUDGET_SECONDS = 8.0
 _QUESTION_LOCK = threading.Lock()
 _QUESTION_VIDEO_ID: str | None = None
 
@@ -29,6 +32,8 @@ class DraftAnswer:
     mode: str
     answer: str
     citations: list[CitationOut]
+    retrieval_mode: str = "bm25"
+    retrieval_version: str | None = None
 
 
 class LlmError(Exception):
@@ -54,7 +59,76 @@ def end_question() -> None:
     _QUESTION_LOCK.release()
 
 
-def draft_answer(segments: list[TranscriptPiece], question: str, duration_sec: float, settings: Settings) -> DraftAnswer:
+def draft_answer(
+    segments: list[TranscriptPiece],
+    question: str,
+    duration_sec: float,
+    settings: Settings,
+    *,
+    db: Session | None = None,
+    video_id: str | None = None,
+) -> DraftAnswer:
+    hits, retrieval_mode, retrieval_version = _retrieve(segments, question, duration_sec, settings, db, video_id)
+    evidence = [segment for hit in hits for segment in hit.segments]
+    if not evidence:
+        return _not_found(retrieval_mode, retrieval_version)
+    if settings.answer_mode.strip().lower() == "extractive":
+        logger.info("GENERATION_DISABLED")
+        return _degraded(evidence, retrieval_mode, retrieval_version)
+    if not settings.llm_configured:
+        logger.info("LLM_NOT_CONFIGURED")
+        return _degraded(evidence, retrieval_mode, retrieval_version)
+    try:
+        content = complete_chat(settings, _messages(question, evidence))
+    except LlmError as exc:
+        logger.info("%s", exc.code)
+        return _degraded(evidence, retrieval_mode, retrieval_version)
+    parsed = _parse_model_json(content)
+    if parsed is None or not parsed.get("has_evidence") or not str(parsed.get("answer", "")).strip():
+        return _not_found(retrieval_mode, retrieval_version)
+    citations = _citations(parsed.get("segment_ids"), evidence)
+    if citations is None:
+        return _not_found(retrieval_mode, retrieval_version)
+    return DraftAnswer(
+        "answered",
+        "generative",
+        str(parsed["answer"]).strip(),
+        citations,
+        retrieval_mode,
+        retrieval_version,
+    )
+
+
+def _retrieve(
+    segments: list[TranscriptPiece],
+    question: str,
+    duration_sec: float,
+    settings: Settings,
+    db: Session | None,
+    video_id: str | None,
+) -> tuple[list, str, str | None]:
+    """优先走 RAG 混合检索；模块不可用或索引未就绪时回退基线 BM25，并如实记录模式。"""
+    if db is not None and video_id:
+        try:
+            from modules.retriever.hybrid import retrieve_with_legacy_fallback
+
+            outcome = retrieve_with_legacy_fallback(
+                db,
+                video_id,
+                question,
+                segments,
+                duration_sec,
+                top_k=settings.retrieval_top_k,
+                max_chars=settings.max_context_characters,
+                budget_seconds=RETRIEVAL_BUDGET_SECONDS,
+            )
+            mode = outcome.mode_used if outcome.mode_used in RETRIEVAL_MODES else "bm25"
+            version = outcome.diagnostics.get("index_version")
+            if not outcome.hits and mode != "bm25_fallback":
+                mode = "bm25_fallback"
+            return outcome.hits, mode, str(version) if version else None
+        except Exception as exc:  # noqa: BLE001 检索模块故障不能打断问答
+            logger.warning("rag retrieve failed, falling back to bm25: %s: %s", exc.__class__.__name__, exc)
     hits = search_segments(
         segments,
         question,
@@ -62,27 +136,7 @@ def draft_answer(segments: list[TranscriptPiece], question: str, duration_sec: f
         top_k=settings.retrieval_top_k,
         max_chars=settings.max_context_characters,
     )
-    evidence = [segment for hit in hits for segment in hit.segments]
-    if not evidence:
-        return _not_found()
-    if settings.answer_mode.strip().lower() == "extractive":
-        logger.info("GENERATION_DISABLED")
-        return _degraded(evidence)
-    if not settings.llm_configured:
-        logger.info("LLM_NOT_CONFIGURED")
-        return _degraded(evidence)
-    try:
-        content = complete_chat(settings, _messages(question, evidence))
-    except LlmError as exc:
-        logger.info("%s", exc.code)
-        return _degraded(evidence)
-    parsed = _parse_model_json(content)
-    if parsed is None or not parsed.get("has_evidence") or not str(parsed.get("answer", "")).strip():
-        return _not_found()
-    citations = _citations(parsed.get("segment_ids"), evidence)
-    if citations is None:
-        return _not_found()
-    return DraftAnswer("answered", "generative", str(parsed["answer"]).strip(), citations)
+    return hits, "bm25", None
 
 
 def complete_chat(settings: Settings, messages: list[dict[str, str]]) -> str:
@@ -117,8 +171,32 @@ def complete_chat(settings: Settings, messages: list[dict[str, str]]) -> str:
                 raise LlmError("LLM_UPSTREAM_ERROR")
             if response.status_code != 200:
                 raise LlmError("LLM_UPSTREAM_ERROR")
-            payload = response.json()
-            return str(payload["choices"][0]["message"]["content"])
+            try:
+                payload = response.json()
+            except ValueError as exc:
+                # 上游返回 200 但正文不是 JSON：属于受控降级，不能冒泡成 500。
+                raise LlmError("LLM_BAD_PAYLOAD") from exc
+            return _extract_content(payload)
+
+
+def _extract_content(payload: object) -> str:
+    """从 chat/completions 响应里取正文。结构异常一律转成 LlmError 走降级。"""
+    if not isinstance(payload, dict):
+        raise LlmError("LLM_BAD_PAYLOAD")
+    choices = payload.get("choices")
+    if not isinstance(choices, list) or not choices:
+        raise LlmError("LLM_BAD_PAYLOAD")
+    first = choices[0]
+    if not isinstance(first, dict):
+        raise LlmError("LLM_BAD_PAYLOAD")
+    message = first.get("message")
+    if not isinstance(message, dict):
+        raise LlmError("LLM_BAD_PAYLOAD")
+    content = message.get("content")
+    if not isinstance(content, str) or not content.strip():
+        # 空正文不能当成“检索不到”，否则会把上游故障说成课程里没有依据。
+        raise LlmError("LLM_EMPTY_CONTENT")
+    return content
 
 
 def _messages(question: str, evidence: list[HitSegment]) -> list[dict[str, str]]:
@@ -178,11 +256,15 @@ def _citations(segment_ids: object, evidence: list[HitSegment]) -> list[Citation
     ]
 
 
-def _not_found() -> DraftAnswer:
-    return DraftAnswer("not_found", "extractive", NOT_FOUND_ANSWER, [])
+def _not_found(retrieval_mode: str = "bm25", retrieval_version: str | None = None) -> DraftAnswer:
+    return DraftAnswer("not_found", "extractive", NOT_FOUND_ANSWER, [], retrieval_mode, retrieval_version)
 
 
-def _degraded(evidence: list[HitSegment]) -> DraftAnswer:
+def _degraded(
+    evidence: list[HitSegment],
+    retrieval_mode: str = "bm25",
+    retrieval_version: str | None = None,
+) -> DraftAnswer:
     ordered = sorted(evidence, key=lambda segment: (segment.start_sec, segment.id))[:5]
     return DraftAnswer(
         "degraded",
@@ -192,4 +274,6 @@ def _degraded(evidence: list[HitSegment]) -> DraftAnswer:
             CitationOut(segment_id=segment.id, start_sec=segment.start_sec, end_sec=segment.end_sec, text=segment.text)
             for segment in ordered
         ],
+        retrieval_mode,
+        retrieval_version,
     )

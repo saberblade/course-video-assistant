@@ -47,8 +47,12 @@ _CACHE_LOCK = threading.Lock()
 
 
 def retrieval_mode_default() -> str:
-    mode = os.getenv("RAG_RETRIEVAL_MODE", "bm25").strip().lower()
-    return mode if mode in ("bm25", "hybrid") else "bm25"
+    """默认走混合检索。索引未就绪或向量接口故障时 retrieve() 会自动退回 bm25 并标注。
+
+    需要强制对照基线 B（纯 BM25）时设 RAG_RETRIEVAL_MODE=bm25。
+    """
+    mode = os.getenv("RAG_RETRIEVAL_MODE", "hybrid").strip().lower()
+    return mode if mode in ("bm25", "hybrid") else "hybrid"
 
 
 def retrieve(

@@ -28,6 +28,19 @@ from app.models import Chapter, Question, Segment, Video
 
 _log = logging.getLogger("course_review.executor")
 
+
+def _rag_indexing_enabled() -> bool:
+    """RAG_INDEXING_ENABLED 显式设置优先；没设置时看向量接口是否配好。"""
+    explicit = os.getenv("RAG_INDEXING_ENABLED")
+    if explicit is not None:
+        return explicit.strip() != "0"
+    try:
+        from modules.retriever.embedding import load_embedding_config
+
+        return load_embedding_config().configured
+    except Exception:  # noqa: BLE001 模块缺失时保持关闭
+        return False
+
 RETRYABLE = {
     "NO_SPEECH": False,
     "INVALID_VIDEO": False,
@@ -66,8 +79,9 @@ class SerialTaskExecutor:
         # 契约要求启动时预热转写模块：后台加载模型，失败只记日志不阻塞服务
         preheat = threading.Thread(target=self._preheat, name="transcriber-preheat", daemon=True)
         preheat.start()
-        # RAG 索引线程（SYS-02）：默认关闭，.env.local 设 RAG_INDEXING_ENABLED=1 启用
-        if os.getenv("RAG_INDEXING_ENABLED", "0") != "0":
+        # RAG 索引线程（SYS-02）：显式配置优先；未配置时只要向量接口可用就默认开启，
+        # 避免“模块写了但线上永不建索引”。向量未配置则保持关闭并记明原因。
+        if _rag_indexing_enabled():
             try:
                 from modules.retriever.service import IndexService
 
@@ -76,6 +90,8 @@ class SerialTaskExecutor:
                 self._log.info("rag indexer scheduled")
             except Exception as exc:  # noqa: BLE001 索引故障不影响基础转写链路
                 self._log.warning("rag indexer start failed: %s: %s", exc.__class__.__name__, exc)
+        else:
+            self._log.info("rag indexer disabled: embedding endpoint not configured")
         self._log.info("executor started (preheat scheduled)")
 
     def stop(self, timeout: float = 10.0) -> None:

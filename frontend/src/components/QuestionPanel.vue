@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { ChatDotRound, MagicStick, Position, Search, Warning } from "@element-plus/icons-vue";
 import { ElMessage } from "element-plus";
 import { api, isMock } from "@/api";
@@ -15,8 +15,39 @@ const draft = ref("");
 const asking = ref(false);
 const inputError = ref("");
 const results = ref<QuestionResult[]>([]);
+const historyLoading = ref(false);
+const historyError = ref("");
+const historyTotal = ref(0);
+const hasMore = ref(false);
 const mockMode = ref<MockAnswerMode>("answered");
 const trimmedCount = computed(() => draft.value.trim().length);
+
+/** 按问题 ID 去重：刷新恢复后不能重复插入同一条问答。 */
+function mergeResults(incoming: QuestionResult[], append = false) {
+  const seen = new Set(results.value.map(item => item.id));
+  const fresh = incoming.filter(item => !seen.has(item.id));
+  results.value = append ? [...results.value, ...fresh] : [...fresh, ...results.value];
+}
+
+async function loadHistory(more = false) {
+  if (historyLoading.value) return;
+  historyLoading.value = true;
+  historyError.value = "";
+  try {
+    const page = await api.listQuestions(props.videoId, 20, more ? results.value.length : 0);
+    historyTotal.value = page.total;
+    mergeResults(page.items, more);
+    hasMore.value = results.value.length < page.total;
+  } catch (error) {
+    historyError.value = toApiError(error).message;
+  } finally {
+    historyLoading.value = false;
+  }
+}
+
+onMounted(() => {
+  void loadHistory(false);
+});
 
 function changeMockMode(value: MockAnswerMode) {
   mockMode.value = value;
@@ -38,7 +69,9 @@ async function ask() {
   asking.value = true;
   try {
     const result = await api.askQuestion(props.videoId, question);
-    results.value.unshift(result);
+    mergeResults([result]);
+    historyTotal.value += 1;
+    draft.value = "";
   } catch (error) {
     const apiError = toApiError(error);
     const suffix = apiError.retryAfter ? `（约 ${apiError.retryAfter} 秒后可重试）` : "";
@@ -65,9 +98,9 @@ function openCitation(citation: Citation) {
       <div>
         <span class="section-kicker">ASK THE COURSE</span>
         <h3 id="question-title">向这段课程提问</h3>
-        <p>仅依据当前视频原文，刷新后清空问答</p>
+        <p>仅依据当前视频原文，刷新后保留历史问答</p>
       </div>
-      <span class="session-label"><ChatDotRound /> 本页会话</span>
+      <span class="session-label"><ChatDotRound /> 已保存 {{ historyTotal }} 条</span>
     </div>
 
     <div v-if="isMock" class="mock-control">
@@ -105,7 +138,23 @@ function openCitation(citation: Citation) {
     </div>
 
     <div class="results" role="log" aria-live="polite" aria-label="当前页面的问答结果">
-      <div v-if="!results.length && !asking" class="results-empty">
+      <el-alert
+        v-if="historyError"
+        :title="`历史问答读取失败：${historyError}`"
+        type="warning"
+        :closable="false"
+        show-icon
+        class="history-alert"
+      >
+        <el-button size="small" @click="loadHistory(false)">重新读取</el-button>
+      </el-alert>
+
+      <div v-if="historyLoading && !results.length" class="results-empty">
+        <span>正在读取历史问答</span>
+        <p>刷新后可从这里继续之前的问题。</p>
+      </div>
+
+      <div v-else-if="!results.length && !asking" class="results-empty">
         <span>还没有提问</span>
         <p>回答会出现在这里，只依据当前视频原文，并标注可直接回看的时间点。</p>
       </div>
@@ -160,6 +209,10 @@ function openCitation(citation: Citation) {
           </p>
         </div>
       </article>
+
+      <div v-if="hasMore" class="history-more">
+        <el-button :loading="historyLoading" @click="loadHistory(true)">加载更早的问答</el-button>
+      </div>
     </div>
   </section>
 </template>
@@ -178,6 +231,8 @@ function openCitation(citation: Citation) {
 .shortcut { margin-left: auto; color: #a0afb2; font-size: 11px; }
 .input-error { margin: 5px 0 0; color: #a03e26; font-size: 12px; }
 .results { margin-top: 20px; }
+.history-alert { margin-bottom: 12px; }
+.history-more { display: flex; justify-content: center; padding: 6px 0 2px; }
 .results-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; min-height: 130px; text-align: center; }
 .results-empty span { color: #6f868b; font-size: 12px; font-weight: 600; }
 .results-empty p { max-width: 250px; margin: 7px 0 0; color: #93a4a7; font-size: 11px; line-height: 1.85; }
