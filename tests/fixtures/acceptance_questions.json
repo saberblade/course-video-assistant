@@ -1,0 +1,33 @@
+{
+  "version": "qa-acceptance-v1",
+  "source": "docs/05_测试与验收/02_样本脚本与问题集.md",
+  "positive_count": 20,
+  "negative_count": 5,
+  "questions": [
+    {"id":"A01","sample":"A","kind":"positive","question":"HTTP请求通常包含哪些部分？","expected_points":["方法","路径","请求头","请求体"],"expected_status":"answered"},
+    {"id":"A02","sample":"A","kind":"positive","question":"GET和POST在这节课中分别用于什么？","expected_points":["GET读取","POST创建或触发操作"],"expected_status":"answered"},
+    {"id":"A03","sample":"A","kind":"positive","question":"视频上传为什么返回202？","expected_points":["服务器已接受","转写尚未完成","查询状态"],"expected_status":"answered"},
+    {"id":"A04","sample":"A","kind":"positive","question":"204和200的响应有何区别？","expected_points":["204没有响应体","200成功并带响应内容"],"expected_status":"answered"},
+    {"id":"A05","sample":"A","kind":"positive","question":"幂等性意味着响应正文必须完全相同吗？","expected_points":["不意味着","最终效果"],"expected_status":"answered"},
+    {"id":"A06","sample":"A","kind":"positive","question":"为什么不能对上传请求无限自动重试？","expected_points":["没有幂等机制","重复任务"],"expected_status":"answered"},
+    {"id":"A07","sample":"A","kind":"positive","question":"Range请求按什么单位取内容，通常对应什么状态码？","expected_points":["字节范围","206","Content-Range"],"expected_status":"answered"},
+    {"id":"B01","sample":"B","kind":"positive","question":"主键和外键在课程里的作用分别是什么？","expected_points":["主键标识记录","外键关联记录"],"expected_status":"answered"},
+    {"id":"B02","sample":"B","kind":"positive","question":"为什么创建视频和任务记录要考虑事务？","expected_points":["避免部分成功","共同成功或回滚"],"expected_status":"answered"},
+    {"id":"B03","sample":"B","kind":"positive","question":"数据库事务能自动解决视频文件写入吗？","expected_points":["不能","应用清理策略"],"expected_status":"answered"},
+    {"id":"B04","sample":"B","kind":"positive","question":"为什么不应给所有列都建立索引？","expected_points":["占空间","写入维护成本"],"expected_status":"answered"},
+    {"id":"B05","sample":"B","kind":"positive","question":"查询某视频转写时应关注哪个筛选字段？","expected_points":["video_id"],"expected_status":"answered"},
+    {"id":"B06","sample":"B","kind":"positive","question":"本项目为什么选择SQLite？","expected_points":["单机","本地文件","部署成本低"],"expected_status":"answered"},
+    {"id":"B07","sample":"B","kind":"positive","question":"演示前备份数据库和视频应怎样处理？","expected_points":["停止写入","统一备份","恢复时核对"],"expected_status":"answered"},
+    {"id":"C01","sample":"C","kind":"positive","question":"检索增强问答先做什么，再做什么？","expected_points":["先找相关片段","再让模型组织回答"],"expected_status":"answered"},
+    {"id":"C02","sample":"C","kind":"positive","question":"BM25为什么可能漏掉同义表达的问题？","expected_points":["词项匹配","同义说法匹配可能变差"],"expected_status":"answered"},
+    {"id":"C03","sample":"C","kind":"positive","question":"模型提供时间戳能直接证明引用可信吗？","expected_points":["不能","真实片段ID","原文时间"],"expected_status":"answered"},
+    {"id":"C04","sample":"C","kind":"positive","question":"有引用是否就能保证回答正确？","expected_points":["不能","原文是否支持结论"],"expected_status":"answered"},
+    {"id":"C05","sample":"C","kind":"positive","question":"资料没有答案时系统应该怎么处理？","expected_points":["明确未找到","不能用课外知识补答"],"expected_status":"answered"},
+    {"id":"C06","sample":"C","kind":"positive","question":"断网后展示原文检索和历史结果需要怎样标注？","expected_points":["未生成综合回答","历史结果回放"],"expected_status":"answered"},
+    {"id":"N01","sample":"A","kind":"negative","question":"这节课推荐的HTTP连接超时具体是多少秒？","expected_points":[],"expected_status":"not_found"},
+    {"id":"N02","sample":"B","kind":"negative","question":"这节课规定SQLite的page_size是多少？","expected_points":[],"expected_status":"not_found"},
+    {"id":"N03","sample":"C","kind":"negative","question":"这节课设置的BM25参数k1具体是多少？","expected_points":[],"expected_status":"not_found"},
+    {"id":"N04","sample":"A","kind":"negative","question":"这段课程建议早餐吃什么？","expected_points":[],"expected_status":"not_found"},
+    {"id":"N05","sample":"C","kind":"negative","question":"这段课程说明了哪家餐厅最好吃？","expected_points":[],"expected_status":"not_found"}
+  ]
+}

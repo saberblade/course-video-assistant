@@ -57,6 +57,7 @@ class SerialTaskExecutor:
         self._current_video_id: str | None = None
         self._transcribe = None  # 惰性导入
         self._cancel = None
+        self._rag = None
 
     # ---------- 生命周期 ----------
     def start(self) -> None:
@@ -65,10 +66,24 @@ class SerialTaskExecutor:
         # 契约要求启动时预热转写模块：后台加载模型，失败只记日志不阻塞服务
         preheat = threading.Thread(target=self._preheat, name="transcriber-preheat", daemon=True)
         preheat.start()
+        # RAG 索引线程（SYS-02）：默认关闭，.env.local 设 RAG_INDEXING_ENABLED=1 启用
+        if os.getenv("RAG_INDEXING_ENABLED", "0") != "0":
+            try:
+                from modules.retriever.service import IndexService
+
+                self._rag = IndexService(self._session_factory)
+                self._rag.start()
+                self._log.info("rag indexer scheduled")
+            except Exception as exc:  # noqa: BLE001 索引故障不影响基础转写链路
+                self._log.warning("rag indexer start failed: %s: %s", exc.__class__.__name__, exc)
         self._log.info("executor started (preheat scheduled)")
 
     def stop(self, timeout: float = 10.0) -> None:
         self._stop.set()
+        rag = self._rag
+        if rag is not None:
+            rag.stop(timeout=timeout)
+            self._rag = None
         thread = self._thread
         if thread is not None and thread.is_alive():
             # 转写模块 cancel_current 安全取消（不交叉持锁）；线程在自己的周期收尾
@@ -267,6 +282,17 @@ class SerialTaskExecutor:
             self._log.info("task ready video_id=%s segments=%d", video_id, n_segments)
         finally:
             db.close()
+        # RAG 索引登记（SYS-02）：课程内容 ready 与向量索引 ready 分开，
+        # 登记失败只记日志，绝不影响视频本体可用。
+        rag = self._rag
+        if rag is not None:
+            db = self._session_factory()
+            try:
+                rag.enqueue(db, video_id)
+            except Exception as exc:  # noqa: BLE001
+                self._log.warning("rag index enqueue failed video_id=%s: %s", video_id, exc)
+            finally:
+                db.close()
 
     def _fail(self, video_id: str, code: str, message: str, retryable: bool) -> None:
         db = self._session_factory()

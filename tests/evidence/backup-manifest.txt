@@ -1,0 +1,8 @@
+backuproot: [LOCAL_REPOSITORY]\backups\20261112_113510
+created_utc: 2026-11-12T03:35:10Z
+python: Python 3.12.1
+node: not bundled
+git: e16c2136ef4a05b80cf289a25a4922f1e4440cd0
+sha256 data\app.db : 5c965426edc4548927bdeeb5e167eefd152f7e54daa95711b9b61d038c8c5782
+sha256 requirements.lock.txt : 65c7f7a00cc1c710ad52406899ccb1f33dfd784145da9f4922f298a3e752921d
+sha256 models\faster-whisper-small\model.bin : MISSING

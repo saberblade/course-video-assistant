@@ -1,0 +1,50 @@
+{
+  "candidate_commit": "填写40位候选提交哈希",
+  "candidate_version": "填写候选版本或tag",
+  "tester": "填写QA姓名",
+  "reviewer": "填写独立复核人",
+  "samples": [
+    {
+      "id": "A",
+      "path": "填写正式授权样本A的本机绝对路径",
+      "sha256": "填写64位SHA-256",
+      "authorization": {
+        "owner": "填写权利人",
+        "scope": "本项目测试与验收",
+        "confirmed_by": "填写确认人",
+        "confirmed_at": "填写ISO 8601时间"
+      },
+      "truth_intervals": {
+        "A01": [], "A02": [], "A03": [], "A04": [], "A05": [], "A06": [], "A07": []
+      }
+    },
+    {
+      "id": "B",
+      "path": "填写正式授权样本B的本机绝对路径",
+      "sha256": "填写64位SHA-256",
+      "authorization": {
+        "owner": "填写权利人",
+        "scope": "本项目测试与验收",
+        "confirmed_by": "填写确认人",
+        "confirmed_at": "填写ISO 8601时间"
+      },
+      "truth_intervals": {
+        "B01": [], "B02": [], "B03": [], "B04": [], "B05": [], "B06": [], "B07": []
+      }
+    },
+    {
+      "id": "C",
+      "path": "填写正式授权样本C的本机绝对路径",
+      "sha256": "填写64位SHA-256",
+      "authorization": {
+        "owner": "填写权利人",
+        "scope": "本项目测试与验收",
+        "confirmed_by": "填写确认人",
+        "confirmed_at": "填写ISO 8601时间"
+      },
+      "truth_intervals": {
+        "C01": [], "C02": [], "C03": [], "C04": [], "C05": [], "C06": []
+      }
+    }
+  ]
+}
