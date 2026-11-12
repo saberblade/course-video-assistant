@@ -1,0 +1,949 @@
+{
+  "run_id": "abc-25-llm-20261112",
+  "executed_at": "2026-11-12T15:50:33+08:00",
+  "candidate_commit": "e16c2136ef4a05b80cf289a25a4922f1e4440cd0",
+  "classification": "ABC_USER_RECORDED_REAL_TRANSCRIPTION_QWEN_PLUS_GENERATIVE",
+  "model": {
+    "name": "Systran/faster-whisper-small",
+    "device": "cpu",
+    "compute_type": "int8",
+    "language": "zh",
+    "model_bin_sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671",
+    "warmup_sec": 1.2997878999999557
+  },
+  "limitations": [
+    "User supplied M4A recordings were wrapped in H.264/AAC MP4 for project compatibility.",
+    "Transcription used the project faster-whisper-small CPU int8 pipeline.",
+    "The question API used the real transcribed segments in an isolated database.",
+    "Generation used the configured qwen-plus compatible endpoint; no API key is stored in evidence.",
+    "Semantic correctness of citation text requires human review."
+  ],
+  "videos": {
+    "A": {
+      "audio_sha256": "6ab49433493ac927d57ab83f440ad226fb4c26207c8113bef6aca1c7c4840c8e",
+      "wrapped_mp4_sha256": "c2a8d52177b64753f4ef46febe52ddfa7045cb56dc3a4a59e08a0ff2f4e616ee",
+      "transcript_sha256": "88748befc32cc8c3f31780609196c7e821de5d4011accd7a4c2b33dc24cbe427",
+      "duration_sec": 207.38,
+      "codec": "H.264/AAC",
+      "transcribe_elapsed_sec": 55.531,
+      "segment_count": 85
+    },
+    "B": {
+      "audio_sha256": "cc5e34fff13583b6576dbc78cb65d037f65aa1187d30ff8be0c71b1b7e19ff35",
+      "wrapped_mp4_sha256": "9fc7d3a9793c067345e14a53658189d7cae147505b2b28f98570cf4eeba474c6",
+      "transcript_sha256": "8a5531fb22473e48fe1c3988a9c992c0474ba0cc97700d6425c02da125a15cc3",
+      "duration_sec": 195.22,
+      "codec": "H.264/AAC",
+      "transcribe_elapsed_sec": 58.36,
+      "segment_count": 32
+    },
+    "C": {
+      "audio_sha256": "26e67bc4fa9b3a5841bacd9e918d4927a6aa4ef257d8e6f482c869432224cbca",
+      "wrapped_mp4_sha256": "41d3e5ba8c6e76f5d93dd4ace87816f840df16279da2ab307b1d87a385768758",
+      "transcript_sha256": "6e2b24ec40b89351510da4fb6d2fbf29df4853683ee5643e98c28d77e79b1d03",
+      "duration_sec": 190.1,
+      "codec": "H.264/AAC",
+      "transcribe_elapsed_sec": 49.035,
+      "segment_count": 72
+    }
+  },
+  "summary": {
+    "total": 25,
+    "strict_passed": 25,
+    "strict_failed": 0,
+    "positive_passed": 20,
+    "positive_total": 20,
+    "negative_passed": 5,
+    "negative_total": 5,
+    "citation_id_validation_passed": 25
+  },
+  "results": [
+    {
+      "id": "A01",
+      "sample": "A",
+      "kind": "positive",
+      "question": "HTTP请求通常包含哪些部分？",
+      "expected_status": "answered",
+      "http_status": 200,
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "HTTP请求通常包含三个主要部分：请求方法（如GET或POST）、请求路径（说明希望访问哪个资源）、请求头（携带身份信息等附加信息）；有些请求还包含请求体（用来传递需要提交的数据）。",
+      "latency_ms": 12784,
+      "citations": [
+        {
+          "segment_id": "c64c9da8-aec0-45e7-8c8c-4bd34cae8c85",
+          "start_sec": 7.0,
+          "end_sec": 11.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "0a3fb1ff-b5fc-4a8f-8920-ed5b37500efe",
+          "start_sec": 11.0,
+          "end_sec": 13.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "85c30cbd-82ee-4449-bdf3-98ea389dcae3",
+          "start_sec": 13.0,
+          "end_sec": 15.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "61ba710d-bfaf-4fc6-bfbd-f243ca86b024",
+          "start_sec": 15.0,
+          "end_sec": 17.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "f8001e28-52e0-43ca-b696-85d8b57cc8c5",
+          "start_sec": 17.0,
+          "end_sec": 19.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        }
+      ],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "A02",
+      "sample": "A",
+      "kind": "positive",
+      "question": "GET和POST在这节课中分别用于什么？",
+      "expected_status": "answered",
+      "http_status": 200,
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "GET通常用于读取资源，例如打开课程列表、读取已有资源；POST通常用于创建资源或触发操作，例如上传新视频、创建一个处理任务。",
+      "latency_ms": 8172,
+      "citations": [
+        {
+          "segment_id": "c6bcee5f-858a-4ae6-af33-63d8c303b083",
+          "start_sec": 29.0,
+          "end_sec": 32.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "2ef5cff6-4c50-4c2f-a567-97af381b2865",
+          "start_sec": 32.0,
+          "end_sec": 35.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "0bfb23ee-629f-4c07-926d-3ebc2293cb3a",
+          "start_sec": 35.0,
+          "end_sec": 38.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "9cffc358-8e4d-4f3e-bd48-c3857c0d766a",
+          "start_sec": 38.0,
+          "end_sec": 41.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "a9edb025-0b75-4f1e-ac0e-3755ce9edc36",
+          "start_sec": 41.0,
+          "end_sec": 43.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        }
+      ],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "A03",
+      "sample": "A",
+      "kind": "positive",
+      "question": "视频上传为什么返回202？",
+      "expected_status": "answered",
+      "http_status": 200,
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "因为视频上传后服务器需要进行语音转写和章节生成等后台处理，尚未完成，所以返回202（已接受）状态码，表示请求已被接收并正在处理中。",
+      "latency_ms": 6934,
+      "citations": [
+        {
+          "segment_id": "6a89a49d-8f47-4dd1-87d1-7b0e83fc7c40",
+          "start_sec": 67.0,
+          "end_sec": 70.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "37cf9b38-0f4e-4714-aed9-79a00e9e80a3",
+          "start_sec": 70.0,
+          "end_sec": 73.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "13113b83-ff11-440f-a24c-b831d9f8efd0",
+          "start_sec": 73.0,
+          "end_sec": 75.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "e6d10dbd-7bd0-4051-87ea-6714cac69e6f",
+          "start_sec": 75.0,
+          "end_sec": 77.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "d9d28fe2-c988-4e75-aaf6-afaeae89d704",
+          "start_sec": 193.0,
+          "end_sec": 195.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        }
+      ],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "A04",
+      "sample": "A",
+      "kind": "positive",
+      "question": "204和200的响应有何区别？",
+      "expected_status": "answered",
+      "http_status": 200,
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "200表示请求成功，且可以携带响应内容；204也表示操作成功，但没有响应体（即不返回任何响应内容）",
+      "latency_ms": 8652,
+      "citations": [
+        {
+          "segment_id": "7d01ba8d-085c-476d-8970-f3ebc7c328ae",
+          "start_sec": 59.0,
+          "end_sec": 62.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "e8f1eb08-ceb3-4aaa-aeae-d651f0a4b021",
+          "start_sec": 82.0,
+          "end_sec": 84.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "16023e47-4f3d-468a-8087-5dce99fd6867",
+          "start_sec": 84.0,
+          "end_sec": 86.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "fd4a5978-ec43-4613-8752-fa4913ae44c3",
+          "start_sec": 86.0,
+          "end_sec": 88.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "60b70a88-4576-41fe-aecf-359291c016f4",
+          "start_sec": 94.0,
+          "end_sec": 97.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        }
+      ],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "A05",
+      "sample": "A",
+      "kind": "positive",
+      "question": "幂等性意味着响应正文必须完全相同吗？",
+      "expected_status": "answered",
+      "http_status": 200,
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "不是。幂等性并不要求每次返回的响应与正文完全相同，而是指多次执行同一操作产生的效果一致。",
+      "latency_ms": 5670,
+      "citations": [
+        {
+          "segment_id": "fd0a2e2b-95d2-4411-990d-d61dd74d14bd",
+          "start_sec": 110.0,
+          "end_sec": 112.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "43eb51be-08e4-4d64-8204-c6047d79cd14",
+          "start_sec": 112.0,
+          "end_sec": 114.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "ac44b490-322c-4a20-a9d9-a5c6e3838fb9",
+          "start_sec": 114.0,
+          "end_sec": 116.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "2162dd72-1570-4961-8165-c37bd009efec",
+          "start_sec": 116.0,
+          "end_sec": 118.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "548f0c2d-83ff-4b29-bbb1-c6b426c61d21",
+          "start_sec": 118.0,
+          "end_sec": 120.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        }
+      ],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "A06",
+      "sample": "A",
+      "kind": "positive",
+      "question": "为什么不能对上传请求无限自动重试？",
+      "expected_status": "answered",
+      "http_status": 200,
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "因为上传请求（如POST）通常用于创建资源或触发操作，不具有幂等性；若无限自动重试，可能在服务器端重复创建多个相同的处理任务（如重复上传同一视频），导致资源浪费或业务异常。片段中明确指出：'如果系统没有设计额外的幂等机制'，'用户连续点击上传按钮'，'可能会创建多个相同的处理任务'；'如果客户端无限重试'，'也可能重复提交同一段视频'。",
+      "latency_ms": 8045,
+      "citations": [
+        {
+          "segment_id": "d9b99c50-6ab4-4eee-8e29-bf02465d28bc",
+          "start_sec": 126.0,
+          "end_sec": 130.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "4fc337cc-af4f-4b63-b74f-1be40bead4c5",
+          "start_sec": 132.0,
+          "end_sec": 134.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "2d4d88b3-5694-40d7-9e78-fa33779cb4df",
+          "start_sec": 134.0,
+          "end_sec": 137.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "ae991dca-4948-4d04-a008-9aa3e1530bb0",
+          "start_sec": 137.0,
+          "end_sec": 140.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "0f624203-cab4-4aee-84f8-35a61281056d",
+          "start_sec": 142.0,
+          "end_sec": 144.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        }
+      ],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "A07",
+      "sample": "A",
+      "kind": "positive",
+      "question": "Range请求按什么单位取内容，通常对应什么状态码？",
+      "expected_status": "answered",
+      "http_status": 200,
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "Range请求按字节单位取内容，通常对应206状态码和Content-Range响应头。",
+      "latency_ms": 5768,
+      "citations": [
+        {
+          "segment_id": "da8b18e5-b8af-471e-9063-2b5de31c18bf",
+          "start_sec": 162.0,
+          "end_sec": 166.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "05d45d82-45ae-4ede-b32d-ba725e0db406",
+          "start_sec": 172.0,
+          "end_sec": 174.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "f3484b1c-2641-445c-bcc5-e005a87e559c",
+          "start_sec": 174.0,
+          "end_sec": 176.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "fb24dd79-e47f-40f4-bf39-925714522529",
+          "start_sec": 202.0,
+          "end_sec": 204.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "2a4c3d95-677f-4359-aa23-367490a7390f",
+          "start_sec": 204.0,
+          "end_sec": 207.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        }
+      ],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "B01",
+      "sample": "B",
+      "kind": "positive",
+      "question": "主键和外键在课程里的作用分别是什么？",
+      "expected_status": "answered",
+      "http_status": 200,
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "主键用于唯一标识表中的一条记录，例如视频表使用VTLID作为主键；外键用于表示不同记录或不同表之间的关联关系，例如转写片段通过保存所属视频的VTLID来表明其与视频表的关联。",
+      "latency_ms": 6255,
+      "citations": [
+        {
+          "segment_id": "297a037d-11f6-4aa7-bfb2-9a69bf6fde66",
+          "start_sec": 11.0,
+          "end_sec": 20.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "5f3f6ebe-d385-4c22-929a-2846dddd7c0b",
+          "start_sec": 20.0,
+          "end_sec": 28.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "6f716056-7f97-4fc2-a1ca-d8a28cadfe9e",
+          "start_sec": 28.0,
+          "end_sec": 31.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "7acd4fcc-8b34-47e6-be48-729677580002",
+          "start_sec": 31.0,
+          "end_sec": 35.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "b09189ba-5005-42d5-954a-d651c6fd29e0",
+          "start_sec": 169.0,
+          "end_sec": 174.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        }
+      ],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "B02",
+      "sample": "B",
+      "kind": "positive",
+      "question": "为什么创建视频和任务记录要考虑事务？",
+      "expected_status": "answered",
+      "http_status": 200,
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "因为创建视频和任务记录是相互关联的操作，必须保证二者同时成功或同时失败；如果只成功创建视频记录而任务记录创建失败，会导致出现无法处理的“孤儿”视频，破坏数据一致性。事务能确保这组操作原子性执行：全部提交或全部回滚，从而维护数据库状态的完整性。",
+      "latency_ms": 7261,
+      "citations": [
+        {
+          "segment_id": "2ae09224-3eef-4bf3-9ac4-c1d320c483ee",
+          "start_sec": 48.0,
+          "end_sec": 52.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "114cdff5-5f3d-4f6c-b053-245a9b120e2e",
+          "start_sec": 52.0,
+          "end_sec": 59.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "03d948e5-2c48-4d1a-81aa-b654fec5690a",
+          "start_sec": 59.0,
+          "end_sec": 66.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "03c68a47-70ba-40bc-b06c-911bb9258805",
+          "start_sec": 66.0,
+          "end_sec": 71.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "6d6c925f-18b6-4f60-b959-c34daeaecc71",
+          "start_sec": 71.0,
+          "end_sec": 77.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        }
+      ],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "B03",
+      "sample": "B",
+      "kind": "positive",
+      "question": "数据库事务能自动解决视频文件写入吗？",
+      "expected_status": "answered",
+      "http_status": 200,
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "不能。数据库事务只能管理数据库内部的数据，不能自动管理视频文件的写入；当数据库操作成功而文件写入失败，或反之，应用程序仍需执行清理或补偿操作。",
+      "latency_ms": 5106,
+      "citations": [
+        {
+          "segment_id": "461bc6bc-bef8-48d3-91e9-2bb7ede83eb0",
+          "start_sec": 77.0,
+          "end_sec": 86.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "b506bb4d-f836-40e6-9e66-f6f90590cd5f",
+          "start_sec": 86.0,
+          "end_sec": 94.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "d7eb6081-181a-42a9-b16a-f86ee6f2e985",
+          "start_sec": 94.0,
+          "end_sec": 98.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "40bed89c-669d-4976-ac04-6a7ef48dc064",
+          "start_sec": 174.0,
+          "end_sec": 181.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        }
+      ],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "B04",
+      "sample": "B",
+      "kind": "positive",
+      "question": "为什么不应给所有列都建立索引？",
+      "expected_status": "answered",
+      "http_status": 200,
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "因为给所有列都建立索引会增加写入成本（插入、修改或删除记录时需同步维护索引），且索引需要额外占用磁盘空间。",
+      "latency_ms": 3500,
+      "citations": [
+        {
+          "segment_id": "84f3d361-dab6-4d25-9549-f02ddd01f88b",
+          "start_sec": 115.0,
+          "end_sec": 120.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "1a52aca7-8da2-42f8-ab94-0b3fc6bae802",
+          "start_sec": 120.0,
+          "end_sec": 126.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        }
+      ],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "B05",
+      "sample": "B",
+      "kind": "positive",
+      "question": "查询某视频转写时应关注哪个筛选字段？",
+      "expected_status": "answered",
+      "http_status": 200,
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "videoid",
+      "latency_ms": 2097,
+      "citations": [
+        {
+          "segment_id": "bc61f9d8-facb-48e5-9457-1abd2df841c8",
+          "start_sec": 109.0,
+          "end_sec": 115.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        }
+      ],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "B06",
+      "sample": "B",
+      "kind": "positive",
+      "question": "本项目为什么选择SQLite？",
+      "expected_status": "answered",
+      "http_status": 200,
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "因为SQLite是个单文件、本地部署、低部署成本的数据库，适合小型项目，且不需要单独部署数据库服务。",
+      "latency_ms": 4813,
+      "citations": [
+        {
+          "segment_id": "6d415ff1-d7f3-4c42-90f6-ead3d6660696",
+          "start_sec": 135.0,
+          "end_sec": 139.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "113c98d1-d856-4d31-9251-6b03a224240d",
+          "start_sec": 139.0,
+          "end_sec": 145.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "5d8fe278-eeeb-489f-a1c2-d3db948b0fd0",
+          "start_sec": 145.0,
+          "end_sec": 149.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "12272950-7ade-4e29-b060-84ed6384d683",
+          "start_sec": 187.0,
+          "end_sec": 191.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        }
+      ],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "B07",
+      "sample": "B",
+      "kind": "positive",
+      "question": "演示前备份数据库和视频应怎样处理？",
+      "expected_status": "answered",
+      "http_status": 200,
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "演示前应先停止数据库和视频文件的新写入操作，再统一备份数据库文件、视频文件及转写等其他相关文件。",
+      "latency_ms": 3594,
+      "citations": [
+        {
+          "segment_id": "4957771e-250b-40f5-93d4-20743f9e5e5c",
+          "start_sec": 155.0,
+          "end_sec": 162.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "bf2e85ab-fd4e-4e23-8f0e-915b75f70e99",
+          "start_sec": 191.0,
+          "end_sec": 194.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        }
+      ],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "C01",
+      "sample": "C",
+      "kind": "positive",
+      "question": "检索增强问答先做什么，再做什么？",
+      "expected_status": "answered",
+      "http_status": 200,
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "检索增强问答先做第一步：检索关键片段（即从课程资料中寻找与问题相关的转写片段）；再做第二步：根据问题和检索到的片段，由语言模型组织回答。",
+      "latency_ms": 7617,
+      "citations": [
+        {
+          "segment_id": "b22f2dcf-0bed-40bf-8e48-78c75cfb5070",
+          "start_sec": 15.0,
+          "end_sec": 20.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "0338642b-d48f-4982-b54d-c3c1d578b466",
+          "start_sec": 20.0,
+          "end_sec": 26.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "dac8d0f0-8e00-444d-adef-cfa98e2990b9",
+          "start_sec": 26.0,
+          "end_sec": 29.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "e4fa2554-7a3c-453a-a06d-2950b9446ad0",
+          "start_sec": 29.0,
+          "end_sec": 31.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "a1dbccfa-9c08-4873-8096-4d4180838e19",
+          "start_sec": 31.0,
+          "end_sec": 34.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        }
+      ],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "C02",
+      "sample": "C",
+      "kind": "positive",
+      "question": "BM25为什么可能漏掉同义表达的问题？",
+      "expected_status": "answered",
+      "http_status": 200,
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "BM25依赖词项的字面匹配，当问题和原文表达相同语义但使用不同词汇（即同义表达）时，因无法识别语义等价性，导致相关片段可能未被匹配，从而漏检。例如课程原文用专业术语，学生提问用常见说法，系统可能找不到相关片段。",
+      "latency_ms": 8096,
+      "citations": [
+        {
+          "segment_id": "40e5e7b4-2d75-4d5d-baa1-bd277acf6f6f",
+          "start_sec": 61.0,
+          "end_sec": 63.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "cca91b1c-46c4-4727-bb33-697d747c7743",
+          "start_sec": 63.0,
+          "end_sec": 65.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "7dd72cf5-2cf8-4fa0-8775-2f9ed335b72d",
+          "start_sec": 65.0,
+          "end_sec": 67.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "099ab565-9829-4f6d-9409-533961dccfd3",
+          "start_sec": 67.0,
+          "end_sec": 70.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "c61d625d-45f2-4a23-85be-c79a413e6163",
+          "start_sec": 70.0,
+          "end_sec": 72.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        }
+      ],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "C03",
+      "sample": "C",
+      "kind": "positive",
+      "question": "模型提供时间戳能直接证明引用可信吗？",
+      "expected_status": "answered",
+      "http_status": 200,
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "不能。时间戳本身不能直接证明引用可信；时间和原文必须来自数据库中的真实转写片段，且即使引用ID存在，也不能自动证明回答一定有证据，人工复核时还需判断引用原文是否真正支持回答内容。",
+      "latency_ms": 10148,
+      "citations": [
+        {
+          "segment_id": "4b844c6a-4629-4a06-99ae-55f156913cf1",
+          "start_sec": 97.0,
+          "end_sec": 99.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "be9b954d-13ce-4f56-bf61-28d2090d6472",
+          "start_sec": 99.0,
+          "end_sec": 101.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "31638501-59ac-4b5e-99dc-cbab97c0b4e9",
+          "start_sec": 101.0,
+          "end_sec": 104.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "8a0db8f2-334c-44ff-8cb9-47b3931018aa",
+          "start_sec": 104.0,
+          "end_sec": 106.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "477aec38-a2cb-4677-8b87-78581d516444",
+          "start_sec": 108.0,
+          "end_sec": 111.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        }
+      ],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "C04",
+      "sample": "C",
+      "kind": "positive",
+      "question": "有引用是否就能保证回答正确？",
+      "expected_status": "answered",
+      "http_status": 200,
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "不能。即使有引用，也不能自动证明回答一定正确；人工复核时还需判断引用原文是否真正支持回答，且如果当前视频没有足够依据，系统应明确返回“未找到”。",
+      "latency_ms": 6931,
+      "citations": [
+        {
+          "segment_id": "477aec38-a2cb-4677-8b87-78581d516444",
+          "start_sec": 108.0,
+          "end_sec": 111.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "c992526e-1f2f-4a87-97c1-44ec32e0d5b6",
+          "start_sec": 111.0,
+          "end_sec": 113.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "b17e6e75-95b1-43de-b73e-20aa65383982",
+          "start_sec": 113.0,
+          "end_sec": 117.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "ab5ae699-4582-4a0b-8469-bc75b1b90fcb",
+          "start_sec": 117.0,
+          "end_sec": 119.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "d9bcdd84-9cc0-455e-8d9e-fc075581fbd2",
+          "start_sec": 119.0,
+          "end_sec": 121.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        }
+      ],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "C05",
+      "sample": "C",
+      "kind": "positive",
+      "question": "资料没有答案时系统应该怎么处理？",
+      "expected_status": "answered",
+      "http_status": 200,
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "系统应该明确返回未找到",
+      "latency_ms": 2201,
+      "citations": [
+        {
+          "segment_id": "d9bcdd84-9cc0-455e-8d9e-fc075581fbd2",
+          "start_sec": 119.0,
+          "end_sec": 121.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        }
+      ],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "C06",
+      "sample": "C",
+      "kind": "positive",
+      "question": "断网后展示原文检索和历史结果需要怎样标注？",
+      "expected_status": "answered",
+      "http_status": 200,
+      "answer_status": "answered",
+      "mode": "generative",
+      "answer": "断网后展示原文检索结果需明确标注为“当前看到的是检索到的课程原文”；若展示历史结果，则必须标注为“历史结果回放”，且不能让用户误以为是刚刚生成的答案。",
+      "latency_ms": 4764,
+      "citations": [
+        {
+          "segment_id": "e6babffc-2390-4278-a851-90d55a4089db",
+          "start_sec": 144.0,
+          "end_sec": 147.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "21d50133-976e-47a3-b3f1-aaefb9baaece",
+          "start_sec": 151.0,
+          "end_sec": 154.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        },
+        {
+          "segment_id": "da1a5dbc-9d8a-45c6-bda8-56945c6d7b48",
+          "start_sec": 154.0,
+          "end_sec": 158.0,
+          "text": "[REDACTED_TRANSCRIPT]"
+        }
+      ],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "N01",
+      "sample": "A",
+      "kind": "negative",
+      "question": "这节课推荐的HTTP连接超时具体是多少秒？",
+      "expected_status": "not_found",
+      "http_status": 200,
+      "answer_status": "not_found",
+      "mode": "extractive",
+      "answer": "当前视频中未找到足够依据，请换一种问法或回看课程。",
+      "latency_ms": 1713,
+      "citations": [],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "N02",
+      "sample": "B",
+      "kind": "negative",
+      "question": "这节课规定SQLite的page_size是多少？",
+      "expected_status": "not_found",
+      "http_status": 200,
+      "answer_status": "not_found",
+      "mode": "extractive",
+      "answer": "当前视频中未找到足够依据，请换一种问法或回看课程。",
+      "latency_ms": 1555,
+      "citations": [],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "N03",
+      "sample": "C",
+      "kind": "negative",
+      "question": "这节课设置的BM25参数k1具体是多少？",
+      "expected_status": "not_found",
+      "http_status": 200,
+      "answer_status": "not_found",
+      "mode": "extractive",
+      "answer": "当前视频中未找到足够依据，请换一种问法或回看课程。",
+      "latency_ms": 1875,
+      "citations": [],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "N04",
+      "sample": "A",
+      "kind": "negative",
+      "question": "这段课程建议早餐吃什么？",
+      "expected_status": "not_found",
+      "http_status": 200,
+      "answer_status": "not_found",
+      "mode": "extractive",
+      "answer": "当前视频中未找到足够依据，请换一种问法或回看课程。",
+      "latency_ms": 1626,
+      "citations": [],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    },
+    {
+      "id": "N05",
+      "sample": "C",
+      "kind": "negative",
+      "question": "这段课程说明了哪家餐厅最好吃？",
+      "expected_status": "not_found",
+      "http_status": 200,
+      "answer_status": "not_found",
+      "mode": "extractive",
+      "answer": "当前视频中未找到足够依据，请换一种问法或回看课程。",
+      "latency_ms": 1865,
+      "citations": [],
+      "citation_ids_valid": true,
+      "strict_pass": true
+    }
+  ]
+}

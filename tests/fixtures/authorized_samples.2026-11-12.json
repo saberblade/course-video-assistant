@@ -1,0 +1,32 @@
+{
+  "version": "2026-11-12",
+  "source_type": "user_self_recorded_from_repository_acceptance_scripts",
+  "authorization_scope": "course-video-assistant testing and acceptance",
+  "original_media_storage": "local_only_not_committed",
+  "samples": [
+    {
+      "id": "A",
+      "topic": "HTTP与接口基础",
+      "duration_sec": 207.38,
+      "original_audio_sha256": "6ab49433493ac927d57ab83f440ad226fb4c26207c8113bef6aca1c7c4840c8e",
+      "wrapped_mp4_sha256": "c2a8d52177b64753f4ef46febe52ddfa7045cb56dc3a4a59e08a0ff2f4e616ee",
+      "truth_intervals_status": "pending_independent_annotation"
+    },
+    {
+      "id": "B",
+      "topic": "数据库与事务",
+      "duration_sec": 195.22,
+      "original_audio_sha256": "cc5e34fff13583b6576dbc78cb65d037f65aa1187d30ff8be0c71b1b7e19ff35",
+      "wrapped_mp4_sha256": "9fc7d3a9793c067345e14a53658189d7cae147505b2b28f98570cf4eeba474c6",
+      "truth_intervals_status": "pending_independent_annotation"
+    },
+    {
+      "id": "C",
+      "topic": "检索问答与来源验证",
+      "duration_sec": 190.10,
+      "original_audio_sha256": "26e67bc4fa9b3a5841bacd9e918d4927a6aa4ef257d8e6f482c869432224cbca",
+      "wrapped_mp4_sha256": "41d3e5ba8c6e76f5d93dd4ace87816f840df16279da2ab307b1d87a385768758",
+      "truth_intervals_status": "pending_independent_annotation"
+    }
+  ]
+}
