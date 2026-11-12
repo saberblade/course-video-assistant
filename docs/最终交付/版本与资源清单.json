@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-12T16:01:40",
+  "generated_at": "2026-11-12T16:04:23",
   "source": {
-    "commit": "e759351b657d8a5e49b4bf779d9f0e5459236701",
+    "commit": "8d4eddd336729db1be7a863f6f3cc9e5ea5c31a3",
     "branch": "feat/account-learning-ui",
-    "commit_time": "2026-11-12T16:01:11+08:00",
+    "commit_time": "2026-11-12T16:01:54+08:00",
     "dirty": true
   },
   "database": {
@@ -16,7 +16,7 @@
     ]
   },
   "dependencies": {
-    "python_lock_sha256": "92ff620e4ca9996a6fa3fb2f5f88b05c6a8ce67ec190bc8b5e3f6083d237efe6",
+    "python_lock_sha256": "890fc5815b115c661239b67f285dd4ba6640963bc1b9e85742b7e8bcef3bb86a",
     "frontend_lock_sha256": "6852a4b6412971d803440afea372fa1857bdcda2586706533c59779eed1a2bca",
     "python": "Python 3.12.13"
   },
