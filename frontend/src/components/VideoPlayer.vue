@@ -18,6 +18,7 @@ let progressVersion = 0;
 let lastSavedSec = 0;
 let lastSentAt = 0;
 let saving = false;
+let staleAttempt = false;
 let explicitSeek = false;
 let resumeApplied = false;
 let disposed = false;
@@ -84,7 +85,7 @@ async function restoreProgress() {
 
 async function persistProgress(force = false) {
   const element = videoElement.value;
-  if (isMock || !element || saving || props.video.status !== "ready") return;
+  if (isMock || !element || saving || staleAttempt || props.video.status !== "ready") return;
   const position = element.currentTime;
   if (!Number.isFinite(position)) return;
   const now = Date.now();
@@ -103,22 +104,55 @@ async function persistProgress(force = false) {
     lastSavedSec = saved.position_sec;
     saveState.value = "saved";
     saveHint.value = "";
+    return;
   } catch (error) {
     const apiError = toApiError(error);
-    if (apiError.code === "VERSION_CONFLICT" || apiError.code === "STALE_ATTEMPT") {
-      // 另一个窗口已经写过：重新读版本，不覆盖对方，也不假装成功。
+
+    // 视频已重新处理：旧批次进度作废，重试没有意义，也不再反复提示。
+    if (apiError.code === "STALE_ATTEMPT") {
+      staleAttempt = true;
       saveState.value = "expired";
-      saveHint.value = "这个视频的进度已在另一个窗口更新，本次未覆盖。刷新页面可取回最新位置。";
+      saveHint.value = "这个视频已重新处理，旧进度已作废，本次未保存。刷新页面后可从头继续。";
+      return;
+    }
+
+    // 版本冲突：多数是刷新瞬间新旧页面各存了一次，或是同一账号的另一个窗口。
+    // 进度是"最后一次为准"的语义，重读版本后原样重试一次即可，正常情况用户无感。
+    if (apiError.code === "VERSION_CONFLICT") {
       try {
         const latest = await api.getProgress(props.video.id);
-        progressVersion = latest.version;
-      } catch {
-        progressVersion = 0;
+        const retried = await api.saveProgress(props.video.id, {
+          attempt: props.video.attempt,
+          position_sec: position,
+          expected_version: latest.version,
+        });
+        progressVersion = retried.version;
+        lastSavedSec = retried.position_sec;
+        saveState.value = "saved";
+        saveHint.value = "";
+        return;
+      } catch (retryError) {
+        const retryApiError = toApiError(retryError);
+        if (retryApiError.code === "STALE_ATTEMPT") {
+          staleAttempt = true;
+          saveState.value = "expired";
+          saveHint.value = "这个视频已重新处理，旧进度已作废，本次未保存。刷新页面后可从头继续。";
+          return;
+        }
+        // 连续两次都被别人抢先，才提示；这种情况确实需要用户知道。
+        saveState.value = "expired";
+        saveHint.value = "进度正在另一个窗口被修改，本次未覆盖。刷新页面可取回最新位置。";
+        try {
+          progressVersion = (await api.getProgress(props.video.id)).version;
+        } catch {
+          progressVersion = 0;
+        }
+        return;
       }
-    } else {
-      saveState.value = "failed";
-      saveHint.value = apiError.message;
     }
+
+    saveState.value = "failed";
+    saveHint.value = apiError.message;
   } finally {
     saving = false;
   }
@@ -163,6 +197,7 @@ watch(
     lastSentAt = 0;
     explicitSeek = false;
     resumeApplied = false;
+    staleAttempt = false;
     saveState.value = "idle";
     saveHint.value = "";
   },
