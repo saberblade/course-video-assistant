@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-12T16:04:30",
+  "generated_at": "2026-11-12T16:14:52",
   "source": {
-    "commit": "3c357cc07a48360b71a5ebd8c5dff09c512091ab",
+    "commit": "e472f4c834f4f8fc0664aa2737914b6cc29cef28",
     "branch": "feat/account-learning-ui",
-    "commit_time": "2026-11-12T16:04:29+08:00",
+    "commit_time": "2026-11-12T16:14:44+08:00",
     "dirty": false
   },
   "database": {
@@ -54,7 +54,7 @@
     "build_dir": "frontend/dist",
     "assets": [
       {
-        "name": "index-DIRgTc9W.js",
+        "name": "index-DS8WEE2D.js",
         "bytes": 22570
       },
       {
@@ -62,7 +62,7 @@
         "bytes": 11108
       },
       {
-        "name": "LoginView-CwLcTg8Y.js",
+        "name": "LoginView-8XOZytLR.js",
         "bytes": 8785
       },
       {
@@ -74,16 +74,16 @@
         "bytes": 10191
       },
       {
-        "name": "screen-CPmRSUpv.js",
+        "name": "screen-QohAI12u.js",
         "bytes": 3746
       },
       {
-        "name": "ScreenView-Cu6CCjx8.css",
-        "bytes": 36182
+        "name": "ScreenView-D-9Qm1RI.css",
+        "bytes": 36410
       },
       {
-        "name": "ScreenView-CzyM6UOb.js",
-        "bytes": 46275
+        "name": "ScreenView-LS2bxxmH.js",
+        "bytes": 46494
       },
       {
         "name": "vendor-axios-CJL1IU5Z.js",
@@ -106,14 +106,14 @@
         "bytes": 112301
       },
       {
-        "name": "VideoDetailView-D5bZJp_l.js",
-        "bytes": 26037
-      },
-      {
         "name": "VideoDetailView-D_-cmYcM.css",
         "bytes": 20139
+      },
+      {
+        "name": "VideoDetailView-DWKBFvh_.js",
+        "bytes": 26037
       }
     ],
-    "total_js_bytes": 1207563
+    "total_js_bytes": 1207782
   }
 }
