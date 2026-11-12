@@ -1,11 +1,11 @@
 {
   "note": "清单描述 source.commit 这一版代码状态。模型、FFmpeg、密钥与前端口令产物不入库，见 README「克隆后最少五步」。",
-  "generated_at": "2026-11-12T17:47:20",
+  "generated_at": "2026-11-12T19:20:00+08:00",
   "source": {
-    "commit": "0c943c40b2bdcb37791abbdbf8c114026cbb631f",
-    "branch": "feat/account-learning-ui",
-    "commit_time": "2026-11-12T17:44:36+08:00",
-    "dirty": false
+    "commit": "6f7d97d578087db3a618e51a082ff44ac35bd42b",
+    "branch": "main",
+    "code_clean": true,
+    "note": "功能代码基线；README、交付说明和测试证据随后归档，不要求文档提交自引用自身 SHA。"
   },
   "database": {
     "engine": "SQLite",
@@ -19,7 +19,8 @@
   "dependencies": {
     "python_lock_sha256": "890fc5815b115c661239b67f285dd4ba6640963bc1b9e85742b7e8bcef3bb86a",
     "frontend_lock_sha256": "6852a4b6412971d803440afea372fa1857bdcda2586706533c59779eed1a2bca",
-    "python": "Python 3.12.13"
+    "python": "3.11.9",
+    "node": "v22.14.0"
   },
   "models": {
     "transcriber": {
@@ -55,19 +56,19 @@
     "build_dir": "frontend/dist",
     "assets": [
       {
-        "name": "index-Bjra3TOm.js",
-        "bytes": 22570
+        "name": "index-B-AUUJBe.js",
+        "bytes": 22639
       },
       {
-        "name": "index-HqQZsOCM.css",
+        "name": "index-BRQead8H.css",
         "bytes": 11108
       },
       {
-        "name": "LoginView-D-rxX1R7.js",
+        "name": "LoginView-DAauAAKq.js",
         "bytes": 8785
       },
       {
-        "name": "LoginView-DRlcyirW.css",
+        "name": "LoginView-t9tqQ5Ar.css",
         "bytes": 6854
       },
       {
@@ -75,12 +76,12 @@
         "bytes": 10191
       },
       {
-        "name": "screen-BlRySr4t.js",
+        "name": "screen-DriAqMb-.js",
         "bytes": 3746
       },
       {
-        "name": "ScreenView-CbSd3dHe.js",
-        "bytes": 46494
+        "name": "ScreenView-CWxRKw1V.js",
+        "bytes": 47022
       },
       {
         "name": "ScreenView-D-9Qm1RI.css",
@@ -111,10 +112,18 @@
         "bytes": 20139
       },
       {
-        "name": "VideoDetailView-DFc3nJhB.js",
+        "name": "VideoDetailView-urj_Z_8K.js",
         "bytes": 26595
       }
     ],
-    "total_js_bytes": 1208340
+    "total_js_bytes": 1208937
+  },
+  "release_tag": "final-prototype-2026-11-12",
+  "validation": {
+    "backend_passed": 141,
+    "browser_scenarios_passed": 14,
+    "runtime_checks_passed": 8,
+    "scope": "prototype, synthetic media",
+    "formal_lecture_quality": "not_tested"
   }
 }
