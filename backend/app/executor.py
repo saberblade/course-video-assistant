@@ -24,6 +24,7 @@ from sqlalchemy import select, delete
 
 from app.chapters import replace_chapters
 from app.clock import utc_now
+from app.glossary import apply_terms_with_count
 from app.models import Chapter, Question, Segment, Video
 
 _log = logging.getLogger("course_review.executor")
@@ -235,16 +236,21 @@ class SerialTaskExecutor:
                 db.execute(delete(Segment).where(Segment.video_id == video_id))
                 db.execute(delete(Chapter).where(Chapter.video_id == video_id))
                 db.execute(delete(Question).where(Question.video_id == video_id))
+                term_hits = 0
                 for seg in segments:
+                    fixed_text, hits = apply_terms_with_count(seg["text"])
+                    term_hits += hits
                     db.add(
                         Segment(
                             id=seg["id"],
                             video_id=video_id,
                             start_sec=seg["start_sec"],
                             end_sec=seg["end_sec"],
-                            text=seg["text"],
+                            text=fixed_text,
                         )
                     )
+                if term_hits:
+                    self._log.info("glossary fixed %d term occurrence(s) video_id=%s", term_hits, video_id)
                 db.flush()  # session autoflush=False：先把分段落库，章节生成才能读到
                 transcribe_rows = db.scalars(select(Segment).where(Segment.video_id == video_id)).all()
                 chapters = replace_chapters(db, video_id, list(transcribe_rows), duration)

@@ -208,9 +208,12 @@ def transcribe(video_path: str, output_dir: str, timeout_sec: float | None = Non
     if deadline <= 0:
         deadline = 1200.0
 
-    # 并发防御：一次只允许一个活动调用
-    if not _state["task_lock"].acquire(blocking=False):
-        raise TranscriberBusy("已有转写任务进行中")
+    # 并发防御：一次只允许一个活动调用。
+    # 但不能"抢不到就报错"——启动预热（warmup）会短暂占用同一把锁加载模型，
+    # 此时刚到队的任务应当等它让出锁，而不是被判成 TRANSCRIBE_FAILED。
+    wait_seconds = float(os.environ.get("TRANSCRIBE_LOCK_WAIT_SECONDS", "180"))
+    if not _state["task_lock"].acquire(timeout=wait_seconds):
+        raise TranscriberBusy("已有转写任务进行中，请稍后重试")
     _state["active"] = True
     try:
         with _state_lock:

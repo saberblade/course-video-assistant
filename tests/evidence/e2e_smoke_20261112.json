@@ -1,0 +1,103 @@
+{
+  "steps": [
+    {
+      "step": "anonymous_denied",
+      "status": 401
+    },
+    {
+      "step": "health",
+      "body": {
+        "status": "ok",
+        "version": "0.1.0",
+        "database": "ok",
+        "transcriber": "ready",
+        "llm_configured": true,
+        "transcriber_model": "ready",
+        "queue_pending": 0,
+        "rag_status": "ready",
+        "rag_indexes_ready": 7,
+        "rag_indexes_failed": 0
+      }
+    },
+    {
+      "step": "baseline_total",
+      "total": 5
+    },
+    {
+      "step": "upload",
+      "status": 202,
+      "body": {
+        "id": "92ce9442-09e3-4e73-94ca-6a5b12aacd9a",
+        "title": "lecture_A",
+        "status": "queued",
+        "processing_mode": "audio_only",
+        "duration_sec": 111.2,
+        "size_bytes": 1084800,
+        "created_at": "2026-11-12T07:50:51Z",
+        "updated_at": "2026-11-12T07:50:51Z",
+        "started_at": null,
+        "finished_at": null,
+        "elapsed_sec": 0.0,
+        "attempt": 1,
+        "error": null
+      },
+      "took": 0.09
+    },
+    {
+      "step": "poll_to_ready",
+      "total_sec": 28.2,
+      "elapsed_sec": 26.0,
+      "trace": [
+        {
+          "t": 0.1,
+          "status": "queued"
+        },
+        {
+          "t": 10.1,
+          "status": "transcribing"
+        },
+        {
+          "t": 20.2,
+          "status": "transcribing"
+        }
+      ]
+    },
+    {
+      "step": "content",
+      "segments": 40,
+      "chapters": 2
+    },
+    {
+      "step": "rag",
+      "status": "ready",
+      "ready": 8,
+      "failed": 0
+    },
+    {
+      "step": "question_positive",
+      "answer_status": "answered",
+      "mode": "generative",
+      "retrieval": "hybrid",
+      "citations": 2
+    },
+    {
+      "step": "question_negative",
+      "answer_status": "not_found",
+      "citations": 0
+    },
+    {
+      "step": "citations_verified",
+      "count": 2
+    },
+    {
+      "step": "history",
+      "total": 2,
+      "returned": 2
+    },
+    {
+      "step": "delete_own_video",
+      "status": 204,
+      "total_after": 5
+    }
+  ]
+}
