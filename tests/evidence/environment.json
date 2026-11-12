@@ -1,0 +1,25 @@
+{
+  "candidate_commit": "e16c2136ef4a05b80cf289a25a4922f1e4440cd0",
+  "executed_at": "2026-11-12",
+  "timezone": "Asia/Shanghai",
+  "os": "Windows NT 10.0.26200.0 AMD64",
+  "python": "3.12.1",
+  "node": "24.22.1",
+  "baseline": {
+    "python": "3.11",
+    "node": "22"
+  },
+  "available": {
+    "ffmpeg": false,
+    "ffprobe": false,
+    "whisper_model": false,
+    "llm_configuration": false
+  },
+  "formal_samples": {
+    "A": "not_provided",
+    "B": "not_provided",
+    "C": "not_provided"
+  },
+  "formal_question_run": "not_executed",
+  "source": "actual_local_execution"
+}
