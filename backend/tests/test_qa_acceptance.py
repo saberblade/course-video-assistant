@@ -195,17 +195,17 @@ def test_llm_malformed_success_payload_is_controlled_degradation(client, make_vi
             return payload
 
     class FakeClient:
-        def __enter__(self):
+        async def __aenter__(self):
             return self
 
-        def __exit__(self, *args):
+        async def __aexit__(self, *args):
             return None
 
         @staticmethod
-        def post(*args, **kwargs):
+        async def post(*args, **kwargs):
             return BrokenResponse()
 
-    monkeypatch.setattr(qa.httpx, "Client", FakeClient)
+    monkeypatch.setattr(qa.httpx, "AsyncClient", FakeClient)
 
     response = client.post(f"/api/videos/{video_id}/questions", json={"question": "召回率衡量什么？"})
 

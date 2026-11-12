@@ -59,3 +59,5 @@ Desktop.ini
 # 本地验证临时文件
 .tmp-e2e/
 /migrations/_tmp/
+**/*.pre_restore_*/
+**/*.failed_restore_*/

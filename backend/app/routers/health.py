@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import os
+import hashlib
+import sys
 from pathlib import Path
 
 from fastapi import APIRouter, Request
@@ -74,7 +76,19 @@ def read_health(db: Session, settings: Settings, request: Request | None = None)
     pending = queue_state(db) if database == "ok" else 0
     rag, rag_ready, rag_failed = rag_state(request) if request is not None else ("disabled", 0, 0)
 
-    ready = database == "ok" and transcriber == "ready"
+    executor = getattr(request.app.state, "task_executor", None) if request is not None else None
+    executor_state = "ready" if executor is not None and executor.is_running() else "disabled"
+    # Do not ping a busy worker here: that would block health behind a transcription.
+    module = sys.modules.get("modules.transcriber")
+    process = getattr(module, "_state", {}).get("proc") if module is not None else None
+    worker_state = "ready" if (
+        process is not None and process.poll() is None and getattr(executor, "preheat_state", "pending") == "ready"
+    ) else getattr(executor, "preheat_state", "not_ready")
+    if worker_state == "ready" and (process is None or process.poll() is not None):
+        worker_state = "failed"
+    from app import assistant, qa
+    draining = (settings.data_dir / ".draining").exists()
+    ready = database == "ok" and transcriber == "ready" and model == "ready" and executor_state == "ready" and worker_state == "ready" and not draining
     body = HealthOut(
         status="ok" if ready else "not_ready",
         version=settings.app_version,
@@ -86,6 +100,12 @@ def read_health(db: Session, settings: Settings, request: Request | None = None)
         rag_status=rag,
         rag_indexes_ready=rag_ready,
         rag_indexes_failed=rag_failed,
+        executor=executor_state,
+        transcriber_worker=worker_state,
+        question_busy=qa._QUESTION_LOCK.locked(),
+        assistant_busy=assistant._LOCK.locked(),
+        draining=draining,
+        service_id=hashlib.sha256(str(PROJECT_ROOT.resolve()).casefold().encode()).hexdigest()[:16],
     )
     return (200 if ready else 503), body
 

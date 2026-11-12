@@ -34,6 +34,7 @@ const chapterContent = ref<HTMLElement>();
 const todoKeyword = ref("");
 const todoFilter = ref<"open" | "done" | "all">("open");
 const noteDialog = ref(false);
+const noteSaving = ref(false);
 const noteDraft = ref("");
 const noteTarget = ref<{ video: Video; chapter: Chapter } | { record: ReviewRecord }>();
 const showSources = ref(false);
@@ -163,14 +164,25 @@ function editNote(record: ReviewRecord) {
   noteDraft.value = record.note;
   noteDialog.value = true;
 }
-function saveNote() {
+async function saveNote() {
+  if (noteSaving.value) return;
   if (!canSave.value) return;
   const target = noteTarget.value;
   if (!target) return;
-  if ("record" in target) store.edit(target.record.key, { note: noteDraft.value.trim() });
-  else store.update(target.video, target.chapter, { saved: true, resolved: false, note: noteDraft.value.trim() });
-  noteDialog.value = false;
-  ElMessage.success(storageError.value ? "本次记录已暂存，请留意存储提示" : "复习线索已保存");
+  noteSaving.value = true;
+  try {
+    const saved = "record" in target
+      ? await store.edit(target.record.key, { note: noteDraft.value.trim() })
+      : await store.update(target.video, target.chapter, { saved: true, resolved: false, note: noteDraft.value.trim() });
+    if (!saved) {
+      ElMessage.warning(storageError.value || "保存未完成，备注仍保留在编辑框，请重试。");
+      return;
+    }
+    noteDialog.value = false;
+    ElMessage.success("复习线索已保存");
+  } finally {
+    noteSaving.value = false;
+  }
 }
 async function toggleSources() {
   showSources.value = !showSources.value;
@@ -261,6 +273,6 @@ async function removeRecord(record: ReviewRecord) {
       <div v-if="!todos.length" class="panel rw-empty"><CollectionTag /><h2>{{ todoKeyword ? '没有匹配的复习线索' : todoFilter === 'done' ? '还没有已解决的记录' : openCount === 0 && doneCount > 0 && todoFilter === 'open' ? '当前的疑问都已解决' : '把想回看的地方留在这里' }}</h2><p>{{ todoKeyword ? '试试课程名称或其他关键词。' : '在课程知识导航中选择章节，点击“加入待复习”，可以附上自己的疑问。' }}</p><el-button v-if="!todoKeyword" type="primary" @click="emit('nav', 'map')">前往课程知识导航</el-button></div>
       <div v-else class="rw-todo-list"><article v-for="record in todos" :key="record.key" class="panel rw-todo-card"><div class="rw-section-row"><span class="rw-state" :class="{ 'is-done': record.resolved }">{{ record.resolved ? '已解决' : '待解决' }}</span><span class="rw-muted">{{ formatDate(record.updatedAt) }}</span></div><h2>{{ record.videoTitle }}</h2><div class="rw-todo-time">{{ formatTime(record.start) }} — {{ formatTime(record.end) }} · 第 {{ record.attempt }} 次处理</div><p class="rw-todo-note">{{ record.note || '留给下一次复习的片段，回看后可以补充自己的理解。' }}</p><blockquote>{{ record.text }}</blockquote><div class="rw-todo-actions"><el-button type="primary" :loading="openingKey === record.key" @click="openRecord(record)">回到这段讲解</el-button><el-button @click="openRecord(record, true)">向课程提问</el-button><el-button @click="store.edit(record.key, { resolved: !record.resolved })">{{ record.resolved ? '重新待复习' : '标记已解决' }}</el-button><el-button text @click="editNote(record)">编辑备注</el-button><el-button text class="rw-remove" @click="removeRecord(record)">移出清单</el-button></div></article></div>
     </template>
-    <el-dialog v-model="noteDialog" title="留下复习线索" width="min(540px, calc(100vw - 32px))" append-to-body :close-on-click-modal="false"><p class="rw-dialog-hint">写下哪里没理解，或下次想重点回看什么。备注可留空。</p><el-input v-model="noteDraft" type="textarea" :rows="4" maxlength="500" show-word-limit placeholder="例如：这里为什么要先调整工程参数？" aria-label="我的复习备注" /><template #footer><el-button @click="noteDialog = false">取消</el-button><el-button type="primary" @click="saveNote">保存复习线索</el-button></template></el-dialog>
+    <el-dialog v-model="noteDialog" title="留下复习线索" width="min(540px, calc(100vw - 32px))" append-to-body :close-on-click-modal="false"><p class="rw-dialog-hint">写下哪里没理解，或下次想重点回看什么。备注可留空。</p><el-input v-model="noteDraft" type="textarea" :rows="4" maxlength="500" show-word-limit placeholder="例如：这里为什么要先调整工程参数？" aria-label="我的复习备注" /><template #footer><el-button @click="noteDialog = false">取消</el-button><el-button type="primary" :loading="noteSaving" @click="saveNote">保存复习线索</el-button></template></el-dialog>
   </section>
 </template>

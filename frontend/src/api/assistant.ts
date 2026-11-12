@@ -6,7 +6,7 @@ export interface AssistantMessage {
   content: string;
 }
 
-export const assistantUsesApi = import.meta.env.VITE_ASSISTANT_USE_API === "true";
+export const assistantUsesApi = import.meta.env.VITE_ASSISTANT_USE_API !== "false";
 export interface AssistantReply { answer: string; mode: "generative" | "guide" }
 
 const guide = [
@@ -20,7 +20,7 @@ const guide = [
   },
   {
     topic: /薄弱|预警|掌握度|学习分析|复习进度|待复习|已解决|备注|标记/,
-    answer: "复习记录和待复习清单暂不可用。你可以先在课程知识导航中查找章节、回看讲解，或打开课程的「向课程提问」核对原文。",
+    answer: "登录后可以标记已复习、加入待复习清单、填写备注和标记已解决。播放进度与复习记录保存在服务器，同一账号访问同一服务可跨浏览器恢复；手动标记不代表知识掌握程度。",
   },
   {
     topic: /知识地图|知识导航|知识点|地图怎么/,

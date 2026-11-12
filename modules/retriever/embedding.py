@@ -14,6 +14,7 @@ import time
 from dataclasses import dataclass
 
 import httpx
+from app.outbound import post_before
 import numpy as np
 
 logger = logging.getLogger("course_review.rag")
@@ -90,21 +91,18 @@ class BailianEmbeddingClient(EmbeddingClient):
             remaining = deadline - time.monotonic()
             if remaining <= 0:
                 raise EmbeddingError("EMBED_TIMEOUT")
-            timeout = httpx.Timeout(
-                connect=self._config.connect_timeout, read=remaining, write=remaining, pool=5
-            )
             try:
-                with httpx.Client() as client:
-                    response = client.post(
-                        _embeddings_url(self._config.base_url),
-                        headers={"Authorization": f"Bearer {self._config.api_key}"},
-                        json={
-                            "model": self._config.model,
-                            "input": texts,
-                            "dimensions": self._config.dimension,
-                            "encoding_format": "float",
-                        },
-                        timeout=timeout,
+                response = post_before(
+                    _embeddings_url(self._config.base_url),
+                    deadline=deadline,
+                    connect_timeout=self._config.connect_timeout,
+                    headers={"Authorization": f"Bearer {self._config.api_key}"},
+                    json={
+                        "model": self._config.model,
+                        "input": texts,
+                        "dimensions": self._config.dimension,
+                        "encoding_format": "float",
+                    },
                     )
             except httpx.TimeoutException as exc:
                 raise EmbeddingError("EMBED_TIMEOUT") from exc
@@ -122,11 +120,18 @@ class BailianEmbeddingClient(EmbeddingClient):
                 raise EmbeddingError("EMBED_UPSTREAM_ERROR")
             if response.status_code != 200:
                 raise EmbeddingError("EMBED_UPSTREAM_ERROR")
-            payload = response.json()
-            data = payload.get("data")
-            if not isinstance(data, list) or len(data) != len(texts):
+            try:
+                payload = response.json()
+            except ValueError as exc:
+                raise EmbeddingError("EMBED_UPSTREAM_ERROR") from exc
+            if not isinstance(payload, dict):
                 raise EmbeddingError("EMBED_UPSTREAM_ERROR")
-            ordered = sorted(data, key=lambda item: item.get("index", 0))
+            data = payload.get("data")
+            if not isinstance(data, list) or len(data) != len(texts) or not all(isinstance(item, dict) for item in data):
+                raise EmbeddingError("EMBED_UPSTREAM_ERROR")
+            if any(type(item.get("index")) is not int for item in data) or sorted(item["index"] for item in data) != list(range(len(texts))):
+                raise EmbeddingError("EMBED_UPSTREAM_ERROR")
+            ordered = sorted(data, key=lambda item: item["index"])
             return [_validate_vector(item.get("embedding"), self._config.dimension) for item in ordered]
 
 
@@ -140,7 +145,12 @@ def _embeddings_url(base_url: str) -> str:
 def _validate_vector(raw: object, dimension: int) -> list[float]:
     if not isinstance(raw, list) or len(raw) != dimension:
         raise EmbeddingError("EMBED_DIMENSION_MISMATCH")
-    array = np.asarray(raw, dtype=np.float32)
+    try:
+        array = np.asarray(raw, dtype=np.float32)
+    except (ValueError, TypeError, OverflowError) as exc:
+        raise EmbeddingError("EMBED_EMPTY_VECTOR") from exc
+    if array.shape != (dimension,):
+        raise EmbeddingError("EMBED_DIMENSION_MISMATCH")
     if not np.all(np.isfinite(array)):
         raise EmbeddingError("EMBED_EMPTY_VECTOR")
     norm = float(np.linalg.norm(array.astype(np.float64)))

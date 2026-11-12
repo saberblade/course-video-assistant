@@ -16,6 +16,7 @@ const password = randomBytes(20).toString('hex');
 const results = [];
 let backend, browser;
 async function check(name, run) {
+  if (process.env.ACCOUNT_UI_FOCUS && !name.includes(process.env.ACCOUNT_UI_FOCUS)) return;
   try { await run(); results.push({ name, result:'passed' }); console.log(`PASS ${name}`); }
   catch (e) { results.push({ name, result:'failed', error:e.message.replaceAll(password,'[redacted]') }); throw e; }
 }
@@ -39,7 +40,7 @@ async function signout(page) {
   await new Promise(resolve=>reservation.close(resolve));
   base = `http://127.0.0.1:${port}`;
   const log = fs.openSync(path.join(output, 'service.log'), 'w');
-  backend = spawn(path.join(root,'.venv/Scripts/python.exe'), ['-X','utf8',path.join(root,'backend/tests/account_ui_fixture.py')], {
+  backend = spawn(process.env.COURSE_PYTHON || path.join(root,'.venv/Scripts/python.exe'), ['-X','utf8',path.join(root,'backend/tests/account_ui_fixture.py')], {
     cwd:root, windowsHide:true, stdio:['ignore',log,log], env:{...process.env, PYTHONDONTWRITEBYTECODE:'1', ACCOUNT_UI_TEST_DIR:output, ACCOUNT_UI_TEST_PASSWORD:password, ACCOUNT_UI_TEST_PORT:String(port)}
   });
   let ready = false;
@@ -47,7 +48,8 @@ async function signout(page) {
     if (backend.exitCode !== null) throw new Error('QA backend exited. See isolated service.log.');
     try {
       const health = await fetch(`${base}/api/health`);
-      if (health.ok && (await health.json()).version === path.basename(output)) { ready = true; break; }
+      // Executor is deliberately disabled: health is 503, while API/UI remain testable.
+      if ((await health.json()).version === path.basename(output)) { ready = true; break; }
     } catch {}
     await new Promise(resolve => setTimeout(resolve,250));
   }
@@ -136,7 +138,7 @@ async function signout(page) {
     const old = JSON.stringify([{key:'legacy',note:'旧匿名私人备注'}]);
     await page.evaluate(value=>localStorage.setItem('course-review:review-records:v1:real',value),old);
     await page.goto(`${base}/screen?view=weak`);
-    await page.getByText('待复习清单暂不可用',{exact:true}).waitFor();
+    await page.getByRole('heading',{name:'待复习清单',exact:true}).waitFor();
     assert.equal(await page.getByText('旧匿名记录仅保留在此浏览器，不会自动绑定或上传到当前账号。',{exact:true}).count(),0);
     assert.equal(await page.getByText('旧匿名私人备注',{exact:true}).count(),0);
     assert.equal(await page.evaluate(()=>localStorage.getItem('course-review:review-records:v1:real')),old);
@@ -288,6 +290,55 @@ async function signout(page) {
     await signin(page,'qa_beta');
     await page.locator('.rw-course-select').getByText('乙的私有课程',{exact:true}).waitFor();
     assert.equal(await page.locator('.rw-course-select').getByText(another.title,{exact:true}).count(),0);
+  });
+  await check('cross-browser progress, notes and question history restore; two real tabs preserve conflicting drafts', async () => {
+    const learning = await browser.newContext({ viewport:{width:1366,height:900} });
+    const first = await learning.newPage();
+    await first.goto(`${base}/login`);
+    await signin(first, 'qa_alpha');
+    const me = await (await learning.request.get(`${base}/api/auth/me`)).json();
+    const headers = {'X-CSRF-Token':me.csrf_token, Origin:base};
+    const courses = await (await learning.request.get(`${base}/api/videos`)).json();
+    const course = courses.items.find(item=>item.title==='甲的私有课程');
+    const summary = await (await learning.request.get(`${base}/api/videos/${course.id}/summary`)).json();
+    const chapter = summary.chapters[0];
+    const progress = await (await learning.request.get(`${base}/api/videos/${course.id}/progress`)).json();
+    assert.equal((await learning.request.put(`${base}/api/videos/${course.id}/progress`, {headers,data:{attempt:course.attempt,position_sec:33,expected_version:progress.version}})).status(),200);
+    const seeded = await learning.request.patch(`${base}/api/videos/${course.id}/chapters/${chapter.id}/review`, {headers,data:{attempt:course.attempt,expected_version:0,saved:true,note:'跨浏览器恢复测试备注'}});
+    assert.equal(seeded.status(),200);
+    const question = '召回率怎样计算？';
+    assert.equal((await learning.request.post(`${base}/api/videos/${course.id}/questions`,{headers,data:{question}})).status(),200);
+    const anotherBrowser = await browser.newContext({ viewport:{width:1366,height:900} });
+    const restored = await anotherBrowser.newPage();
+    await restored.goto(`${base}/login`);
+    await signin(restored,'qa_alpha');
+    await restored.goto(`${base}/videos/${course.id}`);
+    await restored.waitForFunction(()=>document.querySelector('video')?.currentTime>=32);
+    await restored.getByRole('tab',{name:'向课程提问',exact:true}).click();
+    await restored.getByText(question,{exact:true}).first().waitFor();
+    await restored.goto(`${base}/screen?view=weak`);
+    await restored.getByText('跨浏览器恢复测试备注',{exact:true}).waitFor();
+    const otherTab = await anotherBrowser.newPage();
+    await otherTab.goto(`${base}/screen?view=weak`);
+    await otherTab.getByText('跨浏览器恢复测试备注',{exact:true}).waitFor();
+    await restored.getByRole('button',{name:'编辑备注',exact:true}).click();
+    await otherTab.getByRole('button',{name:'编辑备注',exact:true}).click();
+    await restored.getByRole('textbox',{name:'我的复习备注'}).fill('窗口一已经保存');
+    await restored.getByRole('button',{name:'保存复习线索',exact:true}).click();
+    await restored.getByRole('dialog').waitFor({state:'hidden'});
+    await otherTab.getByRole('textbox',{name:'我的复习备注'}).fill('窗口二保留的草稿');
+    await otherTab.getByRole('button',{name:'保存复习线索',exact:true}).click();
+    await otherTab.getByText('这条记录已在另一个窗口更新，已为你刷新最新状态。',{exact:true}).first().waitFor();
+    assert(await otherTab.getByRole('dialog').isVisible());
+    assert.equal(await otherTab.getByRole('textbox',{name:'我的复习备注'}).inputValue(),'窗口二保留的草稿');
+    const latest = await (await learning.request.get(`${base}/api/videos/${course.id}/review-records`)).json();
+    assert.equal(latest.items[0].note,'窗口一已经保存');
+    await otherTab.getByRole('button',{name:'保存复习线索',exact:true}).click();
+    await otherTab.getByRole('dialog').waitFor({state:'hidden'});
+    await otherTab.getByText('窗口二保留的草稿',{exact:true}).waitFor();
+    await otherTab.screenshot({path:path.join(output,'learning-restored.png'),fullPage:true});
+    await anotherBrowser.close();
+    await learning.close();
   });
   assert.deepEqual(errors,[],'browser runtime errors');
 })().catch(error=>{console.error(error.message.replaceAll(password,'[redacted]'));process.exitCode=1;}).finally(async()=>{

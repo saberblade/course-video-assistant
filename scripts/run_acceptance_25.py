@@ -18,7 +18,9 @@
 from __future__ import annotations
 
 import argparse
+import getpass
 import json
+import os
 import sys
 import time
 from datetime import datetime
@@ -90,12 +92,14 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="25 题验收")
     parser.add_argument("--base-url", default="http://127.0.0.1:8000")
     parser.add_argument("--username", default="e2e_demo")
-    parser.add_argument("--password", default="demo-Passw0rd")
+    parser.add_argument("--password", default=None, help="兼容旧调用；推荐 ACCEPTANCE_PASSWORD 环境变量或交互输入")
+    parser.add_argument("--sample-kind", choices=["synthetic", "recorded"], default="synthetic")
     parser.add_argument("--samples-dir", default=str(PROJECT_ROOT / "data" / "tmp" / "samples"))
     parser.add_argument("--reuse", action="store_true", help="复用库里已有的同名视频，不重复上传")
     parser.add_argument("--min-positive", type=int, default=16)
     parser.add_argument("--only", nargs="*", default=None, help="只跑指定题号，如 --only A01 N01")
     args = parser.parse_args()
+    args.password = args.password or os.environ.get("ACCEPTANCE_PASSWORD") or getpass.getpass("验收账号口令（不显示）: ")
 
     bank = json.loads(BANK.read_text(encoding="utf-8"))["questions"]
     evidence: list[dict] = []
@@ -209,24 +213,31 @@ def main() -> int:
             )
             time.sleep(0.3)
 
-    positives = [row for row in evidence if row["id"].startswith(("A0", "B0", "C0"))]
-    negatives = [row for row in evidence if row["id"].startswith("N")]
+    kinds = {item["id"]: item["kind"] for item in bank}
+    positives = [row for row in evidence if kinds[row["id"]] == "positive"]
+    negatives = [row for row in evidence if kinds[row["id"]] == "negative"]
     answered = sum(1 for row in positives if row.get("answer_status") == "answered")
     rejected = sum(1 for row in negatives if row.get("answer_status") == "not_found")
     citation_ok = all(row.get("citation_valid", False) for row in evidence)
-    passed = answered >= args.min_positive and rejected == len(negatives) and citation_ok
+    complete_suite = len(evidence) == len(bank)
+    passed = complete_suite and answered >= args.min_positive and rejected == len(negatives) and citation_ok
 
     stamp = datetime.now().strftime("%Y%m%d_%H%M")
     EVIDENCE.mkdir(parents=True, exist_ok=True)
     payload = {
         "generated_at": datetime.now().isoformat(timespec="seconds"),
         "base_url": args.base_url,
+        "sample_kind": args.sample_kind,
+        "scope": "answer status and citation integrity; semantic correctness requires human review",
         "videos": {k: {"id": v["id"], "title": v["title"], "index": v["index"], "segments": len(v["segments"])} for k, v in videos.items()},
         "summary": {
             "positive_answered": f"{answered}/{len(positives)}",
             "negative_rejected": f"{rejected}/{len(negatives)}",
             "citation_valid": citation_ok,
             "passed": passed,
+            "complete_suite": complete_suite,
+            "semantic_review": "not_executed",
+            "formal_quality_passed": False,
             "threshold_positive": args.min_positive,
         },
         "items": evidence,
@@ -235,14 +246,15 @@ def main() -> int:
     json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
     lines = [
-        "# 25 题验收结果",
+        "# 25 题链路验证结果",
         "",
         f"- 时间：{payload['generated_at']}",
         f"- 服务：{args.base_url}",
-        f"- 有依据题：**{answered}/{len(positives)}**（门槛 {args.min_positive}）",
+        f"- 有依据题返回回答：**{answered}/{len(positives)}**（门槛 {args.min_positive}）",
         f"- 无依据题拒答：**{rejected}/{len(negatives)}**",
         f"- 引用合法性：{'通过' if citation_ok else '不通过'}",
-        f"- 结论：**{'通过' if passed else '未通过'}**",
+        f"- 链路结论：**{'通过' if passed else '未通过或未跑全'}**",
+        f"- 样本：{args.sample_kind}；人工语义判题未执行，本报告不作正式课程质量放行结论。",
         "",
         "| 题号 | 实际 | 期望 | 引用 | 要点 | 耗时 | 结果 |",
         "| --- | --- | --- | --- | --- | --- | --- |",

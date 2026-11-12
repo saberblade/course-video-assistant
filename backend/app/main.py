@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import os
+import sys
 import threading
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -14,6 +15,8 @@ from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.staticfiles import StaticFiles
 
 from app.config import PROJECT_ROOT, get_settings
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 from app.database import (
     Base,
     ensure_question_metadata_columns,
@@ -39,6 +42,7 @@ def create_app() -> FastAPI:
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
+        (settings.data_dir / ".draining").unlink(missing_ok=True)
         for name in ("tmp", "videos", "trash"):
             (settings.data_dir / name).mkdir(parents=True, exist_ok=True)
         Base.metadata.create_all(engine)
@@ -78,6 +82,12 @@ def create_app() -> FastAPI:
     @app.middleware("http")
     async def request_id_middleware(request: Request, call_next):
         request.state.request_id = str(uuid4())
+        if request.method in ("POST", "PUT", "PATCH", "DELETE") and (settings.data_dir / ".draining").exists():
+            from fastapi.responses import JSONResponse
+            return JSONResponse(status_code=503, content={
+                "error": {"code": "SERVICE_DRAINING", "message": "服务正在停止，请稍后重试", "retryable": True},
+                "request_id": request.state.request_id,
+            }, headers={"Retry-After": "3", "X-Request-ID": request.state.request_id})
         response = await call_next(request)
         response.headers["X-Request-ID"] = request.state.request_id
         return response

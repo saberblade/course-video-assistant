@@ -1,6 +1,6 @@
 {
   "version": "2026-11-12",
-  "source_type": "user_self_recorded_from_repository_acceptance_scripts",
+  "source_type": "synthetic_tts_from_repository_acceptance_scripts",
   "authorization_scope": "course-video-assistant testing and acceptance",
   "original_media_storage": "local_only_not_committed",
   "samples": [
