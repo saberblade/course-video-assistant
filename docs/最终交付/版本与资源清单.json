@@ -1,0 +1,119 @@
+{
+  "generated_at": "2026-11-12T16:01:40",
+  "source": {
+    "commit": "e759351b657d8a5e49b4bf779d9f0e5459236701",
+    "branch": "feat/account-learning-ui",
+    "commit_time": "2026-11-12T16:01:11+08:00",
+    "dirty": true
+  },
+  "database": {
+    "engine": "SQLite",
+    "path": "data/app.db",
+    "alembic_revision": "20261112_0002",
+    "migrations": [
+      "20261112_0001_baseline",
+      "20261112_0002_learning_profile_and_rag"
+    ]
+  },
+  "dependencies": {
+    "python_lock_sha256": "92ff620e4ca9996a6fa3fb2f5f88b05c6a8ce67ec190bc8b5e3f6083d237efe6",
+    "frontend_lock_sha256": "6852a4b6412971d803440afea372fa1857bdcda2586706533c59779eed1a2bca",
+    "python": "Python 3.12.13"
+  },
+  "models": {
+    "transcriber": {
+      "path": "models/faster-whisper-small/model.bin",
+      "bytes": 483546902,
+      "sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671",
+      "source": "faster-whisper-small（本机 models 目录，不入 Git）"
+    },
+    "embedding": {
+      "provider": "阿里云百炼",
+      "model": "text-embedding-v4",
+      "dimension": 1024,
+      "configured": true
+    },
+    "generation": {
+      "provider": "阿里云百炼（OpenAI 兼容端点）",
+      "configured": true
+    }
+  },
+  "rag": {
+    "index_version": "idx_v1",
+    "chunking_version": "chunks_v1",
+    "retrieval_mode_default": "hybrid",
+    "rrf_k": 60
+  },
+  "tools": {
+    "ffmpeg": {
+      "path": "tools/ffmpeg/ffmpeg.exe",
+      "version": "ffmpeg version 9.0.2-essentials_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+    }
+  },
+  "frontend": {
+    "build_dir": "frontend/dist",
+    "assets": [
+      {
+        "name": "index-DIRgTc9W.js",
+        "bytes": 22570
+      },
+      {
+        "name": "index-HqQZsOCM.css",
+        "bytes": 11108
+      },
+      {
+        "name": "LoginView-CwLcTg8Y.js",
+        "bytes": 8785
+      },
+      {
+        "name": "LoginView-DRlcyirW.css",
+        "bytes": 6854
+      },
+      {
+        "name": "screen-b-z8nitn.css",
+        "bytes": 10191
+      },
+      {
+        "name": "screen-CPmRSUpv.js",
+        "bytes": 3746
+      },
+      {
+        "name": "ScreenView-Cu6CCjx8.css",
+        "bytes": 36182
+      },
+      {
+        "name": "ScreenView-CzyM6UOb.js",
+        "bytes": 46275
+      },
+      {
+        "name": "vendor-axios-CJL1IU5Z.js",
+        "bytes": 59036
+      },
+      {
+        "name": "vendor-Dq4HVyGZ.js",
+        "bytes": 129564
+      },
+      {
+        "name": "vendor-element-DhoDyWsQ.css",
+        "bytes": 361022
+      },
+      {
+        "name": "vendor-element-Ol0DgpTK.js",
+        "bytes": 799249
+      },
+      {
+        "name": "vendor-vue-Cd-uTh3g.js",
+        "bytes": 112301
+      },
+      {
+        "name": "VideoDetailView-D5bZJp_l.js",
+        "bytes": 26037
+      },
+      {
+        "name": "VideoDetailView-D_-cmYcM.css",
+        "bytes": 20139
+      }
+    ],
+    "total_js_bytes": 1207563
+  }
+}
