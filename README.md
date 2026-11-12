@@ -84,6 +84,25 @@ npm.cmd --prefix frontend run build
 
 Git 仓库不包含虚拟环境、模型、工具二进制、授权录课、密钥、数据库或前端构建产物，成员需在自己的运行设备准备。
 
+## 克隆后最少要做的五步
+
+仓库不含虚拟环境、模型、FFmpeg、密钥和前端构建产物，所以克隆后按顺序补齐这五样即可运行：
+
+| 步骤 | 命令 / 动作 | 不做的后果 |
+| --- | --- | --- |
+| 1 依赖 | `py -3.11 -m venv .venv` 后 `pip install -r requirements.lock.txt` | 起不来 |
+| 2 配置 | `Copy-Item .env.example .env.local`，按需填 `LLM_API_KEY` | 能跑，但问答只返回课程原文（`degraded/extractive`） |
+| 3 模型 | `.\.venv\Scripts\python.exe -X utf8 scripts\download_model_bin.py`，见[模型准备说明](deploy/02_模型准备说明.md) | 能登录、能看列表，上传后处理报 `MODEL_NOT_FOUND` |
+| 4 FFmpeg | 安装 ffmpeg 并放进 PATH，或在 `.env.local` 指 `FFMPEG_BIN`/`FFPROBE_BIN` | 上传时校验失败 |
+| 5 前端 | `npm.cmd --prefix frontend ci` 后 `npm.cmd --prefix frontend run build` | 8000 只提供 API，页面打不开 |
+
+`.\.venv\Scripts\python.exe -m alembic upgrade head` 建库（`deploy\start.ps1` 会自动执行）。
+完成 1–5 后 `powershell -ExecutionPolicy Bypass -File deploy\start.ps1` 即可访问 `http://127.0.0.1:8000/`。
+
+已在干净目录实测：`git clone` → `alembic upgrade head`（12 张表）→ 启动 → 注册/登录/列表 200 →
+`npm ci && npm run build` → 首页 200；`pip install --dry-run -r requirements.lock.txt` 可完整解析。
+模型需自行准备，所以克隆副本的 `/api/health` 会显示 `transcriber_model: missing`，这是如实状态。
+
 ## 启动方式
 
 ### 开发联调：一键启动前后端
