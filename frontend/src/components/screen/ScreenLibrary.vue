@@ -60,13 +60,14 @@ async function removeVideo(video: Video) {
         <h1 id="library-title">我的课程</h1>
         <p>上传课程视频并查看处理进度。处理完成后，可以查看提要、提问并按引用回看。</p>
       </div>
-      <dl class="lib-kpis">
-        <div><dt>课程总数</dt><dd>{{ total }}</dd></div>
-        <div><dt>{{ pageLabel }}可复习</dt><dd class="lib-kpis__ready">{{ readyCount }}</dd></div>
-        <div><dt>{{ pageLabel }}处理中</dt><dd class="lib-kpis__running">{{ runningCount }}</dd></div>
-        <div><dt>{{ pageLabel || "累计" }}时长</dt><dd>{{ totalDuration ? formatDuration(totalDuration) : "--:--" }}</dd></div>
-      </dl>
     </header>
+
+    <dl class="lib-kpis" aria-label="课程概览">
+      <div><dt>课程总数</dt><dd>{{ total }}</dd></div>
+      <div><dt>{{ pageLabel }}可复习</dt><dd class="lib-kpis__ready">{{ readyCount }}</dd></div>
+      <div><dt>{{ pageLabel }}处理中</dt><dd class="lib-kpis__running">{{ runningCount }}</dd></div>
+      <div><dt>{{ pageLabel || "累计" }}时长</dt><dd>{{ totalDuration ? formatDuration(totalDuration) : "--:--" }}</dd></div>
+    </dl>
 
     <section v-if="readyVideo" class="panel lib-resume" aria-label="最近可复习的课程">
       <div class="lib-resume__course">
@@ -131,40 +132,43 @@ async function removeVideo(video: Video) {
 <style scoped>
 .lib {
   display: grid;
-  gap: 18px;
-  max-width: 1480px;
+  gap: 22px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 22px 26px 26px;
+  padding: 30px 36px 32px;
 }
-.lib-head {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 18px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--scr-line);
+/* 与 .rw（知识导航/复习进度/待复习清单）保持同一套标题尺度与节奏 */
+.lib-head { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.lib-head h1 {
+  margin: 5px 0 6px;
+  color: var(--scr-text);
+  font-size: clamp(24px, 2.4vw, 32px);
+  letter-spacing: -0.7px;
+  line-height: 1.4;
 }
-.lib-head h1 { margin: 0 0 3px; color: var(--scr-text); font-size: 26px; line-height: 1.4; }
-.lib-head p { margin: 0; color: var(--scr-text-dim); font-size: 13px; }
+.lib-head p { margin: 0; color: #71858c; font-size: 13px; }
+
+/* KPI 与复习进度的统计卡同一套观感：白卡 + 大号等宽数字 */
 .lib-kpis {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1px;
-  flex-shrink: 0;
+  gap: 14px;
   margin: 0;
-  overflow: hidden;
-  border: 1px solid var(--scr-line);
-  border-radius: 9px;
-  background: var(--scr-line);
 }
-.lib-kpis div { padding: 8px 14px; background: #fff; }
-.lib-kpis dt { color: var(--scr-text-dim); font-size: 11px; }
+.lib-kpis div {
+  padding: 18px 22px;
+  border: 1px solid #e0e9e6;
+  border-radius: 13px;
+  background: #fff;
+}
+.lib-kpis dt { color: #738c8a; font-size: 12px; }
 .lib-kpis dd {
-  margin: 2px 0 0;
-  color: var(--scr-text);
+  margin: 6px 0 0;
+  color: #1b5556;
   font-family: "Bahnschrift", Consolas, monospace;
-  font-size: 18px;
-  line-height: 1.2;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.15;
 }
 .lib-kpis .lib-kpis__ready { color: var(--scr-green); }
 .lib-kpis .lib-kpis__running { color: var(--scr-amber); }
@@ -198,13 +202,23 @@ async function removeVideo(video: Video) {
 @media (max-width: 1180px) {
   .lib-body { grid-template-columns: 280px minmax(0, 1fr); }
 }
+@media (max-width: 1050px) {
+  .lib { padding: 25px 24px; }
+  .lib-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 @media (max-width: 900px) {
-  .lib { padding: 16px 14px 22px; }
-  .lib-head { flex-direction: column; align-items: stretch; }
+  .lib-head { display: block; }
   .lib-body { grid-template-columns: minmax(0, 1fr); }
 }
+@media (max-width: 700px) {
+  .lib { gap: 16px; padding: 22px 16px 30px; }
+  .lib-head h1 { font-size: 26px; }
+  .lib-kpis { gap: 10px; }
+  .lib-kpis div { padding: 16px 18px; }
+  .lib-kpis dd { font-size: 26px; }
+}
 @media (max-width: 440px) {
-  .lib-kpis div { padding: 8px; }
+  .lib-kpis div { padding: 14px 12px; }
   .lib-list__head { padding: 16px 14px; }
   .lib-list__head h2 { font-size: 19px; }
   .lib-list__head p { font-size: 12px; }

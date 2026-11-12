@@ -70,6 +70,8 @@ const todos = computed(() => saved.value.filter(r => {
 const sources = computed(() => activeChapter.value?.segment_ids.map(id => transcript.value?.find(s => s.id === id)).filter((s): s is TranscriptSegment => Boolean(s)) ?? []);
 const currentState = (chapter: Chapter) => video.value ? store.find(video.value, chapter) : undefined;
 const videoStatusNames: Record<Video["status"], string> = { ready: "可以复习", queued: "排队中", transcribing: "正在转写", indexing: "正在整理", failed: "处理失败" };
+// 选中的课程加载失败时，不要在下拉框里显示一串 UUID
+const orphanSelection = computed(() => Boolean(selectedId.value) && !videos.value.some(v => v.id === selectedId.value));
 
 async function loadVideos(more = false) {
   if (loading.value) return;
@@ -216,7 +218,7 @@ async function removeRecord(record: ReviewRecord) {
     <template v-if="view !== 'weak'">
       <section class="rw-course panel" aria-label="选择课程视频">
         <span class="rw-course-icon"><VideoCamera /></span>
-        <div class="rw-course-select"><label for="review-video">当前课程视频</label><el-select id="review-video" v-model="selectedId" class="rw-video-select" popper-class="rw-video-menu" aria-label="选择课程视频" filterable :placeholder="loading ? '正在读取课程…' : '搜索或选择课程视频'" :disabled="!videos.some(v => v.status === 'ready')" no-match-text="没有匹配的课程视频" no-data-text="暂无可复习的课程" :show-arrow="true"><el-option v-for="item in videos" :key="item.id" :value="item.id" :label="item.title" :disabled="item.status !== 'ready'"><div class="rw-video-option"><span class="rw-video-option-icon"><VideoCamera /></span><div class="rw-video-option-copy"><strong :title="item.title">{{ item.title }}</strong><small>{{ formatDuration(item.duration_sec) }}<i />{{ videoStatusNames[item.status] }}</small></div><span class="rw-video-option-state" :class="{ 'is-ready': item.status === 'ready' }">{{ item.id === selectedId ? '当前课程' : videoStatusNames[item.status] }}</span></div></el-option></el-select></div>
+        <div class="rw-course-select"><label for="review-video">当前课程视频</label><el-select id="review-video" v-model="selectedId" class="rw-video-select" popper-class="rw-video-menu" aria-label="选择课程视频" filterable :placeholder="loading ? '正在读取课程…' : '搜索或选择课程视频'" :disabled="!videos.some(v => v.status === 'ready')" no-match-text="没有匹配的课程视频" no-data-text="暂无可复习的课程" :show-arrow="true"><el-option v-if="orphanSelection" :value="selectedId" label="课程信息暂不可用（连接恢复后自动刷新）" disabled /><el-option v-for="item in videos" :key="item.id" :value="item.id" :label="item.title" :disabled="item.status !== 'ready'"><div class="rw-video-option"><span class="rw-video-option-icon"><VideoCamera /></span><div class="rw-video-option-copy"><strong :title="item.title">{{ item.title }}</strong><small>{{ formatDuration(item.duration_sec) }}<i />{{ videoStatusNames[item.status] }}</small></div><span class="rw-video-option-state" :class="{ 'is-ready': item.status === 'ready' }">{{ item.id === selectedId ? '当前课程' : videoStatusNames[item.status] }}</span></div></el-option></el-select></div>
         <span v-if="video" class="rw-course-duration">{{ formatDuration(video.duration_sec) }} · {{ chapters.length }} 个章节</span>
         <el-button :loading="loading" @click="loadVideos()"><el-icon><Refresh /></el-icon>刷新课程</el-button>
         <el-button v-if="videos.length < total" :loading="loading" @click="loadVideos(true)">加载更多课程</el-button>
