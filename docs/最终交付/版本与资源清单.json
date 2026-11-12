@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-11-12T16:04:23",
+  "generated_at": "2026-11-12T16:04:30",
   "source": {
-    "commit": "8d4eddd336729db1be7a863f6f3cc9e5ea5c31a3",
+    "commit": "3c357cc07a48360b71a5ebd8c5dff09c512091ab",
     "branch": "feat/account-learning-ui",
-    "commit_time": "2026-11-12T16:01:54+08:00",
-    "dirty": true
+    "commit_time": "2026-11-12T16:04:29+08:00",
+    "dirty": false
   },
   "database": {
     "engine": "SQLite",
