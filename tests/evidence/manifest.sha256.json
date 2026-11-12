@@ -1,0 +1,15 @@
+{
+  "algorithm": "SHA-256",
+  "candidate_commit": "e16c2136ef4a05b80cf289a25a4922f1e4440cd0",
+  "files": {
+    "README.md": "195dd26cbc7ebc9028ad3aa116dedfb30ff6707a7a118e3ac1094df28bb5f1f4",
+    "environment.json": "a8bffae9d343673470b058c499d37c00450fce921a0d7e943734d56cdb556654",
+    "测试验收报告_2026-11-12.md": "e45fa55dcd29e10aed70cffaaa3f1a3129b7ce4cfd35ffae9e5c6f86ec31953a",
+    "质量检查单_实际验收_2026-11-12.xlsx": "ab357d45222702155e089b9089e5832f97053ee716036d977e72495caec3323d",
+    "backend-and-qa-82.xml": "a7633df6a7750266bd60d47661352f3e8bc7a6d3784aebdcf6a4bcd6625361fc",
+    "backend-baseline-70.xml": "48a1499cf777ea40dcc27b3e4cfbb0a121c4650a93bcd0fd1d81ff351f82880a",
+    "backup-manifest.txt": "6addeec0b5e3ccd0e445fba286cb8e842eab723f93249a751fe9bc244bad0ea7",
+    "backup-restore-check.json": "82816840c22bfa4625cf940d86e575f3b5aa403432cb2ef6467475daf805c5c8",
+    "browser-check.json": "7b98144f3b659397a5dd3d59b9ad4489470ec372ecba40e7191a86150986965a"
+  }
+}
