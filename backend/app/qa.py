@@ -13,6 +13,7 @@ from sqlalchemy.orm import Session
 
 from app.chapters import TranscriptPiece
 from app.config import Settings
+from app.outbound import post_before
 from app.retrieval import HitSegment, search_segments
 from app.schemas import CitationOut
 
@@ -68,7 +69,8 @@ def draft_answer(
     db: Session | None = None,
     video_id: str | None = None,
 ) -> DraftAnswer:
-    hits, retrieval_mode, retrieval_version = _retrieve(segments, question, duration_sec, settings, db, video_id)
+    deadline = time.monotonic() + settings.llm_total_deadline_seconds
+    hits, retrieval_mode, retrieval_version = _retrieve(segments, question, duration_sec, settings, db, video_id, deadline)
     evidence = [segment for hit in hits for segment in hit.segments]
     if not evidence:
         return _not_found(retrieval_mode, retrieval_version)
@@ -79,13 +81,17 @@ def draft_answer(
         logger.info("LLM_NOT_CONFIGURED")
         return _degraded(evidence, retrieval_mode, retrieval_version)
     try:
-        content = complete_chat(settings, _messages(question, evidence))
+        content = complete_chat(settings, _messages(question, evidence), deadline=deadline)
     except LlmError as exc:
         logger.info("%s", exc.code)
         return _degraded(evidence, retrieval_mode, retrieval_version)
     parsed = _parse_model_json(content)
-    if parsed is None or not parsed.get("has_evidence") or not str(parsed.get("answer", "")).strip():
+    if parsed is None or type(parsed.get("has_evidence")) is not bool:
+        return _degraded(evidence, retrieval_mode, retrieval_version)
+    if not parsed["has_evidence"]:
         return _not_found(retrieval_mode, retrieval_version)
+    if not isinstance(parsed.get("answer"), str) or not parsed["answer"].strip():
+        return _degraded(evidence, retrieval_mode, retrieval_version)
     citations = _citations(parsed.get("segment_ids"), evidence)
     if citations is None:
         return _not_found(retrieval_mode, retrieval_version)
@@ -106,6 +112,7 @@ def _retrieve(
     settings: Settings,
     db: Session | None,
     video_id: str | None,
+    deadline: float,
 ) -> tuple[list, str, str | None]:
     """优先走 RAG 混合检索；模块不可用或索引未就绪时回退基线 BM25，并如实记录模式。"""
     if db is not None and video_id:
@@ -120,7 +127,7 @@ def _retrieve(
                 duration_sec,
                 top_k=settings.retrieval_top_k,
                 max_chars=settings.max_context_characters,
-                budget_seconds=RETRIEVAL_BUDGET_SECONDS,
+                budget_seconds=max(0.0, min(RETRIEVAL_BUDGET_SECONDS, deadline - time.monotonic())),
             )
             mode = outcome.mode_used if outcome.mode_used in RETRIEVAL_MODES else "bm25"
             version = outcome.diagnostics.get("index_version")
@@ -139,44 +146,46 @@ def _retrieve(
     return hits, "bm25", None
 
 
-def complete_chat(settings: Settings, messages: list[dict[str, str]]) -> str:
-    deadline = time.monotonic() + settings.llm_total_deadline_seconds
+def complete_chat(settings: Settings, messages: list[dict[str, str]], *, deadline: float | None = None) -> str:
+    if deadline is None:
+        deadline = time.monotonic() + settings.llm_total_deadline_seconds
     retried = False
-    with httpx.Client() as client:
-        while True:
-            remaining = deadline - time.monotonic()
-            if remaining <= 0:
-                raise LlmError("LLM_TIMEOUT")
-            timeout = httpx.Timeout(connect=settings.llm_connect_timeout_seconds, read=remaining, write=remaining, pool=5)
-            try:
-                response = client.post(
-                    _chat_url(settings.llm_base_url),
-                    headers={"Authorization": f"Bearer {settings.llm_api_key}"},
-                    json={"model": settings.llm_model, "messages": messages, "temperature": 0},
-                    timeout=timeout,
-                )
-            except httpx.TimeoutException as exc:
-                raise LlmError("LLM_TIMEOUT") from exc
-            except httpx.TransportError as exc:
-                if not retried and deadline - time.monotonic() > 1:
-                    retried = True
-                    continue
-                raise LlmError("LLM_UPSTREAM_ERROR") from exc
-            if response.status_code in (401, 403):
-                raise LlmError("LLM_AUTH_ERROR")
-            if response.status_code == 429 or response.status_code >= 500:
-                if not retried and deadline - time.monotonic() > 1:
-                    retried = True
-                    continue
-                raise LlmError("LLM_UPSTREAM_ERROR")
-            if response.status_code != 200:
-                raise LlmError("LLM_UPSTREAM_ERROR")
-            try:
-                payload = response.json()
-            except ValueError as exc:
-                # 上游返回 200 但正文不是 JSON：属于受控降级，不能冒泡成 500。
-                raise LlmError("LLM_BAD_PAYLOAD") from exc
-            return _extract_content(payload)
+    while True:
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise LlmError("LLM_TIMEOUT")
+        try:
+            response = post_before(
+                _chat_url(settings.llm_base_url),
+                deadline=deadline,
+                connect_timeout=settings.llm_connect_timeout_seconds,
+                headers={"Authorization": f"Bearer {settings.llm_api_key}"},
+                json={"model": settings.llm_model, "messages": messages, "temperature": 0},
+            )
+        except httpx.TimeoutException as exc:
+            raise LlmError("LLM_TIMEOUT") from exc
+        except httpx.TransportError as exc:
+            if not retried and deadline - time.monotonic() > 1:
+                retried = True
+                continue
+            raise LlmError("LLM_UPSTREAM_ERROR") from exc
+        if response.status_code in (401, 403):
+            raise LlmError("LLM_AUTH_ERROR")
+        if response.status_code == 429 or response.status_code >= 500:
+            if not retried and deadline - time.monotonic() > 1:
+                retried = True
+                continue
+            raise LlmError("LLM_UPSTREAM_ERROR")
+        if response.status_code != 200:
+            raise LlmError("LLM_UPSTREAM_ERROR")
+        try:
+            payload = response.json()
+        except ValueError as exc:
+            # 上游返回 200 但正文不是 JSON：属于受控降级，不能冒泡成 500。
+            raise LlmError("LLM_BAD_PAYLOAD") from exc
+        if time.monotonic() >= deadline:
+            raise LlmError("LLM_TIMEOUT")
+        return _extract_content(payload)
 
 
 def _extract_content(payload: object) -> str:

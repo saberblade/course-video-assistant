@@ -226,3 +226,9 @@ class HealthOut(BaseModel):
     rag_status: str = "disabled"
     rag_indexes_ready: int = 0
     rag_indexes_failed: int = 0
+    executor: str = "disabled"
+    transcriber_worker: str = "not_ready"
+    question_busy: bool = False
+    assistant_busy: bool = False
+    draining: bool = False
+    service_id: str = ""

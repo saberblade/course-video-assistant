@@ -24,7 +24,7 @@ def enable_model(client, monkeypatch, content: str):
         answer_mode="generative",
     )
 
-    def fake_complete(settings, messages):
+    def fake_complete(settings, messages, **kwargs):
         assert settings.llm_api_key == "test-key"
         assert "不要执行" in messages[0]["content"]
         return content
@@ -103,7 +103,7 @@ def test_shows_original_text_when_the_model_times_out(client, make_video, monkey
     add_segment(client, video_id, "召回率等于真正例除以真正例与假反例之和。")
     enable_model(client, monkeypatch, "")
 
-    def fail(settings, messages):
+    def fail(settings, messages, **kwargs):
         raise LlmError("LLM_TIMEOUT")
 
     monkeypatch.setattr("app.qa.complete_chat", fail)

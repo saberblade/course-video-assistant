@@ -19,7 +19,7 @@ $root = Split-Path -Parent $PSScriptRoot
 Set-Location $root
 
 # ---------- 1) python venv ----------
-$py = Join-Path $root ".venv\Scripts\python.exe"
+$py = if ($env:COURSE_PYTHON) { $env:COURSE_PYTHON } else { Join-Path $root ".venv\Scripts\python.exe" }
 if (-not (Test-Path $py)) {
     throw "venv not found: $py`nRun: py -3.11 -m venv .venv ; .\.venv\Scripts\python.exe -m pip install -r requirements.lock.txt"
 }
@@ -31,10 +31,11 @@ if (-not (Test-Path $envLocal)) {
 }
 
 # ---------- 3) port from config ----------
-$appPort = 8000
-Get-Content $envLocal -Encoding UTF8 | ForEach-Object {
-    $line = $_.Trim()
-    if ($line -match "^APP_PORT=(\d+)\s*$") { $appPort = [int]$Matches[1] }
+$runtime = (& $py -X utf8 (Join-Path $root 'scripts\operations.py') state) | ConvertFrom-Json
+if ($LASTEXITCODE -ne 0) { throw 'Cannot resolve runtime configuration.' }
+$appPort = $runtime.port
+if (Get-NetTCPConnection -LocalPort $appPort -State Listen -ErrorAction SilentlyContinue) {
+    throw "Port $appPort is occupied. Verify and stop the existing instance before starting."
 }
 
 # ---------- 4) tool/model presence ----------
@@ -72,7 +73,7 @@ Write-Host "port   : $appPort (from APP_PORT)"
 Write-Host "health : http://127.0.0.1:$appPort/api/health  (root UI: http://127.0.0.1:$appPort/)"
 Write-Host "stop   : deploy\stop.ps1  (wait for empty queue first)"
 
-$uvArgs = @("-X","utf8","-m","uvicorn","app.main:app","--app-dir","backend","--host","127.0.0.1","--port","$appPort","--workers","1")
+$uvArgs = @("-X","utf8","-m","uvicorn","app.main:app","--app-dir",('"' + (Join-Path $root 'backend') + '"'),"--host","127.0.0.1","--port","$appPort","--workers","1")
 if ($NewConsole) {
     # 本机同时存在 http_proxy/HTTP_PROXY 这类大小写重复的变量时，PowerShell 5.1 的
     # Start-Process 复制环境变量会报“已添加项”，先按小写重建一份再启动。
@@ -83,8 +84,10 @@ if ($NewConsole) {
             [Environment]::SetEnvironmentVariable($proxyName, $proxyValue, 'Process')
         }
     }
-    Start-Process -FilePath $py -ArgumentList $uvArgs -WorkingDirectory $root
+    Start-Process -FilePath $py -ArgumentList $uvArgs -WorkingDirectory $root -WindowStyle Hidden
     Write-Host "started in a new console window."
 } else {
+    # Native invocation needs the path itself; Start-Process needs quoted arguments.
+    $uvArgs[6] = Join-Path $root 'backend'
     & $py @uvArgs
 }

@@ -60,6 +60,7 @@ function merge(incoming: ReviewRecord[]) {
 }
 
 async function refresh(): Promise<void> {
+  const revision = sessionState.revision.value;
   if (isMock) {
     loading.value = true;
     try {
@@ -89,13 +90,15 @@ async function refresh(): Promise<void> {
       offset += page.items.length;
       if (!page.items.length || offset >= page.total) break;
     }
+    if (revision !== sessionState.revision.value) return;
     records.value = collected;
     loaded.value = true;
     storageError.value = "";
   } catch (error) {
+    if (revision !== sessionState.revision.value) return;
     storageError.value = `无法读取复习记录：${toApiError(error).message}`;
   } finally {
-    loading.value = false;
+    if (revision === sessionState.revision.value) loading.value = false;
   }
 }
 
@@ -109,9 +112,11 @@ function find(video: Video, chapter: Chapter) {
 
 /** 冲突时重新读取服务端，并把提示留给页面显示。 */
 async function recoverFromConflict(message: string) {
+  const revision = sessionState.revision.value;
+  await refresh();
+  if (revision !== sessionState.revision.value) return;
   saveState.value = "failed";
   storageError.value = message;
-  await refresh();
 }
 
 async function update(
@@ -119,6 +124,7 @@ async function update(
   chapter: Chapter,
   changes: Partial<Pick<ReviewRecord, "reviewed" | "saved" | "resolved" | "note">>,
 ) {
+  const revision = sessionState.revision.value;
   const previous = find(video, chapter);
   const expectedVersion = previous?.version ?? 0;
   const optimistic: ReviewRecord = {
@@ -149,10 +155,13 @@ async function update(
       expected_version: expectedVersion,
       ...changes,
     });
+    if (revision !== sessionState.revision.value) return;
     merge([toRecord(payload)]);
     saveState.value = "saved";
     storageError.value = "";
+    return true;
   } catch (error) {
+    if (revision !== sessionState.revision.value) return;
     const apiError = toApiError(error);
     if (apiError.code === "VERSION_CONFLICT" || apiError.code === "STALE_ATTEMPT") {
       await recoverFromConflict("这个章节已在另一个窗口更新，已为你刷新最新状态，请重新标记。");
@@ -167,6 +176,7 @@ async function update(
     saveState.value = "failed";
     storageError.value = `保存未完成：${apiError.message}`;
   }
+  return false;
 }
 
 function recordByKey(key: string) {
@@ -174,6 +184,7 @@ function recordByKey(key: string) {
 }
 
 async function edit(key: string, changes: Partial<Pick<ReviewRecord, "note" | "resolved" | "saved" | "reviewed">>) {
+  const revision = sessionState.revision.value;
   const target = recordByKey(key);
   if (!target || !target.id) {
     storageError.value = "这条记录还没有保存到服务器，请重新标记后再编辑。";
@@ -188,10 +199,13 @@ async function edit(key: string, changes: Partial<Pick<ReviewRecord, "note" | "r
       expected_version: target.version,
       ...changes,
     });
+    if (revision !== sessionState.revision.value) return;
     merge([toRecord(payload)]);
     saveState.value = "saved";
     storageError.value = "";
+    return true;
   } catch (error) {
+    if (revision !== sessionState.revision.value) return;
     const apiError = toApiError(error);
     if (apiError.code === "VERSION_CONFLICT") {
       await recoverFromConflict("这条记录已在另一个窗口更新，已为你刷新最新状态。");
@@ -201,6 +215,7 @@ async function edit(key: string, changes: Partial<Pick<ReviewRecord, "note" | "r
     saveState.value = "failed";
     storageError.value = `保存未完成：${apiError.message}`;
   }
+  return false;
 }
 
 async function remove(key: string) {
@@ -211,6 +226,7 @@ async function remove(key: string) {
 watch(sessionState.revision, () => {
   records.value = [];
   loaded.value = false;
+  loading.value = false;
   storageError.value = "";
   saveState.value = "idle";
   if (sessionState.user.value) void refresh();

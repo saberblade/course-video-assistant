@@ -18,8 +18,8 @@
 
 | 变量 | 默认 | 说明 |
 | --- | --- | --- |
-| `RAG_INDEXING_ENABLED` | `0` | 执行器是否启动索引线程；`.env.local` 设 `1` 启用 |
-| `RAG_RETRIEVAL_MODE` | `bm25` | 问答默认检索方式（`bm25`/`hybrid`）；评测证明有收益前保持 `bm25` |
+| `RAG_INDEXING_ENABLED` | 自动 | 未设置时按有效向量配置启动索引；可显式设 `0` 禁用或 `1` 启用 |
+| `RAG_RETRIEVAL_MODE` | `hybrid` | 问答默认混合检索；`bm25` 用于关键词基线对照，故障如实标注 fallback |
 | `RAG_EMBEDDING_MODEL` | `text-embedding-v4` | 向量模型 |
 | `RAG_EMBEDDING_DIMENSION` | `1024` | 向量维度（v4 支持 64–2048） |
 | `RAG_EMBEDDING_BATCH_SIZE` | `10` | 单次请求文本条数 |

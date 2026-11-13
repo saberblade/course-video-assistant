@@ -1,0 +1,63 @@
+{
+  "source_commit": "6f7d97d578087db3a618e51a082ff44ac35bd42b",
+  "scope": "prototype, synthetic media; no formal lecture quality claim",
+  "checks": [
+    {
+      "check": "fresh_migration_and_real_model_warmup",
+      "result": "passed",
+      "health": {
+        "status": "ok",
+        "version": "0.1.0",
+        "database": "ok",
+        "transcriber": "ready",
+        "llm_configured": true,
+        "transcriber_model": "ready",
+        "queue_pending": 0,
+        "rag_status": "ready",
+        "rag_indexes_ready": 0,
+        "rag_indexes_failed": 0,
+        "executor": "ready",
+        "transcriber_worker": "ready",
+        "question_busy": false,
+        "assistant_busy": false,
+        "draining": false,
+        "service_id": "e85907ad49e35e2d"
+      }
+    },
+    {
+      "check": "real_media_upload_transcription_chapters",
+      "result": "passed",
+      "seconds": 30.39,
+      "segments": 16,
+      "chapters": 2,
+      "sample_kind": "synthetic"
+    },
+    {
+      "check": "two_account_resource_isolation",
+      "result": "passed"
+    },
+    {
+      "check": "progress_and_notes_persisted",
+      "result": "passed"
+    },
+    {
+      "check": "real_embedding_generation_citations_refusal_history",
+      "result": "passed",
+      "retrieval_mode": "hybrid",
+      "citations": 1
+    },
+    {
+      "check": "owned_service_stop_with_real_data_dir",
+      "result": "passed"
+    },
+    {
+      "check": "verified_backup_and_clean_directory_restore",
+      "result": "passed"
+    },
+    {
+      "check": "restored_login_media_progress_notes_history_vectors",
+      "result": "passed"
+    }
+  ],
+  "completed": true
+}

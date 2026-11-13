@@ -72,6 +72,8 @@ class SerialTaskExecutor:
         self._transcribe = None  # 惰性导入
         self._cancel = None
         self._rag = None
+        self.preheat_state = "pending"
+        self._pending_failures: dict[str, str] = {}
 
     # ---------- 生命周期 ----------
     def start(self) -> None:
@@ -130,8 +132,10 @@ class SerialTaskExecutor:
 
             began = time.perf_counter()
             warmup()
+            self.preheat_state = "ready"
             self._log.info("transcriber preheat ok in %.2fs", time.perf_counter() - began)
         except Exception as exc:  # noqa: BLE001 预热失败不阻塞服务，首个任务再真实报错
+            self.preheat_state = "failed"
             self._log.warning("transcriber preheat failed: %s: %s", exc.__class__.__name__, exc)
 
     def current_video_id(self) -> str | None:
@@ -141,7 +145,18 @@ class SerialTaskExecutor:
     # ---------- 主循环 ----------
     def _run(self) -> None:
         while not self._stop.is_set():
-            video_id = self._claim_next()
+            for failed_id, message in list(self._pending_failures.items()):
+                try:
+                    self._fail(failed_id, "TRANSCRIBE_FAILED", message, True)
+                    self._pending_failures.pop(failed_id, None)
+                except Exception:
+                    self._log.exception("retrying failure persistence on the next queue pass")
+            try:
+                video_id = self._claim_next()
+            except Exception:
+                self._log.exception("queue claim failed; retrying after idle interval")
+                self._stop.wait(self._idle_wait)
+                continue
             if video_id is None:
                 self._stop.wait(self._idle_wait)
                 continue
@@ -149,7 +164,12 @@ class SerialTaskExecutor:
                 self._process(video_id)
             except Exception as exc:  # noqa: BLE001 执行器兜底：任务必须落终态
                 self._log.exception("unexpected executor failure")
-                self._fail(video_id, "TRANSCRIBE_FAILED", f"{exc.__class__.__name__}: {exc}", True)
+                try:
+                    self._fail(video_id, "TRANSCRIBE_FAILED", f"{exc.__class__.__name__}: {exc}", True)
+                except Exception:
+                    self._pending_failures[video_id] = f"{exc.__class__.__name__}: {exc}"
+                    self._log.exception("failed to persist task failure; queue remains alive")
+                    self._stop.wait(self._idle_wait)
 
     def _enter_indexing(self, video_id: str) -> None:
         db = self._session_factory()
@@ -207,6 +227,7 @@ class SerialTaskExecutor:
             t0 = time.perf_counter()
             try:
                 segments = self._transcribe(audio_path, out_dir, timeout_sec=self._timeout)
+                self.preheat_state = "ready"
             except Exception as exc:
                 code = getattr(exc, "code", None)
                 if code == "INVALID_VIDEO" and not os.path.exists(audio_path):

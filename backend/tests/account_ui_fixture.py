@@ -10,6 +10,7 @@ from uuid import uuid4
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "backend"))
+sys.path.insert(0, str(ROOT))
 target = Path(os.environ["ACCOUNT_UI_TEST_DIR"]).resolve()
 if target.parent != (ROOT / "logs").resolve() or not target.name.startswith("account-ui-"):
     raise RuntimeError("QA data must use a fresh logs/account-ui-* directory")
@@ -29,7 +30,7 @@ with app.state.session_factory() as db:
     users = [User(id=str(uuid4()), username_normalized=name, display_name=display, password_hash=hash_password(password), is_active=1, created_at=utc_now()) for name, display in [("qa_alpha", "甲同学"), ("qa_beta", "乙同学")]]
     db.add_all(users)
     db.commit()
-    media = ROOT / "data" / "tmp" / "sample_lecture.mp4"
+    media = Path(os.environ.get("ACCOUNT_UI_MEDIA", str(ROOT / "data" / "tmp" / "sample_lecture.mp4")))
     courses = [(users[0], "甲的私有课程"), (users[1], "乙的私有课程"), (users[0], "甲的另一门课程")]
     for user, title in courses:
         video_id = str(uuid4())

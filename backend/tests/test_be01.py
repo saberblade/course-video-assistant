@@ -14,8 +14,9 @@ def test_health_says_transcriber_is_missing(client):
     response = client.get("/api/health")
     body = response.json()
     expected_ok = (pathlib.Path("modules") / "transcriber" / "__init__.py").is_file()
-    assert response.status_code == 200 if expected_ok else response.status_code == 503
-    assert body["status"] == ("ok" if expected_ok else "not_ready")
+    assert response.status_code == 503  # 单测关闭执行器，不能假称完整处理链已就绪。
+    assert body["status"] == "not_ready"
+    assert body["executor"] == "disabled"
     assert body["database"] == "ok"
     assert body["transcriber"] == ("ready" if expected_ok else "missing")
     assert body["llm_configured"] is False

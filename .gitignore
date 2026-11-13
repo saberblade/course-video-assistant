@@ -59,9 +59,12 @@ Desktop.ini
 # 本地验证临时文件
 .tmp-e2e/
 /migrations/_tmp/
-
 # 打包产物
 /packaging/build/
 /packaging/dist/
 /packaging/*.spec
 /packaging/课迹*/
+
+# 恢复演练产物（远端新增）
+**/*.pre_restore_*/
+**/*.failed_restore_*/
