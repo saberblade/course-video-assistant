@@ -59,3 +59,9 @@ Desktop.ini
 # 本地验证临时文件
 .tmp-e2e/
 /migrations/_tmp/
+
+# 打包产物
+/packaging/build/
+/packaging/dist/
+/packaging/*.spec
+/packaging/课迹*/

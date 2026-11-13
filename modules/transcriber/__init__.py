@@ -87,9 +87,25 @@ def _subprocess_env() -> None:
     _state["env"] = env
 
 
+def _worker_command() -> list[str]:
+    """worker 的启动命令。
+
+    源码运行：python _worker.py
+    打包运行：同一个 exe 加 --transcriber-worker 参数（PyInstaller 里没有独立 python，
+    也没有 .py 文件，所以必须复用 exe 自身的入口）。
+    也可用 TRANSCRIBER_WORKER_EXE 指向一个独立的 worker 可执行文件。
+    """
+    override = os.environ.get("TRANSCRIBER_WORKER_EXE")
+    if override:
+        return [override]
+    if getattr(sys, "frozen", False):
+        return [sys.executable, "--transcriber-worker"]
+    return [sys.executable, "-X", "utf8", str(WORKER_ENTRY)]
+
+
 def _spawn_worker():
     proc = subprocess.Popen(
-        [sys.executable, "-X", "utf8", str(WORKER_ENTRY)],
+        _worker_command(),
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,

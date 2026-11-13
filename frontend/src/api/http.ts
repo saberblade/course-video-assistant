@@ -8,7 +8,8 @@ declare module "axios" {
 
 export const http = axios.create({
   baseURL: "/api",
-  timeout: 35_000,
+  // 必须大于服务端的 LLM_TOTAL_DEADLINE_SECONDS（默认 40s），否则服务端算完、客户端已经先断了。
+  timeout: 55_000,
   withCredentials: true,
 });
 
